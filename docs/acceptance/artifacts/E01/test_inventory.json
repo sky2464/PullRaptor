@@ -1,0 +1,682 @@
+{
+  "collected_at": "2026-10-03T13:15:10.538725+00:00",
+  "revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "tests": [
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_sensitive_content_redaction"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_build_safe_prompt_neutralizes_injection"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_prompt_truncation_under_strict_bounds"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_request_ai_proposals_disabled_by_default"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_request_ai_proposals_successful_mock"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_render_untrusted_proposals_section"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_ai_proposals_do_not_alter_canonical_report"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_max_requests_zero_skips_network"
+    },
+    {
+      "module": "test_ai_adapter",
+      "class": "TestAIAdapter",
+      "test": "test_request_ai_proposals_handles_network_error_gracefully"
+    },
+    {
+      "module": "test_cache",
+      "class": "TestCache",
+      "test": "test_clean_warm_corrupt_cache_identical"
+    },
+    {
+      "module": "test_cache",
+      "class": "TestCache",
+      "test": "test_runtime_schema_change_miss"
+    },
+    {
+      "module": "test_cache",
+      "class": "TestCache",
+      "test": "test_cache_symlink_refused"
+    },
+    {
+      "module": "test_cli",
+      "class": "TestCLI",
+      "test": "test_cli_help"
+    },
+    {
+      "module": "test_cli",
+      "class": "TestCLI",
+      "test": "test_structural_python_complete"
+    },
+    {
+      "module": "test_cli",
+      "class": "TestCLI",
+      "test": "test_explicit_diff_profile_scope_statement"
+    },
+    {
+      "module": "test_cli",
+      "class": "TestCLI",
+      "test": "test_stdout_machine_format_stderr_diagnostics"
+    },
+    {
+      "module": "test_config",
+      "class": "TestConfig",
+      "test": "test_defaults_exact"
+    },
+    {
+      "module": "test_config",
+      "class": "TestConfig",
+      "test": "test_unknown_key_error"
+    },
+    {
+      "module": "test_config",
+      "class": "TestConfig",
+      "test": "test_glob_semantics"
+    },
+    {
+      "module": "test_config",
+      "class": "TestConfig",
+      "test": "test_ci_override_cannot_weaken_required_scope"
+    },
+    {
+      "module": "test_config",
+      "class": "TestConfig",
+      "test": "test_minimum_finalization_capacity"
+    },
+    {
+      "module": "test_diff",
+      "class": "TestDiff",
+      "test": "test_changes_detects_addition_and_modification"
+    },
+    {
+      "module": "test_diff",
+      "class": "TestDiff",
+      "test": "test_hostile_external_diff_textconv_fsmonitor_not_executed"
+    },
+    {
+      "module": "test_diff",
+      "class": "TestDiff",
+      "test": "test_attributes_cannot_hide_source"
+    },
+    {
+      "module": "test_distribution_metadata",
+      "class": "TestDistributionMetadata",
+      "test": "test_python_minor_claim_matches_acceptance"
+    },
+    {
+      "module": "test_distribution_metadata",
+      "class": "TestDistributionMetadata",
+      "test": "test_no_runtime_dependencies"
+    },
+    {
+      "module": "test_distribution_metadata",
+      "class": "TestDistributionMetadata",
+      "test": "test_image_cli_default"
+    },
+    {
+      "module": "test_distribution_metadata",
+      "class": "TestDistributionMetadata",
+      "test": "test_no_global_safe_directory_wildcard"
+    },
+    {
+      "module": "test_distribution_metadata",
+      "class": "TestDistributionMetadata",
+      "test": "test_customer_no_source_clone"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_all_evidence_accumulations"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_different_claim_or_revision_cannot_accumulate"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_conflict_not_blocker"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_shifted_line_same_obligation"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_base_parse_failure_delta_unknown"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_old_sink_new_witness_retained"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_missing_receipt_cannot_complete"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_duplicate_or_foreign_receipt_rejected"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_fatal_diagnostic_exit3"
+    },
+    {
+      "module": "test_evidence",
+      "class": "TestEvidence",
+      "test": "test_incomplete_precedes_finding_exit"
+    },
+    {
+      "module": "test_kernel",
+      "class": "TestKernel",
+      "test": "test_review_structural_python_complete"
+    },
+    {
+      "module": "test_kernel",
+      "class": "TestKernel",
+      "test": "test_review_with_finding"
+    },
+    {
+      "module": "test_kernel",
+      "class": "TestKernel",
+      "test": "test_review_clean_and_incremental_identical"
+    },
+    {
+      "module": "test_kernel",
+      "class": "TestKernel",
+      "test": "test_review_diff_profile"
+    },
+    {
+      "module": "test_kernel",
+      "class": "TestKernel",
+      "test": "test_unresolved_import_incomplete_exit2"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_initialize_handshake"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_notification_handling"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_ping"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_tools_list"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_explain_finding_tool"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_unknown_tool"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_path_validation_and_containment"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_review_tool_dispatch"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_get_findings_and_coverage_tools"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_resources_list_and_read"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_malformed_json_rpc_ignored_gracefully"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_findings_min_severity_filter"
+    },
+    {
+      "module": "test_mcp_server",
+      "class": "TestMCPServer",
+      "test": "test_mcp_event_loop_io"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_canonical_excludes_execution_metadata"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_invalid_span_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_content_facts_cannot_carry_occurrence"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_duplicate_keys_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_nonfinite_json_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_bool_not_integer"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_max_payload_bytes_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_max_depth_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_max_aggregate_items_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_max_string_bytes_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_malformed_utf8_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_surrogate_rejected"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_report_union_strict_tags"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_item_accounting_recursive"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_limit_failure_cannot_claim_support_or_complete"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_two_missing_imports_have_distinct_keys"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_roundtrip_full_report"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_roundtrip_limit_failure"
+    },
+    {
+      "module": "test_models",
+      "class": "TestModels",
+      "test": "test_prohibit_unknown_authority_fields"
+    },
+    {
+      "module": "test_process",
+      "class": "TestProcess",
+      "test": "test_run_bounded_success"
+    },
+    {
+      "module": "test_process",
+      "class": "TestProcess",
+      "test": "test_output_flood_stopped"
+    },
+    {
+      "module": "test_process",
+      "class": "TestProcess",
+      "test": "test_timeout_and_process_tree_cleanup"
+    },
+    {
+      "module": "test_process",
+      "class": "TestProcess",
+      "test": "test_shared_deadline_not_reset"
+    },
+    {
+      "module": "test_process",
+      "class": "TestProcess",
+      "test": "test_worker_environment_has_no_credentials"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_draft_pr_skipped"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_head_drift_rejected_with_exit_2"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_publish_new_comment"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_update_existing_comment_idempotency"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_cli_missing_token_error"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_unicode_columns_crlf_exact"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_scope_shadowing_and_aliases"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_nested_functions_not_outer_mutation"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_parameter_reassignment"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_parse_failure_preserves_diff_coverage"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_import_side_effect_not_executed"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_oversized_source_not_sent_to_worker"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_wrong_blob_or_span_rejected"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_stdlib_identity_not_missing_context"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_missing_external_module_partial"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_new_module_resolves_previous_miss"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_subprocess_alias_modeled"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_local_subprocess_shadows_external_model"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_timeout_or_worker_crash_partial"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_maximum_source_base64_fits_protocol"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_ambiguous_module_no_external_fallback"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_resolving_x_leaves_y_missing"
+    },
+    {
+      "module": "test_python_facts",
+      "class": "TestPythonFacts",
+      "test": "test_isolated_startup_ignores_site_and_paths"
+    },
+    {
+      "module": "test_render",
+      "class": "TestRender",
+      "test": "test_empty_findings_not_safety_claim"
+    },
+    {
+      "module": "test_render",
+      "class": "TestRender",
+      "test": "test_unicode_sarif_character_columns"
+    },
+    {
+      "module": "test_render",
+      "class": "TestRender",
+      "test": "test_markdown_fence_html_link_breakout"
+    },
+    {
+      "module": "test_render",
+      "class": "TestRender",
+      "test": "test_limit_failure_rendering_sarif"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_intentional_patterns_never_defect_claim"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_shadowed_subprocess_no_shell_claim"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_conditional_reraise_not_classified_as_swallowed"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_untrusted_command_not_inferred_from_shell_true"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py001_positives"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py001_negatives"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py002_positives"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py002_negatives"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py003_positives"
+    },
+    {
+      "module": "test_rules",
+      "class": "TestRules",
+      "test": "test_py003_negatives"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_refs_pinned_before_read"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_merge_base_not_base_tip"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_dirty_tree_ignored"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_option_like_ref_rejected"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_nul_metadata_paths"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_binary_and_deleted_file_preserved"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_symlink_and_submodule_not_followed"
+    },
+    {
+      "module": "test_snapshot",
+      "class": "TestSnapshot",
+      "test": "test_replace_objects_ignored"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_staged_snapshot_leaves_index_and_working_tree_untouched"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_workdir_snapshot_captures_unstaged_and_untracked_files"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_cli_staged_flag"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_cli_workdir_flag"
+    }
+  ],
+  "test_count": 130,
+  "inventory": {
+    "production_modules": [
+      "__init__.py",
+      "__main__.py",
+      "ai_adapter.py",
+      "cache.py",
+      "config.py",
+      "diff.py",
+      "evidence.py",
+      "git_snapshot.py",
+      "kernel.py",
+      "mcp_server.py",
+      "models.py",
+      "parser_worker.py",
+      "process.py",
+      "publisher.py",
+      "python_facts.py",
+      "render.py",
+      "rules.py"
+    ],
+    "production_module_count": 17,
+    "production_line_count": 3943,
+    "runtime_dependencies": [],
+    "python_baseline": "3.12.x"
+  }
+}

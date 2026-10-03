@@ -16,13 +16,13 @@ WORKDIR /app
 # Run as non-privileged user for boundary isolation
 RUN useradd -m -u 1000 -s /bin/bash pullraptor
 
-COPY --chown=pullraptor:pullraptor src/ /app/src/
-COPY --chown=pullraptor:pullraptor tests/ /app/tests/
+COPY pyproject.toml README.md /app/
+COPY src/ /app/src/
+RUN pip install --no-cache-dir /app
+
+RUN chown -R pullraptor:pullraptor /app
 
 USER pullraptor
 
-# Allow git inspection on mounted workspace repositories regardless of host uid
-RUN git config --global --add safe.directory '*'
-
-# Default entrypoint runs the test suite
-CMD ["python", "-m", "unittest", "discover", "-s", "tests", "-v"]
+# Default entrypoint exposes the customer CLI; run acceptance tests only in CI/dev profiles.
+CMD ["pullraptor", "--help"]
