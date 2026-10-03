@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "blob_digest": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "producer_id": "handcrafted_fixture_v1",
+  "runtime_version": "handcrafted",
+  "complete": true,
+  "boundaries": [],
+  "functions": [
+    {
+      "name": "loop_demo",
+      "parameters": ["items"],
+      "entry_node_id": 0,
+      "node_order": [0, 1, 2, 3, 4, 5],
+      "complete": true,
+      "bindings": [
+        {"name": "items", "kind": "parameter", "shadows_builtin_input": false}
+      ],
+      "boundaries": [],
+      "nodes": [
+        {
+          "node_id": 0,
+          "operation": {"op": "while", "test_name": "items"},
+          "span": {"start_byte": 0, "end_byte": 5, "start_line": 1, "end_line": 1, "start_column": 1, "end_column": 5},
+          "successors": [
+            {"kind": "while_body", "target_id": 1},
+            {"kind": "while_exit", "target_id": 5}
+          ]
+        },
+        {
+          "node_id": 1,
+          "operation": {"op": "if", "test_name": "stop"},
+          "span": {"start_byte": 6, "end_byte": 10, "start_line": 2, "end_line": 2, "start_column": 1, "end_column": 5},
+          "successors": [
+            {"kind": "if_true", "target_id": 2},
+            {"kind": "if_false", "target_id": 3}
+          ]
+        },
+        {
+          "node_id": 2,
+          "operation": {"op": "break"},
+          "span": {"start_byte": 11, "end_byte": 16, "start_line": 3, "end_line": 3, "start_column": 1, "end_column": 6},
+          "successors": [{"kind": "break", "target_id": 5}]
+        },
+        {
+          "node_id": 3,
+          "operation": {"op": "continue"},
+          "span": {"start_byte": 17, "end_byte": 25, "start_line": 4, "end_line": 4, "start_column": 1, "end_column": 9},
+          "successors": [{"kind": "continue", "target_id": 0}]
+        },
+        {
+          "node_id": 4,
+          "operation": {"op": "else"},
+          "span": {"start_byte": 26, "end_byte": 30, "start_line": 5, "end_line": 5, "start_column": 1, "end_column": 5},
+          "successors": [{"kind": "loop_else", "target_id": 5}]
+        },
+        {
+          "node_id": 5,
+          "operation": {"op": "return"},
+          "span": {"start_byte": 31, "end_byte": 37, "start_line": 6, "end_line": 6, "start_column": 1, "end_column": 7},
+          "successors": [{"kind": "return", "target_id": 5}]
+        }
+      ]
+    }
+  ]
+}

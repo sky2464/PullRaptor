@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pullraptor-statement-ir-schema-1",
+  "title": "PullRaptor StatementIR schema 1 (occurrence-free)",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "blob_digest",
+    "producer_id",
+    "runtime_version",
+    "functions"
+  ],
+  "properties": {
+    "schema_version": {"const": "1"},
+    "blob_digest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "producer_id": {"type": "string", "minLength": 1},
+    "runtime_version": {"type": "string", "minLength": 1},
+    "complete": {"type": "boolean"},
+    "boundaries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/boundary"}
+    },
+    "functions": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/function"}
+    }
+  },
+  "$defs": {
+    "span": {
+      "type": "object",
+      "required": [
+        "start_byte",
+        "end_byte",
+        "start_line",
+        "end_line",
+        "start_column",
+        "end_column"
+      ],
+      "properties": {
+        "start_byte": {"type": "integer", "minimum": 0},
+        "end_byte": {"type": "integer", "minimum": 0},
+        "start_line": {"type": "integer", "minimum": 1},
+        "end_line": {"type": "integer", "minimum": 1},
+        "start_column": {"type": "integer", "minimum": 1},
+        "end_column": {"type": "integer", "minimum": 1}
+      }
+    },
+    "boundary": {
+      "type": "object",
+      "required": ["code", "message"],
+      "properties": {
+        "code": {"type": "string"},
+        "message": {"type": "string"},
+        "span": {"$ref": "#/$defs/span"}
+      }
+    },
+    "successor": {
+      "type": "object",
+      "required": ["kind", "target_id"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "sequential",
+            "if_true",
+            "if_false",
+            "while_body",
+            "while_exit",
+            "for_body",
+            "for_exit",
+            "loop_else",
+            "break",
+            "continue",
+            "return",
+            "raise",
+            "unreachable"
+          ]
+        },
+        "target_id": {"type": "integer", "minimum": 0}
+      }
+    },
+    "operation": {
+      "type": "object",
+      "required": ["op"],
+      "properties": {
+        "op": {
+          "type": "string",
+          "enum": [
+            "name_assign",
+            "name_copy",
+            "constant_type",
+            "value_preserving_expression",
+            "call",
+            "if",
+            "while",
+            "for",
+            "break",
+            "continue",
+            "else",
+            "return",
+            "raise",
+            "unknown"
+          ]
+        },
+        "target": {"type": "string"},
+        "source_name": {"type": "string"},
+        "constant_kind": {"type": "string"},
+        "operator": {"type": "string"},
+        "operand_names": {"type": "array", "items": {"type": "string"}},
+        "callee_resolution": {"type": "string"},
+        "callee_name": {"type": "string"},
+        "test_name": {"type": "string"},
+        "iter_name": {"type": "string"},
+        "return_name": {"type": "string"},
+        "reason": {"type": "string"}
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["node_id", "operation", "span", "successors"],
+      "properties": {
+        "node_id": {"type": "integer", "minimum": 0},
+        "operation": {"$ref": "#/$defs/operation"},
+        "span": {"$ref": "#/$defs/span"},
+        "successors": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/successor"}
+        }
+      }
+    },
+    "function": {
+      "type": "object",
+      "required": ["name", "parameters", "entry_node_id", "node_order", "nodes"],
+      "properties": {
+        "name": {"type": "string"},
+        "parameters": {"type": "array", "items": {"type": "string"}},
+        "entry_node_id": {"type": "integer", "minimum": 0},
+        "node_order": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+        "complete": {"type": "boolean"},
+        "bindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "kind"],
+            "properties": {
+              "name": {"type": "string"},
+              "kind": {"type": "string"},
+              "shadows_builtin_input": {"type": "boolean"}
+            }
+          }
+        },
+        "boundaries": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/boundary"}
+        },
+        "nodes": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/node"}
+        }
+      }
+    }
+  }
+}
