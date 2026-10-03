@@ -15,11 +15,17 @@ from pullraptor.mcp_server import (
     process_request,
     run_mcp_server,
 )
+from tests.helpers import make_repo
 
 
 class TestMCPServer(unittest.TestCase):
     def setUp(self) -> None:
-        self.repo_root = Path(__file__).resolve().parent.parent
+        self.repo = make_repo({"app.py": b"def f():\n    pass\n"})
+        self.repo.commit({"app.py": b"def f():\n    return 42\n"}, message="second")
+        self.repo_root = self.repo.root
+
+    def tearDown(self) -> None:
+        self.repo.cleanup()
 
     def test_initialize_handshake(self) -> None:
         req = {
@@ -81,7 +87,7 @@ class TestMCPServer(unittest.TestCase):
     def test_path_validation_and_containment(self) -> None:
         # Valid repo root
         valid_path = _validate_repo_path(str(self.repo_root))
-        self.assertEqual(valid_path, self.repo_root)
+        self.assertEqual(valid_path, self.repo_root.resolve())
 
         # Invalid directory
         with self.assertRaises(ValueError):
