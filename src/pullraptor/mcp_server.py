@@ -52,15 +52,45 @@ RULE_EXPLANATIONS: dict[str, dict[str, str]] = {
 }
 
 
+def _workspace_root() -> Path:
+    """Authorized workspace boundary for MCP repository path arguments."""
+    env_root = os.environ.get("PULLRAPTOR_MCP_WORKSPACE_ROOT")
+    if env_root:
+        return Path(os.path.realpath(env_root))
+    return Path(os.path.realpath(os.getcwd()))
+
+
 def _validate_repo_path(repo_arg: str | None) -> Path:
-    """Validate and resolve repository path safely."""
+    """Validate and resolve repository path safely within the workspace boundary."""
     raw = repo_arg or "."
-    path = Path(raw).resolve()
+    path = Path(os.path.realpath(raw))
+    workspace = _workspace_root()
+    try:
+        path.relative_to(workspace)
+    except ValueError:
+        raise ValueError(f"Path is outside authorized workspace boundary: {raw}") from None
     if not path.is_dir():
         raise ValueError(f"Path is not a valid directory: {raw}")
     if not (path / ".git").exists():
         raise ValueError(f"Path is not a Git repository root: {raw}")
     return path
+
+
+_SEVERITY_ORDER = {"advisory": 0, "warning": 1, "error": 2}
+
+
+def _load_optional_ai_config() -> Any:
+    from pullraptor.ai_adapter import AIConfig
+
+    endpoint = os.environ.get("PULLRAPTOR_AI_ENDPOINT", "").strip()
+    if not endpoint:
+        return None
+    return AIConfig(
+        enabled=True,
+        endpoint=endpoint,
+        api_key=os.environ.get("PULLRAPTOR_AI_TOKEN", ""),
+        model=os.environ.get("PULLRAPTOR_AI_MODEL", "default"),
+    )
 
 
 def _tool_definitions() -> list[dict[str, Any]]:
@@ -136,6 +166,10 @@ def _tool_definitions() -> list[dict[str, Any]]:
                 "properties": {
                     "rule_id": {"type": "string", "description": "Rule identifier (e.g., PY001, PY002, PY003)"},
                     "finding_id": {"type": "string", "description": "Finding identifier from review results"},
+                    "use_ai": {
+                        "type": "boolean",
+                        "description": "Request optional advisory model explanation when AI endpoint is configured",
+                    },
                 },
                 "required": ["rule_id"],
             },
@@ -199,8 +233,12 @@ def handle_get_findings(args: dict[str, Any]) -> str:
 
     findings_out = []
     file_pat = args.get("file_pattern", "")
+    min_severity = str(args.get("min_severity", "advisory")).lower()
+    min_rank = _SEVERITY_ORDER.get(min_severity, 0)
     for f in rep.findings:
         if file_pat and file_pat not in f.span.path:
+            continue
+        if _SEVERITY_ORDER.get(f.severity, 0) < min_rank:
             continue
         findings_out.append(
             {
@@ -255,11 +293,43 @@ def handle_explain(args: dict[str, Any]) -> str:
     if not info:
         return f"No documentation found for rule {rule_id}. Available rules: {', '.join(sorted(RULE_EXPLANATIONS.keys()))}."
 
-    return (
+    base_text = (
         f"### {rule_id}: {info['title']}\n\n"
         f"**Claim**: {info['claim']}\n\n"
         f"**Rationale**: {info['rationale']}\n\n"
         f"**Remediation**:\n{info['remediation']}\n"
+    )
+
+    if not args.get("use_ai"):
+        return base_text
+
+    ai_cfg = _load_optional_ai_config()
+    if ai_cfg is None:
+        return base_text + "\n> Advisory model explanation unavailable: set PULLRAPTOR_AI_ENDPOINT to enable.\n"
+
+    from pullraptor.ai_adapter import ExternalContext, build_explanation_prompt, query_ai_provider
+    from pullraptor.models import Deadline
+
+    rep: Report | None = _STATE.get("report")
+    related: tuple[Any, ...] = ()
+    if isinstance(rep, FullReport):
+        related = tuple(f for f in rep.findings if f.rule == rule_id)
+
+    prompt = build_explanation_prompt(
+        related,
+        ExternalContext(issue_text=f"Explain rule {rule_id} for developers."),
+        max_bytes=ai_cfg.max_context_bytes,
+    )
+    deadline = _STATE.get("deadline") or Deadline(time.monotonic(), 60.0)
+    proposals = query_ai_provider(ai_cfg, prompt, deadline=deadline)
+    if not proposals:
+        return base_text
+
+    return (
+        base_text
+        + "\n---\n### Advisory Model Explanation (Untrusted)\n\n"
+        + proposals[0].content
+        + "\n"
     )
 
 

@@ -18,9 +18,11 @@ class TestCLI(unittest.TestCase):
         self.repo.cleanup()
 
     def test_cli_help(self) -> None:
-        with self.assertRaises(SystemExit) as ctx:
+        out = io.StringIO()
+        with self.assertRaises(SystemExit) as ctx, patch("sys.stdout", out):
             main(["--help"])
         self.assertEqual(ctx.exception.code, 0)
+        self.assertIn("PullRaptor offline review kernel", out.getvalue())
 
     def test_structural_python_complete(self) -> None:
         base_c = self.repo.commit_ids[0]

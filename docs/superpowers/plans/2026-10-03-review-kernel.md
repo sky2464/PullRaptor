@@ -175,4 +175,4 @@ Cached ContentFacts have no path/side; Task 4 binds current occurrences. If extr
 
 ## Handoff
 
-No production tasks are complete. When implementation is authorized, sequential task implementation with independent review is recommended because ingestion, scope, and evidence interfaces share security-sensitive invariants. Parallel research or independent fixture preparation can continue, but shared kernel interfaces should stabilize in task order. Any new dependency or semantic capability must earn a scoped design decision and acceptance gate.
+E01 tasks 1–8 are complete with acceptance tests in `tests/`. Subsequent milestones E02, E03, E07, and E08 shipped on separate branches with their own specs and verification. E04–E06 and E09–E11 remain proposed until child designs and acceptance evidence exist. Any new dependency or semantic capability must earn a scoped design decision and acceptance gate before implementation.
