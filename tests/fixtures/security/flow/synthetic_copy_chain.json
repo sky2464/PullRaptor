@@ -1,0 +1,65 @@
+{
+  "schema_version": "1",
+  "blob_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "producer_id": "handcrafted_fixture_v1",
+  "runtime_version": "handcrafted",
+  "complete": true,
+  "boundaries": [],
+  "functions": [
+    {
+      "name": "synthetic_sanitizer_algebra",
+      "parameters": [],
+      "entry_node_id": 0,
+      "node_order": [0, 1, 2, 3],
+      "complete": true,
+      "bindings": [
+        {"name": "a", "kind": "local", "shadows_builtin_input": false},
+        {"name": "b", "kind": "local", "shadows_builtin_input": false}
+      ],
+      "boundaries": [],
+      "nodes": [
+        {
+          "node_id": 0,
+          "operation": {
+            "op": "call",
+            "target": "a",
+            "callee_resolution": "builtin",
+            "callee_name": "input",
+            "arguments": []
+          },
+          "span": {"start_byte": 0, "end_byte": 8, "start_line": 1, "end_line": 1, "start_column": 1, "end_column": 8},
+          "successors": [{"kind": "sequential", "target_id": 1}]
+        },
+        {
+          "node_id": 1,
+          "operation": {
+            "op": "call",
+            "target": "b",
+            "callee_resolution": "unknown",
+            "callee_name": "sql_escape",
+            "arguments": [{"kind": "name", "name": "a"}]
+          },
+          "span": {"start_byte": 9, "end_byte": 24, "start_line": 2, "end_line": 2, "start_column": 1, "end_column": 16},
+          "successors": [{"kind": "sequential", "target_id": 2}]
+        },
+        {
+          "node_id": 2,
+          "operation": {
+            "op": "call",
+            "callee_resolution": "unknown",
+            "callee_name": "execute_sql",
+            "arguments": [{"kind": "name", "name": "a"}]
+          },
+          "span": {"start_byte": 25, "end_byte": 42, "start_line": 3, "end_line": 3, "start_column": 1, "end_column": 18},
+          "successors": [{"kind": "sequential", "target_id": 3}]
+        },
+        {
+          "node_id": 3,
+          "operation": {"op": "return"},
+          "span": {"start_byte": 43, "end_byte": 49, "start_line": 4, "end_line": 4, "start_column": 1, "end_column": 7},
+          "successors": [{"kind": "return", "target_id": 3}]
+        }
+      ]
+    }
+  ]
+}
