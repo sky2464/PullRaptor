@@ -1,0 +1,2765 @@
+{
+  "kind": "requirement_assertion_fixture_map",
+  "date": "2026-10-03",
+  "producer_card": "E01-T9-MAP",
+  "document_revision": "d29cbb1be4150d58be12eb13496af970203c7cf1",
+  "mapping_source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "trusted_base_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "method": "Merge static declaration inventory, cache/output assertion map overlay, and evaluation invariants; no imports or suite execution.",
+  "input_artifacts": [
+    "docs/acceptance/artifacts/E01/2026-10-03-static-inventory.json",
+    "docs/acceptance/artifacts/E01/2026-10-03-cache-output-assertion-map.md",
+    "docs/acceptance/artifacts/E01/task7-task8-assertion-overlay.json",
+    "docs/evaluation.md"
+  ],
+  "acceptance_criteria": {
+    "E01-A1": "not_run",
+    "E01-A2": "not_run",
+    "E01-A3": "not_run",
+    "independent_decision": "pending"
+  },
+  "summary": {
+    "named_plan_tests": 106,
+    "named_declaration_located": 68,
+    "named_assertion_gaps": 132,
+    "unnamed_cache_output_obligations": 26,
+    "evaluation_invariant_rows": 17,
+    "task7_named_partial_or_unmapped": 16,
+    "task8_named_partial_or_unmapped": 16,
+    "coverage_bucket_counts": {
+      "mapped": 0,
+      "partial": 14,
+      "unmapped": 32,
+      "declaration_only": 60
+    }
+  },
+  "named_requirements": [
+    {
+      "requirement_id": "T1.test_bool_not_integer",
+      "task": 1,
+      "planned_test": "test_bool_not_integer",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 254,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_canonical_excludes_execution_metadata",
+      "task": 1,
+      "planned_test": "test_canonical_excludes_execution_metadata",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 120,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_content_facts_cannot_carry_occurrence",
+      "task": 1,
+      "planned_test": "test_content_facts_cannot_carry_occurrence",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 212,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_duplicate_keys_rejected",
+      "task": 1,
+      "planned_test": "test_duplicate_keys_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 243,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_invalid_span_rejected",
+      "task": 1,
+      "planned_test": "test_invalid_span_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 162,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_item_accounting_recursive",
+      "task": 1,
+      "planned_test": "test_item_accounting_recursive",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 308,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_limit_failure_cannot_claim_support_or_complete",
+      "task": 1,
+      "planned_test": "test_limit_failure_cannot_claim_support_or_complete",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 323,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_nonfinite_json_rejected",
+      "task": 1,
+      "planned_test": "test_nonfinite_json_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 249,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_report_union_strict_tags",
+      "task": 1,
+      "planned_test": "test_report_union_strict_tags",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 302,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T1.test_two_missing_imports_have_distinct_keys",
+      "task": 1,
+      "planned_test": "test_two_missing_imports_have_distinct_keys",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 375,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T2.test_ci_override_cannot_weaken_required_scope",
+      "task": 2,
+      "planned_test": "test_ci_override_cannot_weaken_required_scope",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 55,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T2.test_defaults_exact",
+      "task": 2,
+      "planned_test": "test_defaults_exact",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 10,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T2.test_glob_semantics",
+      "task": 2,
+      "planned_test": "test_glob_semantics",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T2.test_minimum_finalization_capacity",
+      "task": 2,
+      "planned_test": "test_minimum_finalization_capacity",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 84,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T2.test_unknown_key_error",
+      "task": 2,
+      "planned_test": "test_unknown_key_error",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 27,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_ambient_git_config_ignored",
+      "task": 3,
+      "planned_test": "test_ambient_git_config_ignored",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_attributes_cannot_hide_source",
+      "task": 3,
+      "planned_test": "test_attributes_cannot_hide_source",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 60,
+          "path": "tests/test_diff.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_binary_and_deleted_file_preserved",
+      "task": 3,
+      "planned_test": "test_binary_and_deleted_file_preserved",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 76,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_dirty_tree_ignored",
+      "task": 3,
+      "planned_test": "test_dirty_tree_ignored",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 54,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_hostile_external_diff_textconv_fsmonitor_not_executed",
+      "task": 3,
+      "planned_test": "test_hostile_external_diff_textconv_fsmonitor_not_executed",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 38,
+          "path": "tests/test_diff.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_inherited_handles_closed",
+      "task": 3,
+      "planned_test": "test_inherited_handles_closed",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_large_text_diff_bounded",
+      "task": 3,
+      "planned_test": "test_large_text_diff_bounded",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_merge_base_not_base_tip",
+      "task": 3,
+      "planned_test": "test_merge_base_not_base_tip",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_multiple_merge_bases_rejected",
+      "task": 3,
+      "planned_test": "test_multiple_merge_bases_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_non_utf8_path_reported",
+      "task": 3,
+      "planned_test": "test_non_utf8_path_reported",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_nul_metadata_paths",
+      "task": 3,
+      "planned_test": "test_nul_metadata_paths",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 68,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_option_like_ref_rejected",
+      "task": 3,
+      "planned_test": "test_option_like_ref_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 62,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_output_flood_stopped",
+      "task": 3,
+      "planned_test": "test_output_flood_stopped",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 30,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_promisor_object_never_lazy_fetches",
+      "task": 3,
+      "planned_test": "test_promisor_object_never_lazy_fetches",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_refs_pinned_before_read",
+      "task": 3,
+      "planned_test": "test_refs_pinned_before_read",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 26,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_replace_objects_ignored",
+      "task": 3,
+      "planned_test": "test_replace_objects_ignored",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 102,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_shallow_missing_object_incomplete",
+      "task": 3,
+      "planned_test": "test_shallow_missing_object_incomplete",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_shared_deadline_not_reset",
+      "task": 3,
+      "planned_test": "test_shared_deadline_not_reset",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 59,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_symlink_and_submodule_not_followed",
+      "task": 3,
+      "planned_test": "test_symlink_and_submodule_not_followed",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 87,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T3.test_worker_environment_has_no_credentials",
+      "task": 3,
+      "planned_test": "test_worker_environment_has_no_credentials",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 73,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_ambiguous_module_no_external_fallback",
+      "task": 4,
+      "planned_test": "test_ambiguous_module_no_external_fallback",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 218,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_import_side_effect_not_executed",
+      "task": 4,
+      "planned_test": "test_import_side_effect_not_executed",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 91,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_isolated_startup_ignores_site_and_paths",
+      "task": 4,
+      "planned_test": "test_isolated_startup_ignores_site_and_paths",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 253,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_local_subprocess_shadows_external_model",
+      "task": 4,
+      "planned_test": "test_local_subprocess_shadows_external_model",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 186,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_maximum_source_base64_fits_protocol",
+      "task": 4,
+      "planned_test": "test_maximum_source_base64_fits_protocol",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 210,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_missing_external_module_partial",
+      "task": 4,
+      "planned_test": "test_missing_external_module_partial",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 139,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_missing_import_diagnostic",
+      "task": 4,
+      "planned_test": "test_missing_import_diagnostic",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_nested_functions_not_outer_mutation",
+      "task": 4,
+      "planned_test": "test_nested_functions_not_outer_mutation",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 56,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_neutral_worker_cwd",
+      "task": 4,
+      "planned_test": "test_neutral_worker_cwd",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_new_module_resolves_previous_miss",
+      "task": 4,
+      "planned_test": "test_new_module_resolves_previous_miss",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 153,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_oversized_source_not_sent_to_worker",
+      "task": 4,
+      "planned_test": "test_oversized_source_not_sent_to_worker",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 103,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_parameter_reassignment",
+      "task": 4,
+      "planned_test": "test_parameter_reassignment",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 69,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_parse_failure_preserves_diff_coverage",
+      "task": 4,
+      "planned_test": "test_parse_failure_preserves_diff_coverage",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 81,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_resolving_x_leaves_y_missing",
+      "task": 4,
+      "planned_test": "test_resolving_x_leaves_y_missing",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 234,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_scope_shadowing_and_aliases",
+      "task": 4,
+      "planned_test": "test_scope_shadowing_and_aliases",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 41,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_stdlib_identity_not_missing_context",
+      "task": 4,
+      "planned_test": "test_stdlib_identity_not_missing_context",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 123,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_subprocess_alias_modeled",
+      "task": 4,
+      "planned_test": "test_subprocess_alias_modeled",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 174,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_timeout_or_worker_crash_partial",
+      "task": 4,
+      "planned_test": "test_timeout_or_worker_crash_partial",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 204,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_unicode_columns_crlf_exact",
+      "task": 4,
+      "planned_test": "test_unicode_columns_crlf_exact",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 31,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_worker_duplicate_fields_partial",
+      "task": 4,
+      "planned_test": "test_worker_duplicate_fields_partial",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T4.test_wrong_blob_or_span_rejected",
+      "task": 4,
+      "planned_test": "test_wrong_blob_or_span_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 110,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T5.test_conditional_reraise_not_classified_as_swallowed",
+      "task": 5,
+      "planned_test": "test_conditional_reraise_not_classified_as_swallowed",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 61,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T5.test_intentional_patterns_never_defect_claim",
+      "task": 5,
+      "planned_test": "test_intentional_patterns_never_defect_claim",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T5.test_shadowed_subprocess_no_shell_claim",
+      "task": 5,
+      "planned_test": "test_shadowed_subprocess_no_shell_claim",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 49,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T5.test_untrusted_command_not_inferred_from_shell_true",
+      "task": 5,
+      "planned_test": "test_untrusted_command_not_inferred_from_shell_true",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 73,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_all_evidence_accumulations",
+      "task": 6,
+      "planned_test": "test_all_evidence_accumulations",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 24,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_ambiguous_rename_unknown",
+      "task": 6,
+      "planned_test": "test_ambiguous_rename_unknown",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_base_parse_failure_delta_unknown",
+      "task": 6,
+      "planned_test": "test_base_parse_failure_delta_unknown",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 79,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_conflict_not_blocker",
+      "task": 6,
+      "planned_test": "test_conflict_not_blocker",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 42,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_different_claim_or_revision_cannot_accumulate",
+      "task": 6,
+      "planned_test": "test_different_claim_or_revision_cannot_accumulate",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_duplicate_or_foreign_receipt_rejected",
+      "task": 6,
+      "planned_test": "test_duplicate_or_foreign_receipt_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 126,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_fatal_diagnostic_exit3",
+      "task": 6,
+      "planned_test": "test_fatal_diagnostic_exit3",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 143,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_incomplete_precedes_finding_exit",
+      "task": 6,
+      "planned_test": "test_incomplete_precedes_finding_exit",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 153,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_missing_receipt_cannot_complete",
+      "task": 6,
+      "planned_test": "test_missing_receipt_cannot_complete",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 110,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_old_sink_new_witness_retained",
+      "task": 6,
+      "planned_test": "test_old_sink_new_witness_retained",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 92,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_shifted_line_same_obligation",
+      "task": 6,
+      "planned_test": "test_shifted_line_same_obligation",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 58,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "mapping_kind": "body_review_pending",
+      "assertion_coverage": "declaration_only",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_valid_head_claim_survives_unrelated_partial",
+      "task": 6,
+      "planned_test": "test_valid_head_claim_survives_unrelated_partial",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_worker_cannot_shrink_scope",
+      "task": 6,
+      "planned_test": "test_worker_cannot_shrink_scope",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T6.test_wrong_revision_or_capability_rejected",
+      "task": 6,
+      "planned_test": "test_wrong_revision_or_capability_rejected",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped_declaration",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Task 1-6 assertion body review pending; see static inventory declarations",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_all_extractor_components_invalidate",
+      "task": 7,
+      "planned_test": "test_all_extractor_components_invalidate",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cache.py:61,65 ext1/ext2 key"
+      ],
+      "alternate_assertions": [],
+      "remaining_gap": "No worker/producer/binding component mutation inventory",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_atomic_interrupted_write_miss",
+      "task": 7,
+      "planned_test": "test_atomic_interrupted_write_miss",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "No interrupted-write staging/rename fixture",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_cache_symlink_or_reparse_refused",
+      "task": 7,
+      "planned_test": "test_cache_symlink_or_reparse_refused",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_cache.py:76-79 test_cache_symlink_refused"
+      ],
+      "remaining_gap": "Root/parent redirect, reparse, write redirect; OSError path unasserted",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_ci_cache_off",
+      "task": 7,
+      "planned_test": "test_ci_cache_off",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_config.py:55-82 CI override only"
+      ],
+      "remaining_gap": "review(..., ci=True) must not admit cache I/O",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_clean_warm_corrupt_cache_identical",
+      "task": 7,
+      "planned_test": "test_clean_warm_corrupt_cache_identical",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_cache.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cache.py:42,47-48,54"
+      ],
+      "alternate_assertions": [
+        "tests/test_kernel.py:51-59"
+      ],
+      "remaining_gap": "No warm hit, full canonical equality, or corrupt/absent report comparison",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_full_manifest_resolution_recomputed",
+      "task": 7,
+      "planned_test": "test_full_manifest_resolution_recomputed",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_python_facts.py:153-172 as test_new_module_resolves_previous_miss"
+      ],
+      "remaining_gap": "No cached review orchestration or canonical report comparison",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_incomplete_discovery_cannot_seal_complete_scope",
+      "task": 7,
+      "planned_test": "test_incomplete_discovery_cannot_seal_complete_scope",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_evidence.py:160-171 combined incomplete discovery and receipt"
+      ],
+      "remaining_gap": "Isolate discovery incomplete with all known receipts complete",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_runtime_schema_change_miss",
+      "task": 7,
+      "planned_test": "test_runtime_schema_change_miss",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 56,
+          "path": "tests/test_cache.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cache.py:63-65"
+      ],
+      "alternate_assertions": [],
+      "remaining_gap": "Key change only; no read-miss or report equality after identity change",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_same_blob_different_paths_rebound",
+      "task": 7,
+      "planned_test": "test_same_blob_different_paths_rebound",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_python_facts.py:162,169 resolution only"
+      ],
+      "remaining_gap": "Same content at two paths/sides with cache rebound",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_schema_valid_foreign_cache_ignored",
+      "task": 7,
+      "planned_test": "test_schema_valid_foreign_cache_ignored",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_cache.py:52-54 invalid JSON only"
+      ],
+      "remaining_gap": "Schema-valid omitted-fact foreign entry",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_scope_import_closure_fixed_point",
+      "task": 7,
+      "planned_test": "test_scope_import_closure_fixed_point",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Multi-hop/cyclic coordinator closure fixtures",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_shared_permissions_cache_disabled",
+      "task": 7,
+      "planned_test": "test_shared_permissions_cache_disabled",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Shared directory and wrong-owner fixtures",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_size_cap",
+      "task": 7,
+      "planned_test": "test_size_cap",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_config.py:19 default cap only"
+      ],
+      "remaining_gap": "No aggregate capacity/eviction fixtures",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_slow_preparation_short_policy_still_bounded",
+      "task": 7,
+      "planned_test": "test_slow_preparation_short_policy_still_bounded",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_process.py:59-71",
+        "tests/test_config.py:86-93"
+      ],
+      "remaining_gap": "Full-review bootstrap timing under short policy",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_unrelated_malformed_file_not_required",
+      "task": 7,
+      "planned_test": "test_unrelated_malformed_file_not_required",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_python_facts.py:81-89 direct parse only"
+      ],
+      "remaining_gap": "Repository with unrelated malformed file and scope honesty",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T7.test_unresolved_context_required",
+      "task": 7,
+      "planned_test": "test_unresolved_context_required",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_kernel.py:81-84",
+        "tests/test_python_facts.py:151,245-251",
+        "tests/test_models.py:375-392 keys only"
+      ],
+      "remaining_gap": "Coordinator lookup key, capability/cause/recovery, CLI exit 2",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_config_error_exit3",
+      "task": 8,
+      "planned_test": "test_config_error_exit3",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_config.py ValueError",
+        "tests/test_evidence.py:149-151 decision 3"
+      ],
+      "remaining_gap": "CLI invalid TOML exit 3 with bounded stderr",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_core_network_disabled",
+      "task": 8,
+      "planned_test": "test_core_network_disabled",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "End-to-end socket/DNS denial through CLI",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_deleted_line_sarif_side",
+      "task": 8,
+      "planned_test": "test_deleted_line_sarif_side",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Baseline-only SARIF history properties",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_empty_findings_not_safety_claim",
+      "task": 8,
+      "planned_test": "test_empty_findings_not_safety_claim",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "mapping_kind": "exact_mapped",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_render.py:42-43 Markdown only"
+      ],
+      "alternate_assertions": [],
+      "remaining_gap": "JSON/SARIF and partial-with-empty-findings",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_explicit_diff_profile_scope_statement",
+      "task": 8,
+      "planned_test": "test_explicit_diff_profile_scope_statement",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 45,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cli.py:61-62"
+      ],
+      "alternate_assertions": [
+        "tests/test_kernel.py:68-72"
+      ],
+      "remaining_gap": "Visible semantic/security limits of diff scope",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_links_only_from_trusted_identity",
+      "task": 8,
+      "planned_test": "test_links_only_from_trusted_identity",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Trusted/untrusted navigation fixtures",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_markdown_fence_html_link_breakout",
+      "task": 8,
+      "planned_test": "test_markdown_fence_html_link_breakout",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 71,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_render.py:83 script tag only"
+      ],
+      "alternate_assertions": [],
+      "remaining_gap": "Fence closure, inactive links, visible representation",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_recovery_guidance_not_attacker_commands",
+      "task": 8,
+      "planned_test": "test_recovery_guidance_not_attacker_commands",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_python_facts.py diagnostic messages only"
+      ],
+      "remaining_gap": "Trusted recovery IDs across formats",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_report_byte_limit_never_complete",
+      "task": 8,
+      "planned_test": "test_report_byte_limit_never_complete",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "alternate_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_models.py:341-372,416-421 constructed LimitFailure",
+        "tests/test_render.py:95-96"
+      ],
+      "remaining_gap": "Full-report output exhaustion through CLI",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_requested_and_examined_scope_visible",
+      "task": 8,
+      "planned_test": "test_requested_and_examined_scope_visible",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_kernel.py:30",
+        "tests/test_render.py:31,34 empty scope"
+      ],
+      "remaining_gap": "Nonempty scope visible in all formats",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_stdout_machine_format_stderr_diagnostics",
+      "task": 8,
+      "planned_test": "test_stdout_machine_format_stderr_diagnostics",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 64,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cli.py:79-82"
+      ],
+      "alternate_assertions": [],
+      "remaining_gap": "stderr never asserted; no error-path JSON cleanliness",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_structural_other_language_partial_exit2",
+      "task": 8,
+      "planned_test": "test_structural_other_language_partial_exit2",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [
+        "tests/test_config.py:24-25 suffix inventory"
+      ],
+      "remaining_gap": "Mixed-language structural CLI exit 2 all formats",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_structural_python_complete",
+      "task": 8,
+      "planned_test": "test_structural_python_complete",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 27,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_cli.py:42-43"
+      ],
+      "alternate_assertions": [
+        "tests/test_kernel.py:28-31"
+      ],
+      "remaining_gap": "Incomplete receipts, scope, all output formats",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_terminal_escape_controls_and_bidi",
+      "task": 8,
+      "planned_test": "test_terminal_escape_controls_and_bidi",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "ESC/control/bidi in every displayed field",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_unicode_sarif_character_columns",
+      "task": 8,
+      "planned_test": "test_unicode_sarif_character_columns",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "declaration_located",
+      "declarations": [
+        {
+          "line": 45,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "mapping_kind": "exact_partial",
+      "assertion_coverage": "partial",
+      "primary_assertions": [
+        "tests/test_render.py:61,63,65-69 synthetic span"
+      ],
+      "alternate_assertions": [
+        "tests/test_python_facts.py:33-39 digest only"
+      ],
+      "remaining_gap": "Source-derived Unicode byte-to-character fidelity",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "T8.test_uri_reserved_segments_roundtrip",
+      "task": 8,
+      "planned_test": "test_uri_reserved_segments_roundtrip",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "declaration_status": "unmapped_declaration",
+      "declarations": [],
+      "mapping_kind": "unmapped",
+      "assertion_coverage": "unmapped",
+      "primary_assertions": [],
+      "alternate_assertions": [],
+      "remaining_gap": "Reserved URI segment round trips",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    }
+  ],
+  "unnamed_requirements": [
+    {
+      "requirement_id": "U7-01",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-CACHE-EQUALITY",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-02",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-CACHE-MUTATIONS",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-03",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-CACHE-REPLAY",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-04",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-BOOTSTRAP-DEADLINE",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-05",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-CACHE-CONTENT-BOUNDARY",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-06",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-CACHE-OPERATIONAL",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-07",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-CACHE-ADMISSION",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-08",
+      "acceptance_ids": [
+        "E01-A1",
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-CACHE-IDENTITIES",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-09",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-COORDINATOR-INPUTS",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-10",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-SCOPE-CLOSURE",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-11",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-AGGREGATE-BUDGETS",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U7-12",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "proposed_fixture": "E01-REVISION-REBUILD",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-01",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-FORMAT-SCOPE",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-02",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-OUTPUT-EXHAUSTION",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-03",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-RENDER-DEADLINE",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-04",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-MINIMUM-OUTPUT-CAPACITY",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-05",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-CLI-OUTPUT-CHANNEL",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-06",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-CLI-OFFLINE-BOUNDARY",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-07",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-PRESENTATION-BOUNDARY",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-08",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-SARIF-SIDES",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-09",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-LOCATION-TO-OUTPUT",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-10",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-RECOVERY-FLOW",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-11",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-RUNTIME-CONTRACT",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-12",
+      "acceptance_ids": [
+        "E01-A3"
+      ],
+      "proposed_fixture": "E01-LOCAL-FLOW-INVENTORY",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-13",
+      "acceptance_ids": [
+        "E01-A3"
+      ],
+      "proposed_fixture": "E01-BENCHMARK-INVENTORY",
+      "assertion_coverage": "unmapped",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "U8-14",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "proposed_fixture": "E01-ADVISORY-OUTPUT",
+      "assertion_coverage": "partial",
+      "source_artifact": "2026-10-03-cache-output-assertion-map.md",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    }
+  ],
+  "evaluation_invariants": [
+    {
+      "requirement_id": "EVAL.immutable_comparison",
+      "label": "Immutable comparison",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.safe_ingestion",
+      "label": "Safe ingestion",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.location_fidelity",
+      "label": "Location fidelity",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.scope_honesty",
+      "label": "Scope honesty",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.differential_reporting",
+      "label": "Differential reporting",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.cache_correctness",
+      "label": "Cache correctness",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.pattern_restraint",
+      "label": "Pattern restraint",
+      "acceptance_ids": [
+        "E01-A2"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.offline_behavior",
+      "label": "Offline behavior",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.resource_limits",
+      "label": "Resource limits",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.independent_scope",
+      "label": "Independent scope",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.strict_records",
+      "label": "Strict records",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.cache_admission",
+      "label": "Cache admission",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.process_authority",
+      "label": "Process authority",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.safe_presentation",
+      "label": "Safe presentation",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.recovery_guidance",
+      "label": "Recovery guidance",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.external_import_scope",
+      "label": "External/import scope",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    },
+    {
+      "requirement_id": "EVAL.failure_output",
+      "label": "Failure output",
+      "acceptance_ids": [
+        "E01-A1"
+      ],
+      "assertion_coverage": "inventory_pending",
+      "source": "docs/evaluation.md E01 required invariants",
+      "runtime_result": "not_run",
+      "expected_result": "not_run"
+    }
+  ],
+  "downstream_cards": [
+    "E01-T9-CACHE",
+    "E01-T9-OUTPUT",
+    "E01-T9-RECORDS",
+    "E01-T9-CORPUS",
+    "E01-T9-BENCH"
+  ],
+  "claim_limit": "Rows locate declarations and static gaps only. They do not pass criteria or authorize merge."
+}
