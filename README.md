@@ -1,4 +1,4 @@
-# PullRaptor
+# Pull Raptor
 
 PullRaptor is an offline, local-first pull request reviewer built around the difference between two immutable revisions and the evidence needed to explain that difference.
 
