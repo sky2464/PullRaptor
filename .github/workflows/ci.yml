@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit Tests & Verification
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run test suite
+        run: |
+          PYTHONPATH=src python3 -m unittest discover -s tests -v
+
+      - name: Verify PullRaptor self-review
+        run: |
+          PYTHONPATH=src python3 -m pullraptor --base HEAD~1 --head HEAD --exact-base
+
+  docker:
+    name: Docker Build & Container Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build Docker container
+        run: |
+          docker build -t pullraptor:ci .
+
+      - name: Run test suite inside Docker
+        run: |
+          docker run --rm pullraptor:ci
+
+      - name: Run review on mounted workspace inside Docker
+        run: |
+          docker run --rm -v "${{ github.workspace }}:/repo" pullraptor:ci python -m pullraptor --repo /repo --base HEAD~1 --head HEAD --exact-base
