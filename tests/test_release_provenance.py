@@ -5,7 +5,7 @@ from __future__ import annotations
 import hashlib
 import unittest
 
-from release.build import (
+from pullraptor.release_provenance import (
     ArtifactIdentity,
     BuildOrigin,
     ReleaseManifest,
