@@ -10,7 +10,7 @@ Complete bounded stdio MCP, a functioning packaged VS Code extension, neutral AI
 
 ## Dependencies and delivery boundary
 
-E01/E02 local snapshot/report and E07 artifact acceptance for local delivery; optional explanation uses E03. Remote mode requires accepted E10 API and E11 identity/isolation essentials. E06 is required only if patch apply/validation is separately exposed; initial editor/MCP actions are review/read/explain with no publication or application command.
+E01/E02 local snapshot/report and E07 artifact acceptance for local delivery; optional explanation uses E03. Remote activation requires accepted E10-A1/A2 API/job contracts and E11-A1/A2 identity/isolation/retention essentials for the consumed scope. E08-A4 owns cross-client remote MCP parity after the service profile's E10-A4 CLI/API deployment evidence; E10-A4 does not depend on E08-A4 or full E11-A3 operational acceptance. Full E10/E11/E08 acceptance remains required for their broader release claims. E06 is required only if patch apply/validation is separately exposed; initial editor/MCP actions are review/read/explain with no publication or application command.
 
 ## Architecture and records
 

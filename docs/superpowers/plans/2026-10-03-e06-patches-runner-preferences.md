@@ -72,6 +72,8 @@ assert working_tree_after == working_tree_before
 - Consumes: Task 1 PatchedTree and trusted RunnerPlan; source commands never enter the analysis process.
 - Produces: `validate_runner(plan: RunnerPlan, controls: IsolationControls) -> RunnerAdmission`; IsolationControls(filesystem, egress, credentials, process_tree, cpu, memory, pids), RunnerAdmission(allowed, cause); launcher `execute(plan: RunnerPlan) -> ExecutionReceipt` with image/runtime/input/argv/result/limits/termination identities.
 
+**Bootstrap boundary:** Before E06-A2 acceptance, only independently reviewed synthetic control fixtures may execute, inside a separately designed disposable evaluation boundary with denied credentials/egress and bounded filesystem/process/resources. They establish whether the runner enforces its controls; they are not reviewed target-repository tests. Reviewed target code remains denied until independent runner acceptance. Missing evaluation controls block these fixtures, never justify host execution.
+
 - [ ] **Step 1: Write the failing acceptance tests.** Add `test_missing_egress_or_filesystem_control_refuses`, `test_no_ambient_credentials_or_host_socket`, `test_timeout_kills_process_tree`, `test_output_flood_bounded`, and `test_no_runner_not_run`. A missing filesystem control returns allowed false and cause `isolation_unavailable`; do not execute a harmless fallback on the host.
 
 Expected assertions for the stated adverse fixture:
