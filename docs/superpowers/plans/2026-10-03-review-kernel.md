@@ -1,6 +1,6 @@
 # PullRaptor Offline Review Kernel Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task by task. Steps use checkbox syntax for tracking. This is a proposed plan; no task has been executed.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task by task. Steps use checkbox syntax for tracking. Tasks 1–8 retain historical implementation checkboxes; Task 9's full acceptance audit is pending. Checkboxes alone are not acceptance evidence.
 
 **Goal:** Deliver E01: a useful offline comparison of immutable revisions with honest coverage, three advisory Python patterns, stable evidence, and reproducible outputs.
 
@@ -173,6 +173,28 @@ Cached ContentFacts have no path/side; Task 4 binds current occurrences. If extr
 - [x] Measure cold/warm time and RSS against the documented fixture; report actual values even if targets fail. Audit imports, subprocesses, file/module count and runtime requirements. Verify competitor-name/domain absence and all local documentation links.
 - [x] Perform whole-kernel review of trust boundaries, adverse inputs and scope claims. Record limitations, update E01 status only with acceptance evidence, and commit verified deliverable. Do not begin E02–E06 without their child plans.
 
+### Task 9: Audit and independently accept the implemented E01 scope
+
+**Status:** Unexecuted acceptance work. Do not rerun or credit Tasks 1–8 from checkbox state alone. Apply the [execution contract](../../planning-contract.md).
+
+**Files:** Produce `docs/acceptance/E01.md` and `docs/acceptance/artifacts/E01/`; add missing adverse fixtures only in the affected existing test modules. A discovered production defect needs a scoped correction task before implementation.
+
+**Consumes:** Current reviewed E01 source/artifact revision, Tasks 1–8 contracts, parent specification §§5–8, and the evaluation contract.
+
+**Produces:** A revision-bound acceptance record with per-criterion `passed`, `failed`, `not_run` or `stale` states and an independent acceptance decision. No new kernel interface.
+
+| ID | Required acceptance |
+|---|---|
+| E01-A1 | Map every Task 1–8 required behavior/adverse case to an actual test/fixture and saved result; zero egress/source execution, exact locations, scope honesty, bounded process/record/output behavior and all four evidence states must pass. Missing named tests remain gaps, never credited by a similarly named suite. |
+| E01-A2 | Completed clean/warm/corrupt/absent-cache mutation runs agree on full canonical data; separately record partial cold runs and successful full replay. Each PY001–PY003 rule has at least 10 positive and 10 counterexample/ambiguous cases with exact advisory claim boundaries. |
+| E01-A3 | Record code/module/runtime/dependency/size inventory and at least 30 cold/warm benchmark repetitions on the master-plan's pinned 2-vCPU/4-GiB, 10,000-file fixture; report p95/RSS and actual enforcement. Independently accept the local review/summary/exact-line/coverage-recovery flow and all limitations. |
+
+- [ ] **Step 1:** Inventory actual tests against each requirement in Tasks 1–8 and E01-A1–A3; record missing cases before running anything. Define fixture IDs and expected outcomes. Assertions include `canonical_clean == canonical_warm == canonical_corrupt` for completed runs, `partial_exit == 2`, and all initial findings `policy_class == "advisory"`.
+- [ ] **Step 2:** In an authorized trusted development environment, run `PYTHONPATH=src python3.12 -m unittest discover -s tests -v`; save command/runtime/revision/exit/output. Test execution here does not admit arbitrary reviewed-code execution in analysis. Add focused adverse fixtures where inventory identifies a gap and confirm they meaningfully fail before any scoped correction.
+- [ ] **Step 3:** Run the pinned mutation/corpus/user-flow fixtures and 30-repetition benchmark; save full reports and raw timing/RSS data. Compare byte-for-byte completed canonical reports, not finding counts. Missing fixtures or unrun benchmarks stay `not_run`.
+- [ ] **Step 4:** Complete `docs/acceptance/E01.md` with every criterion, actual resource results and unresolved limitations; obtain independent acceptance review. Keep E01 acceptance pending on any failed/not_run/stale required criterion. Do not infer held-out accuracy or enable blockers from pattern fixtures.
+- [ ] **Step 5:** Commit the reviewed record on an allowed branch. Only an accepted record promotes E01 in the master plan; the E01/E02 usefulness pilot additionally gates wider delivery/breadth.
+
 ## Handoff
 
-E01 tasks 1–8 are complete with acceptance tests in `tests/`. Subsequent milestones E02, E03, E07, and E08 shipped on separate branches with their own specs and verification. E04–E06 and E09–E11 remain proposed until child designs and acceptance evidence exist. Any new dependency or semantic capability must earn a scoped design decision and acceptance gate before implementation.
+E01 production modules and historical tests exist; full acceptance awaits Task 9. E02/E03/E07/E08 contain partial implementations of their parent scope. E04–E06 and E09–E11 remain proposed. The master plan links scoped child documents for all packages; subsequent execution needs authorization, accepted prerequisites and fresh acceptance evidence.
