@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import io
 import json
+import os
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from pullraptor.__main__ import main
 from pullraptor.mcp_server import (
@@ -23,8 +25,14 @@ class TestMCPServer(unittest.TestCase):
         self.repo = make_repo({"app.py": b"def f():\n    pass\n"})
         self.repo.commit({"app.py": b"def f():\n    return 42\n"}, message="second")
         self.repo_root = self.repo.root
+        self._workspace_patch = patch.dict(
+            os.environ,
+            {"PULLRAPTOR_MCP_WORKSPACE_ROOT": str(self.repo_root.parent)},
+        )
+        self._workspace_patch.start()
 
     def tearDown(self) -> None:
+        self._workspace_patch.stop()
         self.repo.cleanup()
 
     def test_initialize_handshake(self) -> None:
@@ -85,15 +93,18 @@ class TestMCPServer(unittest.TestCase):
         self.assertIn("Unknown tool", result["content"][0]["text"])
 
     def test_path_validation_and_containment(self) -> None:
-        # Valid repo root
         valid_path = _validate_repo_path(str(self.repo_root))
         self.assertEqual(valid_path, self.repo_root.resolve())
 
-        # Invalid directory
         with self.assertRaises(ValueError):
             _validate_repo_path("/nonexistent/directory/for/testing")
 
-        # Non-git directory
+        workspace = self.repo_root.parent
+        outside = workspace.parent
+        if outside != workspace:
+            with self.assertRaises(ValueError):
+                _validate_repo_path(str(outside))
+
         temp_dir = Path("/tmp")
         if not (temp_dir / ".git").exists():
             with self.assertRaises(ValueError):
@@ -154,6 +165,26 @@ class TestMCPServer(unittest.TestCase):
         read_resp = process_request(read_req)
         self.assertIsNotNone(read_resp)
         self.assertEqual(read_resp["result"]["contents"][0]["uri"], "pullraptor://report/latest")
+
+    def test_malformed_json_rpc_ignored_gracefully(self) -> None:
+        in_stream = io.StringIO("{ not valid json }\n")
+        out_stream = io.StringIO()
+        code = run_mcp_server(input_stream=in_stream, output_stream=out_stream)
+        self.assertEqual(code, 0)
+        self.assertEqual(out_stream.getvalue().strip(), "")
+
+    def test_findings_min_severity_filter(self) -> None:
+        dispatch_tool(
+            "pullraptor_review",
+            {"repo_path": str(self.repo_root), "base": "HEAD~1", "head": "HEAD"},
+        )
+        all_findings = json.loads(
+            dispatch_tool("pullraptor_get_findings", {"min_severity": "advisory"})["content"][0]["text"]
+        )
+        high_only = json.loads(
+            dispatch_tool("pullraptor_get_findings", {"min_severity": "error"})["content"][0]["text"]
+        )
+        self.assertGreaterEqual(all_findings["count"], high_only["count"])
 
     def test_mcp_event_loop_io(self) -> None:
         input_data = (

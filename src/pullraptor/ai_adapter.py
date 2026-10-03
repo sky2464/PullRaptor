@@ -44,7 +44,8 @@ class AIConfig:
     max_requests: int = 2
     max_context_bytes: int = 65_536
     max_output_tokens: int = 2048
-    timeout_seconds: float = 20.0
+    timeout_seconds: float = 30.0
+    max_network_seconds: float = 60.0
 
 
 @dataclass(frozen=True)
@@ -118,6 +119,102 @@ def build_safe_prompt(
     return full_prompt
 
 
+def build_explanation_prompt(
+    findings: tuple[Finding, ...],
+    context: ExternalContext,
+    max_bytes: int = 65_536,
+) -> str:
+    """Alias for injection-safe explanation prompt construction."""
+    return build_safe_prompt(findings, context, max_bytes=max_bytes)
+
+
+def build_context_envelope(
+    issue_text: str = "",
+    ci_log_snippet: str = "",
+    commit_message: str = "",
+    *,
+    max_bytes: int = 65_536,
+) -> ExternalContext:
+    """Build bounded external context with redaction applied to each field."""
+    issue = redact_sensitive_content(issue_text.strip())
+    ci_log = redact_sensitive_content(ci_log_snippet.strip())
+    commit = redact_sensitive_content(commit_message.strip())
+    combined = f"{issue}\n{ci_log}\n{commit}".encode("utf-8")
+    if len(combined) > max_bytes:
+        trimmed = combined[:max_bytes].decode("utf-8", errors="ignore")
+        parts = trimmed.split("\n", 2)
+        issue = parts[0] if len(parts) > 0 else ""
+        ci_log = parts[1] if len(parts) > 1 else ""
+        commit = parts[2] if len(parts) > 2 else ""
+    return ExternalContext(issue_text=issue, ci_log_snippet=ci_log, commit_message=commit)
+
+
+def query_ai_provider(
+    config: AIConfig,
+    prompt: str,
+    *,
+    deadline: Deadline,
+) -> tuple[AIProposal, ...]:
+    """Issue a single bounded HTTPS request with an already-built prompt."""
+    if not config.enabled or not config.endpoint or not prompt.strip():
+        return ()
+    if deadline.is_work_exhausted():
+        return ()
+
+    payload = {
+        "model": config.model,
+        "messages": [
+            {"role": "system", "content": "You are a code review analysis assistant. Output clear markdown."},
+            {"role": "user", "content": prompt[: config.max_context_bytes]},
+        ],
+        "max_tokens": config.max_output_tokens,
+        "temperature": 0.2,
+    }
+
+    req_data = json.dumps(payload).encode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "User-Agent": "PullRaptor-AIAdapter/0.3.0",
+    }
+    if config.api_key:
+        headers["Authorization"] = f"Bearer {config.api_key}"
+
+    req = urllib.request.Request(config.endpoint, data=req_data, headers=headers, method="POST")
+    timeout = min(config.timeout_seconds, config.max_network_seconds, deadline.remaining_work())
+
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            raw_body = resp.read().decode("utf-8")
+            body = json.loads(raw_body)
+            choices = body.get("choices", [])
+            if not choices:
+                return ()
+            content = choices[0].get("message", {}).get("content", "")
+            usage = body.get("usage", {})
+            tokens_used = int(usage.get("total_tokens", 0))
+            return (
+                AIProposal(
+                    kind="explanation",
+                    target_rule=None,
+                    target_span=None,
+                    content=content,
+                    model=config.model,
+                    tokens_used=tokens_used,
+                ),
+            )
+    except Exception as err:
+        return (
+            AIProposal(
+                kind="explanation",
+                target_rule=None,
+                target_span=None,
+                content=f"*AI explanation could not be completed:* `{type(err).__name__}`",
+                model=config.model,
+                tokens_used=0,
+            ),
+        )
+
+
 def request_ai_proposals(
     findings: tuple[Finding, ...],
     context: ExternalContext,
@@ -134,61 +231,8 @@ def request_ai_proposals(
     if deadline.is_work_exhausted():
         return ()
 
+    if config.max_requests < 1:
+        return ()
+
     prompt = build_safe_prompt(findings, context, max_bytes=config.max_context_bytes)
-
-    # Prepare standard JSON payload (OpenAI-compatible chat completion payload)
-    payload = {
-        "model": config.model,
-        "messages": [
-            {"role": "system", "content": "You are a code review analysis assistant. Output clear markdown."},
-            {"role": "user", "content": prompt},
-        ],
-        "max_tokens": config.max_output_tokens,
-        "temperature": 0.2,
-    }
-
-    req_data = json.dumps(payload).encode("utf-8")
-    headers = {
-        "Content-Type": "application/json",
-        "User-Agent": "PullRaptor-AIAdapter/0.3.0",
-    }
-    if config.api_key:
-        headers["Authorization"] = f"Bearer {config.api_key}"
-
-    req = urllib.request.Request(config.endpoint, data=req_data, headers=headers, method="POST")
-    timeout = min(config.timeout_seconds, deadline.remaining_work())
-
-    try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
-            raw_body = resp.read().decode("utf-8")
-            body = json.loads(raw_body)
-            choices = body.get("choices", [])
-            if not choices:
-                return ()
-            first_choice = choices[0]
-            content = first_choice.get("message", {}).get("content", "")
-            usage = body.get("usage", {})
-            tokens_used = usage.get("total_tokens", 0)
-
-            return (
-                AIProposal(
-                    kind="explanation",
-                    target_rule=None,
-                    target_span=None,
-                    content=content,
-                    model=config.model,
-                    tokens_used=tokens_used,
-                ),
-            )
-    except Exception as err:
-        # AI failure is non-fatal: return untrusted proposal noting communication error
-        return (
-            AIProposal(
-                kind="explanation",
-                target_rule=None,
-                target_span=None,
-                content=f"*AI explanation could not be completed:* `{type(err).__name__}`",
-                model=config.model,
-                tokens_used=0,
-            ),
-        )
+    return query_ai_provider(config, prompt, deadline=deadline)

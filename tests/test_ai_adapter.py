@@ -18,10 +18,14 @@ from pullraptor.ai_adapter import (
     request_ai_proposals,
 )
 from pullraptor.models import (
+    CoverageReceipt,
     Deadline,
     Finding,
+    FullReport,
     RecordLimits,
+    ReviewContract,
     Span,
+    canonical_bytes,
 )
 from pullraptor.render import render_markdown
 
@@ -109,6 +113,63 @@ class TestAIAdapter(unittest.TestCase):
         self.assertIn("remove `shell=True`", prop.content)
         self.assertEqual(prop.tokens_used, 42)
         self.assertEqual(prop.model, "test-model")
+
+    def test_render_untrusted_proposals_section(self) -> None:
+        contract = ReviewContract(
+            base_tip="b", comparison_base="b", head="h",
+            policy_digest="p", config_digest="c", tool_digest="t",
+            profile="structural", expected_scope=(), discovery_complete=True,
+        )
+        report = FullReport(
+            schema="1", kind="full", contract=contract, receipts=(),
+            findings=(self.finding,), diagnostics=(),
+            execution={
+                "exit_code": 0,
+                "proposals": [
+                    {
+                        "kind": "explanation",
+                        "model": "test-model",
+                        "content": "Use a list argument instead of shell=True.",
+                    }
+                ],
+            },
+        )
+        md = render_markdown(report, limits=RecordLimits(), deadline=Deadline(time.monotonic(), 30.0))
+        self.assertIn("Untrusted Proposals", md)
+        self.assertIn("test-model", md)
+
+    def test_ai_proposals_do_not_alter_canonical_report(self) -> None:
+        contract = ReviewContract(
+            base_tip="b", comparison_base="b", head="h",
+            policy_digest="p", config_digest="c", tool_digest="t",
+            profile="structural", expected_scope=(), discovery_complete=True,
+        )
+        base_report = FullReport(
+            schema="1", kind="full", contract=contract, receipts=(),
+            findings=(self.finding,), diagnostics=(), execution={"exit_code": 0},
+        )
+        with_proposals = FullReport(
+            schema="1", kind="full", contract=contract, receipts=(),
+            findings=(self.finding,), diagnostics=(),
+            execution={
+                "exit_code": 0,
+                "proposals": [{"kind": "explanation", "model": "m", "content": "hint"}],
+            },
+        )
+        limits = RecordLimits()
+        deadline = Deadline(time.monotonic(), 30.0)
+        self.assertEqual(
+            canonical_bytes(base_report, limits=limits, deadline=deadline),
+            canonical_bytes(with_proposals, limits=limits, deadline=deadline),
+        )
+
+    def test_max_requests_zero_skips_network(self) -> None:
+        cfg = AIConfig(enabled=True, endpoint="https://api.example.com/v1/chat/completions", max_requests=0)
+        deadline = Deadline(started_at=time.monotonic(), duration_seconds=10.0)
+        with patch("urllib.request.urlopen") as mock_urlopen:
+            proposals = request_ai_proposals((self.finding,), ExternalContext(), cfg, deadline)
+        self.assertEqual(proposals, ())
+        mock_urlopen.assert_not_called()
 
     @patch("urllib.request.urlopen")
     def test_request_ai_proposals_handles_network_error_gracefully(self, mock_urlopen: MagicMock) -> None:
