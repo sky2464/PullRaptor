@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 from pathlib import Path
 import sys
 import time
@@ -32,6 +33,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--format", choices=["markdown", "json", "sarif"], default="markdown", help="Output format ('markdown', 'json', 'sarif')")
     parser.add_argument("--no-cache", action="store_true", help="Disable parser caching")
     parser.add_argument("--ci", action="store_true", help="Run in CI mode with strict verification")
+
+    # Optional AI context and explanations
+    parser.add_argument("--ai-endpoint", help="HTTPS endpoint for optional AI explanations")
+    parser.add_argument("--ai-model", default="default", help="Model name for AI explanations")
+    parser.add_argument("--ai-token", help="Bearer token for AI endpoint (or env PULLRAPTOR_AI_TOKEN)")
+    parser.add_argument("--context-issue", help="File containing issue/PR description text for untrusted context")
+    parser.add_argument("--context-ci-log", help="File containing CI failure log snippet for untrusted context")
 
     args = parser.parse_args(argv)
 
@@ -73,6 +81,44 @@ def main(argv: list[str] | None = None) -> int:
     except Exception as err:
         sys.stderr.write(f"PullRaptor: fatal execution error: {err}\n")
         return 3
+
+    # Optional AI Context & Explanations (Untrusted Proposals)
+    if args.ai_endpoint and report.kind == "full" and report.findings:
+        from pullraptor.ai_adapter import (
+            AIConfig,
+            ExternalContext,
+            request_ai_proposals,
+        )
+
+        issue_text = ""
+        if args.context_issue and Path(args.context_issue).exists():
+            issue_text = Path(args.context_issue).read_text(encoding="utf-8", errors="replace")
+
+        ci_log = ""
+        if args.context_ci_log and Path(args.context_ci_log).exists():
+            ci_log = Path(args.context_ci_log).read_text(encoding="utf-8", errors="replace")
+
+        ext_ctx = ExternalContext(issue_text=issue_text, ci_log_snippet=ci_log)
+        ai_cfg = AIConfig(
+            enabled=True,
+            endpoint=args.ai_endpoint,
+            model=args.ai_model,
+            api_key=args.ai_token or os.environ.get("PULLRAPTOR_AI_TOKEN", ""),
+        )
+
+        proposals = request_ai_proposals(report.findings, ext_ctx, ai_cfg, deadline)
+        if proposals:
+            report.execution["proposals"] = [
+                {
+                    "kind": p.kind,
+                    "target_rule": p.target_rule,
+                    "target_span": p.target_span,
+                    "content": p.content,
+                    "model": p.model,
+                    "tokens_used": p.tokens_used,
+                }
+                for p in proposals
+            ]
 
     # Render report to stdout
     if args.format == "json":

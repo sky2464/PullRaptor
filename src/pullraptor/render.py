@@ -81,6 +81,15 @@ def render_markdown(
             lines.append(f"- **Severity:** {f.severity} ({f.policy_class}) | **Delta:** {f.delta}")
             lines.append(f"- **Witness:**\n```\n{_escape_md(f.witness)}\n```\n")
 
+    # AI Untrusted Proposals
+    proposals = report.execution.get("proposals", []) if isinstance(report.execution, dict) else []
+    if proposals:
+        lines.append("## AI Explanations & Suggestions (Untrusted Proposals)\n")
+        lines.append("> [!NOTE]\n> The following explanations are model-generated and untrusted. They do not alter deterministic review findings or grant merge authorization.\n")
+        for p in proposals:
+            lines.append(f"### Model Explanation (`{p.get('model', 'unknown')}`)\n")
+            lines.append(f"{p.get('content', '')}\n")
+
     # Diagnostics
     if report.diagnostics:
         lines.append("## Diagnostics\n")
