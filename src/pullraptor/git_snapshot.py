@@ -31,14 +31,15 @@ def _git_env() -> dict[str, str]:
     }
 
 
-def _safe_git_args() -> list[str]:
+def _safe_git_args(repo: Path) -> list[str]:
     """Base arguments to disable external helpers, replacement objects, and hooks."""
+    trusted_repo = str(repo.resolve())
     return [
         _GIT_BIN,
         "-c", "core.fsmonitor=false",
         "-c", "diff.external=",
         "-c", "diff.textconv=",
-        "-c", "safe.directory=*",
+        "-c", f"safe.directory={trusted_repo}",
         "--no-lazy-fetch",
         "--no-replace-objects",
         "--no-optional-locks",
@@ -65,7 +66,7 @@ def freeze_working_tree(
     )
 
     if staged_only:
-        cmd = tuple(_safe_git_args() + ["write-tree"])
+        cmd = tuple(_safe_git_args(repo) + ["write-tree"])
         res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
         if res.returncode != 0:
             err = res.stderr.decode("utf-8", errors="replace").strip()
@@ -85,14 +86,14 @@ def freeze_working_tree(
         env_work["GIT_INDEX_FILE"] = temp_idx
 
         # Stage all working tree changes into temporary index
-        cmd_add = tuple(_safe_git_args() + ["add", "--all"])
+        cmd_add = tuple(_safe_git_args(repo) + ["add", "--all"])
         res_add = run_bounded(cmd_add, cwd=repo, env=env_work, deadline=deadline, bounds=bounds)
         if res_add.returncode != 0:
             err = res_add.stderr.decode("utf-8", errors="replace").strip()
             raise ValueError(f"Failed to stage working directory into temporary index: {err}")
 
         # Write tree from temporary index
-        cmd_write = tuple(_safe_git_args() + ["write-tree"])
+        cmd_write = tuple(_safe_git_args(repo) + ["write-tree"])
         res_write = run_bounded(cmd_write, cwd=repo, env=env_work, deadline=deadline, bounds=bounds)
         if res_write.returncode != 0:
             err = res_write.stderr.decode("utf-8", errors="replace").strip()
@@ -128,7 +129,7 @@ def resolve_inputs(
     bounds = ProcessBounds(max_stdout_bytes=1024, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
 
     # Resolve base_ref commit OID
-    cmd_base = tuple(_safe_git_args() + ["rev-parse", "--verify", "--end-of-options", f"{base_ref}^{{commit}}"])
+    cmd_base = tuple(_safe_git_args(repo) + ["rev-parse", "--verify", "--end-of-options", f"{base_ref}^{{commit}}"])
     res_base = run_bounded(cmd_base, cwd=repo, env=env, deadline=deadline, bounds=bounds)
     if res_base.returncode != 0:
         raise ValueError(f"Failed to resolve base ref {base_ref!r}: {res_base.stderr.decode('utf-8', errors='replace').strip()}")
@@ -139,7 +140,7 @@ def resolve_inputs(
         return (base_tip, base_tip, head_ref)
 
     # Resolve head_ref commit OID
-    cmd_head = tuple(_safe_git_args() + ["rev-parse", "--verify", "--end-of-options", f"{head_ref}^{{commit}}"])
+    cmd_head = tuple(_safe_git_args(repo) + ["rev-parse", "--verify", "--end-of-options", f"{head_ref}^{{commit}}"])
     res_head = run_bounded(cmd_head, cwd=repo, env=env, deadline=deadline, bounds=bounds)
     if res_head.returncode != 0:
         raise ValueError(f"Failed to resolve head ref {head_ref!r}: {res_head.stderr.decode('utf-8', errors='replace').strip()}")
@@ -149,7 +150,7 @@ def resolve_inputs(
         return (base_tip, base_tip, head_oid)
 
     # Compute merge-base
-    cmd_mb = tuple(_safe_git_args() + ["merge-base", "--all", base_tip, head_oid])
+    cmd_mb = tuple(_safe_git_args(repo) + ["merge-base", "--all", base_tip, head_oid])
     res_mb = run_bounded(cmd_mb, cwd=repo, env=env, deadline=deadline, bounds=bounds)
     if res_mb.returncode != 0:
         raise ValueError(f"Failed to compute merge-base between {base_tip} and {head_oid}")
@@ -173,7 +174,7 @@ def read_snapshot(repo: Path, oid: str, limits: Limits, deadline: Deadline) -> S
         max_stderr_bytes=limits.max_stderr_bytes,
         timeout_seconds=limits.review_timeout_seconds,
     )
-    cmd = tuple(_safe_git_args() + ["ls-tree", "-r", "-z", "-l", "--full-name", oid])
+    cmd = tuple(_safe_git_args(repo) + ["ls-tree", "-r", "-z", "-l", "--full-name", oid])
     res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
     if res.returncode != 0:
         raise ValueError(f"Failed to read snapshot {oid}: {res.stderr.decode('utf-8', errors='replace').strip()}")
@@ -246,7 +247,7 @@ def read_blob(repo: Path, blob_oid: str, limits: Limits, deadline: Deadline) -> 
         max_stderr_bytes=limits.max_stderr_bytes,
         timeout_seconds=limits.parse_timeout_seconds,
     )
-    cmd = tuple(_safe_git_args() + ["cat-file", "-p", blob_oid])
+    cmd = tuple(_safe_git_args(repo) + ["cat-file", "-p", blob_oid])
     res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
 
     if res.stdout_truncated:

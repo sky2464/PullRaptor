@@ -84,7 +84,7 @@ def _compute_blob_diff(
         timeout_seconds=limits.parse_timeout_seconds,
     )
     # Using git diff with raw blob hashes isolates comparison from working tree attributes
-    cmd = tuple(_safe_git_args() + ["diff", "--no-color", "--no-ext-diff", "-U3", oid1, oid2])
+    cmd = tuple(_safe_git_args(repo) + ["diff", "--no-color", "--no-ext-diff", "-U3", oid1, oid2])
     res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
 
     diff_text = res.stdout.decode("utf-8", errors="replace")

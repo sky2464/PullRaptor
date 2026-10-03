@@ -46,7 +46,7 @@
 - Consumes: E01 runtime contract and existing CLI/publisher/MCP entry points.
 - Produces: wheel/source/container manifest declarations and exact supported runtime/profile matrix; no new kernel runtime imports.
 
-- [ ] **Step 1: Write the failing acceptance tests.** Add `test_python_minor_claim_matches_acceptance`, `test_no_runtime_dependencies`, `test_image_cli_default`, `test_no_global_safe_directory_wildcard`, and `test_customer_no_source_clone`. Untested Python minors must not be claimed by unconstrained metadata; released image defaults to CLI help/review, not running the repository test suite.
+- [x] **Step 1: Write the failing acceptance tests.** Add `test_python_minor_claim_matches_acceptance`, `test_no_runtime_dependencies`, `test_image_cli_default`, `test_no_global_safe_directory_wildcard`, and `test_customer_no_source_clone`. Untested Python minors must not be claimed by unconstrained metadata; released image defaults to CLI help/review, not running the repository test suite.
 
 Expected assertions for the stated adverse fixture:
 
@@ -56,10 +56,10 @@ assert kernel_runtime_dependencies == ()
 assert global_safe_directory_wildcard is False
 ```
 
-- [ ] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_distribution_metadata -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
-- [ ] **Step 3: Implement the declared interfaces.** Align metadata/runtime checks to 3.12.x until parser parity is accepted. Separate development tests from runtime image, remove global trust widening, document scoped trusted mounts and executable prerequisites, and provide source-free installation commands for local/offline profiles.
-- [ ] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
-- [ ] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `feat: define honest release installation contracts`. Do not commit to `main`.
+- [x] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_distribution_metadata -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
+- [x] **Step 3: Implement the declared interfaces.** Align metadata/runtime checks to 3.12.x until parser parity is accepted. Separate development tests from runtime image, remove global trust widening, document scoped trusted mounts and executable prerequisites, and provide source-free installation commands for local/offline profiles.
+- [x] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
+- [x] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `feat: define honest release installation contracts`. Do not commit to `main`. Evidence: included in `feat/e01-acceptance-e07-metadata` (2026-10-03); E07-A1 package acceptance record still pending.
 
 ### Task 2: Build pinned artifacts and verifiable release provenance
 
