@@ -84,6 +84,50 @@ class TestProcess(unittest.TestCase):
         )
         self.assertEqual(res.stdout.strip(), b"NONE")
 
+    def test_stdin_input_requires_positive_cap(self) -> None:
+        bounds = ProcessBounds(max_stdout_bytes=1024, max_stderr_bytes=1024, timeout_seconds=2.0)
+        deadline = Deadline(started_at=time.monotonic(), duration_seconds=10.0)
+        res = run_bounded(
+            (sys.executable, "-c", "import sys; print(sys.stdin.read())"),
+            cwd=Path.cwd(),
+            env={"PATH": os.environ.get("PATH", "")},
+            deadline=deadline,
+            bounds=bounds,
+            input_bytes=b"hello",
+            max_input_bytes=0,
+        )
+        self.assertNotEqual(res.returncode, 0)
+        self.assertIn(b"input cap", res.stderr)
+
+    def test_stdin_input_delivered_and_closed(self) -> None:
+        bounds = ProcessBounds(max_stdout_bytes=1024, max_stderr_bytes=1024, timeout_seconds=2.0)
+        deadline = Deadline(started_at=time.monotonic(), duration_seconds=10.0)
+        res = run_bounded(
+            (sys.executable, "-c", "import sys; print(sys.stdin.read())"),
+            cwd=Path.cwd(),
+            env={"PATH": os.environ.get("PATH", "")},
+            deadline=deadline,
+            bounds=bounds,
+            input_bytes=b"payload",
+            max_input_bytes=64,
+        )
+        self.assertEqual(res.returncode, 0)
+        self.assertEqual(res.stdout.strip(), b"payload")
+
+    def test_stdin_over_cap_rejected_before_launch(self) -> None:
+        bounds = ProcessBounds(max_stdout_bytes=1024, max_stderr_bytes=1024, timeout_seconds=2.0)
+        deadline = Deadline(started_at=time.monotonic(), duration_seconds=10.0)
+        res = run_bounded(
+            (sys.executable, "-c", "print('unused')"),
+            cwd=Path.cwd(),
+            env={"PATH": os.environ.get("PATH", "")},
+            deadline=deadline,
+            bounds=bounds,
+            input_bytes=b"x" * 100,
+            max_input_bytes=10,
+        )
+        self.assertIn(b"input exceeds", res.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()

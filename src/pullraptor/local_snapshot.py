@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 from collections import defaultdict
+from contextlib import contextmanager
 from dataclasses import dataclass
 import hashlib
 import os
 from pathlib import Path
+import shutil
 import stat
 import subprocess
 import tempfile
@@ -98,13 +100,50 @@ def _read_bounded_file(path: Path, limits: Limits) -> tuple[bytes | None, Diagno
         os.close(fd)
 
 
+def _git_index_path(repo: Path, deadline: Deadline, limits: Limits) -> Path | None:
+    env = _git_env()
+    bounds = ProcessBounds(max_stdout_bytes=4096, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
+    cmd = tuple(_safe_git_args(repo) + ["rev-parse", "--git-path", "index"])
+    res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
+    if res.returncode != 0:
+        return None
+    raw = res.stdout.decode("utf-8", errors="replace").strip()
+    path = Path(raw)
+    if not path.is_absolute():
+        path = (repo / path).resolve()
+    return path if path.is_file() else None
+
+
+@contextmanager
+def _isolated_index_environment(repo: Path, deadline: Deadline, limits: Limits):
+    """Run Git subprocesses against a copy of the repository index so reads cannot mutate it."""
+    base = _git_env()
+    index_path = _git_index_path(repo, deadline, limits)
+    if index_path is None:
+        yield base
+        return
+    with tempfile.NamedTemporaryFile(prefix="pullraptor_idx_ro_", delete=False) as tf:
+        temp_idx = tf.name
+    try:
+        shutil.copy2(index_path, temp_idx)
+        isolated = dict(base)
+        isolated["GIT_INDEX_FILE"] = temp_idx
+        yield isolated
+    finally:
+        try:
+            os.unlink(temp_idx)
+        except OSError:
+            pass
+
+
 def _git_ls_files_index(
     repo: Path,
     limits: Limits,
     deadline: Deadline,
+    *,
+    env: dict[str, str],
 ) -> tuple[list[tuple[str, str, str]], list[Diagnostic]]:
     """Return list of (path, mode, blob_oid) from the index."""
-    env = _git_env()
     bounds = ProcessBounds(max_stdout_bytes=limits.max_total_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
     args = tuple(_safe_git_args(repo) + ["ls-files", "-s", "-z"])
     res = run_bounded(args, cwd=repo, env=env, deadline=deadline, bounds=bounds)
@@ -141,8 +180,8 @@ def _git_tracked_paths(
     deadline: Deadline,
     *,
     include_untracked: bool,
+    env: dict[str, str],
 ) -> tuple[list[str], list[Diagnostic]]:
-    env = _git_env()
     bounds = ProcessBounds(max_stdout_bytes=limits.max_total_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
     args = list(_safe_git_args(repo))
     if include_untracked:
@@ -167,8 +206,14 @@ def _git_tracked_paths(
     return paths, diagnostics
 
 
-def _git_hash_object_w(repo: Path, content: bytes, deadline: Deadline, limits: Limits) -> str | None:
-    env = _git_env()
+def _git_hash_object_w(
+    repo: Path,
+    content: bytes,
+    deadline: Deadline,
+    limits: Limits,
+    *,
+    env: dict[str, str],
+) -> str | None:
     bounds = ProcessBounds(max_stdout_bytes=128, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
     with tempfile.NamedTemporaryFile(prefix="pullraptor_blob_", delete=False) as tf:
         tf.write(content)
@@ -186,8 +231,14 @@ def _git_hash_object_w(repo: Path, content: bytes, deadline: Deadline, limits: L
             pass
 
 
-def _git_mktree(repo: Path, lines: bytes, deadline: Deadline, limits: Limits) -> str | None:
-    env = _git_env()
+def _git_mktree(
+    repo: Path,
+    lines: bytes,
+    deadline: Deadline,
+    limits: Limits,
+    *,
+    env: dict[str, str],
+) -> str | None:
     argv = list(_safe_git_args(repo)) + ["mktree", "-z"]
     remaining = deadline.remaining_work()
     if remaining <= 0:
@@ -214,6 +265,8 @@ def _build_tree_oid(
     entries: dict[str, tuple[str, str]],
     deadline: Deadline,
     limits: Limits,
+    *,
+    env: dict[str, str],
 ) -> str | None:
     """Build a Git tree OID from a flat map of relative path -> (mode, blob_oid)."""
 
@@ -243,7 +296,7 @@ def _build_tree_oid(
             return _EMPTY_TREE_OID
 
         payload = b"".join(lines)
-        return _git_mktree(repo, payload, deadline, limits)
+        return _git_mktree(repo, payload, deadline, limits, env=env)
 
     return build_level(entries)
 
@@ -269,81 +322,83 @@ def capture_local(
     race = False
     tree_entries: dict[str, tuple[str, str]] = {}
 
-    if staged_only:
-        index_entries, list_diags = _git_ls_files_index(repo, limits, deadline)
-        diagnostics.extend(list_diags)
-        for rel, mode, blob_oid in index_entries:
-            tree_entries[rel] = (mode, blob_oid)
-    else:
-        paths, list_diags = _git_tracked_paths(
-            repo,
-            limits,
-            deadline,
-            include_untracked=include_untracked,
-        )
-        diagnostics.extend(list_diags)
-        if len(paths) > limits.max_tracked_entries:
-            diagnostics.append(
-                Diagnostic(
-                    code="LIMIT_EXCEEDED",
-                    message="Tracked paths exceed max_tracked_entries",
-                    cause="max_tracked_entries_exceeded",
-                )
+    with _isolated_index_environment(repo, deadline, limits) as git_env:
+        if staged_only:
+            index_entries, list_diags = _git_ls_files_index(repo, limits, deadline, env=git_env)
+            diagnostics.extend(list_diags)
+            for rel, mode, blob_oid in index_entries:
+                tree_entries[rel] = (mode, blob_oid)
+        else:
+            paths, list_diags = _git_tracked_paths(
+                repo,
+                limits,
+                deadline,
+                include_untracked=include_untracked,
+                env=git_env,
             )
-
-        for rel in sorted(set(paths)):
-            if deadline.is_work_exhausted():
-                diagnostics.append(
-                    Diagnostic(code="DEADLINE", message="Capture deadline exhausted", cause="deadline_exceeded")
-                )
-                break
-
-            full_path = repo / rel
-            if not full_path.exists():
-                continue
-
-            content, diag, saw_race = _read_bounded_file(full_path, limits)
-            if saw_race:
-                race = True
-            if diag is not None:
-                diagnostics.append(diag)
-                if diag.cause == "capture_race":
-                    race = True
-                continue
-            if content is None:
-                continue
-
-            blob_oid = _git_hash_object_w(repo, content, deadline, limits)
-            if blob_oid is None:
+            diagnostics.extend(list_diags)
+            if len(paths) > limits.max_tracked_entries:
                 diagnostics.append(
                     Diagnostic(
-                        code="BLOB_WRITE",
-                        message=f"Failed to write blob for {rel}",
-                        path=rel,
-                        cause="git_hash_object",
+                        code="LIMIT_EXCEEDED",
+                        message="Tracked paths exceed max_tracked_entries",
+                        cause="max_tracked_entries_exceeded",
                     )
                 )
-                continue
-            tree_entries[rel] = ("100644", blob_oid)
 
-    discovery_complete = not race and not any(
-        d.cause in ("capture_race", "git_error", "deadline_exceeded", "max_tracked_entries_exceeded")
-        for d in diagnostics
-    )
+            for rel in sorted(set(paths)):
+                if deadline.is_work_exhausted():
+                    diagnostics.append(
+                        Diagnostic(code="DEADLINE", message="Capture deadline exhausted", cause="deadline_exceeded")
+                    )
+                    break
 
-    tree_oid = _EMPTY_TREE_OID
-    if tree_entries:
-        if discovery_complete:
-            built = _build_tree_oid(repo, tree_entries, deadline, limits)
-            if built is None:
-                diagnostics.append(
-                    Diagnostic(code="TREE_BUILD", message="Failed to build snapshot tree", cause="mktree_failed")
-                )
-                discovery_complete = False
+                full_path = repo / rel
+                if not full_path.exists():
+                    continue
+
+                content, diag, saw_race = _read_bounded_file(full_path, limits)
+                if saw_race:
+                    race = True
+                if diag is not None:
+                    diagnostics.append(diag)
+                    if diag.cause == "capture_race":
+                        race = True
+                    continue
+                if content is None:
+                    continue
+
+                blob_oid = _git_hash_object_w(repo, content, deadline, limits, env=git_env)
+                if blob_oid is None:
+                    diagnostics.append(
+                        Diagnostic(
+                            code="BLOB_WRITE",
+                            message=f"Failed to write blob for {rel}",
+                            path=rel,
+                            cause="git_hash_object",
+                        )
+                    )
+                    continue
+                tree_entries[rel] = ("100644", blob_oid)
+
+        discovery_complete = not race and not any(
+            d.cause in ("capture_race", "git_error", "deadline_exceeded", "max_tracked_entries_exceeded")
+            for d in diagnostics
+        )
+
+        tree_oid = _EMPTY_TREE_OID
+        if tree_entries:
+            if discovery_complete:
+                built = _build_tree_oid(repo, tree_entries, deadline, limits, env=git_env)
+                if built is None:
+                    diagnostics.append(
+                        Diagnostic(code="TREE_BUILD", message="Failed to build snapshot tree", cause="mktree_failed")
+                    )
+                    discovery_complete = False
+                else:
+                    tree_oid = built
             else:
-                tree_oid = built
-        else:
-            tree_oid = ""
+                tree_oid = ""
 
     manifest = _manifest_digest(tree_entries) if tree_entries else hashlib.sha256(b"").hexdigest()
 

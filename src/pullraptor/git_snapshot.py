@@ -20,6 +20,25 @@ from pullraptor.process import run_bounded
 _GIT_BIN = shutil.which("git") or "/usr/bin/git"
 
 
+def _git_supports_global_option(option: str) -> bool:
+    """Return True when the installed Git accepts ``option`` before subcommands."""
+    import subprocess
+
+    try:
+        proc = subprocess.run(
+            [_GIT_BIN, option, "--version"],
+            capture_output=True,
+            timeout=5.0,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return proc.returncode == 0
+
+
+_GIT_NO_LAZY_FETCH = _git_supports_global_option("--no-lazy-fetch")
+
+
 def _git_env() -> dict[str, str]:
     """Produce a sanitized minimal environment for Git subprocesses."""
     return {
@@ -40,7 +59,7 @@ def _safe_git_args(repo: Path) -> list[str]:
         "-c", "diff.external=",
         "-c", "diff.textconv=",
         "-c", f"safe.directory={trusted_repo}",
-        "--no-lazy-fetch",
+        *([] if not _GIT_NO_LAZY_FETCH else ["--no-lazy-fetch"]),
         "--no-replace-objects",
         "--no-optional-locks",
     ]

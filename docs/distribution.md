@@ -17,7 +17,8 @@ Customers may install from a published wheel or sdist artifact:
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install pullraptor==<pinned-version>
-pullraptor review --help
+pullraptor --help
+pullraptor --workdir --base HEAD --repo /path/to/customer/repo
 ```
 
 Offline installation uses a downloaded wheel file:
@@ -33,7 +34,7 @@ The pinned `python:3.12-slim` image copies only the `src/` tree and defaults to 
 ```bash
 docker build -t pullraptor:local .
 docker run --rm -v /path/to/customer/repo:/work -w /work pullraptor:local \
-  pullraptor review --base main --head HEAD
+  pullraptor --workdir --base HEAD --repo /work
 ```
 
 Development and acceptance test suites are not the default container command.

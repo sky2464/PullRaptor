@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import argparse
+import json
 import tomllib
 import unittest
 from pathlib import Path
@@ -28,6 +30,40 @@ class TestDistributionMetadata(unittest.TestCase):
         pyproject = tomllib.loads(_read_text(REPO_ROOT / "pyproject.toml"))
         deps = pyproject["project"].get("dependencies", [])
         self.assertEqual(deps, [])
+
+    def test_distribution_zero_runtime_dependencies(self) -> None:
+        self.test_no_runtime_dependencies()
+
+    def test_declared_cli_examples_match_parser(self) -> None:
+        parser = argparse.ArgumentParser(prog="pullraptor")
+        parser.add_argument("--repo")
+        parser.add_argument("--base")
+        head_group = parser.add_mutually_exclusive_group()
+        head_group.add_argument("--head")
+        head_group.add_argument("--staged", action="store_true")
+        head_group.add_argument("--workdir", action="store_true")
+        dist = _read_text(REPO_ROOT / "docs" / "distribution.md")
+        self.assertIn("pullraptor --workdir", dist)
+        self.assertNotIn("pullraptor review", dist)
+        args = parser.parse_args(["--workdir", "--base", "HEAD"])
+        self.assertTrue(args.workdir)
+
+    def test_dependency_inventory_exact_versions_digests_licenses(self) -> None:
+        inv_path = REPO_ROOT / "docs" / "dependencies" / "E07.json"
+        self.assertTrue(inv_path.is_file())
+        inv = json.loads(_read_text(inv_path))
+        self.assertEqual(inv["schema"], "pullraptor-dependency-inventory/1")
+        self.assertEqual(inv["kernel_runtime"]["python_packages"], [])
+        for host in inv["host_prerequisites"]:
+            self.assertIn("license", host)
+            self.assertIn("version", host)
+
+    def test_container_base_and_build_tools_pinned(self) -> None:
+        inv = json.loads(_read_text(REPO_ROOT / "docs" / "dependencies" / "E07.json"))
+        self.assertEqual(inv["container_image"]["reference"], "docker.io/library/python:3.12-slim")
+        self.assertIn("setuptools", inv["build_tools"][0]["name"])
+        dockerfile = _read_text(REPO_ROOT / "Dockerfile")
+        self.assertIn("python:3.12-slim", dockerfile)
 
     def test_image_cli_default(self) -> None:
         dockerfile = _read_text(REPO_ROOT / "Dockerfile")

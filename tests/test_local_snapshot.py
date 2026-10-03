@@ -135,7 +135,6 @@ class TestLocalSnapshot(unittest.TestCase):
         app = repo.root / "app.py"
         app.write_text("def f():\n    return 1\n", encoding="utf-8")
 
-        index_before = (repo.root / ".git" / "index").read_bytes()
         head_before = subprocess.run(
             ["git", "rev-parse", "HEAD"],
             cwd=repo.root,
@@ -150,6 +149,7 @@ class TestLocalSnapshot(unittest.TestCase):
             text=True,
             check=True,
         ).stdout
+        index_before = (repo.root / ".git" / "index").read_bytes()
 
         capture_local(
             repo.root,
