@@ -266,11 +266,17 @@ def review(
                 mod = imp.get("module") or imp.get("name") or ""
                 candidate_path = f"{mod.replace('.', '/')}.py"
                 candidate_init = f"{mod.replace('.', '/')}/__init__.py"
+                candidate_src_path = f"src/{candidate_path}"
+                candidate_src_init = f"src/{candidate_init}"
 
                 if candidate_path in head_blobs_by_path:
                     head_queue.append(candidate_path)
                 elif candidate_init in head_blobs_by_path:
                     head_queue.append(candidate_init)
+                elif candidate_src_path in head_blobs_by_path:
+                    head_queue.append(candidate_src_path)
+                elif candidate_src_init in head_blobs_by_path:
+                    head_queue.append(candidate_src_init)
         else:
             receipts_list.append(
                 CoverageReceipt(
@@ -299,6 +305,7 @@ def review(
     all_diagnostics.extend(base_res_diags)
 
     # Unresolved imports produce distinct scope entries and incomplete receipts
+    seen_imp_keys: set[str] = set()
     for d in head_res_diags:
         if d.code == "IMPORT_UNRESOLVED" and d.path:
             imp_key = import_scope_key(
@@ -309,6 +316,9 @@ def review(
                 relative_level=0,
                 capability="python_structure",
             )
+            if imp_key in seen_imp_keys:
+                continue
+            seen_imp_keys.add(imp_key)
             expected_scope_list.append(
                 ScopeEntry(
                     key=imp_key,

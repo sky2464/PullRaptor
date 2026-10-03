@@ -53,15 +53,17 @@ Every row is proposed. “Included” means a 1.0 target with the stated boundar
 | F25 | Revision-bound receipts | E01 | Exact input manifests and independently checkable locations; hashes do not establish truth |
 | F26 | Reviewer routing and PR queue | Deferred | Requires organizational history/dashboard; ownership hints alone do not deliver the full capability |
 | F27 | Post-merge and release automation | Deferred | Separate permissions and workflow scope |
-| F28 | Agent/editor access | E06 | CLI JSON/NDJSON contract first; small editor/MCP adapters only after protocol review |
+| F28 | Agent/editor access | E06/E08 | Shared review contract; E08 owns VS Code and neutral editor/assistant plugins, MCP and skills after per-client protocol review |
 | F29 | Production telemetry correlation | Deferred | Requires a runtime ingestion/retention system |
-| F30 | Cloud posture and enterprise control plane | Deferred | Requires infrastructure integrations and organizational governance |
+| F30 | Cloud posture and enterprise control plane | Split: E10/E11 enterprise delivery; posture deferred | Hosted/private service and enterprise governance now requested; cloud infrastructure posture analysis remains deferred |
+| F31 | Independently verified review scope | E01/E02 | Coordinator-owned pinned request; missing/foreign/duplicate receipts cannot establish completeness or publication eligibility |
+| F32 | Actionable incomplete-review guidance | E01–E06 | Stable cause, affected capability and trusted next action; narrowing scope remains explicit and never fabricates a clean result |
 
-The 26 included targets count workflow capabilities, not equal detection strength. Deep security, enterprise management, and comprehensive language semantics cannot be squeezed into a zero-dependency first release. Feature claims must include scope and be checked against [evaluation requirements](../evaluation.md).
+The original study defined F01–F30. F31–F32 were added by the [independent security/architecture review](../reviews/2026-10-03-security-architecture.md); they are product requirements, not newly advertised market capabilities. The original 28 included targets count workflow capabilities, not equal detection strength. The user-requested E07–E11 delivery expansion is recorded in the [master plan](../../Master-Plan.md); the partial promotion of F30 does not claim its full cloud-posture capability or alter the historical 1.0 count. Deep security, enterprise management, and comprehensive language semantics cannot be squeezed into a zero-dependency first release. Feature claims must include scope and be checked against [evaluation requirements](../evaluation.md).
 
 | Intended delivery class | Capability IDs | Required interpretation |
 |---|---|---|
-| End-to-end workflow | F01–F05, F09–F12, F22–F25, F28 | Complete the named user flow with its stated scope |
+| End-to-end workflow | F01–F05, F09–F12, F22–F25, F28, F31–F32 | Complete the named user flow with its stated scope |
 | Advisory draft | F06, F13, F14, F18 | Useful proposal or obligation question; not a verified correctness claim |
 | Language/model conditional | F07, F08, F15–F17, F19 | Supported inputs only; limitations and missing evidence visible |
 | Import-based | F20, F21 | External data with provenance; imported accuracy is not native validation |

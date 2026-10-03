@@ -134,6 +134,14 @@ def resolve_context(
                 mod_name = ".".join(parts)
             repo_modules[mod_name] = blob.path
 
+            if parts[0] == "src" and len(parts) > 1:
+                src_parts = parts[1:]
+                if src_parts[-1] == "__init__":
+                    src_mod_name = ".".join(src_parts[:-1]) if len(src_parts) > 1 else src_parts[0]
+                else:
+                    src_mod_name = ".".join(src_parts)
+                repo_modules[src_mod_name] = blob.path
+
     stdlib_modules = getattr(sys, "stdlib_module_names", set())
 
     resolved_list: list[ResolvedFacts] = []
@@ -148,12 +156,27 @@ def resolve_context(
             canonical = mod.split(".")[0] if mod else ""
 
             # 1. Repository candidate takes priority (shadows stdlib/external)
-            if canonical in repo_modules:
+            if mod in repo_modules:
+                resolved_imports.append({
+                    "raw": mod,
+                    "canonical": canonical,
+                    "kind": "repo",
+                    "target_path": repo_modules[mod],
+                })
+            elif canonical in repo_modules:
                 resolved_imports.append({
                     "raw": mod,
                     "canonical": canonical,
                     "kind": "repo",
                     "target_path": repo_modules[canonical],
+                })
+            elif any(k == canonical or k.startswith(canonical + ".") for k in repo_modules):
+                matching_path = next(v for k, v in repo_modules.items() if k == canonical or k.startswith(canonical + "."))
+                resolved_imports.append({
+                    "raw": mod,
+                    "canonical": canonical,
+                    "kind": "repo",
+                    "target_path": matching_path,
                 })
             # 2. Pinned standard library
             elif canonical in stdlib_modules:

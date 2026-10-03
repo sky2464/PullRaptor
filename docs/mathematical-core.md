@@ -47,14 +47,16 @@ Only a sound over-approximation for an explicitly bounded model can justify excl
 
 ## 3. Finite dataflow, later than E01
 
-For taint hazards T, use the finite lattice P(T), subset order, union join, and monotone transfer functions:
+Let T be a finite hazard set and Loc a finite set of modeled variable/heap locations or value definitions. Use environments in `Env = Loc -> P(T)`, pointwise subset order, pointwise union join, and monotone transfer functions:
 
 ```text
-in(n)  = union(out(p) for p in predecessors(n))
+in(n)  = pointwise_union(out(p) for p in predecessors(n))
 out(n) = transfer_n(in(n))
 ```
 
-Worklist iteration reaches a finite fixed point. Transfer summaries must state their input/output correspondence, alias handling and unsupported behavior. Unknown calls conservatively propagate relevant hazards and attach an unknown-boundary record. Sanitizers remove only a modeled hazard in its valid context; escaping SQL cannot discharge shell or filesystem hazards.
+Seed explicit sources and the entry environment; iterate from the least environment on reachable modeled nodes. Worklist iteration reaches a finite fixed point within the pinned finite domain. Transfers specify input/output correspondence: assignment propagates the right-hand value; a sanitizer changes its returned value only. Strong updates require one proven target; ambiguous aliases need weak updates or unknown-boundary diagnostics. Unknown calls propagate relevant argument/heap hazards and attach a boundary record; absent library summaries cannot prove a value safe. Sanitizers remove only a modeled hazard in its valid context; escaping SQL cannot discharge shell or filesystem hazards.
+
+Counterexample: `a = source(); b = sql_escape(a); execute_sql(a)` retains SQL hazard on `a` even if `b` is discharged under the sanitizer contract. One hazard set per CFG node without value correspondence would incorrectly clean both. Declared source seeds, alias model, loop behavior and finite location bounds must be tested; truncation is partial, not a least fixed point for the omitted program.
 
 Store predecessor witnesses during propagation. A shortest model path is an understandable explanation, not an executable exploit. Path feasibility, deployment exposure and exploitability are separate evidence dimensions. Reproducing a failing input strengthens the claim but requires the isolated runner.
 
@@ -66,7 +68,7 @@ A_out(n) = (A_in(n) \ Kill(n)) union Gen(n)
 required(n) subset_of A_in(n)
 ```
 
-Initialize entry with explicitly declared preconditions; initialize non-entry nodes to the finite fact universe and iterate downward appropriately. Include all predecessors in the over-approximate CFG unless infeasibility is established within the bounded model; unknown feasibility remains included. Generate a fact only on a successful authorization-check branch. Kill it after subject/resource reassignment, state invalidation, or an unsupported operation that may change the obligation. An unknown branch cannot add a must fact. Disconnected nodes are not evidence that runtime entry is impossible when the entry model is incomplete.
+Initialize entry with explicitly declared preconditions; initialize non-entry nodes to the finite fact universe and iterate downward appropriately. Include all predecessors in the over-approximate CFG unless infeasibility is established within the bounded model; unknown feasibility remains included. Generate a fact only on a successful authorization-check branch. Kill it after subject/resource reassignment, state invalidation, or an unsupported operation that may change the obligation. An unknown branch cannot add a must fact. Evaluate assertions only on nodes whose entry/reachability and predecessor model are complete. A disconnected node's top initialization is not proof of authorization, and an incomplete entry model cannot prove it unreachable.
 
 Dominance is necessary in some models but insufficient: checking the wrong resource, failing open, or using a stale permission after mutation/concurrency breaks the inference. “Authorization not established by this model” is initially advisory; it is not “request is definitely unauthorized.” These obligations require a real CFG/dataflow adapter and framework models, not token matches.
 
@@ -88,6 +90,16 @@ e(c) = (s, r), where s and r are each 0 or 1
 Accumulate using componentwise OR. Do not erase counterevidence because a later model repeats the allegation. Different revisions are different claim contexts; evidence from H1 does not automatically support H2. Deduplicate correlated copies and preserve provenance. Support for “uses a shell” does not become support for “has command injection.”
 
 A reportable asserted claim needs fresh revision binding, valid source location, sufficient witness for that claim type, and completed required analysis. A blocker additionally needs a trusted policy mapping and no unresolved conflict. Unknown results can be reported as questions or diagnostics with their uncertainty label. Hashes ensure content identity, not truth, authorship, authorization, or test adequacy.
+
+Let Q be the coordinator-owned expected scope and receipts R_q carry keys, pinned input identities and completion states. Completeness requires a bijection between Q and valid receipt keys, then completion of every required entry:
+
+```text
+valid_scope = keys(R_q) == Q and no_duplicate_keys(R_q)
+complete = discovery_complete and valid_scope and all(receipt(q).complete for q in Q)
+supported(c) requires complete(prerequisites(c)) and validated_witness(c)
+```
+
+Q starts from both immutable manifests and trusted classification and expands append-only through supported imports; it is sealed before evaluation. Scope completeness also requires coordinator discovery completion, not only completion of known entries. File and import-lookup keys have separate identities; multiple missing modules from one file cannot collapse into one receipt. Modeled external classification does not create behavioral facts beyond its pinned symbol model. Worker-selected scope is never Q's authority. Receipt validation also checks revision/capability/contract identities. Claim-local prerequisite completion can preserve a head observation during an unrelated partial review, but does not establish whole-scope absence or change exit 2. Unknown baseline evidence keeps causal delta unknown.
 
 Use severity, delta class, evidence class and coverage as separate fields. Before calibration, sort with an explicit deterministic tuple; do not multiply invented probabilities to produce a numeric risk score. Blast-radius counts are modeled graph counts, not likelihood or business loss.
 
@@ -130,9 +142,9 @@ Use exact serialized byte costs for the byte budget. Without a provider tokenize
 
 ## 7. Cache and receipt algebra
 
-An immutable snapshot manifest includes sorted path/mode/blob entries. Reuse keys include a content digest, exact parser/runtime version, fact schema, rule/model version when relevant, trusted configuration and actual read-set dependencies. JSON encoding is canonical: stable keys and lists, UTF-8, no nonfinite numbers. Git object IDs may be SHA-1 or SHA-256 and are not hardcoded to one length.
+An immutable snapshot manifest includes sorted path/mode/blob entries. Reuse keys include a content digest, exact parser/runtime version, fact schema, all fact-producing component digests, rule/model version when relevant, semantic configuration and actual read-set dependencies. Cache controls are operational inputs, outside that semantic digest. JSON encoding is canonical: stable keys and lists, UTF-8, no nonfinite numbers. External decoding additionally rejects duplicates and enforces byte/depth/item/string/type limits. Git object IDs may be SHA-1 or SHA-256 and are not hardcoded to one length.
 
-E01 caches per-blob parser facts only. Resolution, coverage and rule evaluation are rebuilt each run. Later semantic caches must additionally include successes, lookup misses, module search domains and pinned external advisory/context inputs. An unknown dependency invalidates reuse.
+E01 caches occurrence-free `ContentFacts` only, then creates `BoundFacts` from current manifest path/side/snapshot and recomputes run-local resolution, coverage and rules. A type requiring a path cannot also be the reusable per-blob cache payload. Only private operator-owned cache admission permits reuse; foreign/shared/self-hashed entries are misses. Checking emitted facts cannot detect facts omitted by a forged cache. Later semantic caches must additionally include successes, lookup misses, module search domains and pinned external advisory/context inputs. An unknown dependency invalidates reuse.
 
 For completed logical analyses with the same requested scope and pinned inputs, the required invariant is:
 
@@ -141,7 +153,9 @@ canonical(Review_incremental(B, H, R, C, V))
 == canonical(Review_clean(B, H, R, C, V))
 ```
 
-Compare findings, locations, witnesses, delta states, coverage and diagnostics; counts alone are inadequate. Cache hit/timing data lives outside canonical output. Corrupt/missing cache is a miss and produces the same semantic result when analysis completes. Wall-time limits can make clean and warm runs complete different amounts of work. Such runs remain explicitly partial and cannot satisfy this invariant until a full clean replay completes. Write an atomic temp file and replace; cap cache size and do not trust executable cache content.
+Compare findings, locations, witnesses, delta states, coverage and diagnostics; counts alone are inadequate. Cache admission/miss/hit/timing data lives outside canonical output. Corrupt/missing/untrusted cache is a miss and produces the same semantic result when analysis completes. Wall-time limits can make clean and warm runs complete different amounts of work. Such runs remain explicitly partial and cannot satisfy this invariant until a full clean replay completes. A schema-valid limit-failure envelope marks omitted domains and cannot assert a full result or satisfy equivalence; output has a fixed reserve inside the invocation budget. Atomic bounded writes prevent torn entries, not malicious writers; storage trust is a separate premise.
+
+Publication identity is also separate from this algebra. A stable repository/PR/rule/obligation key survives repeated branch comparisons, while observations pin individual revisions and witnesses. Dismissal is a workflow fact, not refutation. Publication requires fresh platform association plus head/base/policy/scope binding; identical head OIDs alone do not authorize replay or stale-policy publication.
 
 ## 8. Patch evidence and monotonic status
 
