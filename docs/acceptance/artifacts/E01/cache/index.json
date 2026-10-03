@@ -1,0 +1,7 @@
+{
+  "card_id": "E01-T9-CACHE",
+  "artifact_directory": "cache",
+  "scheduled_rows": 28,
+  "evidence_status": "not_run",
+  "claim_limit": "Placeholder until the assigned card saves fixtures and raw outputs."
+}

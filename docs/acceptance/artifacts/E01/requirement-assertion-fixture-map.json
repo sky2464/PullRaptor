@@ -2,7 +2,7 @@
   "kind": "requirement_assertion_fixture_map",
   "date": "2026-10-03",
   "producer_card": "E01-T9-MAP",
-  "document_revision": "82f7377c3317c413876326b3e6570ae64581720b",
+  "document_revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
   "mapping_source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
   "trusted_base_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
   "method": "Merge static declaration inventory, cache/output assertion map overlay, and evaluation invariants; no imports or suite execution.",
@@ -2761,5 +2761,17 @@
     "E01-T9-CORPUS",
     "E01-T9-BENCH"
   ],
-  "claim_limit": "Rows locate declarations and static gaps only. They do not pass criteria or authorize merge."
+  "claim_limit": "Rows locate declarations and static gaps only. They do not pass criteria or authorize merge.",
+  "runtime_subset": {
+    "candidate_revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
+    "collected_at": "2026-10-03T22:11:20.654936+00:00",
+    "discovered_test_methods": 232,
+    "production_module_count": 27,
+    "production_line_count": 7408,
+    "unittest_exit_code": 0,
+    "unittest_log": "unittest_discover_verbose.log",
+    "micro_benchmark": "micro_benchmark.json",
+    "claim_limit": "Full-suite pass is subset evidence only; requirement rows remain not_run."
+  },
+  "downstream_schedule_artifact": "docs/acceptance/artifacts/E01/downstream-fixture-schedule.json"
 }

@@ -1,0 +1,19 @@
+{
+  "kind": "cache_output_assertion_map_runtime_xref",
+  "date": "2026-10-03",
+  "static_map": "2026-10-03-cache-output-assertion-map.md",
+  "static_map_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "runtime_subset": {
+    "candidate_revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
+    "collected_at": "2026-10-03T22:11:20.654936+00:00",
+    "discovered_test_methods": 232,
+    "production_module_count": 27,
+    "production_line_count": 7408,
+    "unittest_exit_code": 0,
+    "unittest_log": "unittest_discover_verbose.log",
+    "micro_benchmark": "micro_benchmark.json",
+    "claim_limit": "Full-suite pass is subset evidence only; requirement rows remain not_run."
+  },
+  "downstream_schedule": "downstream-fixture-schedule.json",
+  "claim_limit": "Static Task 7\u20138 body review remains bound to mapping_source_revision; this file links separately collected runtime subset evidence only."
+}

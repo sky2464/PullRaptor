@@ -1,0 +1,7 @@
+{
+  "card_id": "E01-T9-BENCH",
+  "artifact_directory": "benchmark",
+  "scheduled_rows": 2,
+  "evidence_status": "not_run",
+  "claim_limit": "Placeholder until the assigned card saves fixtures and raw outputs."
+}
