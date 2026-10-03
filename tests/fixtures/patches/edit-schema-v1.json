@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pullraptor://e06-path-edit/1",
+  "title": "PathEdit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["path", "old_blob", "old_mode", "new_bytes"],
+  "properties": {
+    "path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\.\\./)(?!.*\\\\)(?!.*%2f)[^\\0]+$"
+    },
+    "old_blob": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{40}|0000000000000000000000000000000000000000)$"
+    },
+    "old_mode": {
+      "type": "string",
+      "pattern": "^100644$"
+    },
+    "new_bytes": {
+      "type": "string",
+      "maxLength": 2097152
+    }
+  }
+}
