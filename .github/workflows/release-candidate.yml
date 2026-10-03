@@ -14,8 +14,10 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
         with:
           persist-credentials: false
-      - name: Record revision
-        run: git rev-parse HEAD > release-source-revision.txt
-      - name: Build manifest placeholder
+      - name: Build release candidate (not product acceptance)
+        env:
+          PULLRAPTOR_WORKFLOW_DIGEST: ${{ hashFiles('.github/workflows/release-candidate.yml') }}
+          PULLRAPTOR_RUN_ID: ${{ github.run_id }}
+          PULLRAPTOR_REPOSITORY_ID: ${{ github.repository }}
         run: |
-          python3.12 release/build.py 2>/dev/null || echo "manifest generation requires coordinator release assignment"
+          PYTHONPATH=src python3.12 release/build.py --output-dir build/release-candidate
