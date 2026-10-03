@@ -1,0 +1,908 @@
+{
+  "kind": "downstream_fixture_schedule",
+  "date": "2026-10-03",
+  "source_artifacts": [
+    "docs/acceptance/artifacts/E01/requirement-assertion-fixture-map.json",
+    "docs/acceptance/artifacts/E01/2026-10-03-cache-output-assertion-map.md"
+  ],
+  "mapping_source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "document_revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
+  "acceptance_criteria": {
+    "E01-A1": "not_run",
+    "E01-A2": "not_run",
+    "E01-A3": "not_run",
+    "independent_decision": "pending"
+  },
+  "cards": {
+    "E01-T9-CACHE": [
+      {
+        "requirement_id": "U7-01",
+        "proposed_fixture": "E01-CACHE-EQUALITY",
+        "acceptance_ids": [
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-02",
+        "proposed_fixture": "E01-CACHE-MUTATIONS",
+        "acceptance_ids": [
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-03",
+        "proposed_fixture": "E01-CACHE-REPLAY",
+        "acceptance_ids": [
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-04",
+        "proposed_fixture": "E01-BOOTSTRAP-DEADLINE",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-05",
+        "proposed_fixture": "E01-CACHE-CONTENT-BOUNDARY",
+        "acceptance_ids": [
+          "E01-A1",
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-06",
+        "proposed_fixture": "E01-CACHE-OPERATIONAL",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-07",
+        "proposed_fixture": "E01-CACHE-ADMISSION",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-08",
+        "proposed_fixture": "E01-CACHE-IDENTITIES",
+        "acceptance_ids": [
+          "E01-A1",
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-09",
+        "proposed_fixture": "E01-COORDINATOR-INPUTS",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-10",
+        "proposed_fixture": "E01-SCOPE-CLOSURE",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-11",
+        "proposed_fixture": "E01-AGGREGATE-BUDGETS",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U7-12",
+        "proposed_fixture": "E01-REVISION-REBUILD",
+        "acceptance_ids": [
+          "E01-A2"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_all_extractor_components_invalidate",
+        "planned_test": "test_all_extractor_components_invalidate",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_atomic_interrupted_write_miss",
+        "planned_test": "test_atomic_interrupted_write_miss",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_cache_symlink_or_reparse_refused",
+        "planned_test": "test_cache_symlink_or_reparse_refused",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_ci_cache_off",
+        "planned_test": "test_ci_cache_off",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_clean_warm_corrupt_cache_identical",
+        "planned_test": "test_clean_warm_corrupt_cache_identical",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_full_manifest_resolution_recomputed",
+        "planned_test": "test_full_manifest_resolution_recomputed",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_incomplete_discovery_cannot_seal_complete_scope",
+        "planned_test": "test_incomplete_discovery_cannot_seal_complete_scope",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_runtime_schema_change_miss",
+        "planned_test": "test_runtime_schema_change_miss",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_same_blob_different_paths_rebound",
+        "planned_test": "test_same_blob_different_paths_rebound",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_schema_valid_foreign_cache_ignored",
+        "planned_test": "test_schema_valid_foreign_cache_ignored",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_scope_import_closure_fixed_point",
+        "planned_test": "test_scope_import_closure_fixed_point",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_shared_permissions_cache_disabled",
+        "planned_test": "test_shared_permissions_cache_disabled",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_size_cap",
+        "planned_test": "test_size_cap",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_slow_preparation_short_policy_still_bounded",
+        "planned_test": "test_slow_preparation_short_policy_still_bounded",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_unrelated_malformed_file_not_required",
+        "planned_test": "test_unrelated_malformed_file_not_required",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T7.test_unresolved_context_required",
+        "planned_test": "test_unresolved_context_required",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      }
+    ],
+    "E01-T9-OUTPUT": [
+      {
+        "requirement_id": "U8-01",
+        "proposed_fixture": "E01-FORMAT-SCOPE",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-02",
+        "proposed_fixture": "E01-OUTPUT-EXHAUSTION",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-03",
+        "proposed_fixture": "E01-RENDER-DEADLINE",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-04",
+        "proposed_fixture": "E01-MINIMUM-OUTPUT-CAPACITY",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-05",
+        "proposed_fixture": "E01-CLI-OUTPUT-CHANNEL",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-06",
+        "proposed_fixture": "E01-CLI-OFFLINE-BOUNDARY",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-07",
+        "proposed_fixture": "E01-PRESENTATION-BOUNDARY",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-08",
+        "proposed_fixture": "E01-SARIF-SIDES",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-09",
+        "proposed_fixture": "E01-LOCATION-TO-OUTPUT",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-10",
+        "proposed_fixture": "E01-RECOVERY-FLOW",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-11",
+        "proposed_fixture": "E01-RUNTIME-CONTRACT",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_config_error_exit3",
+        "planned_test": "test_config_error_exit3",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_core_network_disabled",
+        "planned_test": "test_core_network_disabled",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_deleted_line_sarif_side",
+        "planned_test": "test_deleted_line_sarif_side",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_empty_findings_not_safety_claim",
+        "planned_test": "test_empty_findings_not_safety_claim",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_explicit_diff_profile_scope_statement",
+        "planned_test": "test_explicit_diff_profile_scope_statement",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_links_only_from_trusted_identity",
+        "planned_test": "test_links_only_from_trusted_identity",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_markdown_fence_html_link_breakout",
+        "planned_test": "test_markdown_fence_html_link_breakout",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_recovery_guidance_not_attacker_commands",
+        "planned_test": "test_recovery_guidance_not_attacker_commands",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_report_byte_limit_never_complete",
+        "planned_test": "test_report_byte_limit_never_complete",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_requested_and_examined_scope_visible",
+        "planned_test": "test_requested_and_examined_scope_visible",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_stdout_machine_format_stderr_diagnostics",
+        "planned_test": "test_stdout_machine_format_stderr_diagnostics",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_structural_other_language_partial_exit2",
+        "planned_test": "test_structural_other_language_partial_exit2",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_structural_python_complete",
+        "planned_test": "test_structural_python_complete",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_terminal_escape_controls_and_bidi",
+        "planned_test": "test_terminal_escape_controls_and_bidi",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_unicode_sarif_character_columns",
+        "planned_test": "test_unicode_sarif_character_columns",
+        "assertion_coverage": "partial",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T8.test_uri_reserved_segments_roundtrip",
+        "planned_test": "test_uri_reserved_segments_roundtrip",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      }
+    ],
+    "E01-T9-RECORDS": [
+      {
+        "requirement_id": "T1.test_bool_not_integer",
+        "planned_test": "test_bool_not_integer",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_canonical_excludes_execution_metadata",
+        "planned_test": "test_canonical_excludes_execution_metadata",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_content_facts_cannot_carry_occurrence",
+        "planned_test": "test_content_facts_cannot_carry_occurrence",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_duplicate_keys_rejected",
+        "planned_test": "test_duplicate_keys_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_invalid_span_rejected",
+        "planned_test": "test_invalid_span_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_item_accounting_recursive",
+        "planned_test": "test_item_accounting_recursive",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_limit_failure_cannot_claim_support_or_complete",
+        "planned_test": "test_limit_failure_cannot_claim_support_or_complete",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_nonfinite_json_rejected",
+        "planned_test": "test_nonfinite_json_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_report_union_strict_tags",
+        "planned_test": "test_report_union_strict_tags",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T1.test_two_missing_imports_have_distinct_keys",
+        "planned_test": "test_two_missing_imports_have_distinct_keys",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T2.test_ci_override_cannot_weaken_required_scope",
+        "planned_test": "test_ci_override_cannot_weaken_required_scope",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T2.test_defaults_exact",
+        "planned_test": "test_defaults_exact",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T2.test_glob_semantics",
+        "planned_test": "test_glob_semantics",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T2.test_minimum_finalization_capacity",
+        "planned_test": "test_minimum_finalization_capacity",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T2.test_unknown_key_error",
+        "planned_test": "test_unknown_key_error",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_ambient_git_config_ignored",
+        "planned_test": "test_ambient_git_config_ignored",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_attributes_cannot_hide_source",
+        "planned_test": "test_attributes_cannot_hide_source",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_binary_and_deleted_file_preserved",
+        "planned_test": "test_binary_and_deleted_file_preserved",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_dirty_tree_ignored",
+        "planned_test": "test_dirty_tree_ignored",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_hostile_external_diff_textconv_fsmonitor_not_executed",
+        "planned_test": "test_hostile_external_diff_textconv_fsmonitor_not_executed",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_inherited_handles_closed",
+        "planned_test": "test_inherited_handles_closed",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_large_text_diff_bounded",
+        "planned_test": "test_large_text_diff_bounded",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_merge_base_not_base_tip",
+        "planned_test": "test_merge_base_not_base_tip",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_multiple_merge_bases_rejected",
+        "planned_test": "test_multiple_merge_bases_rejected",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_non_utf8_path_reported",
+        "planned_test": "test_non_utf8_path_reported",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_nul_metadata_paths",
+        "planned_test": "test_nul_metadata_paths",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_option_like_ref_rejected",
+        "planned_test": "test_option_like_ref_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_output_flood_stopped",
+        "planned_test": "test_output_flood_stopped",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_promisor_object_never_lazy_fetches",
+        "planned_test": "test_promisor_object_never_lazy_fetches",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_refs_pinned_before_read",
+        "planned_test": "test_refs_pinned_before_read",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_replace_objects_ignored",
+        "planned_test": "test_replace_objects_ignored",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_shallow_missing_object_incomplete",
+        "planned_test": "test_shallow_missing_object_incomplete",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_shared_deadline_not_reset",
+        "planned_test": "test_shared_deadline_not_reset",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_symlink_and_submodule_not_followed",
+        "planned_test": "test_symlink_and_submodule_not_followed",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T3.test_worker_environment_has_no_credentials",
+        "planned_test": "test_worker_environment_has_no_credentials",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_ambiguous_module_no_external_fallback",
+        "planned_test": "test_ambiguous_module_no_external_fallback",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_import_side_effect_not_executed",
+        "planned_test": "test_import_side_effect_not_executed",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_isolated_startup_ignores_site_and_paths",
+        "planned_test": "test_isolated_startup_ignores_site_and_paths",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_local_subprocess_shadows_external_model",
+        "planned_test": "test_local_subprocess_shadows_external_model",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_maximum_source_base64_fits_protocol",
+        "planned_test": "test_maximum_source_base64_fits_protocol",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_missing_external_module_partial",
+        "planned_test": "test_missing_external_module_partial",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_missing_import_diagnostic",
+        "planned_test": "test_missing_import_diagnostic",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_nested_functions_not_outer_mutation",
+        "planned_test": "test_nested_functions_not_outer_mutation",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_neutral_worker_cwd",
+        "planned_test": "test_neutral_worker_cwd",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_new_module_resolves_previous_miss",
+        "planned_test": "test_new_module_resolves_previous_miss",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_oversized_source_not_sent_to_worker",
+        "planned_test": "test_oversized_source_not_sent_to_worker",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_parameter_reassignment",
+        "planned_test": "test_parameter_reassignment",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_parse_failure_preserves_diff_coverage",
+        "planned_test": "test_parse_failure_preserves_diff_coverage",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_resolving_x_leaves_y_missing",
+        "planned_test": "test_resolving_x_leaves_y_missing",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_scope_shadowing_and_aliases",
+        "planned_test": "test_scope_shadowing_and_aliases",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_stdlib_identity_not_missing_context",
+        "planned_test": "test_stdlib_identity_not_missing_context",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_subprocess_alias_modeled",
+        "planned_test": "test_subprocess_alias_modeled",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_timeout_or_worker_crash_partial",
+        "planned_test": "test_timeout_or_worker_crash_partial",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_unicode_columns_crlf_exact",
+        "planned_test": "test_unicode_columns_crlf_exact",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_worker_duplicate_fields_partial",
+        "planned_test": "test_worker_duplicate_fields_partial",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T4.test_wrong_blob_or_span_rejected",
+        "planned_test": "test_wrong_blob_or_span_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T5.test_conditional_reraise_not_classified_as_swallowed",
+        "planned_test": "test_conditional_reraise_not_classified_as_swallowed",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T5.test_intentional_patterns_never_defect_claim",
+        "planned_test": "test_intentional_patterns_never_defect_claim",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T5.test_shadowed_subprocess_no_shell_claim",
+        "planned_test": "test_shadowed_subprocess_no_shell_claim",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T5.test_untrusted_command_not_inferred_from_shell_true",
+        "planned_test": "test_untrusted_command_not_inferred_from_shell_true",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_all_evidence_accumulations",
+        "planned_test": "test_all_evidence_accumulations",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_ambiguous_rename_unknown",
+        "planned_test": "test_ambiguous_rename_unknown",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_base_parse_failure_delta_unknown",
+        "planned_test": "test_base_parse_failure_delta_unknown",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_conflict_not_blocker",
+        "planned_test": "test_conflict_not_blocker",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_different_claim_or_revision_cannot_accumulate",
+        "planned_test": "test_different_claim_or_revision_cannot_accumulate",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_duplicate_or_foreign_receipt_rejected",
+        "planned_test": "test_duplicate_or_foreign_receipt_rejected",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_fatal_diagnostic_exit3",
+        "planned_test": "test_fatal_diagnostic_exit3",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_incomplete_precedes_finding_exit",
+        "planned_test": "test_incomplete_precedes_finding_exit",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_missing_receipt_cannot_complete",
+        "planned_test": "test_missing_receipt_cannot_complete",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_old_sink_new_witness_retained",
+        "planned_test": "test_old_sink_new_witness_retained",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_shifted_line_same_obligation",
+        "planned_test": "test_shifted_line_same_obligation",
+        "assertion_coverage": "declaration_only",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_valid_head_claim_survives_unrelated_partial",
+        "planned_test": "test_valid_head_claim_survives_unrelated_partial",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_worker_cannot_shrink_scope",
+        "planned_test": "test_worker_cannot_shrink_scope",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "T6.test_wrong_revision_or_capability_rejected",
+        "planned_test": "test_wrong_revision_or_capability_rejected",
+        "assertion_coverage": "unmapped",
+        "runtime_result": "not_run"
+      }
+    ],
+    "E01-T9-CORPUS": [
+      {
+        "requirement_id": "U8-14",
+        "proposed_fixture": "E01-ADVISORY-OUTPUT",
+        "acceptance_ids": [
+          "E01-A1"
+        ],
+        "static_coverage": "partial",
+        "runtime_result": "not_run"
+      }
+    ],
+    "E01-T9-BENCH": [
+      {
+        "requirement_id": "U8-12",
+        "proposed_fixture": "E01-LOCAL-FLOW-INVENTORY",
+        "acceptance_ids": [
+          "E01-A3"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      },
+      {
+        "requirement_id": "U8-13",
+        "proposed_fixture": "E01-BENCHMARK-INVENTORY",
+        "acceptance_ids": [
+          "E01-A3"
+        ],
+        "static_coverage": "unmapped",
+        "runtime_result": "not_run"
+      }
+    ]
+  },
+  "output_directories": {
+    "E01-T9-CACHE": "cache",
+    "E01-T9-OUTPUT": "output",
+    "E01-T9-RECORDS": "boundaries",
+    "E01-T9-CORPUS": "corpus",
+    "E01-T9-BENCH": "benchmark"
+  },
+  "claim_limit": "Schedules proposed fixtures and gaps; does not pass criteria or create fixtures."
+}
