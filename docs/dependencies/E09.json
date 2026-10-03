@@ -1,0 +1,27 @@
+{
+  "schema": "pullraptor-dependency-inventory/1",
+  "date": "2026-10-03",
+  "package": "E09",
+  "code_revision": "28b623a",
+  "kernel_runtime": {
+    "python_packages": [],
+    "role": "Deterministic connector records and fake transport (stdlib only)"
+  },
+  "platform_api": {
+    "name": "azure_devops_services_rest",
+    "version": "7.1",
+    "role": "Acquisition and publication outside kernel",
+    "license": "Microsoft API terms (operator acceptance required)",
+    "admission": "not_run"
+  },
+  "host_prerequisites": [
+    {
+      "name": "python",
+      "version": "3.12.x",
+      "role": "Connector unit tests",
+      "license": "PSF-2.0",
+      "required": true
+    }
+  ],
+  "notes": "No ambient PAT in analysis workers; live calls require operator-scoped grants and E09-D1 contract review."
+}
