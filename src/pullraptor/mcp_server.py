@@ -17,19 +17,23 @@ from pullraptor.git_snapshot import resolve_inputs
 from pullraptor.local_snapshot import capture_local
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, FullReport, Limits, RecordLimits, Report
+from pullraptor.mcp_sessions import (
+    MAX_RESPONSE_BYTES,
+    MCPSession,
+    PROTOCOL_VERSION,
+    default_deadline,
+    get_session_report,
+    negotiate_protocol_version,
+    register_session_report,
+    reject_unknown_fields,
+    validate_request_bytes,
+)
 from pullraptor.render import render_json, render_markdown
 
-PROTOCOL_VERSION = "2024-11-05"
 SERVER_NAME = "pullraptor-mcp"
 SERVER_VERSION = "0.3.0"
 
-# In-memory store for latest review state
-_STATE: dict[str, Any] = {
-    "report": None,
-    "deadline": None,
-    "limits": None,
-    "repo_path": None,
-}
+_DEFAULT_SESSION = MCPSession(id="default", workspace_grants=frozenset({"*"}))
 
 RULE_EXPLANATIONS: dict[str, dict[str, str]] = {
     "PY001": {
@@ -141,6 +145,11 @@ def _tool_definitions() -> list[dict[str, Any]]:
                 "type": "object",
                 "properties": {
                     "repo_path": {"type": "string", "description": "Path to Git repository root"},
+                    "report_digest": {"type": "string", "description": "Pinned report digest from pullraptor_review"},
+                    "repository_id": {
+                        "type": "string",
+                        "description": "Authorized repository identity for the pinned report",
+                    },
                     "min_severity": {
                         "type": "string",
                         "enum": ["advisory", "warning", "error"],
@@ -160,6 +169,11 @@ def _tool_definitions() -> list[dict[str, Any]]:
                 "type": "object",
                 "properties": {
                     "repo_path": {"type": "string", "description": "Path to Git repository root"},
+                    "report_digest": {"type": "string", "description": "Pinned report digest from pullraptor_review"},
+                    "repository_id": {
+                        "type": "string",
+                        "description": "Authorized repository identity for the pinned report",
+                    },
                 },
             },
         },
@@ -171,6 +185,11 @@ def _tool_definitions() -> list[dict[str, Any]]:
                 "properties": {
                     "rule_id": {"type": "string", "description": "Rule identifier (e.g., PY001, PY002, PY003)"},
                     "finding_id": {"type": "string", "description": "Finding identifier from review results"},
+                    "report_digest": {"type": "string", "description": "Pinned report digest from pullraptor_review"},
+                    "repository_id": {
+                        "type": "string",
+                        "description": "Authorized repository identity for the pinned report",
+                    },
                     "use_ai": {
                         "type": "boolean",
                         "description": "Request optional advisory model explanation when AI endpoint is configured",
@@ -182,7 +201,22 @@ def _tool_definitions() -> list[dict[str, Any]]:
     ]
 
 
-def handle_review(args: dict[str, Any]) -> str:
+def _authorized_repository_id(repo_path: Path) -> str:
+    explicit = os.environ.get("PULLRAPTOR_MCP_REPOSITORY_ID", "").strip()
+    if explicit:
+        return explicit
+    return str(repo_path.resolve())
+
+
+def _active_session(session: MCPSession | None = None) -> MCPSession:
+    return session or _DEFAULT_SESSION
+
+
+def handle_review(args: dict[str, Any], *, session: MCPSession | None = None) -> str:
+    mcp_session = _active_session(session)
+    if mcp_session.active_reviews >= 2:
+        return json.dumps({"status": "review_cap_exceeded", "message": "At most 2 active reviews per session"})
+    mcp_session.active_reviews += 1
     repo_path = _validate_repo_path(args.get("repo_path"))
     start_monotonic = time.monotonic()
     staged = bool(args.get("staged"))
@@ -243,20 +277,45 @@ def handle_review(args: dict[str, Any]) -> str:
         is_head_tree=is_head_tree,
     )
 
-    _STATE["report"] = rep
-    _STATE["deadline"] = deadline
-    _STATE["limits"] = rec_limits
-    _STATE["repo_path"] = str(repo_path)
+    repository_id = _authorized_repository_id(repo_path)
+    head_or_snapshot = head_ref if isinstance(head_ref, str) else str(head_ref)
+    pinned = register_session_report(
+        mcp_session,
+        authorized_repository_id=repository_id,
+        report=rep,
+        head_or_snapshot=head_or_snapshot,
+        limits=rec_limits,
+        deadline=deadline,
+    )
+    mcp_session.active_reviews = max(0, mcp_session.active_reviews - 1)
 
-    return render_markdown(rep, limits=rec_limits, deadline=deadline)
+    markdown = render_markdown(rep, limits=rec_limits, deadline=deadline)
+    return (
+        markdown
+        + f"\n\n<!-- pullraptor:report_digest={pinned.report_digest} repository_id={repository_id} -->\n"
+    )
 
 
-def handle_get_findings(args: dict[str, Any]) -> str:
-    rep: Report | None = _STATE.get("report")
+def _resolve_report_from_args(
+    args: dict[str, Any],
+    *,
+    session: MCPSession,
+) -> tuple[Report | None, str]:
+    digest = str(args.get("report_digest", "")).strip()
+    repository_id = str(args.get("repository_id", "")).strip()
+    if not digest or not repository_id:
+        return None, "report_not_found"
+    pinned = get_session_report(session.id, digest, repository_id, session=session)
+    if pinned is None:
+        return None, "report_not_found"
+    return pinned.report, "ok"
+
+
+def handle_get_findings(args: dict[str, Any], *, session: MCPSession | None = None) -> str:
+    mcp_session = _active_session(session)
+    rep, state = _resolve_report_from_args(args, session=mcp_session)
     if rep is None:
-        # Run review automatically
-        handle_review(args)
-        rep = _STATE.get("report")
+        return json.dumps({"status": state, "findings": [], "implicit_review_count": 0})
 
     if not isinstance(rep, FullReport):
         return json.dumps({"status": "no_full_report", "findings": []})
@@ -285,11 +344,11 @@ def handle_get_findings(args: dict[str, Any]) -> str:
     return json.dumps({"count": len(findings_out), "findings": findings_out}, indent=2)
 
 
-def handle_get_coverage(args: dict[str, Any]) -> str:
-    rep: Report | None = _STATE.get("report")
+def handle_get_coverage(args: dict[str, Any], *, session: MCPSession | None = None) -> str:
+    mcp_session = _active_session(session)
+    rep, state = _resolve_report_from_args(args, session=mcp_session)
     if rep is None:
-        handle_review(args)
-        rep = _STATE.get("report")
+        return json.dumps({"status": state, "receipts": []})
 
     if not isinstance(rep, FullReport):
         return json.dumps({"status": "no_full_report", "receipts": []})
@@ -317,7 +376,7 @@ def handle_get_coverage(args: dict[str, Any]) -> str:
     )
 
 
-def handle_explain(args: dict[str, Any]) -> str:
+def handle_explain(args: dict[str, Any], *, session: MCPSession | None = None) -> str:
     rule_id = str(args.get("rule_id", "")).strip().upper()
     info = RULE_EXPLANATIONS.get(rule_id)
     if not info:
@@ -340,7 +399,8 @@ def handle_explain(args: dict[str, Any]) -> str:
     from pullraptor.ai_adapter import ExternalContext, build_explanation_prompt, query_ai_provider
     from pullraptor.models import Deadline
 
-    rep: Report | None = _STATE.get("report")
+    mcp_session = _active_session(session)
+    rep, _state = _resolve_report_from_args(args, session=mcp_session)
     related: tuple[Any, ...] = ()
     if isinstance(rep, FullReport):
         related = tuple(f for f in rep.findings if f.rule == rule_id)
@@ -350,7 +410,7 @@ def handle_explain(args: dict[str, Any]) -> str:
         ExternalContext(issue_text=f"Explain rule {rule_id} for developers."),
         max_bytes=ai_cfg.max_context_bytes,
     )
-    deadline = _STATE.get("deadline") or Deadline(time.monotonic(), 60.0)
+    deadline = default_deadline()
     proposals = query_ai_provider(ai_cfg, prompt, deadline=deadline)
     if not proposals:
         return base_text
@@ -363,16 +423,21 @@ def handle_explain(args: dict[str, Any]) -> str:
     )
 
 
-def dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
+def dispatch_tool(
+    name: str,
+    arguments: dict[str, Any],
+    *,
+    session: MCPSession | None = None,
+) -> dict[str, Any]:
     try:
         if name == "pullraptor_review":
-            text = handle_review(arguments)
+            text = handle_review(arguments, session=session)
         elif name == "pullraptor_get_findings":
-            text = handle_get_findings(arguments)
+            text = handle_get_findings(arguments, session=session)
         elif name == "pullraptor_get_coverage":
-            text = handle_get_coverage(arguments)
+            text = handle_get_coverage(arguments, session=session)
         elif name == "pullraptor_explain_finding":
-            text = handle_explain(arguments)
+            text = handle_explain(arguments, session=session)
         else:
             return {"content": [{"type": "text", "text": f"Unknown tool: {name}"}], "isError": True}
 
@@ -381,21 +446,38 @@ def dispatch_tool(name: str, arguments: dict[str, Any]) -> dict[str, Any]:
         return {"content": [{"type": "text", "text": f"Error: {exc}"}], "isError": True}
 
 
-def process_request(req: dict[str, Any]) -> dict[str, Any] | None:
+def process_request(req: dict[str, Any], *, session: MCPSession | None = None) -> dict[str, Any] | None:
+    mcp_session = _active_session(session)
     msg_id = req.get("id")
     method = req.get("method")
     params = req.get("params") or {}
 
     # Notification handling (no response)
     if method == "notifications/initialized":
+        mcp_session.initialized = True
         return None
 
     if method == "initialize":
+        init_params = params if isinstance(params, dict) else {}
+        if reject_unknown_fields(init_params, frozenset({"protocolVersion", "capabilities", "clientInfo"})):
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32602, "message": "unknown_fields"},
+            }
+        negotiated, err = negotiate_protocol_version(init_params.get("protocolVersion"))
+        if err:
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32602, "message": err},
+            }
+        mcp_session.negotiated_version = negotiated
         return {
             "jsonrpc": "2.0",
             "id": msg_id,
             "result": {
-                "protocolVersion": PROTOCOL_VERSION,
+                "protocolVersion": negotiated,
                 "capabilities": {
                     "tools": {},
                     "resources": {},
@@ -414,10 +496,23 @@ def process_request(req: dict[str, Any]) -> dict[str, Any] | None:
         return {"jsonrpc": "2.0", "id": msg_id, "result": {"tools": _tool_definitions()}}
 
     if method == "tools/call":
+        if mcp_session.negotiated_version is None:
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32002, "message": "session_not_initialized"},
+            }
         name = params.get("name", "")
         args = params.get("arguments") or {}
-        result = dispatch_tool(name, args)
-        return {"jsonrpc": "2.0", "id": msg_id, "result": result}
+        result = dispatch_tool(name, args, session=mcp_session)
+        encoded = json.dumps({"jsonrpc": "2.0", "id": msg_id, "result": result})
+        if len(encoded.encode("utf-8")) > MAX_RESPONSE_BYTES:
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32603, "message": "response_too_large"},
+            }
+        return json.loads(encoded)
 
     if method == "resources/list":
         return {
@@ -441,11 +536,21 @@ def process_request(req: dict[str, Any]) -> dict[str, Any] | None:
 
     if method == "resources/read":
         uri = params.get("uri", "")
-        rep: Report | None = _STATE.get("report")
+        digest = str(params.get("report_digest", "")).strip()
+        repository_id = str(params.get("repository_id", "")).strip()
+        rep: Report | None = None
+        if digest and repository_id:
+            pinned = get_session_report(mcp_session.id, digest, repository_id, session=mcp_session)
+            if pinned is not None:
+                rep = pinned.report
         if uri == "pullraptor://report/latest" and rep is not None:
-            content = render_json(rep, limits=_STATE.get("limits") or RecordLimits(), deadline=_STATE.get("deadline") or Deadline(time.monotonic(), 60.0))
+            limits = RecordLimits()
+            content = render_json(rep, limits=limits, deadline=default_deadline())
         elif uri == "pullraptor://coverage/summary" and isinstance(rep, FullReport):
-            content = handle_get_coverage({})
+            content = handle_get_coverage(
+                {"report_digest": digest, "repository_id": repository_id},
+                session=mcp_session,
+            )
         else:
             content = json.dumps({"error": f"Resource not found or no active report: {uri}"})
 
@@ -467,10 +572,39 @@ def process_request(req: dict[str, Any]) -> dict[str, Any] | None:
     return None
 
 
-def run_mcp_server(input_stream=None, output_stream=None) -> int:
+def handle_message(payload: bytes, session: MCPSession | None = None) -> bytes | None:
+    """Parse one bounded MCP request and return encoded JSON-RPC response bytes."""
+    mcp_session = _active_session(session)
+    err = validate_request_bytes(payload)
+    if err:
+        return json.dumps(
+            {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": err}}
+        ).encode("utf-8")
+    req = json.loads(payload.decode("utf-8"))
+    if not isinstance(req, dict):
+        return json.dumps(
+            {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "invalid_request"}}
+        ).encode("utf-8")
+    resp = process_request(req, session=mcp_session)
+    if resp is None:
+        return None
+    encoded = json.dumps(resp).encode("utf-8")
+    if len(encoded) > MAX_RESPONSE_BYTES:
+        return json.dumps(
+            {
+                "jsonrpc": "2.0",
+                "id": req.get("id"),
+                "error": {"code": -32603, "message": "response_too_large"},
+            }
+        ).encode("utf-8")
+    return encoded
+
+
+def run_mcp_server(input_stream=None, output_stream=None, *, session: MCPSession | None = None) -> int:
     """Run the MCP server event loop over standard IO streams."""
     instream = input_stream or sys.stdin
     outstream = output_stream or sys.stdout
+    mcp_session = _active_session(session)
 
     while True:
         line = instream.readline()
@@ -496,9 +630,10 @@ def run_mcp_server(input_stream=None, output_stream=None) -> int:
             except Exception:
                 continue
 
-        resp = process_request(req)
-        if resp is not None:
-            outstream.write(json.dumps(resp) + "\n")
+        raw = json.dumps(req).encode("utf-8")
+        resp_bytes = handle_message(raw, session=mcp_session)
+        if resp_bytes is not None:
+            outstream.write(resp_bytes.decode("utf-8") + "\n")
             outstream.flush()
 
     return 0

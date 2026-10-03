@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "E08 MCP session wire contract (construction)",
+  "type": "object",
+  "properties": {
+    "protocolVersion": {
+      "type": "string",
+      "enum": ["2024-11-05"]
+    },
+    "session_id": { "type": "string" },
+    "report_digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "authorized_repository_id": { "type": "string", "minLength": 1 },
+    "workspace_grants": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}
