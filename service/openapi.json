@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "PullRaptor Review Service",
+    "version": "v1"
+  },
+  "paths": {
+    "/v1/jobs": {
+      "post": {
+        "summary": "Submit a bounded review request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubmitEnvelope"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Job accepted",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization denied before source or report access"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{job_id}": {
+      "get": {
+        "summary": "Get job state",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Authorized job state",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Authorization denied"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{job_id}/report": {
+      "get": {
+        "summary": "Fetch stored report for a completed job",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report JSON (schema 1 full or limit_failure)"
+          },
+          "403": {
+            "description": "Authorization denied before report bytes are read"
+          }
+        }
+      }
+    },
+    "/v1/jobs/{job_id}/cancel": {
+      "post": {
+        "summary": "Cancel a queued or running job",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated job state"
+          },
+          "403": {
+            "description": "Authorization denied"
+          }
+        }
+      }
+    },
+    "/v1/capabilities": {
+      "get": {
+        "summary": "List admitted capability rows for the authorized principal",
+        "responses": {
+          "200": {
+            "description": "Capability document"
+          },
+          "403": {
+            "description": "Authorization denied"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "SubmitEnvelope": {
+        "type": "object",
+        "required": ["api_version", "request"],
+        "properties": {
+          "api_version": {
+            "type": "integer",
+            "enum": [1]
+          },
+          "request": {
+            "$ref": "#/components/schemas/ServiceRequest"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ServiceRequest": {
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "repository_id",
+          "base_tip",
+          "comparison_base",
+          "head_or_snapshot",
+          "policy_origin",
+          "scope_digest",
+          "profile",
+          "reviewer_digest"
+        ],
+        "properties": {
+          "tenant_id": { "type": "string" },
+          "repository_id": { "type": "string" },
+          "base_tip": { "type": "string" },
+          "comparison_base": { "type": "string" },
+          "head_or_snapshot": { "type": "string" },
+          "policy_origin": { "type": "string" },
+          "scope_digest": { "type": "string" },
+          "profile": { "type": "string" },
+          "reviewer_digest": { "type": "string" },
+          "request_kind": {
+            "type": "string",
+            "enum": ["full", "patch_only"]
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobResponse": {
+        "type": "object",
+        "required": ["api_version", "job"],
+        "properties": {
+          "api_version": { "type": "string" },
+          "job": { "type": "object" }
+        }
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@ RUN apt-get update && \
 # Configure environment: standard unbuffered output and deterministic pathing
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONPATH=/app/src
+    PYTHONPATH=/app/src:/app
 
 WORKDIR /app
 
@@ -18,6 +18,8 @@ RUN useradd -m -u 1000 -s /bin/bash pullraptor
 
 COPY pyproject.toml README.md /app/
 COPY src/ /app/src/
+COPY service/ /app/service/
+COPY sdk/ /app/sdk/
 RUN pip install --no-cache-dir /app
 
 RUN chown -R pullraptor:pullraptor /app
