@@ -1,6 +1,6 @@
 # PullRaptor Master Plan
 
-Date: 2026-10-03. Status: proposed design and implementation plan. External distribution and enterprise integration scope is recorded in the roadmap; detailed child designs and implementation remain subject to review. These planning amendments do not establish a working reviewer or accepted release.
+Date: 2026-10-03. Status: roadmap planning coverage complete; child designs are proposed for review; implementation and release acceptance remain incomplete. Every E01–E11 package has a scoped specification/plan and acceptance criteria. Planning completion does not establish an accepted feature or authorize production implementation.
 
 ## Intended outcome
 
@@ -32,18 +32,18 @@ The initial recommendation was local CLI plus GitHub CI, optional AI, and develo
 
 ## Releases and independent work packages
 
-Each package needs its own child specification, implementation plan and acceptance review. Only E01 currently has a detailed execution plan. E07–E11 expand the requested roadmap beyond the original kernel-focused 1.0 scope; they are decomposed delivery tracks, not promised dates or a claim that the original budgets cover a hosted platform.
+Each package has a linked scoped specification and implementation plan in the planning index below and requires its own independent acceptance record. E07–E11 expand the requested roadmap beyond the original kernel-focused 1.0 scope; they are decomposed delivery tracks, not promised dates or a claim that the original budgets cover a hosted platform. E01–E03/E07–E08 contain implementation artifacts, but full acceptance is not established by their earlier Complete labels.
 
 | Package | Target | Deliverable | Exit gate | Status |
 |---|---|---|---|---|
-| E01 | 0.1 | Offline kernel, Python patterns, diff summaries, request/scope receipts, actionable coverage diagnostics, bounded JSON/Markdown/SARIF, private cache | Determinism, clean/incremental equivalence, trusted cache admission, bounded ingestion, independent scope validation | Complete |
-| E02 | 0.2 | Two child packages: immutable staged/unstaged snapshots; hardened GitHub CI/publication, stable lifecycle, draft/path controls | Snapshot races; disposable fork isolation, current head/base/policy/scope binding, retry reconciliation, publish preview | Complete |
-| E03 | 0.3 | Optional AI review/chat, pinned issue and CI-failure context, explanations, test/doc suggestions | Typed untrusted proposals, approved transport, prompt-injection cases, bounded cost, no AI-only blockers | Complete |
+| E01 | 0.1 | Offline kernel, Python patterns, diff summaries, request/scope receipts, actionable coverage diagnostics, bounded JSON/Markdown/SARIF, private cache | Determinism, clean/incremental equivalence, trusted cache admission, bounded ingestion, independent scope validation | Implemented; acceptance pending |
+| E02 | 0.2 | Two child packages: immutable staged/unstaged snapshots; hardened GitHub CI/publication, stable lifecycle, draft/path controls | Snapshot races; disposable fork isolation, current head/base/policy/scope binding, retry reconciliation, publish preview | Partial implementation; acceptance pending |
+| E03 | 0.3 | Optional AI review/chat, pinned issue and CI-failure context, explanations, test/doc suggestions | Typed untrusted proposals, approved transport, prompt-injection cases, bounded cost, no AI-only blockers | Partial implementation; acceptance pending |
 | E04 | 0.4 | Optional language workers; start JS/TS and Go, then Java/C#, then Rust/PHP/Ruby/C/C++ | Per-language capability matrix and held-out quality gate; syntax support is not dataflow support | Proposed |
 | E05 | 0.5 | Bounded source-to-sink analysis, authorization obligations, local secret patterns, lockfile advisories, scanner import | Explicit assumptions, taint and sanitizer negatives, redaction, no unsound unreachable suppression | Proposed |
 | E06 | 1.0 | Patch validation, isolated regression runner, reviewed preferences; shared contracts for editor/agent consumers | Patch preconditions, actual execution receipts, clean re-analysis, feature acceptance audit; install/editor deliverables owned by E07/E08 | Proposed |
-| E07 | Distribution track | Packaged CLI (`pyproject.toml`), pinned Docker container (`python:3.12-slim`), release provenance, update/rollback and offline installation | Clean-machine install without manual source clone; runtime/license inventory, provenance verification, uninstall/rollback, artifact review equivalence | Complete |
-| E08 | Editor/agent track | VS Code extension; AI-editor and terminal-assistant plugin packages; standalone skills and local/remote MCP adapter | Per-client/version/session matrix, credential isolation, bounded protocol, stale snapshot handling, safe rendering and no unauthorized writes | Complete |
+| E07 | Distribution track | Packaged CLI (`pyproject.toml`), pinned Docker container (`python:3.12-slim`), release provenance, update/rollback and offline installation | Clean-machine install without manual source clone; runtime/license inventory, provenance verification, uninstall/rollback, artifact review equivalence | Partial implementation; acceptance pending |
+| E08 | Editor/agent track | VS Code extension; AI-editor and terminal-assistant plugin packages; standalone skills and local/remote MCP adapter | Per-client/version/session matrix, credential isolation, bounded protocol, stale snapshot handling, safe rendering and no unauthorized writes | Partial implementation; acceptance pending |
 | E09 | Azure DevOps track | Azure Repos Git connector, Azure Pipelines template/task, service hooks, PR comments/status and organization extension packaging | Trusted-policy isolation, iteration/head/base binding, event retry reconciliation, branch-policy mapping and scoped credentials | Proposed |
 | E10 | Service track | Versioned review API, thin SDK, authenticated completion webhooks, GitHub App, hosted and private enterprise deployments | API compatibility, repository authorization, job/tenant isolation, source-transfer/retention enforcement, webhook replay tests and failure recovery | Proposed |
 | E11 | Enterprise operations track | SSO, role-based access, organization policy, audit, secrets, deployment administration and controlled releases | Cross-tenant denial, revocation, policy provenance, deletion/backup recovery, update rollback and operational pilot | Proposed |
@@ -88,7 +88,7 @@ E11 covers SSO and lifecycle provisioning, role-based repository access, central
 
 Dependency order: E07 packaging can begin after E01 acceptance and supply the pinned reviewer artifact for E02; E02 and its usefulness pilot gate wider delivery expansion. E08 local review depends on E02 snapshots and E07; its remote mode also depends on E10. E09 starts with the released engine and E02 publication contracts and can use customer CI before hosting. E10 builds on E07 and the trusted acquisition/publication boundaries. E11 is required before claiming enterprise-ready hosted or private service; identity/isolation/retention essentials must ship with any remote pilot. E03 is needed for AI explanation/proposals, not deterministic integration. E04–E06 are needed only for their advertised language, security or patch/execution capabilities.
 
-Every delivery track first writes its own child design, dependency/license inventory, compatibility matrix, failure policy, resource budget and meaningful adverse acceptance cases. Validate an install → authenticate/connect → review exact revisions → display coverage → repeat after changes → revoke/uninstall flow on each supported surface. Compare completed canonical reports against the packaged CLI for identical logical inputs. Pin and test transport/client/platform versions; packaging portability does not establish behavior portability. Test changed policy with unchanged head, cross-repository replay, duplicate events, expired tokens, malicious report rendering, tenant-crossing access and interrupted jobs. All tracks remain Proposed until their own evidence exists.
+Every delivery track now has a proposed child design and plan. Before implementation, pin its dependency/license inventory and compatibility matrix; enforce its declared failure policy/resource budget and meaningful adverse acceptance cases. Validate an install → authenticate/connect → review exact revisions → display coverage → repeat after changes → revoke/uninstall flow on each supported surface. Compare completed canonical reports against the packaged CLI for identical logical inputs. Pin and test transport/client/platform versions; packaging portability does not establish behavior portability. Test changed policy with unchanged head, cross-repository replay, duplicate events, expired tokens, malicious report rendering, tenant-crossing access and interrupted jobs. Acceptance remains pending for every track until its own complete evidence record and independent decision exist.
 
 ### Platform references
 
@@ -121,6 +121,66 @@ On a documented 2-vCPU, 4-GiB Linux runner, the initial benchmark target is p95 
 
 A hosted service and private enterprise deployment are now proposed E10/E11 deliverables; neither is mandatory for offline use. A minimal organization administration interface belongs to those tracks. Billing, a large analytics dashboard, organization graph service, embedding index, continuous background agents, cloud inventory/posture analysis, runtime telemetry, cross-service runtime proof and automatic merge remain deferred. GitHub and Azure Repos Git are explicit platform targets. Other Git platforms and TFVC require separate scope decisions; no platform API is part of E01.
 
+## Planning coverage and implementation status
+
+All E01–E11 now have a scoped specification, execution plan, acceptance criteria and explicit dependency order. The new child documents are proposed drafts for review. Planning coverage is complete for the recorded roadmap; product implementation and release acceptance are not complete. This request authorizes documentation/planning only.
+
+E04–E06 and E09–E11 have no observed implementation. E01–E03 and E07–E08 have implementation artifacts with different completeness; full-roadmap acceptance remains pending despite earlier completion labels.
+
+| Package | Specification | Execution plan | Current implementation / acceptance state | Outstanding acceptance |
+|---|---|---|---|---|
+| E01 | [parent specification, §§5–8](docs/superpowers/specs/2026-10-03-pullraptor-design.md) | [kernel plan](docs/superpowers/plans/2026-10-03-review-kernel.md) | Implemented; acceptance pending | Historical tasks checked; fresh adverse, corpus, performance and independent acceptance record missing |
+| E02 | [child spec](docs/superpowers/specs/2026-10-03-e02-snapshots-and-publication.md) | [child plan](docs/superpowers/plans/2026-10-03-e02-snapshots-and-publication.md) | Partial implementation; acceptance pending | E02-A1–A4; no accepted record |
+| E03 | [child spec](docs/superpowers/specs/2026-10-03-e03-acceptance-completion.md) | [child plan](docs/superpowers/plans/2026-10-03-e03-acceptance-completion.md) | Partial implementation; acceptance pending | E03-A1–A3; no accepted record |
+| E04 | [child spec](docs/superpowers/specs/2026-10-03-e04-language-workers.md) | [child plan](docs/superpowers/plans/2026-10-03-e04-language-workers.md) | Proposed; no implementation observed | E04-A1–A3; no accepted record |
+| E05 | [child spec](docs/superpowers/specs/2026-10-03-e05-security-models.md) | [child plan](docs/superpowers/plans/2026-10-03-e05-security-models.md) | Proposed; no implementation observed | E05-A1–A4; no accepted record |
+| E06 | [child spec](docs/superpowers/specs/2026-10-03-e06-patches-runner-preferences.md) | [child plan](docs/superpowers/plans/2026-10-03-e06-patches-runner-preferences.md) | Proposed; no implementation observed | E06-A1–A4; no accepted record |
+| E07 | [child spec](docs/superpowers/specs/2026-10-03-e07-release-distribution.md) | [child plan](docs/superpowers/plans/2026-10-03-e07-release-distribution.md) | Partial implementation; acceptance pending | E07-A1–A3; no accepted record |
+| E08 | [child spec](docs/superpowers/specs/2026-10-03-e08-delivery-completion.md) | [child plan](docs/superpowers/plans/2026-10-03-e08-delivery-completion.md) | Partial implementation; acceptance pending | E08-A1–A4; no accepted record |
+| E09 | [child spec](docs/superpowers/specs/2026-10-03-e09-azure-devops.md) | [child plan](docs/superpowers/plans/2026-10-03-e09-azure-devops.md) | Proposed; no implementation observed | E09-A1–A3; no accepted record |
+| E10 | [child spec](docs/superpowers/specs/2026-10-03-e10-service-api.md) | [child plan](docs/superpowers/plans/2026-10-03-e10-service-api.md) | Proposed; no implementation observed | E10-A1–A4; no accepted record |
+| E11 | [child spec](docs/superpowers/specs/2026-10-03-e11-enterprise-operations.md) | [child plan](docs/superpowers/plans/2026-10-03-e11-enterprise-operations.md) | Proposed; no implementation observed | E11-A1–A3; no accepted record |
+
+The [planning coverage audit](docs/reviews/2026-10-03-planning-coverage.md) records the inspected base revision and evidence for these states. Existing source and tests demonstrate artifacts are present; they do not independently establish the full exit gates. Historical E03/E08 plans describe earlier subsets; their new completion plans govern outstanding parent scope. All new tasks are unchecked. No production code or runtime suite was executed in this planning change.
+
+## Worker execution and completion rules
+
+Use the [execution and acceptance contract](docs/planning-contract.md). Before implementation, a worker must identify its exact child task, acceptance IDs, accepted prerequisites, trusted base revision and scope. Missing plan/criteria/prerequisite/isolation means explicitly report blocked_for_execution; do not invent a reduced scope and mark the package complete. Proposed plans make work reviewable, but do not authorize execution or shipment.
+
+Statuses record actual work separately from acceptance. A package becomes Accepted only after all its required criteria have fresh revision-bound artifacts and an independent acceptance decision in `docs/acceptance/E<nn>.md`. Acceptance records are not yet present; their paths below are future outputs. A finished subset, passing tests, report hash or checked task box cannot accept an entire roadmap track. Deferred surfaces/capabilities stay visible.
+
+## Acceptance and capability ownership
+
+The [evaluation contract](docs/evaluation.md) remains authoritative for quality, adverse inputs, pilot and benchmark evidence. The [32-row capability catalog](docs/research/2026-10-03-capability-review.md) is reconciled below; IDs express proposed scope, not completion or competitive parity.
+
+| Capability IDs | Owning task / acceptance criterion | Release boundary |
+|---|---|---|
+| F01, F03, F09, F23, F25, F31 | E01 Tasks 1–8/9; E02-A1/A2 | Exact snapshots, scope, policy, cache equivalence and incomplete recovery |
+| F02, F05, F10 | E01 Tasks 3/8; E02-A2/A3/A4 | Exact-line local results and trusted CI/publication lifecycle |
+| F04, F06, F11, F24 | E01 Task 8/9; E03-A1/A2/A3 | Deterministic summary, pinned optional context/chat and explicit privacy |
+| F07, F08, F16 | E01 Tasks 4/7; E03-A1; E04-A1/A2/A3 | Each language/model tier independently admitted; owned bounded graph presentation |
+| F12 | E06-A4 | Explicit maintainer-approved declarative preferences |
+| F13, F14, F15 | E03-A3; E06-A1/A2/A3 | Draft suggestions distinct from independently validated patch/execution receipts |
+| F17, F18 | E05-A1/A2 | Bounded hazard and authorization models, initially advisory |
+| F19, F20, F21 | E05-A3/A4 | Redacted local patterns and provenance-preserving external observations |
+| F22 | E01 Tasks 1/8/9; E08-A1; E10-A1 | Canonical JSON/Markdown/SARIF and full/limit-failure consumer compatibility |
+| F28 | E06-A3; E08-A1/A2/A3/A4 | Editor/plugin/skill/MCP delivery and declared client/session matrix |
+| F30 enterprise portion | E10-A1/A2/A3/A4; E11-A1/A2/A3 | Hosted/private API/app operations and organization controls |
+| F32 | E01 Tasks 4/8/9; every child failure policy | Stable capability/cause/trusted recovery; narrowing scope remains explicit |
+| F26, F27, F29; F30 cloud-posture portion | Deferred; no implementation task authorized | Queue/routing, post-merge automation, runtime telemetry and cloud posture |
+| Delivery amendments beyond catalog | E07-A1/A2/A3; E09-A1/A2/A3; E10/E11 criteria | Packaging, Azure integration and service/operations have separate budgets/evidence |
+
+## Delivery sequence and release acceptance
+
+1. Audit and independently accept existing E01 work using Task 9; accept E07 packaging/provenance/install evidence.
+2. Complete/accept E02A local capture, then E02B hostile CI/publication. Run the E01/E02 usefulness pilot with thresholds declared before collection.
+3. Finish E03 acceptance and E08 local editor/plugin/MCP delivery. They remain optional to deterministic CLI review; E03 consent/transport gates precede remote AI.
+4. After the usefulness gate, admit E04 languages/capabilities and E05 modeled security independently; E06 patch/runner/preferences only under its isolation gate. No release requires unsupported languages to appear complete.
+5. E09 may use accepted customer CI without hosting. Start E10-A1/A2 local API/job contracts, then accept E11-A1/A2 identity/policy/isolation/retention essentials, then E10-A3/A4 remote app/deployment pilots and E08-A4 remote MCP. Finish E11-A3 operational acceptance before enterprise-ready claims.
+6. Release only the accepted subsets/languages/platforms; publish versioned artifact support/limitation and acceptance records. Actual external release is a separately authorized action.
+
+Each child spec declares proposed dependency/resource budgets and failure policy. Measure and inventory them before admission; the original kernel budgets do not cover enterprise operations. Platform/client/version selections remain proposed until pinned and exercised. Independent review must accept the actual source/artifact revision and complete requested user flow, not a graph or status label.
+
 ## Next concrete action
 
-Review [the specification](docs/superpowers/specs/2026-10-03-pullraptor-design.md), [security and architecture decisions](docs/reviews/2026-10-03-security-architecture.md), and [the E01 plan](docs/superpowers/plans/2026-10-03-review-kernel.md). If implementation is subsequently authorized, build E01 and measure its limits before expanding delivery or analysis claims. Then write scoped E07–E11 child designs/plans in dependency order; the requested integration scope does not authorize production implementation.
+Review the proposed child documents and the planning coverage audit. On a subsequent authorized implementation request, start with the E01 acceptance audit/record and E07 artifact gates, then E02 local-capture and CI/publication completion in the sequence above. The worker must explicitly report pending acceptance or blocked prerequisites and ship only a scoped task with a real plan and criteria. The roadmap document is complete as planning coverage; the product is not complete.
