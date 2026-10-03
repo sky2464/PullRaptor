@@ -1,5 +1,7 @@
 # E02: Immutable local snapshots and trusted PR publication Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Finish local snapshot integrity and the separate, revision-bound GitHub CI publisher.
@@ -10,7 +12,7 @@
 
 **Spec:** [E02 child specification](../specs/2026-10-03-e02-snapshots-and-publication.md).
 
-**Status:** Proposed; all tasks below are unexecuted. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
+**Status:** Partial implementation: local capture and publication contract/lifecycle helpers exist at the assigned base (PR 16). Checked steps preserve that work; publisher integration, full report/context binding, CLI/MCP consumer parity and Task 4 actual CI/pilot evidence remain incomplete. No E02 criterion is accepted by the checkboxes. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
 
 ## Global Constraints
 

@@ -1,5 +1,7 @@
 # PullRaptor Offline Review Kernel Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** For an authorized implementation assignment, use superpowers:subagent-driven-development or superpowers:executing-plans task by task. A preparation assignment may inspect Task 9 without starting implementation or running tests. Steps use checkbox syntax for tracking. Tasks 1–8 retain historical implementation checkboxes; Task 9's full acceptance audit is pending. Checkboxes alone are not acceptance evidence.
 
 **Goal:** Deliver E01: a useful offline comparison of immutable revisions with honest coverage, three advisory Python patterns, stable evidence, and reproducible outputs.

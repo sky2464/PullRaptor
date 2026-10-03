@@ -1,5 +1,7 @@
 # E05: Bounded security models and external observations Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Produce narrow, evidence-labeled security observations without claiming universal exploitability.
@@ -32,7 +34,7 @@
 
 ## File and interface map
 
-- Task 1: create `src/pullraptor/python_cfg.py`, `src/pullraptor/security_flow.py`; modify `src/pullraptor/kernel.py`; bounded graph construction and monotone transfers.
+- Task 1: create `src/pullraptor/python_ir.py`, `src/pullraptor/python_lowering.py`, `src/pullraptor/python_cfg.py`, `src/pullraptor/security_flow.py`; modify `src/pullraptor/kernel.py`; bounded graph construction and monotone transfers.
 - Task 2: create `src/pullraptor/auth_obligations.py`; separate authorization model.
 - Task 3: create `src/pullraptor/secret_patterns.py`; modify `src/pullraptor/render.py`; owned advisory detection with value-free output.
 - Task 4: create `src/pullraptor/advisories.py`, `src/pullraptor/scanner_import.py`; external data provenance without evidence promotion.
@@ -41,11 +43,11 @@
 
 **Acceptance:** E05-A1.
 
-**Files:** create `src/pullraptor/python_cfg.py`, `src/pullraptor/security_flow.py`; modify `src/pullraptor/kernel.py`; test: `tests/test_security_flow.py`.
+**Files:** create `src/pullraptor/python_ir.py`, `src/pullraptor/python_lowering.py`, `src/pullraptor/python_cfg.py`, `src/pullraptor/security_flow.py`; modify `src/pullraptor/kernel.py`; test: `tests/test_python_lowering.py`, `tests/test_security_flow.py`. E05-D1 owns occurrence-free statement IR/lowering; synthetic IR fixtures allow independent transfer construction.
 
 **Interfaces:**
-- Consumes: bound Python AST facts, ReviewContract, Limits, Deadline and SecurityModel.
-- Produces: `build_cfg(facts: BoundFacts, model: SecurityModel) -> ControlFlow`; ControlFlow(entry, nodes, edges, complete, boundaries); `analyze_hazards(cfg: ControlFlow, model: SecurityModel, deadline: Deadline) -> FlowResult`; FlowResult(observations: tuple[SecurityObservation, ...], complete: bool, boundaries: tuple[str, ...]).
+- Consumes: validated `BoundStatementIR` from E05-D1, ReviewContract, Limits, the shared absolute Deadline and SecurityModel. Existing `BoundFacts` symbols/imports/pattern summaries do not contain ordered statements. See the [owned IR/lowering contract](../../build-interfaces.md); fresh extraction and admitted private-cache reuse both support binding.
+- Produces: `build_cfg(ir: BoundStatementIR, model: SecurityModel, *, limits: Limits, deadline: Deadline) -> ControlFlow`; ControlFlow(entry, nodes, edges, complete, boundaries); `analyze_hazards(cfg: ControlFlow, model: SecurityModel, deadline: Deadline) -> FlowResult`; FlowResult(observations: tuple[SecurityObservation, ...], complete: bool, boundaries: tuple[str, ...]).
 
 - [ ] **Step 1: Write the failing acceptance tests.** Add `test_sanitizer_only_return_value`, `test_wrong_context_sanitizer`, `test_ambiguous_alias_weak_update`, `test_unknown_call_propagates`, `test_loop_monotone_converges`, and `test_transfer_cap_partial`. For `a=source(); b=sql_escape(a); execute_sql(a)`, a SQL hazard survives on a; b's sanitizer does not discharge shell/filesystem hazards. Include 30 positive and 30 negative/unknown held-out cases per advertised model.
 
@@ -69,7 +71,7 @@ assert truncated.complete is False
 
 **Interfaces:**
 - Consumes: Task 1 ControlFlow and explicit trusted AuthModel(version, entry_preconditions, checks, required_actions, invalidators).
-- Produces: `analyze_authorization(cfg: ControlFlow, model: AuthModel) -> AuthorizationResult`; AuthorizationResult(observations, complete, established); established contains AuthFact(subject, action, resource, state_version).
+- Produces: `analyze_authorization(cfg: ControlFlow, model: AuthModel, *, limits: Limits, deadline: Deadline) -> AuthorizationResult`; AuthorizationResult(observations, complete, established); established contains AuthFact(subject, action, resource, state_version).
 
 - [ ] **Step 1: Write the failing acceptance tests.** Add `test_alternate_unauthorized_path`, `test_wrong_resource_guard`, `test_reassignment_kills_permission`, `test_fail_open_guard`, `test_disconnected_incomplete_entry`, and `test_success_branch_only_gen`. A guarded branch joined with an unchecked branch must not establish the permission; an incomplete entry cannot inherit a top initialization as proof.
 

@@ -1,5 +1,7 @@
 # E07: Packaged release, provenance and offline installation Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Release independently verifiable CLI/container artifacts with clean installation and rollback evidence.
@@ -10,7 +12,7 @@
 
 **Spec:** [E07 child specification](../specs/2026-10-03-e07-release-distribution.md).
 
-**Status:** Partial Task 1 metadata implementation and suite evidence exist from PR 14; exact dependency/license admission and full E07 acceptance remain pending. Tasks 2–3 remain unexecuted. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
+**Status:** Partial Task 1 metadata/suite evidence (PR 14) and Task 2 provenance helper/release-candidate scaffold (PR 16) exist. The build entry point still only re-exports verifier helpers; actual artifact generation/origin admission and Task 3 install/equivalence evidence remain pending. Exact dependency/license admission and full E07 acceptance remain pending. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
 
 ## Global Constraints
 
