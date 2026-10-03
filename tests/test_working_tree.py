@@ -9,6 +9,7 @@ from unittest.mock import patch
 
 from pullraptor.__main__ import main
 from pullraptor.git_snapshot import freeze_working_tree, resolve_inputs
+from pullraptor.local_snapshot import capture_local
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, Limits
 from tests.helpers import make_repo
@@ -56,7 +57,18 @@ class TestWorkingTreeSnapshots(unittest.TestCase):
         untracked_file = self.repo.root / "new_helper.py"
         untracked_file.write_text("def helper():\n    return True\n")
 
-        tree_oid = freeze_working_tree(self.repo.root, self.limits, self.deadline, staged_only=False)
+        base_tip, _, _ = resolve_inputs(
+            self.repo.root, "HEAD", "HEAD", self.limits, self.deadline, exact_base=True
+        )
+        snapshot = capture_local(
+            self.repo.root,
+            base_tip,
+            staged_only=False,
+            include_untracked=True,
+            limits=self.limits,
+            deadline=self.deadline,
+        )
+        tree_oid = snapshot.tree_oid
         self.assertEqual(len(tree_oid), 40)
 
         # Verify real status still shows unstaged modification and untracked file

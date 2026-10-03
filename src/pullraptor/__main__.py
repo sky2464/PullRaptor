@@ -8,7 +8,8 @@ from pathlib import Path
 import sys
 import time
 
-from pullraptor.git_snapshot import freeze_working_tree
+from pullraptor.git_snapshot import resolve_inputs
+from pullraptor.local_snapshot import capture_local
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, Limits
 from pullraptor.render import render_json, render_markdown, render_sarif
@@ -67,12 +68,30 @@ def main(argv: list[str] | None = None) -> int:
         if args.staged or args.workdir:
             base_ref = args.base if args.base is not None else "HEAD"
             is_head_tree = True
-            head_ref = freeze_working_tree(
-                repo=repo_path,
-                limits=Limits(),
-                deadline=Deadline(started_at=start_monotonic, duration_seconds=10.0),
-                staged_only=args.staged,
+            limits = Limits()
+            deadline = Deadline(started_at=start_monotonic, duration_seconds=10.0)
+            base_tip, _, _ = resolve_inputs(
+                repo_path,
+                base_ref,
+                "HEAD",
+                limits,
+                deadline,
+                exact_base=True,
             )
+            snapshot = capture_local(
+                repo_path,
+                base_tip,
+                staged_only=args.staged,
+                include_untracked=False,
+                limits=limits,
+                deadline=deadline,
+            )
+            if not snapshot.discovery_complete or not snapshot.tree_oid:
+                sys.stderr.write("PullRaptor: local snapshot capture incomplete\n")
+                for diag in snapshot.diagnostics:
+                    sys.stderr.write(f"  - {diag.code}: {diag.message}\n")
+                return 2
+            head_ref = snapshot.tree_oid
         else:
             if not args.head:
                 parser.error("One of --head, --staged, or --workdir is required")

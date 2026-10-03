@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PullRaptorReleaseManifest",
+  "type": "object",
+  "required": ["version", "source_revision", "artifacts", "runtime_matrix", "dependency_inventory"],
+  "properties": {
+    "version": { "type": "string" },
+    "source_revision": { "type": "string", "pattern": "^[0-9a-f]{40}$" },
+    "provenance_ref": { "type": "string" },
+    "runtime_matrix": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "dependency_inventory": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["kind", "digest", "size"],
+        "properties": {
+          "kind": { "type": "string" },
+          "digest": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "size": { "type": "integer", "minimum": 0 },
+          "entrypoints": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}
