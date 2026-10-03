@@ -1,5 +1,7 @@
 # E04: Declared language workers and capability admission Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Admit optional language facts with per-language capability and quality evidence.
@@ -32,7 +34,7 @@
 
 ## File and interface map
 
-- Task 1: create `src/pullraptor/language_workers.py`; modify `src/pullraptor/kernel.py`; trusted registry and coordinator receipt validation.
+- Task 1: create `src/pullraptor/language_workers.py`; modify `src/pullraptor/kernel.py`, `src/pullraptor/process.py`; test `tests/test_process.py`; trusted registry and coordinator receipt validation.
 - Task 2: create `workers/typescript/worker.mjs`, `workers/go/main.go`, `tests/fixtures/languages/js_ts/`, `tests/fixtures/languages/go/`; bounded syntax and lexical structure only.
 - Task 3: create `docs/language-capabilities.json`, `src/pullraptor/graph_view.py`, `tests/fixtures/languages/wave_two/`, `tests/fixtures/languages/wave_three/`; extend `src/pullraptor/language_workers.py`; per-language rollout and safe owned graph serialization.
 
@@ -40,10 +42,10 @@
 
 **Acceptance:** E04-A1.
 
-**Files:** create `src/pullraptor/language_workers.py`; modify `src/pullraptor/kernel.py`; test: `tests/test_language_workers.py`.
+**Files:** create `src/pullraptor/language_workers.py`; modify `src/pullraptor/kernel.py`, `src/pullraptor/process.py`; test: `tests/test_language_workers.py`, `tests/test_process.py`. E04-D0 owns the bounded stdin extension; pure result validators do not wait for a live parser.
 
 **Interfaces:**
-- Consumes: ReviewContract, ContentFacts, CoverageReceipt, Limits, Deadline and existing bounded codec/process helper.
+- Consumes: ReviewContract, ContentFacts, CoverageReceipt, Limits, Deadline and existing bounded codec helper and E04-D0 bounded stdin contract in the [coordinator interface decisions](../../build-interfaces.md). The current process helper has DEVNULL stdin; a JSON worker request needs the explicit optional input/cap extension before real dispatch.
 - Produces: `run_language(request: LanguageRequest, *, registry: LanguageRegistry, limits: Limits, deadline: Deadline) -> LanguageResult`; LanguageRegistry is an immutable tuple of entries(language, capability, executable_digest, grammar_digest, allowed_environment).
 
 - [ ] **Step 1: Write the failing acceptance tests.** Add `test_omitted_foreign_duplicate_receipts_partial`, `test_worker_cannot_advertise_extra_capability`, `test_grammar_config_change_invalidates_cache`, `test_source_not_executed`, and `test_timeout_has_gap`. An omitted required key remains a coordinator gap and cannot produce completed coverage.

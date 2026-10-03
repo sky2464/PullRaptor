@@ -1,0 +1,29 @@
+{
+  "cards": 71,
+  "main_plan_tasks": 36,
+  "acceptance_ids": 38,
+  "capability_ids": 32,
+  "construction_ready": 18,
+  "acyclic": true,
+  "negative_controls_rejected": [
+    "missing_owner",
+    "duplicate_id",
+    "unknown_dependency",
+    "unearned_readiness",
+    "self_cycle",
+    "two_node_cycle",
+    "missing_child_task",
+    "missing_acceptance_id"
+  ],
+  "local_links_checked": 131,
+  "static_test_declarations": 159,
+  "product_runtime": "not_run",
+  "validator": "stdlib-only static documentation checker; no project imports",
+  "checker_runtime": "3.14.7",
+  "code_revision": "28b623ab1bb238ef11fbf07b29c1c773522a4a42",
+  "content_sha256": {
+    "docs/build-tasks.json": "856a523f135a0864a9fce1d779496196d92bcb438e74436ed1cf84db4e52882d",
+    "docs/build-task-board.md": "14d6f5d3347dc013af3e47b5d38c643c31a1b6d98bf117f76b52a77d1f89e2ec",
+    "docs/build-interfaces.md": "cc506d6edff2923c46645a0f5acf207924071a0c45e8105dbcb6dea3f603b27e"
+  }
+}

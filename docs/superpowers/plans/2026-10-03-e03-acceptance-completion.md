@@ -1,5 +1,7 @@
 # E03: AI context, transport and conversation acceptance Implementation Plan
 
+**Build handoff:** [task board](../../build-task-board.md), [exact task cards](../../build-tasks.json) and [coordinator interface decisions](../../build-interfaces.md). Read these with this plan; distinguish reviewed-output construction prerequisites from activation/acceptance gates.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Finish the broader E03 contract while retaining AI output as optional untrusted proposals.
@@ -82,7 +84,7 @@ assert sent_credentials is False
 ```
 
 - [ ] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_ai_transport tests.test_ai_adapter -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
-- [ ] **Step 3: Implement the declared interfaces.** Use authenticated TLS to the explicit origin/path with no ambient proxy/redirect; enforce actual connected-address allowlisting or an accepted OS egress rule. Separate local/private-provider policy from remote. Track 2-request/65,536-byte/2,048-output-token/60-second totals including retries and cost_unknown. Strictly decode bounded proposal output and reject support/permission/publication/destination fields.
+- [ ] **Step 3: Implement the declared interfaces.** Use authenticated TLS to the explicit origin/path with no ambient proxy/redirect; enforce actual connected-address allowlisting or an accepted OS egress rule. Separate local/private-provider policy from remote. Track at most 2 total requests, 65,536 aggregate serialized context bytes including retries, 2,048 requested output tokens per request and 60 seconds aggregate wall time; record aggregate requested tokens separately and preserve cost_unknown. Test two permitted 2,048-token requests against attempt/context/deadline exhaustion. Strictly decode bounded proposal output and reject support/permission/publication/destination fields.
 - [ ] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
 - [ ] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `feat: enforce AI transport and budget receipts`. Do not commit to `main`.
 
