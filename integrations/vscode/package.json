@@ -1,0 +1,66 @@
+{
+  "name": "pullraptor-vscode",
+  "displayName": "PullRaptor Code Reviewer",
+  "description": "Deterministic offline code review, coverage receipts, and structural diagnostics for Git repositories",
+  "version": "0.3.0",
+  "publisher": "pullraptor",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Linters",
+    "Programming Languages",
+    "Testing"
+  ],
+  "keywords": [
+    "code review",
+    "git",
+    "diff",
+    "static analysis",
+    "pull request"
+  ],
+  "activationEvents": [
+    "workspaceContains:.git"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "pullraptor.reviewWorkingTree",
+        "title": "PullRaptor: Review Working Tree Changes",
+        "category": "PullRaptor"
+      },
+      {
+        "command": "pullraptor.reviewStaged",
+        "title": "PullRaptor: Review Staged Changes",
+        "category": "PullRaptor"
+      },
+      {
+        "command": "pullraptor.showCoverageReceipts",
+        "title": "PullRaptor: Show Verification Coverage Receipts",
+        "category": "PullRaptor"
+      }
+    ],
+    "configuration": {
+      "title": "PullRaptor",
+      "properties": {
+        "pullraptor.executablePath": {
+          "type": "string",
+          "default": "pullraptor",
+          "description": "Path to the pullraptor executable binary or Python entry point"
+        },
+        "pullraptor.profile": {
+          "type": "string",
+          "enum": ["structural", "diff"],
+          "default": "structural",
+          "description": "Analysis profile for review evaluations"
+        },
+        "pullraptor.enableMcp": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable MCP stdio communication for fast in-process query responses"
+        }
+      }
+    }
+  }
+}

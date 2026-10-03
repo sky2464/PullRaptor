@@ -41,7 +41,20 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--context-issue", help="File containing issue/PR description text for untrusted context")
     parser.add_argument("--context-ci-log", help="File containing CI failure log snippet for untrusted context")
 
+    # MCP server mode
+    parser.add_argument("--mcp", action="store_true", help="Start Model Context Protocol (MCP) stdio server")
+
+    # If first argument is 'mcp', run MCP server directly
+    raw_args = argv if argv is not None else sys.argv[1:]
+    if raw_args and raw_args[0] == "mcp":
+        from pullraptor.mcp_server import run_mcp_server
+        return run_mcp_server()
+
     args = parser.parse_args(argv)
+
+    if args.mcp:
+        from pullraptor.mcp_server import run_mcp_server
+        return run_mcp_server()
 
     start_monotonic = time.monotonic()
     repo_path = Path(args.repo).resolve()
