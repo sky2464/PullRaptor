@@ -2,8 +2,10 @@
 
 **Document ID:** `docs/superpowers/specs/2026-10-03-e08-mcp-and-editor.md`  
 **Milestone:** E08  
-**Status:** Complete  
+**Status:** Historical MCP/manifest subset implemented; full E08 acceptance pending
 **Date:** 2026-10-03  
+
+The current roadmap's full scope is governed by the [completion specification](2026-10-03-e08-delivery-completion.md) and [completion plan](../plans/2026-10-03-e08-delivery-completion.md). This historical subset does not establish parent-package acceptance; conflicting earlier requirements are superseded by the completion specification.
 
 ---
 
