@@ -1,0 +1,21 @@
+# Release-candidate provenance workflow (uploads remain separately authorized).
+name: Release Candidate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Record revision
+        run: git rev-parse HEAD > release-source-revision.txt
+      - name: Build manifest placeholder
+        run: |
+          python3.12 release/build.py 2>/dev/null || echo "manifest generation requires coordinator release assignment"

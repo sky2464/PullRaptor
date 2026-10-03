@@ -71,7 +71,7 @@ assert global_safe_directory_wildcard is False
 - Consumes: exact reviewed source revision and pinned trusted build/runtime inventories.
 - Produces: `verify_release(manifest: ReleaseManifest, expected_revision: str, trusted_origin: BuildOrigin) -> ReleaseDecision`; BuildOrigin(workflow_digest, run_id, repository_id, artifact_digests), ReleaseDecision(admitted, cause).
 
-- [ ] **Step 1: Write the failing acceptance tests.** Add `test_mutable_tag_insufficient`, `test_wrong_revision_or_build_origin`, `test_artifact_tampering`, `test_build_dependency_inventory`, and `test_two_builds_reported`. A digest supplied by the artifact alone cannot authenticate origin; wrong expected revision returns admitted false.
+- [x] **Step 1: Write the failing acceptance tests.** Add `test_mutable_tag_insufficient`, `test_wrong_revision_or_build_origin`, `test_artifact_tampering`, `test_build_dependency_inventory`, and `test_two_builds_reported`. A digest supplied by the artifact alone cannot authenticate origin; wrong expected revision returns admitted false.
 
 Expected assertions for the stated adverse fixture:
 
@@ -80,10 +80,10 @@ assert decision.admitted is False
 assert decision.cause == "wrong_source_revision"
 ```
 
-- [ ] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_release_provenance -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
-- [ ] **Step 3: Implement the declared interfaces.** Pin container base/action commits/build dependencies, produce wheel/source/image identities and license/SBOM/provenance records from platform-derived trusted build metadata. Verify origin independently of manifest hashes. Compare two clean builds and report reproducibility deviations rather than promising byte identity without evidence. Keep release uploads behind their separately authorized release action.
-- [ ] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
-- [ ] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `feat: produce pinned release candidate provenance`. Do not commit to `main`.
+- [x] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_release_provenance -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
+- [x] **Step 3: Implement the declared interfaces.** Pin container base/action commits/build dependencies, produce wheel/source/image identities and license/SBOM/provenance records from platform-derived trusted build metadata. Verify origin independently of manifest hashes. Compare two clean builds and report reproducibility deviations rather than promising byte identity without evidence. Keep release uploads behind their separately authorized release action.
+- [x] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
+- [x] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `feat: produce pinned release candidate provenance`. Do not commit to `main`.
 
 ### Task 3: Prove clean-machine installation, equivalence and recovery
 

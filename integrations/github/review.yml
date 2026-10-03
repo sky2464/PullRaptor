@@ -1,0 +1,61 @@
+# Hardened PullRaptor review template (declarative contract; not the development CI workflow).
+name: PullRaptor Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  analyze:
+    name: Analyze (untrusted)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    env:
+      PULLRAPTOR_PR_TITLE: ${{ github.event.pull_request.title }}
+      PULLRAPTOR_PR_BODY: ${{ github.event.pull_request.body }}
+    steps:
+      - name: Install trusted reviewer artifact
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        with:
+          repository: sky2464/PullRaptor
+          ref: 79a00f32896af7bc3270f8ea583453d0079b2962
+          path: pullraptor-artifact
+          persist-credentials: false
+          sparse-checkout: |
+            src
+            pyproject.toml
+
+      - name: Capture and review head (read-only)
+        working-directory: pullraptor-artifact
+        env:
+          PYTHONPATH: src
+        run: |
+          python3.12 -m pullraptor --help
+
+      - name: Egress isolation profile
+        run: echo "admission=unavailable"
+
+  publish:
+    name: Publish (privileged)
+    needs: analyze
+    runs-on: ubuntu-24.04
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Fetch bounded report artifact
+        uses: actions/download-artifact@fa0a91b85d8f369360cf09cc0f86126337ad235c # v4.1.8
+        with:
+          name: pullraptor-report
+
+      - name: Publish review comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.PULLRAPTOR_PUBLISH_TOKEN }}
+        run: |
+          python3.12 -m pullraptor.publisher --help
