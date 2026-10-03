@@ -1,0 +1,56 @@
+{
+  "schema": "pullraptor-platform-adapter/1",
+  "package": "E09",
+  "platform": "azure_devops_services",
+  "api_version": "7.1",
+  "operations": {
+    "get_pull_request": {
+      "method": "GET",
+      "path_template": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}",
+      "query": { "api-version": "7.1" },
+      "required_scopes": ["vso.code"]
+    },
+    "get_pull_request_iteration": {
+      "method": "GET",
+      "path_template": "/{organization}/{project}/_apis/git/repositories/{repositoryId}/pullrequests/{pullRequestId}/iterations/{iterationId}",
+      "query": { "api-version": "7.1" },
+      "required_scopes": ["vso.code"]
+    },
+    "get_branch_policy": {
+      "method": "GET",
+      "path_template": "/{organization}/{project}/_apis/policy/configurations",
+      "query": { "api-version": "7.1", "repositoryId": "{repositoryId}", "refName": "{refName}" },
+      "required_scopes": ["vso.policy_manage"]
+    }
+  },
+  "context_fields": [
+    "organization_id",
+    "project_id",
+    "repository_id",
+    "pr_id",
+    "iteration_id",
+    "source_head",
+    "target_tip",
+    "comparison_base",
+    "policy_digest",
+    "scope_digest",
+    "reviewer_digest"
+  ],
+  "fake_transport": {
+    "send_method": "send_descriptor",
+    "rules": {
+      "body_max_bytes": 1048576,
+      "redirects": "deny",
+      "proxy": "deny",
+      "dns_rebind_check": "required_before_send",
+      "retries_max": 3,
+      "retry_window_seconds": 30
+    }
+  },
+  "credential_reference": {
+    "kind": "scoped_pat_or_oidc",
+    "minimum_scopes": ["vso.code", "vso.policy_manage"],
+    "operator_grant_required": true
+  },
+  "unsupported": ["azure_devops_server", "tfvc"]
+}
