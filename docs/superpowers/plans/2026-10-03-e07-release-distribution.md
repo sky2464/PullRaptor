@@ -95,20 +95,25 @@ assert decision.cause == "wrong_source_revision"
 - Consumes: Task 2 verified ReleaseManifest/artifacts and licensed immutable review fixtures.
 - Produces: InstallReceipt records and canonical comparisons for each admitted runtime/platform/artifact/profile.
 
-- [ ] **Step 1: Write the failing acceptance tests.** Add `test_fresh_venv_without_repo_clone`, `test_offline_wheel_and_image`, `test_source_wheel_container_canonical_equal`, `test_uninstall_no_credentials_left`, `test_update_rollback_previous_report`, and `test_interrupted_install_recovery`. Use a fixture producing both advisory findings and a required coverage gap; preserve both in installed reports.
+- [ ] **Step 1: Write the failing acceptance tests.** Add `test_fresh_venv_without_repo_clone`, `test_offline_wheel_and_image`, `test_source_wheel_container_canonical_equal`, `test_uninstall_no_credentials_left`, `test_update_rollback_previous_report`, `test_interrupted_install_recovery`, and `test_first_install_without_prior_release`. Use a fixture producing both advisory findings and a required coverage gap; preserve both in installed reports. A first release has no previously accepted artifact: interrupted initial installation must leave a clean or explicit recoverable failure state. Update/rollback acceptance requires an independently accepted prior artifact fixture; when absent, retain that criterion as `not_run` and exclude update/rollback release claims until evidence exists. Never invent a prior acceptance marker.
 
 Expected assertions for the stated adverse fixture:
 
 ```python
 assert installed_canonical == source_canonical
-assert rollback_version == previously_accepted_version
 assert customer_clone_required is False
+# Update fixture only, with independent prior-artifact acceptance:
+assert rollback_version == previously_accepted_version
+# First-install fixture, with no accepted prior artifact:
+assert initial_install_state in {"clean", "recoverable_failure"}
 ```
 
 - [ ] **Step 2: Run the focused suite and confirm a meaningful failure.** Run `PYTHONPATH=src python3.12 -m unittest tests.test_installed_artifacts -v`. Missing new interfaces may fail import initially; existing code must fail the new adverse assertion before correction.
 - [ ] **Step 3: Implement the declared interfaces.** Run trusted development/install checks in clean supported environments and accepted runtime boundaries, with network denied for offline cases. Record artifact and runtime sizes separately, install/startup/RSS, uninstall remnants and actual update/rollback steps. Do not run arbitrary reviewed build scripts during installation.
 - [ ] **Step 4: Run the same suite.** Require all named assertions to pass, including the successful fixture; retain raw outputs and exact input/tool identities.
 - [ ] **Step 5: Commit the reviewed task on an allowed feature branch.** Stage only this task's files; use commit message `test: verify release installation and rollback`. Do not commit to `main`.
+
+Initial-install evidence may be recorded as a subset. If update/rollback lacks the required prior accepted artifact and remains `not_run`, E07-A3 and full E07 acceptance remain pending; do not mark the whole criterion passed or advertise update/rollback support.
 
 ## Package acceptance and handoff
 

@@ -1,0 +1,1428 @@
+{
+  "acceptance": {
+    "E01-A1": "not_run",
+    "E01-A2": "not_run",
+    "E01-A3": "not_run",
+    "independent_decision": "pending"
+  },
+  "boundary": "stdlib AST parsing and immutable git blob reads only; no project imports, test execution or target-source execution",
+  "claim_limit": "Names and file digests locate declarations. They do not prove behavior, fixture counts, passing tests, provenance authority or acceptance. An absent exact name may have an alternate test; assertion mapping is pending.",
+  "date": "2026-10-03",
+  "document_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "kind": "static_inventory",
+  "named_plan_inventory": [
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 254,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_bool_not_integer",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 120,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_canonical_excludes_execution_metadata",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 212,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_content_facts_cannot_carry_occurrence",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 243,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_duplicate_keys_rejected",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 162,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_invalid_span_rejected",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 308,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_item_accounting_recursive",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 323,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_limit_failure_cannot_claim_support_or_complete",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 249,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_nonfinite_json_rejected",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 302,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_report_union_strict_tags",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 375,
+          "path": "tests/test_models.py"
+        }
+      ],
+      "planned_test": "test_two_missing_imports_have_distinct_keys",
+      "runtime": "not_run",
+      "task": 1
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 55,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "planned_test": "test_ci_override_cannot_weaken_required_scope",
+      "runtime": "not_run",
+      "task": 2
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 10,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "planned_test": "test_defaults_exact",
+      "runtime": "not_run",
+      "task": 2
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "planned_test": "test_glob_semantics",
+      "runtime": "not_run",
+      "task": 2
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 84,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "planned_test": "test_minimum_finalization_capacity",
+      "runtime": "not_run",
+      "task": 2
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 27,
+          "path": "tests/test_config.py"
+        }
+      ],
+      "planned_test": "test_unknown_key_error",
+      "runtime": "not_run",
+      "task": 2
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_ambient_git_config_ignored",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 60,
+          "path": "tests/test_diff.py"
+        }
+      ],
+      "planned_test": "test_attributes_cannot_hide_source",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 76,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_binary_and_deleted_file_preserved",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 54,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_dirty_tree_ignored",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 38,
+          "path": "tests/test_diff.py"
+        }
+      ],
+      "planned_test": "test_hostile_external_diff_textconv_fsmonitor_not_executed",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_inherited_handles_closed",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_large_text_diff_bounded",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_merge_base_not_base_tip",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_multiple_merge_bases_rejected",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_non_utf8_path_reported",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 68,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_nul_metadata_paths",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 62,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_option_like_ref_rejected",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 30,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "planned_test": "test_output_flood_stopped",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_promisor_object_never_lazy_fetches",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 26,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_refs_pinned_before_read",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 102,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_replace_objects_ignored",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_shallow_missing_object_incomplete",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 59,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "planned_test": "test_shared_deadline_not_reset",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 87,
+          "path": "tests/test_snapshot.py"
+        }
+      ],
+      "planned_test": "test_symlink_and_submodule_not_followed",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 73,
+          "path": "tests/test_process.py"
+        }
+      ],
+      "planned_test": "test_worker_environment_has_no_credentials",
+      "runtime": "not_run",
+      "task": 3
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 218,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_ambiguous_module_no_external_fallback",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 91,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_import_side_effect_not_executed",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 253,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_isolated_startup_ignores_site_and_paths",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 186,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_local_subprocess_shadows_external_model",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 210,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_maximum_source_base64_fits_protocol",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 139,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_missing_external_module_partial",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_missing_import_diagnostic",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 56,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_nested_functions_not_outer_mutation",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_neutral_worker_cwd",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 153,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_new_module_resolves_previous_miss",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 103,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_oversized_source_not_sent_to_worker",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 69,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_parameter_reassignment",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 81,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_parse_failure_preserves_diff_coverage",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 234,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_resolving_x_leaves_y_missing",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 41,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_scope_shadowing_and_aliases",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 123,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_stdlib_identity_not_missing_context",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 174,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_subprocess_alias_modeled",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 204,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_timeout_or_worker_crash_partial",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 31,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_unicode_columns_crlf_exact",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_worker_duplicate_fields_partial",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 110,
+          "path": "tests/test_python_facts.py"
+        }
+      ],
+      "planned_test": "test_wrong_blob_or_span_rejected",
+      "runtime": "not_run",
+      "task": 4
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 61,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "planned_test": "test_conditional_reraise_not_classified_as_swallowed",
+      "runtime": "not_run",
+      "task": 5
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "planned_test": "test_intentional_patterns_never_defect_claim",
+      "runtime": "not_run",
+      "task": 5
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 49,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "planned_test": "test_shadowed_subprocess_no_shell_claim",
+      "runtime": "not_run",
+      "task": 5
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 73,
+          "path": "tests/test_rules.py"
+        }
+      ],
+      "planned_test": "test_untrusted_command_not_inferred_from_shell_true",
+      "runtime": "not_run",
+      "task": 5
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 24,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_all_evidence_accumulations",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_ambiguous_rename_unknown",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 79,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_base_parse_failure_delta_unknown",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 42,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_conflict_not_blocker",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_different_claim_or_revision_cannot_accumulate",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 126,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_duplicate_or_foreign_receipt_rejected",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 143,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_fatal_diagnostic_exit3",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 153,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_incomplete_precedes_finding_exit",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 110,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_missing_receipt_cannot_complete",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 92,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_old_sink_new_witness_retained",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 58,
+          "path": "tests/test_evidence.py"
+        }
+      ],
+      "planned_test": "test_shifted_line_same_obligation",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_valid_head_claim_survives_unrelated_partial",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_worker_cannot_shrink_scope",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_wrong_revision_or_capability_rejected",
+      "runtime": "not_run",
+      "task": 6
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_all_extractor_components_invalidate",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_atomic_interrupted_write_miss",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_cache_symlink_or_reparse_refused",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_ci_cache_off",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 36,
+          "path": "tests/test_cache.py"
+        }
+      ],
+      "planned_test": "test_clean_warm_corrupt_cache_identical",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_full_manifest_resolution_recomputed",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_incomplete_discovery_cannot_seal_complete_scope",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 56,
+          "path": "tests/test_cache.py"
+        }
+      ],
+      "planned_test": "test_runtime_schema_change_miss",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_same_blob_different_paths_rebound",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_schema_valid_foreign_cache_ignored",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_scope_import_closure_fixed_point",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_shared_permissions_cache_disabled",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_size_cap",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_slow_preparation_short_policy_still_bounded",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_unrelated_malformed_file_not_required",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_unresolved_context_required",
+      "runtime": "not_run",
+      "task": 7
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_config_error_exit3",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_core_network_disabled",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_deleted_line_sarif_side",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 39,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "planned_test": "test_empty_findings_not_safety_claim",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 45,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "planned_test": "test_explicit_diff_profile_scope_statement",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_links_only_from_trusted_identity",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 71,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "planned_test": "test_markdown_fence_html_link_breakout",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_recovery_guidance_not_attacker_commands",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_report_byte_limit_never_complete",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_requested_and_examined_scope_visible",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 64,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "planned_test": "test_stdout_machine_format_stderr_diagnostics",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_structural_other_language_partial_exit2",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 27,
+          "path": "tests/test_cli.py"
+        }
+      ],
+      "planned_test": "test_structural_python_complete",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_terminal_escape_controls_and_bidi",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [
+        {
+          "line": 45,
+          "path": "tests/test_render.py"
+        }
+      ],
+      "planned_test": "test_unicode_sarif_character_columns",
+      "runtime": "not_run",
+      "task": 8
+    },
+    {
+      "assertion_mapping": "not_reviewed",
+      "declarations": [],
+      "planned_test": "test_uri_reserved_segments_roundtrip",
+      "runtime": "not_run",
+      "task": 8
+    }
+  ],
+  "plan": "docs/superpowers/plans/2026-10-03-review-kernel.md",
+  "plan_sha256": "229f625d14639d103000aedf75fd201394a4dc2b8c1a2c328d7c5d18d70056b1",
+  "source_modules": [
+    {
+      "bytes": 63,
+      "path": "src/pullraptor/__init__.py",
+      "scope": "E01",
+      "sha256": "63413019a7f86c6610d6a98108f35aef95b49175194073c896fed960bb578097"
+    },
+    {
+      "bytes": 6329,
+      "path": "src/pullraptor/__main__.py",
+      "scope": "E01",
+      "sha256": "a0b4f80902f65e17f33592c69031fe07e200512ca3851b91e891ab8f340bf252"
+    },
+    {
+      "bytes": 8506,
+      "path": "src/pullraptor/ai_adapter.py",
+      "scope": "adapter",
+      "sha256": "5e9de8127545cd82654bdebec4c4a6d5801fb48e14831ff8ea3e275580be2281"
+    },
+    {
+      "bytes": 3598,
+      "path": "src/pullraptor/cache.py",
+      "scope": "E01",
+      "sha256": "ee6e3b22ea30d6fd973f2035a98c3dc10a338b55f1a7fba03455d616113f30e4"
+    },
+    {
+      "bytes": 4548,
+      "path": "src/pullraptor/config.py",
+      "scope": "E01",
+      "sha256": "6c2d489991b3a9eaed82fbce7a1c5d5950f5aad623e17eaf1b0adfce2ede9c85"
+    },
+    {
+      "bytes": 5205,
+      "path": "src/pullraptor/diff.py",
+      "scope": "E01",
+      "sha256": "6f9d4f4d636d33a74cb32504a1ed2389321e3a90babf6ef33ac53411ac43fb49"
+    },
+    {
+      "bytes": 6980,
+      "path": "src/pullraptor/evidence.py",
+      "scope": "E01",
+      "sha256": "2567d7909a4b18909d277f9e311f0154ad2ead21e99044ec277ff2c569276a41"
+    },
+    {
+      "bytes": 9396,
+      "path": "src/pullraptor/git_snapshot.py",
+      "scope": "E01",
+      "sha256": "7c5aa8a5d7d6010eb0cab85c47347c00dd94f5bd9f0dc7a27526b72352ee7a50"
+    },
+    {
+      "bytes": 14381,
+      "path": "src/pullraptor/kernel.py",
+      "scope": "E01",
+      "sha256": "35537f9199c6ea8baf54a91ad467397bf1a22f813781ec15767a20d944e1f2bf"
+    },
+    {
+      "bytes": 17234,
+      "path": "src/pullraptor/mcp_server.py",
+      "scope": "adapter",
+      "sha256": "d27f616f066dd9f6a6c1ddb197b529502b97f4b0b96965c1ea6937285cab7db2"
+    },
+    {
+      "bytes": 20363,
+      "path": "src/pullraptor/models.py",
+      "scope": "E01",
+      "sha256": "2cbb00afa981cb79f2a2bf439e26dc0db27d40d2e94e0f4dabd8d0b29c16df59"
+    },
+    {
+      "bytes": 13049,
+      "path": "src/pullraptor/parser_worker.py",
+      "scope": "E01",
+      "sha256": "38956563ee2c38f72277d875fcae157f2f6711646861cc1d22a90bb81f4eca55"
+    },
+    {
+      "bytes": 5239,
+      "path": "src/pullraptor/process.py",
+      "scope": "E01",
+      "sha256": "44d524da00064851314866a4469526c48e0fa9fef81aeffb8d2c23e09b99449f"
+    },
+    {
+      "bytes": 8908,
+      "path": "src/pullraptor/publisher.py",
+      "scope": "adapter",
+      "sha256": "e819a7440570022a7f898e049a0609e75ab9012565f227e74b6fb3b498295131"
+    },
+    {
+      "bytes": 7480,
+      "path": "src/pullraptor/python_facts.py",
+      "scope": "E01",
+      "sha256": "c5bf148bf3e6d858e15c18e5517c829083b2c9100e28d25ab9f9c08855aa4d9c"
+    },
+    {
+      "bytes": 7712,
+      "path": "src/pullraptor/render.py",
+      "scope": "E01",
+      "sha256": "767142d2ba2c813655392a0e23b283b8e8dda469a7dc6d466a94a12dcdcf2913"
+    },
+    {
+      "bytes": 4483,
+      "path": "src/pullraptor/rules.py",
+      "scope": "E01",
+      "sha256": "c78b294a4d36de531be7805c75a7bd08ea6b35486b0b952e39542013e86ef081"
+    }
+  ],
+  "source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "test_modules": [
+    {
+      "methods": {
+        "test_ai_proposals_do_not_alter_canonical_report": 141,
+        "test_build_safe_prompt_neutralizes_injection": 60,
+        "test_max_requests_zero_skips_network": 166,
+        "test_prompt_truncation_under_strict_bounds": 71,
+        "test_render_untrusted_proposals_section": 117,
+        "test_request_ai_proposals_disabled_by_default": 80,
+        "test_request_ai_proposals_handles_network_error_gracefully": 175,
+        "test_request_ai_proposals_successful_mock": 87,
+        "test_sensitive_content_redaction": 49
+      },
+      "path": "tests/test_ai_adapter.py",
+      "sha256": "31d859ec0c71101f6296f617abea151cc5efaa80e21fb772e1d6de7ae254359c"
+    },
+    {
+      "methods": {
+        "test_cache_symlink_refused": 67,
+        "test_clean_warm_corrupt_cache_identical": 36,
+        "test_runtime_schema_change_miss": 56
+      },
+      "path": "tests/test_cache.py",
+      "sha256": "22f201469e40ff95d375e13224617fbb2137266d5ef408f3a710be96898e4d8b"
+    },
+    {
+      "methods": {
+        "test_cli_help": 20,
+        "test_explicit_diff_profile_scope_statement": 45,
+        "test_stdout_machine_format_stderr_diagnostics": 64,
+        "test_structural_python_complete": 27
+      },
+      "path": "tests/test_cli.py",
+      "sha256": "3445991b37dec18422091f07f2dd93d4a545311da2b42878d922dc661131a0fc"
+    },
+    {
+      "methods": {
+        "test_ci_override_cannot_weaken_required_scope": 55,
+        "test_defaults_exact": 10,
+        "test_glob_semantics": 39,
+        "test_minimum_finalization_capacity": 84,
+        "test_unknown_key_error": 27
+      },
+      "path": "tests/test_config.py",
+      "sha256": "a0efefbd9bb8489dc669f54694d7ef14f7f9c4a1008704b688742b8dfb540c8e"
+    },
+    {
+      "methods": {
+        "test_attributes_cannot_hide_source": 60,
+        "test_changes_detects_addition_and_modification": 23,
+        "test_hostile_external_diff_textconv_fsmonitor_not_executed": 38
+      },
+      "path": "tests/test_diff.py",
+      "sha256": "678e4dbfc00922e89d3a54ef9e453d6a7ebd4cf828509eb08e98117491494ae9"
+    },
+    {
+      "methods": {
+        "test_all_evidence_accumulations": 24,
+        "test_base_parse_failure_delta_unknown": 79,
+        "test_conflict_not_blocker": 42,
+        "test_different_claim_or_revision_cannot_accumulate": 36,
+        "test_duplicate_or_foreign_receipt_rejected": 126,
+        "test_fatal_diagnostic_exit3": 143,
+        "test_incomplete_precedes_finding_exit": 153,
+        "test_missing_receipt_cannot_complete": 110,
+        "test_old_sink_new_witness_retained": 92,
+        "test_shifted_line_same_obligation": 58
+      },
+      "path": "tests/test_evidence.py",
+      "sha256": "4b9e359a8e38172a7ca0b23a50c30663cb09919ba190d5967ea045657a5f0f91"
+    },
+    {
+      "methods": {
+        "test_review_clean_and_incremental_identical": 46,
+        "test_review_diff_profile": 61,
+        "test_review_structural_python_complete": 21,
+        "test_review_with_finding": 33,
+        "test_unresolved_import_incomplete_exit2": 74
+      },
+      "path": "tests/test_kernel.py",
+      "sha256": "8e73ea463c696c396f3515f1827071ab0ee120fee39f6e74a25936e4b48d07a0"
+    },
+    {
+      "methods": {
+        "test_explain_finding_tool": 77,
+        "test_findings_min_severity_filter": 176,
+        "test_get_findings_and_coverage_tools": 134,
+        "test_initialize_handshake": 38,
+        "test_malformed_json_rpc_ignored_gracefully": 169,
+        "test_mcp_event_loop_io": 189,
+        "test_notification_handling": 51,
+        "test_path_validation_and_containment": 95,
+        "test_ping": 59,
+        "test_resources_list_and_read": 149,
+        "test_review_tool_dispatch": 113,
+        "test_tools_list": 66,
+        "test_unknown_tool": 90
+      },
+      "path": "tests/test_mcp_server.py",
+      "sha256": "3fac3bc470a3b1e846cdd64cfe74666db5b2573b43637b53ff7f23fef8cb2b06"
+    },
+    {
+      "methods": {
+        "test_bool_not_integer": 254,
+        "test_canonical_excludes_execution_metadata": 120,
+        "test_content_facts_cannot_carry_occurrence": 212,
+        "test_duplicate_keys_rejected": 243,
+        "test_invalid_span_rejected": 162,
+        "test_item_accounting_recursive": 308,
+        "test_limit_failure_cannot_claim_support_or_complete": 323,
+        "test_malformed_utf8_rejected": 291,
+        "test_max_aggregate_items_rejected": 276,
+        "test_max_depth_rejected": 268,
+        "test_max_payload_bytes_rejected": 261,
+        "test_max_string_bytes_rejected": 284,
+        "test_nonfinite_json_rejected": 249,
+        "test_prohibit_unknown_authority_fields": 423,
+        "test_report_union_strict_tags": 302,
+        "test_roundtrip_full_report": 394,
+        "test_roundtrip_limit_failure": 403,
+        "test_surrogate_rejected": 296,
+        "test_two_missing_imports_have_distinct_keys": 375
+      },
+      "path": "tests/test_models.py",
+      "sha256": "03c42f35b0def1746c3aab991ebb53da2bc7e8f323941517f11b057208b65dac"
+    },
+    {
+      "methods": {
+        "test_output_flood_stopped": 30,
+        "test_run_bounded_success": 14,
+        "test_shared_deadline_not_reset": 59,
+        "test_timeout_and_process_tree_cleanup": 44,
+        "test_worker_environment_has_no_credentials": 73
+      },
+      "path": "tests/test_process.py",
+      "sha256": "dcbb2b3a59861b890eaa38822a6de61cd6b46289f522caf74884ed2173d68f32"
+    },
+    {
+      "methods": {
+        "test_cli_missing_token_error": 129,
+        "test_draft_pr_skipped": 36,
+        "test_head_drift_rejected_with_exit_2": 55,
+        "test_publish_new_comment": 73,
+        "test_update_existing_comment_idempotency": 100
+      },
+      "path": "tests/test_publisher.py",
+      "sha256": "b73f8ed74b002d8cbfb5ab166960982939e1cd81c29e4ca981e7e969417ced75"
+    },
+    {
+      "methods": {
+        "test_ambiguous_module_no_external_fallback": 218,
+        "test_import_side_effect_not_executed": 91,
+        "test_isolated_startup_ignores_site_and_paths": 253,
+        "test_local_subprocess_shadows_external_model": 186,
+        "test_maximum_source_base64_fits_protocol": 210,
+        "test_missing_external_module_partial": 139,
+        "test_nested_functions_not_outer_mutation": 56,
+        "test_new_module_resolves_previous_miss": 153,
+        "test_oversized_source_not_sent_to_worker": 103,
+        "test_parameter_reassignment": 69,
+        "test_parse_failure_preserves_diff_coverage": 81,
+        "test_resolving_x_leaves_y_missing": 234,
+        "test_scope_shadowing_and_aliases": 41,
+        "test_stdlib_identity_not_missing_context": 123,
+        "test_subprocess_alias_modeled": 174,
+        "test_timeout_or_worker_crash_partial": 204,
+        "test_unicode_columns_crlf_exact": 31,
+        "test_wrong_blob_or_span_rejected": 110
+      },
+      "path": "tests/test_python_facts.py",
+      "sha256": "b883c630571ee34759113735441153e29bdcbc109a6bee7cf89adb8c3b5cdd41"
+    },
+    {
+      "methods": {
+        "test_empty_findings_not_safety_claim": 39,
+        "test_limit_failure_rendering_sarif": 85,
+        "test_markdown_fence_html_link_breakout": 71,
+        "test_unicode_sarif_character_columns": 45
+      },
+      "path": "tests/test_render.py",
+      "sha256": "f42c7b00df02c375e747cbdc2fb069a1423db321f789ec04832d157d87330734"
+    },
+    {
+      "methods": {
+        "test_conditional_reraise_not_classified_as_swallowed": 61,
+        "test_intentional_patterns_never_defect_claim": 39,
+        "test_py001_negatives": 104,
+        "test_py001_positives": 85,
+        "test_py002_negatives": 144,
+        "test_py002_positives": 125,
+        "test_py003_negatives": 184,
+        "test_py003_positives": 165,
+        "test_shadowed_subprocess_no_shell_claim": 49,
+        "test_untrusted_command_not_inferred_from_shell_true": 73
+      },
+      "path": "tests/test_rules.py",
+      "sha256": "6a2d9ee113665eb091ef2fa1fbe8bbd232f7a29ec04903fa76a33e106daa61c0"
+    },
+    {
+      "methods": {
+        "test_binary_and_deleted_file_preserved": 76,
+        "test_dirty_tree_ignored": 54,
+        "test_merge_base_not_base_tip": 36,
+        "test_nul_metadata_paths": 68,
+        "test_option_like_ref_rejected": 62,
+        "test_refs_pinned_before_read": 26,
+        "test_replace_objects_ignored": 102,
+        "test_symlink_and_submodule_not_followed": 87
+      },
+      "path": "tests/test_snapshot.py",
+      "sha256": "e4a8ec5524298959d7452097e479c55eaab7bcb7190bc3c4c559e5c064d5699b"
+    },
+    {
+      "methods": {
+        "test_cli_staged_flag": 79,
+        "test_cli_workdir_flag": 96,
+        "test_staged_snapshot_leaves_index_and_working_tree_untouched": 26,
+        "test_workdir_snapshot_captures_unstaged_and_untracked_files": 52
+      },
+      "path": "tests/test_working_tree.py",
+      "sha256": "304389f6214b3c8a99b4de232b7d5996ca646c34b4b8b0a46a53be433642e3b4"
+    }
+  ],
+  "trusted_base_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084"
+}

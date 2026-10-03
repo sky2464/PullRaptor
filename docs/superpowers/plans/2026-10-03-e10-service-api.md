@@ -121,7 +121,7 @@ assert credential_sent_to_unapproved_origin is False
 - Consumes: Tasks 1–3 and accepted E11-A1/A2; E07 runtime artifacts.
 - Produces: hosted/private deployment receipts, capability/cost/retention matrices and E10 acceptance record.
 
-- [ ] **Step 1: Write the failing acceptance tests.** Add `test_source_transfer_requires_org_policy`, `test_private_no_egress`, `test_cross_tenant_worker_store_denied`, `test_terminal_scratch_deleted`, `test_restart_mid_job`, and `test_remote_sdk_mcp_canonical_equal`. With remote transfer disabled, reject before source acquisition/upload; private deterministic operation must survive denied egress.
+- [ ] **Step 1: Write the failing acceptance tests.** Add `test_source_transfer_requires_org_policy`, `test_private_no_egress`, `test_cross_tenant_worker_store_denied`, `test_terminal_scratch_deleted`, `test_restart_mid_job`, and `test_remote_sdk_cli_api_canonical_equal`. With remote transfer disabled, reject before source acquisition/upload; private deterministic operation must survive denied egress. E10-A4 owns CLI/API/SDK profile parity; E08-A4 subsequently owns MCP/client parity and cannot be a prerequisite for accepting this service profile.
 
 Expected assertions for the stated adverse fixture:
 

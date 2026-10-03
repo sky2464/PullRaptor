@@ -123,7 +123,7 @@ A hosted service and private enterprise deployment are now proposed E10/E11 deli
 
 ## Planning coverage and implementation status
 
-All E01–E11 now have a scoped specification, execution plan, acceptance criteria and explicit dependency order. The new child documents are proposed drafts for review. Planning coverage is complete for the recorded roadmap; product implementation and release acceptance are not complete. This request authorizes documentation/planning only.
+All E01–E11 now have a scoped specification, execution plan, acceptance criteria and explicit dependency order. The child documents are proposed designs; product implementation and release acceptance are not complete. Historical planning-only requests do not override later human instructions. The coordinator records the current assignment scope and task-specific prerequisites in the [worker dispatch and unblock record](docs/worker-dispatch.md).
 
 E04–E06 and E09–E11 have no observed implementation. E01–E03 and E07–E08 have implementation artifacts with different completeness; full-roadmap acceptance remains pending despite earlier completion labels.
 
@@ -145,9 +145,9 @@ The [planning coverage audit](docs/reviews/2026-10-03-planning-coverage.md) reco
 
 ## Worker execution and completion rules
 
-Use the [execution and acceptance contract](docs/planning-contract.md). Before implementation, a worker must identify its exact child task, acceptance IDs, accepted prerequisites, trusted base revision and scope. Missing plan/criteria/prerequisite/isolation means explicitly report blocked_for_execution; do not invent a reduced scope and mark the package complete. Proposed plans make work reviewable, but do not authorize execution or shipment.
+Use the [execution and acceptance contract](docs/planning-contract.md) and [worker dispatch record](docs/worker-dispatch.md). Before implementation, a worker must identify its exact child task, acceptance IDs, consumed prerequisites, trusted base revision and scope. Verify code and document revisions separately. Missing plan/criteria/consumed prerequisite/isolation means report blocked_for_execution for that task with a resolving owner and next action; do not invent a reduced scope or freeze independent work. Proposed plans make work reviewable, but do not authorize execution or shipment.
 
-Statuses record actual work separately from acceptance. A package becomes Accepted only after all its required criteria have fresh revision-bound artifacts and an independent acceptance decision in `docs/acceptance/E<nn>.md`. Acceptance records are not yet present; their paths below are future outputs. A finished subset, passing tests, report hash or checked task box cannot accept an entire roadmap track. Deferred surfaces/capabilities stay visible.
+Statuses record actual work separately from acceptance. A package becomes Accepted only after all its required criteria have fresh revision-bound artifacts and an independent acceptance decision in `docs/acceptance/E<nn>.md`. E01 has a partial static inventory; no complete independently accepted record is present. Other acceptance paths remain future outputs. A finished subset, passing tests, report hash or checked task box cannot accept an entire roadmap track. Deferred surfaces/capabilities stay visible.
 
 ## Acceptance and capability ownership
 
@@ -183,4 +183,4 @@ Each child spec declares proposed dependency/resource budgets and failure policy
 
 ## Next concrete action
 
-Review the proposed child documents and the planning coverage audit. On a subsequent authorized implementation request, start with the E01 acceptance audit/record and E07 artifact gates, then E02 local-capture and CI/publication completion in the sequence above. The worker must explicitly report pending acceptance or blocked prerequisites and ship only a scoped task with a real plan and criteria. The roadmap document is complete as planning coverage; the product is not complete.
+Continue E01 Task 9 Step 1's requirement/assertion/fixture mapping using the [supplemental static inventory](docs/acceptance/E01-static-inventory.md). The named-test inventory is recorded; reconcile separately collected suite evidence against missing adverse cases before crediting acceptance. Full corpus, benchmark and independent acceptance remain pending. In parallel, complete the E07 Task 1 dependency/license audit in the [dispatch queue](docs/worker-dispatch.md). Neither preparation task requires E01 already to be accepted. Runtime verification and production implementation need a concrete coordinator assignment within the current human-authorized scope. Complete consumed prerequisites before local delivery, hostile CI or remote activation; ship only independently accepted scopes.

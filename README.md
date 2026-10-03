@@ -66,6 +66,8 @@ docker run --rm -v "$(pwd):/repo" pullraptor python -m pullraptor --repo /repo -
 | Document | Purpose |
 |---|---|
 | [Master plan](Master-Plan.md) | Release order, scope, gates, and decisions |
+| [Worker dispatch and unblock record](docs/worker-dispatch.md) | Assigned revisions, task-level prerequisites, blocker escalation and next worker queue |
+| [E01 static inventory](docs/acceptance/E01-static-inventory.md) | Static test-declaration inventory, missing evidence and next verification work |
 | [Product and architecture specification](docs/superpowers/specs/2026-10-03-pullraptor-design.md) | User flows, interfaces, runtime choice, trust boundaries |
 | [Mathematical core](docs/mathematical-core.md) | Algorithms, equations, assumptions, and counterexamples |
 | [Capability review](docs/research/2026-10-03-capability-review.md) | Workflow capabilities and acceptance criteria |

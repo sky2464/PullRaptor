@@ -1,6 +1,6 @@
 # PullRaptor Offline Review Kernel Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development or superpowers:executing-plans to implement this plan task by task. Steps use checkbox syntax for tracking. Tasks 1–8 retain historical implementation checkboxes; Task 9's full acceptance audit is pending. Checkboxes alone are not acceptance evidence.
+> **For agentic workers:** For an authorized implementation assignment, use superpowers:subagent-driven-development or superpowers:executing-plans task by task. A preparation assignment may inspect Task 9 without starting implementation or running tests. Steps use checkbox syntax for tracking. Tasks 1–8 retain historical implementation checkboxes; Task 9's full acceptance audit is pending. Checkboxes alone are not acceptance evidence.
 
 **Goal:** Deliver E01: a useful offline comparison of immutable revisions with honest coverage, three advisory Python patterns, stable evidence, and reproducible outputs.
 
@@ -175,7 +175,7 @@ Cached ContentFacts have no path/side; Task 4 binds current occurrences. If extr
 
 ### Task 9: Audit and independently accept the implemented E01 scope
 
-**Status:** Unexecuted acceptance work. Do not rerun or credit Tasks 1–8 from checkbox state alone. Apply the [execution contract](../../planning-contract.md).
+**Status:** Supplemental static named-test inventory recorded in [E01 static inventory](../../acceptance/E01-static-inventory.md); reconcile separately collected runtime evidence against full requirement/assertion/fixture mapping. Independent acceptance remains pending. Do not rerun or credit Tasks 1–8 from checkbox state alone. Apply the [execution contract](../../planning-contract.md). Step 1 requires neither prior E01 acceptance nor an E06 runner.
 
 **Files:** Produce `docs/acceptance/E01.md` and `docs/acceptance/artifacts/E01/`; add missing adverse fixtures only in the affected existing test modules. A discovered production defect needs a scoped correction task before implementation.
 
