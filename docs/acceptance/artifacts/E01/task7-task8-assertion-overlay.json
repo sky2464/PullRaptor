@@ -1,0 +1,268 @@
+{
+  "date": "2026-10-03",
+  "source": "docs/acceptance/artifacts/E01/2026-10-03-cache-output-assertion-map.md",
+  "source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "named_task7": {
+    "test_clean_warm_corrupt_cache_identical": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_cache.py:42,47-48,54"],
+      "alternates": ["tests/test_kernel.py:51-59"],
+      "gap": "No warm hit, full canonical equality, or corrupt/absent report comparison"
+    },
+    "test_atomic_interrupted_write_miss": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "No interrupted-write staging/rename fixture"
+    },
+    "test_runtime_schema_change_miss": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_cache.py:63-65"],
+      "alternates": [],
+      "gap": "Key change only; no read-miss or report equality after identity change"
+    },
+    "test_same_blob_different_paths_rebound": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_python_facts.py:162,169 resolution only"],
+      "gap": "Same content at two paths/sides with cache rebound"
+    },
+    "test_size_cap": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_config.py:19 default cap only"],
+      "gap": "No aggregate capacity/eviction fixtures"
+    },
+    "test_full_manifest_resolution_recomputed": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": [],
+      "alternates": ["tests/test_python_facts.py:153-172 as test_new_module_resolves_previous_miss"],
+      "gap": "No cached review orchestration or canonical report comparison"
+    },
+    "test_schema_valid_foreign_cache_ignored": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_cache.py:52-54 invalid JSON only"],
+      "gap": "Schema-valid omitted-fact foreign entry"
+    },
+    "test_shared_permissions_cache_disabled": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "Shared directory and wrong-owner fixtures"
+    },
+    "test_cache_symlink_or_reparse_refused": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": [],
+      "alternates": ["tests/test_cache.py:76-79 test_cache_symlink_refused"],
+      "gap": "Root/parent redirect, reparse, write redirect; OSError path unasserted"
+    },
+    "test_ci_cache_off": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_config.py:55-82 CI override only"],
+      "gap": "review(..., ci=True) must not admit cache I/O"
+    },
+    "test_all_extractor_components_invalidate": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": ["tests/test_cache.py:61,65 ext1/ext2 key"],
+      "alternates": [],
+      "gap": "No worker/producer/binding component mutation inventory"
+    },
+    "test_scope_import_closure_fixed_point": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "Multi-hop/cyclic coordinator closure fixtures"
+    },
+    "test_unrelated_malformed_file_not_required": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_python_facts.py:81-89 direct parse only"],
+      "gap": "Repository with unrelated malformed file and scope honesty"
+    },
+    "test_unresolved_context_required": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": [],
+      "alternates": [
+        "tests/test_kernel.py:81-84",
+        "tests/test_python_facts.py:151,245-251",
+        "tests/test_models.py:375-392 keys only"
+      ],
+      "gap": "Coordinator lookup key, capability/cause/recovery, CLI exit 2"
+    },
+    "test_incomplete_discovery_cannot_seal_complete_scope": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": [],
+      "alternates": ["tests/test_evidence.py:160-171 combined incomplete discovery and receipt"],
+      "gap": "Isolate discovery incomplete with all known receipts complete"
+    },
+    "test_slow_preparation_short_policy_still_bounded": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_process.py:59-71", "tests/test_config.py:86-93"],
+      "gap": "Full-review bootstrap timing under short policy"
+    }
+  },
+  "named_task8": {
+    "test_structural_python_complete": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_cli.py:42-43"],
+      "alternates": ["tests/test_kernel.py:28-31"],
+      "gap": "Incomplete receipts, scope, all output formats"
+    },
+    "test_structural_other_language_partial_exit2": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_config.py:24-25 suffix inventory"],
+      "gap": "Mixed-language structural CLI exit 2 all formats"
+    },
+    "test_explicit_diff_profile_scope_statement": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_cli.py:61-62"],
+      "alternates": ["tests/test_kernel.py:68-72"],
+      "gap": "Visible semantic/security limits of diff scope"
+    },
+    "test_config_error_exit3": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_config.py ValueError", "tests/test_evidence.py:149-151 decision 3"],
+      "gap": "CLI invalid TOML exit 3 with bounded stderr"
+    },
+    "test_empty_findings_not_safety_claim": {
+      "coverage": "partial",
+      "mapping_kind": "exact_mapped",
+      "assertions": ["tests/test_render.py:42-43 Markdown only"],
+      "alternates": [],
+      "gap": "JSON/SARIF and partial-with-empty-findings"
+    },
+    "test_deleted_line_sarif_side": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "Baseline-only SARIF history properties"
+    },
+    "test_unicode_sarif_character_columns": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_render.py:61,63,65-69 synthetic span"],
+      "alternates": ["tests/test_python_facts.py:33-39 digest only"],
+      "gap": "Source-derived Unicode byte-to-character fidelity"
+    },
+    "test_stdout_machine_format_stderr_diagnostics": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_cli.py:79-82"],
+      "alternates": [],
+      "gap": "stderr never asserted; no error-path JSON cleanliness"
+    },
+    "test_terminal_escape_controls_and_bidi": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "ESC/control/bidi in every displayed field"
+    },
+    "test_markdown_fence_html_link_breakout": {
+      "coverage": "partial",
+      "mapping_kind": "exact_partial",
+      "assertions": ["tests/test_render.py:83 script tag only"],
+      "alternates": [],
+      "gap": "Fence closure, inactive links, visible representation"
+    },
+    "test_links_only_from_trusted_identity": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "Trusted/untrusted navigation fixtures"
+    },
+    "test_uri_reserved_segments_roundtrip": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "Reserved URI segment round trips"
+    },
+    "test_report_byte_limit_never_complete": {
+      "coverage": "partial",
+      "mapping_kind": "alternate_partial",
+      "assertions": [],
+      "alternates": [
+        "tests/test_models.py:341-372,416-421 constructed LimitFailure",
+        "tests/test_render.py:95-96"
+      ],
+      "gap": "Full-report output exhaustion through CLI"
+    },
+    "test_requested_and_examined_scope_visible": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_kernel.py:30", "tests/test_render.py:31,34 empty scope"],
+      "gap": "Nonempty scope visible in all formats"
+    },
+    "test_recovery_guidance_not_attacker_commands": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": ["tests/test_python_facts.py diagnostic messages only"],
+      "gap": "Trusted recovery IDs across formats"
+    },
+    "test_core_network_disabled": {
+      "coverage": "unmapped",
+      "mapping_kind": "unmapped",
+      "assertions": [],
+      "alternates": [],
+      "gap": "End-to-end socket/DNS denial through CLI"
+    }
+  },
+  "unnamed": [
+    {"id": "U7-01", "acceptance_ids": ["E01-A2"], "proposed_fixture": "E01-CACHE-EQUALITY", "coverage": "unmapped"},
+    {"id": "U7-02", "acceptance_ids": ["E01-A2"], "proposed_fixture": "E01-CACHE-MUTATIONS", "coverage": "unmapped"},
+    {"id": "U7-03", "acceptance_ids": ["E01-A2"], "proposed_fixture": "E01-CACHE-REPLAY", "coverage": "unmapped"},
+    {"id": "U7-04", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-BOOTSTRAP-DEADLINE", "coverage": "unmapped"},
+    {"id": "U7-05", "acceptance_ids": ["E01-A1", "E01-A2"], "proposed_fixture": "E01-CACHE-CONTENT-BOUNDARY", "coverage": "unmapped"},
+    {"id": "U7-06", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-CACHE-OPERATIONAL", "coverage": "unmapped"},
+    {"id": "U7-07", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-CACHE-ADMISSION", "coverage": "partial"},
+    {"id": "U7-08", "acceptance_ids": ["E01-A1", "E01-A2"], "proposed_fixture": "E01-CACHE-IDENTITIES", "coverage": "unmapped"},
+    {"id": "U7-09", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-COORDINATOR-INPUTS", "coverage": "unmapped"},
+    {"id": "U7-10", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-SCOPE-CLOSURE", "coverage": "partial"},
+    {"id": "U7-11", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-AGGREGATE-BUDGETS", "coverage": "partial"},
+    {"id": "U7-12", "acceptance_ids": ["E01-A2"], "proposed_fixture": "E01-REVISION-REBUILD", "coverage": "unmapped"},
+    {"id": "U8-01", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-FORMAT-SCOPE", "coverage": "unmapped"},
+    {"id": "U8-02", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-OUTPUT-EXHAUSTION", "coverage": "partial"},
+    {"id": "U8-03", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-RENDER-DEADLINE", "coverage": "unmapped"},
+    {"id": "U8-04", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-MINIMUM-OUTPUT-CAPACITY", "coverage": "partial"},
+    {"id": "U8-05", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-CLI-OUTPUT-CHANNEL", "coverage": "partial"},
+    {"id": "U8-06", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-CLI-OFFLINE-BOUNDARY", "coverage": "partial"},
+    {"id": "U8-07", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-PRESENTATION-BOUNDARY", "coverage": "partial"},
+    {"id": "U8-08", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-SARIF-SIDES", "coverage": "unmapped"},
+    {"id": "U8-09", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-LOCATION-TO-OUTPUT", "coverage": "partial"},
+    {"id": "U8-10", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-RECOVERY-FLOW", "coverage": "partial"},
+    {"id": "U8-11", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-RUNTIME-CONTRACT", "coverage": "unmapped"},
+    {"id": "U8-12", "acceptance_ids": ["E01-A3"], "proposed_fixture": "E01-LOCAL-FLOW-INVENTORY", "coverage": "unmapped"},
+    {"id": "U8-13", "acceptance_ids": ["E01-A3"], "proposed_fixture": "E01-BENCHMARK-INVENTORY", "coverage": "unmapped"},
+    {"id": "U8-14", "acceptance_ids": ["E01-A1"], "proposed_fixture": "E01-ADVISORY-OUTPUT", "coverage": "partial"}
+  ]
+}
