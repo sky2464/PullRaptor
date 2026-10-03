@@ -1,0 +1,8 @@
+{
+  "package": "E11",
+  "status": "local_fake_stubs",
+  "live_identity_providers": [],
+  "live_cloud_credentials": false,
+  "runtime_packages": [],
+  "notes": "Enterprise identity and policy construction uses stdlib-only fake assertions and grant snapshots until operator-pinned OIDC and crypto adapters are admitted."
+}
