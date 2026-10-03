@@ -33,7 +33,19 @@ from pullraptor.models import (
 )
 from pullraptor.parser_worker import EXTRACTOR_DIGEST
 from pullraptor.python_facts import bind_facts, extract_python, resolve_context
+from pullraptor.python_ir import BoundStatementIR
 from pullraptor.rules import evaluate_rules
+from pullraptor.security_flow import FlowResult, analyze_bound_ir, pysec001_model
+
+
+def analyze_python_security_flow(
+    bound: BoundStatementIR,
+    *,
+    limits: Limits,
+    deadline: Deadline,
+) -> FlowResult:
+    """Advisory PYSEC001 hazard analysis over bound statement IR (not merged into findings yet)."""
+    return analyze_bound_ir(bound, pysec001_model(), limits=limits, deadline=deadline)
 
 
 def review(
