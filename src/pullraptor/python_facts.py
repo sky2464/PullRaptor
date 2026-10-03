@@ -48,7 +48,7 @@ def extract_python(
             content=None,
             diagnostics=(
                 Diagnostic(
-                    code="DEADLINE_EXCEEDED",
+                    code="TIMEOUT",
                     message="Parse deadline exhausted before extraction",
                     cause="deadline_exhausted",
                 ),
@@ -123,73 +123,73 @@ def resolve_context(
     manifest: Snapshot,
 ) -> tuple[tuple[ResolvedFacts, ...], tuple[Diagnostic, ...]]:
     """Conservatively resolve imports and symbols against current full manifest and stdlib."""
-    # Build repository module inventory from manifest
-    repo_modules: dict[str, str] = {}
-    for blob in manifest.blobs:
-        if blob.path and blob.path.endswith(".py"):
-            parts = blob.path[:-3].split("/")
-            if parts[-1] == "__init__":
-                mod_name = ".".join(parts[:-1]) if len(parts) > 1 else parts[0]
-            else:
-                mod_name = ".".join(parts)
-            repo_modules[mod_name] = blob.path
-
-            if parts[0] == "src" and len(parts) > 1:
-                src_parts = parts[1:]
-                if src_parts[-1] == "__init__":
-                    src_mod_name = ".".join(src_parts[:-1]) if len(src_parts) > 1 else src_parts[0]
-                else:
-                    src_mod_name = ".".join(src_parts)
-                repo_modules[src_mod_name] = blob.path
-
+    py_blobs = [b.path for b in manifest.blobs if b.path and b.path.endswith(".py")]
     stdlib_modules = getattr(sys, "stdlib_module_names", set())
 
     resolved_list: list[ResolvedFacts] = []
     diagnostics: list[Diagnostic] = []
 
     for bound in facts:
+        bound_dir = Path(bound.path).parent
         resolved_imports: list[dict[str, Any]] = []
 
         for imp in bound.content.imports:
-            mod = imp.get("module") or imp.get("name") or ""
-            # Canonical module target (top-level package or module)
-            canonical = mod.split(".")[0] if mod else ""
+            raw_mod = imp.get("canonical") or imp.get("module") or imp.get("name") or ""
+            canonical = raw_mod.split(".")[0] if raw_mod else ""
+            level = imp.get("level", 0)
 
-            # 1. Repository candidate takes priority (shadows stdlib/external)
-            if mod in repo_modules:
+            parts = canonical.split(".")
+            file_cand = "/".join(parts) + ".py"
+            pkg_cand = "/".join(parts) + "/__init__.py"
+
+            matches: list[str] = []
+            if level > 0:
+                rel_base = bound_dir
+                for _ in range(level - 1):
+                    rel_base = rel_base.parent
+                rel_file = (rel_base / file_cand).as_posix()
+                rel_pkg = (rel_base / pkg_cand).as_posix()
+                matches = [p for p in py_blobs if p in (rel_file, rel_pkg)]
+            else:
+                matches = [
+                    p for p in py_blobs
+                    if p in (file_cand, pkg_cand) or p.endswith("/" + file_cand) or p.endswith("/" + pkg_cand)
+                ]
+
+            if len(matches) > 1:
                 resolved_imports.append({
-                    "raw": mod,
+                    "raw": raw_mod,
+                    "canonical": canonical,
+                    "kind": "ambiguous",
+                    "target_path": None,
+                })
+                diagnostics.append(
+                    Diagnostic(
+                        code="IMPORT_AMBIGUOUS",
+                        message=f"PullRaptor: IMPORT_AMBIGUOUS in {bound.path}: multiple candidates {matches} for '{canonical}'",
+                        path=bound.path,
+                        side=bound.side,
+                        cause="ambiguous_candidates",
+                        recovery="Use explicit package path or disambiguate module names",
+                    )
+                )
+            elif len(matches) == 1:
+                resolved_imports.append({
+                    "raw": raw_mod,
                     "canonical": canonical,
                     "kind": "repo",
-                    "target_path": repo_modules[mod],
+                    "target_path": matches[0],
                 })
-            elif canonical in repo_modules:
-                resolved_imports.append({
-                    "raw": mod,
-                    "canonical": canonical,
-                    "kind": "repo",
-                    "target_path": repo_modules[canonical],
-                })
-            elif any(k == canonical or k.startswith(canonical + ".") for k in repo_modules):
-                matching_path = next(v for k, v in repo_modules.items() if k == canonical or k.startswith(canonical + "."))
-                resolved_imports.append({
-                    "raw": mod,
-                    "canonical": canonical,
-                    "kind": "repo",
-                    "target_path": matching_path,
-                })
-            # 2. Pinned standard library
             elif canonical in stdlib_modules:
                 resolved_imports.append({
-                    "raw": mod,
+                    "raw": raw_mod,
                     "canonical": canonical,
                     "kind": "stdlib",
                     "target_path": None,
                 })
-            # 3. Unresolved external
             else:
                 resolved_imports.append({
-                    "raw": mod,
+                    "raw": raw_mod,
                     "canonical": canonical,
                     "kind": "unresolved",
                     "target_path": None,
@@ -201,7 +201,7 @@ def resolve_context(
                         path=bound.path,
                         side=bound.side,
                         cause="missing_dependency",
-                        recovery=f"Add {canonical}.py to repository or configure modeled external",
+                        recovery=f"Add {canonical}.py to repository or declare external package model",
                     )
                 )
 

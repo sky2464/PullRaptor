@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 import shutil
+import tempfile
 
 from pullraptor.models import (
     BlobRef,
@@ -44,6 +45,68 @@ def _safe_git_args() -> list[str]:
     ]
 
 
+def freeze_working_tree(
+    repo: Path,
+    limits: Limits,
+    deadline: Deadline,
+    *,
+    staged_only: bool = False,
+) -> str:
+    """Atomically freeze staged index or dirty working tree into an immutable Git tree object.
+
+    Does not modify repository HEAD, references, working files, or the developer's index.
+    Returns the 40-character hex tree OID.
+    """
+    env = _git_env()
+    bounds = ProcessBounds(
+        max_stdout_bytes=1024,
+        max_stderr_bytes=limits.max_stderr_bytes,
+        timeout_seconds=5.0,
+    )
+
+    if staged_only:
+        cmd = tuple(_safe_git_args() + ["write-tree"])
+        res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
+        if res.returncode != 0:
+            err = res.stderr.decode("utf-8", errors="replace").strip()
+            raise ValueError(f"Failed to freeze staged index tree: {err}")
+        return res.stdout.decode("utf-8").strip()
+
+    # Full working tree: use temporary index to avoid altering user's .git/index
+    with tempfile.NamedTemporaryFile(prefix="pullraptor_idx_", delete=False) as tf:
+        temp_idx = tf.name
+
+    try:
+        real_idx = repo / ".git" / "index"
+        if real_idx.is_file():
+            shutil.copy2(real_idx, temp_idx)
+
+        env_work = dict(env)
+        env_work["GIT_INDEX_FILE"] = temp_idx
+
+        # Stage all working tree changes into temporary index
+        cmd_add = tuple(_safe_git_args() + ["add", "--all"])
+        res_add = run_bounded(cmd_add, cwd=repo, env=env_work, deadline=deadline, bounds=bounds)
+        if res_add.returncode != 0:
+            err = res_add.stderr.decode("utf-8", errors="replace").strip()
+            raise ValueError(f"Failed to stage working directory into temporary index: {err}")
+
+        # Write tree from temporary index
+        cmd_write = tuple(_safe_git_args() + ["write-tree"])
+        res_write = run_bounded(cmd_write, cwd=repo, env=env_work, deadline=deadline, bounds=bounds)
+        if res_write.returncode != 0:
+            err = res_write.stderr.decode("utf-8", errors="replace").strip()
+            raise ValueError(f"Failed to freeze working directory tree: {err}")
+
+        return res_write.stdout.decode("utf-8").strip()
+    finally:
+        try:
+            if os.path.exists(temp_idx):
+                os.unlink(temp_idx)
+        except OSError:
+            pass
+
+
 def resolve_inputs(
     repo: Path,
     base_ref: str,
@@ -52,6 +115,7 @@ def resolve_inputs(
     deadline: Deadline,
     *,
     exact_base: bool = False,
+    is_head_tree: bool = False,
 ) -> tuple[str, str, str]:
     """Resolve base and head refs to immutable commit OIDs and compute comparison base.
 
@@ -69,6 +133,10 @@ def resolve_inputs(
     if res_base.returncode != 0:
         raise ValueError(f"Failed to resolve base ref {base_ref!r}: {res_base.stderr.decode('utf-8', errors='replace').strip()}")
     base_tip = res_base.stdout.decode("utf-8").strip()
+
+    if is_head_tree:
+        # Head is already an immutable tree object representing frozen working tree / staged changes
+        return (base_tip, base_tip, head_ref)
 
     # Resolve head_ref commit OID
     cmd_head = tuple(_safe_git_args() + ["rev-parse", "--verify", "--end-of-options", f"{head_ref}^{{commit}}"])

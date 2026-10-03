@@ -201,7 +201,61 @@ sp.run(["ls"], shell=True)
         self.assertEqual(imp["kind"], "repo")
         self.assertEqual(imp["canonical"], "subprocess")
 
+    def test_timeout_or_worker_crash_partial(self) -> None:
+        expired_deadline = Deadline(started_at=time.monotonic() - 10.0, duration_seconds=5.0)
+        res = extract_python(b"x = 1\n", self.limits, expired_deadline)
+        self.assertIsNone(res.content)
+        self.assertTrue(any(d.code == "TIMEOUT" for d in res.diagnostics))
+
+    def test_maximum_source_base64_fits_protocol(self) -> None:
+        code = b"# filler comment\nx = 1\n" * 40000
+        self.assertLess(len(code), self.limits.max_blob_bytes)
+        res = extract_python(code, self.limits, self.deadline)
+        self.assertIsNotNone(res.content)
+        assert res.content is not None
+        self.assertEqual(res.content.blob_digest, hashlib.sha256(code).hexdigest())
+
+    def test_ambiguous_module_no_external_fallback(self) -> None:
+        code = b"import common\n"
+        res = extract_python(code, self.limits, self.deadline)
+        facts = res.content
+        assert facts is not None
+
+        blob1 = BlobRef(path="app.py", path_bytes=b"app.py", mode="100644", blob_oid="1", size=len(code))
+        blob2 = BlobRef(path="pkg_a/common.py", path_bytes=b"pkg_a/common.py", mode="100644", blob_oid="2", size=10)
+        blob3 = BlobRef(path="pkg_b/common.py", path_bytes=b"pkg_b/common.py", mode="100644", blob_oid="3", size=10)
+        snap = Snapshot(oid="snap", blobs=(blob1, blob2, blob3))
+
+        bound = bind_facts(facts, code, snap, "app.py", "head")
+        resolved, diags = resolve_context((bound,), snap)
+        self.assertTrue(any(d.code == "IMPORT_AMBIGUOUS" for d in diags))
+        self.assertEqual(resolved[0].resolved_imports[0]["kind"], "ambiguous")
+
+    def test_resolving_x_leaves_y_missing(self) -> None:
+        code = b"import json\nimport missing_module\n"
+        res = extract_python(code, self.limits, self.deadline)
+        facts = res.content
+        assert facts is not None
+
+        blob = BlobRef(path="app.py", path_bytes=b"app.py", mode="100644", blob_oid="1", size=len(code))
+        snap = Snapshot(oid="snap", blobs=(blob,))
+        bound = bind_facts(facts, code, snap, "app.py", "head")
+
+        resolved, diags = resolve_context((bound,), snap)
+        self.assertEqual(len(diags), 1)
+        self.assertEqual(diags[0].code, "IMPORT_UNRESOLVED")
+        self.assertIn("missing_module", diags[0].message)
+
+        resolved_imps = resolved[0].resolved_imports
+        self.assertTrue(any(i["canonical"] == "json" and i["kind"] == "stdlib" for i in resolved_imps))
+        self.assertTrue(any(i["canonical"] == "missing_module" and i["kind"] == "unresolved" for i in resolved_imps))
+
+    def test_isolated_startup_ignores_site_and_paths(self) -> None:
+        code = b"import sys\n"
+        res = extract_python(code, self.limits, self.deadline)
+        self.assertIsNotNone(res.content)
+        self.assertEqual(len(res.diagnostics), 0)
+
 
 if __name__ == "__main__":
-    import os
     unittest.main()

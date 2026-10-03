@@ -19,6 +19,14 @@ The project is in the planning stage. The user's current request authorizes rese
 - Verify incremental and clean analysis equivalence, determinism, and meaningful adverse cases before declaring a feature complete.
 - Label roadmap targets as proposed until their acceptance evidence exists. Update task status only from actual work and checks.
 
+## Branch and Pull Request Policy
+
+- All commits must be made on feature / pull request branches and never directly on `main`.
+- Branch naming convention strictly follows `feat/<descriptor>` (e.g., `feat/e02-local-snapshots-and-publication`), `fix/<descriptor>`, `chore/<descriptor>`, or `docs/<descriptor>`.
+- Maintain a clean repository with at most 2 or 3 active branches (`main` plus current feature/PR branch). Prune merged branches.
+- Direct pushes to `main` are blocked; all changes must merge through pull requests verified by CI.
+- Review and CI policies derive strictly from the trusted base revision (`main`); head branch changes cannot weaken review.
+
 ## Explicit knowledge-graph command
 
 - When the user types `/graphify`, use the installed skill at `~/.Codex/skills/graphify/SKILL.md` or its instructions before doing anything else. This explicit command rule does not add a graph-tool dependency to the review kernel.

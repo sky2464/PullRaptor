@@ -46,6 +46,7 @@ def review(
     ci: bool = False,
     exact_base: bool = False,
     use_cache: bool = True,
+    is_head_tree: bool = False,
 ) -> tuple[Report, Deadline, RecordLimits]:
     """Execute a complete, immutable review comparing base and head revisions.
 
@@ -57,7 +58,7 @@ def review(
 
     # 1. Resolve immutable Git commits
     base_tip, comparison_base, head = resolve_inputs(
-        repo, base_ref, head_ref, Limits(), initial_deadline, exact_base=exact_base
+        repo, base_ref, head_ref, Limits(), initial_deadline, exact_base=exact_base, is_head_tree=is_head_tree
     )
 
     # 2. Read base-tip snapshot to discover trusted policy (.pullraptor.toml)
