@@ -32,9 +32,13 @@ from pullraptor.publication_contract import (
     validate_publication,
 )
 from pullraptor.publication_lifecycle import PublishedObservation, plan_publication
+from pullraptor.publication_transport import (
+    COMMENT_MARKER,
+    apply_publication_write,
+    fetch_issue_comments_paginated,
+    find_owned_review_comment_id,
+)
 from pullraptor.render import render_markdown
-
-COMMENT_MARKER = "<!-- pullraptor:review -->"
 _BOT_OWNER = "pullraptor-bot"
 
 
@@ -370,9 +374,23 @@ def publish_report(
         sys.stdout.write(f"PullRaptor Publisher: preview only; no comment writes for PR #{pr_number}\n")
         return 0
 
-    comments_url = f"{api_base_url}/repos/{repo_slug}/issues/{pr_number}/comments?per_page=100"
-    _c_status, comments_data = _github_api_request(comments_url, token)
-    comments_list = comments_data if isinstance(comments_data, list) else []
+    def _transport_request(
+        url: str,
+        auth_token: str,
+        method: str = "GET",
+        payload: dict[str, Any] | None = None,
+    ) -> tuple[int, Any]:
+        status, body = _github_api_request(url, auth_token, method=method, payload=payload)
+        return status, body
+
+    comments_list, _inventory_state = fetch_issue_comments_paginated(
+        api_base_url=api_base_url,
+        repo_slug=repo_slug,
+        pr_number=pr_number,
+        token=token,
+        deadline=deadline,
+        request_fn=_transport_request,
+    )
     existing_observations = observations_from_comments(comments_list)
 
     artifact_digest = pinned_expected.artifact_digest
@@ -400,28 +418,41 @@ def publish_report(
         )
         return 2
 
-    existing_comment_id: int | None = None
-    for c in comments_list:
-        if isinstance(c, dict) and COMMENT_MARKER in str(c.get("body", "")):
-            existing_comment_id = c.get("id")
-            break
+    owned_comment_id = find_owned_review_comment_id(comments_list)
 
-    should_create = bool(pub_plan.create) or existing_comment_id is None
-    if existing_comment_id is not None:
-        update_url = f"{api_base_url}/repos/{repo_slug}/issues/comments/{existing_comment_id}"
-        _u_status, _ = _github_api_request(update_url, token, method="PATCH", payload={"body": comment_payload})
+    write_result = apply_publication_write(
+        api_base_url=api_base_url,
+        repo_slug=repo_slug,
+        pr_number=pr_number,
+        token=token,
+        comment_payload=comment_payload,
+        pub_plan=pub_plan,
+        owned_comment_id=owned_comment_id,
+        deadline=deadline,
+        request_fn=_transport_request,
+    )
+
+    if write_result.action == "created":
         sys.stdout.write(
-            f"PullRaptor Publisher: Updated existing review comment {existing_comment_id} on PR #{pr_number}\n"
+            f"PullRaptor Publisher: Published review comment {write_result.comment_id} on PR #{pr_number}\n"
         )
-    elif should_create:
-        post_url = f"{api_base_url}/repos/{repo_slug}/issues/{pr_number}/comments"
-        _p_status, new_comment = _github_api_request(post_url, token, method="POST", payload={"body": comment_payload})
-        new_id = new_comment.get("id") if isinstance(new_comment, dict) else "unknown"
-        sys.stdout.write(f"PullRaptor Publisher: Published review comment {new_id} on PR #{pr_number}\n")
-    else:
+    elif write_result.action == "updated":
+        sys.stdout.write(
+            f"PullRaptor Publisher: Updated existing review comment {write_result.comment_id} on PR #{pr_number}\n"
+        )
+    elif write_result.action == "reconciled":
         sys.stdout.write(
             f"PullRaptor Publisher: reconciled duplicate delivery; no new comment for PR #{pr_number}\n"
         )
+    elif write_result.action == "deferred":
+        sys.stdout.write(
+            f"PullRaptor Publisher: deferred publication ({write_result.cause}) for PR #{pr_number}\n"
+        )
+    else:
+        sys.stderr.write(
+            f"PullRaptor Publisher: publication transport failed ({write_result.cause}) for PR #{pr_number}\n"
+        )
+        return 3
 
     return 0
 

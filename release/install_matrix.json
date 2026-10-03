@@ -1,0 +1,19 @@
+{
+  "profiles": [
+    {
+      "id": "python-3.12-linux-x86_64-venv",
+      "runtime": "python-3.12",
+      "platform": "linux-x86_64",
+      "artifact_kinds": ["wheel"],
+      "offline": true,
+      "state": "development_verified"
+    }
+  ],
+  "footprint_budgets": {
+    "kernel_bytes_max": 5242880,
+    "extras_bytes_max": 104857600,
+    "image_bytes_max": 268435456,
+    "startup_seconds_max": 2.0,
+    "rss_bytes_max": 67108864
+  }
+}

@@ -9,6 +9,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from pullraptor.publication_contract import PublicationContext, scope_digest_from_report
+from pullraptor.publication_transport import TransportResponseLost
 from pullraptor.publisher import COMMENT_MARKER, main, publish_report, report_from_decoded
 
 _HEAD = "a" * 40
@@ -300,6 +301,126 @@ class TestPublisher(unittest.TestCase):
         payload = mock_api.call_args_list[3].kwargs["payload"]
         self.assertNotIn("<script>", payload["body"])
         self.assertIn("# PullRaptor Review", payload["body"])
+
+    @patch("pullraptor.publisher._github_api_request")
+    def test_actual_lost_post_response_no_duplicate_write(self, mock_api: MagicMock) -> None:
+        reconciled_comment = {
+            "id": 501,
+            "body": f"{COMMENT_MARKER}\n# PullRaptor Review",
+            "user": {"login": "pullraptor-bot"},
+        }
+
+        comment_reads = 0
+
+        def side_effect(url: str, token: str, method: str = "GET", payload=None):
+            nonlocal comment_reads
+            if method == "POST":
+                raise TransportResponseLost("response lost after successful POST")
+            if method == "GET" and "comments" in url:
+                comment_reads += 1
+                if comment_reads == 1:
+                    return (200, [])
+                return (200, [reconciled_comment])
+            if "pulls" in url:
+                return (200, _pr_payload())
+            return (200, {})
+
+        mock_api.side_effect = side_effect
+        out = io.StringIO()
+        with patch("sys.stdout", out):
+            code = publish_report(
+                report_dict=self.report_dict,
+                repo_slug="owner/repo",
+                pr_number=1,
+                token="dummy_token",
+                connector=_CONNECTOR,
+            )
+        self.assertEqual(code, 0)
+        self.assertIn("reconciled duplicate delivery", out.getvalue())
+        post_calls = [c for c in mock_api.call_args_list if c.kwargs.get("method") == "POST"]
+        self.assertEqual(len(post_calls), 1)
+
+    @patch("pullraptor.publisher._github_api_request")
+    def test_owned_comment_pagination_bounded(self, mock_api: MagicMock) -> None:
+        page1 = [{"id": i, "body": "noise", "user": {"login": "user"}} for i in range(100)]
+        page2 = [
+            {
+                "id": 999,
+                "body": f"{COMMENT_MARKER}\nold",
+                "user": {"login": "pullraptor-bot"},
+            }
+        ]
+        calls: list[str] = []
+
+        def side_effect(url: str, token: str, method: str = "GET", payload=None):
+            calls.append(url)
+            if method == "GET" and "comments" in url:
+                if "page=1" in url:
+                    return (200, page1)
+                if "page=2" in url:
+                    return (200, page2)
+                return (200, [])
+            if "pulls" in url:
+                return (200, _pr_payload())
+            if method == "PATCH":
+                return (200, {"id": 999})
+            return (200, {})
+
+        mock_api.side_effect = side_effect
+        publish_report(
+            report_dict=self.report_dict,
+            repo_slug="owner/repo",
+            pr_number=1,
+            token="dummy_token",
+            connector=_CONNECTOR,
+        )
+        self.assertTrue(any("page=1" in u for u in calls))
+        self.assertTrue(any("page=2" in u for u in calls))
+
+    @patch("pullraptor.publisher._github_api_request")
+    def test_foreign_marker_not_updated_by_publisher(self, mock_api: MagicMock) -> None:
+        foreign = {
+            "id": 777,
+            "body": f"{COMMENT_MARKER}\nforeign",
+            "user": {"login": "evil-user"},
+        }
+        mock_api.side_effect = [
+            (200, _pr_payload()),
+            (200, [foreign]),
+            (200, _pr_payload()),
+            (201, {"id": 888}),
+        ]
+        publish_report(
+            report_dict=self.report_dict,
+            repo_slug="owner/repo",
+            pr_number=1,
+            token="dummy_token",
+            connector=_CONNECTOR,
+        )
+        methods = [c.kwargs.get("method", "GET") for c in mock_api.call_args_list]
+        self.assertNotIn("PATCH", methods)
+        patch_targets = [c.args[0] for c in mock_api.call_args_list if c.kwargs.get("method") == "PATCH"]
+        self.assertFalse(any("777" in t for t in patch_targets))
+
+    @patch("pullraptor.publisher._github_api_request")
+    def test_rate_limit_deferred_receipt(self, mock_api: MagicMock) -> None:
+        mock_api.side_effect = [
+            (200, _pr_payload()),
+            (200, []),
+            (200, _pr_payload()),
+            RuntimeError("GitHub API HTTP 403 on POST: rate limit exceeded"),
+        ]
+        out = io.StringIO()
+        with patch("sys.stdout", out):
+            code = publish_report(
+                report_dict=self.report_dict,
+                repo_slug="owner/repo",
+                pr_number=1,
+                token="dummy_token",
+                connector=_CONNECTOR,
+            )
+        self.assertEqual(code, 0)
+        self.assertIn("deferred publication", out.getvalue())
 
     @patch("pullraptor.publisher._github_api_request")
     def test_publication_failure_preserves_report(self, mock_api: MagicMock) -> None:
