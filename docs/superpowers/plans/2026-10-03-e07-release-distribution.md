@@ -10,7 +10,7 @@
 
 **Spec:** [E07 child specification](../specs/2026-10-03-e07-release-distribution.md).
 
-**Status:** Proposed; all tasks below are unexecuted. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
+**Status:** Partial Task 1 metadata implementation and suite evidence exist from PR 14; exact dependency/license admission and full E07 acceptance remain pending. Tasks 2–3 remain unexecuted. Read the spec and [execution gate](../../planning-contract.md) before starting. Existing artifacts are inputs to audit, not accepted implementations of the expanded scope.
 
 ## Global Constraints
 
