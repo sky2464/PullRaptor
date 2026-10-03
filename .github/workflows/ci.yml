@@ -19,6 +19,15 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify PR branch naming convention
+        if: github.event_name == 'pull_request'
+        run: |
+          BRANCH="${{ github.head_ref }}"
+          if [[ ! "$BRANCH" =~ ^(feat|fix|chore|docs)/[a-zA-Z0-9._-]+$ ]]; then
+            echo "ERROR: Branch '$BRANCH' violates project naming convention (must be feat/*, fix/*, chore/*, docs/*)." >&2
+            exit 1
+          fi
+
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
@@ -28,9 +37,16 @@ jobs:
         run: |
           PYTHONPATH=src python3 -m unittest discover -s tests -v
 
+      - name: Install package and verify CLI entrypoints
+        run: |
+          pip install -e .
+          pullraptor --help
+          pullraptor-publish --help
+          pullraptor --workdir
+
       - name: Verify PullRaptor self-review
         run: |
-          PYTHONPATH=src python3 -m pullraptor --base HEAD~1 --head HEAD --exact-base
+          pullraptor --base HEAD~1 --head HEAD --exact-base
 
   docker:
     name: Docker Build & Container Tests

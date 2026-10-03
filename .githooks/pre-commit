@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+current_branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo "")
+
+# 1. Enforce no direct commits on main
+if [ "$current_branch" = "main" ]; then
+    echo "ERROR: Direct commits to 'main' are prohibited by project policy." >&2
+    echo "Please create a feature branch first: git checkout -b feat/<topic>" >&2
+    exit 1
+fi
+
+# 2. Enforce branch naming convention (when on a branch)
+if [ -n "$current_branch" ]; then
+    if [[ ! "$current_branch" =~ ^(feat|fix|chore|docs)/[a-zA-Z0-9._-]+$ ]]; then
+        echo "ERROR: Branch name '$current_branch' does not follow project convention." >&2
+        echo "Branch names must follow: feat/<descriptor> (e.g. feat/e02-local-snapshots-and-publication)" >&2
+        exit 1
+    fi
+fi
+
+# 3. Check local branch hygiene (maintain at most 2-3 local branches)
+local_branch_count=$(git branch --list | wc -l | tr -d ' ')
+if [ "$local_branch_count" -gt 3 ]; then
+    echo "WARNING: There are $local_branch_count local branches. Decided project limit is 2-3 active branches." >&2
+    echo "Please delete merged/stale branches to keep the workspace clean:" >&2
+    git branch --list >&2
+fi
+
+exit 0

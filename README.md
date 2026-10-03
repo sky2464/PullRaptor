@@ -18,7 +18,12 @@ Its promise is simple: **show what changed, what may break, why a finding deserv
 
 Run PullRaptor directly via Python 3.12:
 
-```bash
+# Review uncommitted working tree changes against HEAD
+python3.12 -m pullraptor --workdir
+
+# Review staged index changes against HEAD
+python3.12 -m pullraptor --staged
+
 # Markdown review of current HEAD against main
 python3.12 -m pullraptor --base main --head HEAD
 
@@ -30,6 +35,9 @@ python3.12 -m pullraptor --base main --head HEAD --format sarif
 
 # Explicit diff-only profile (bypasses semantic analysis)
 python3.12 -m pullraptor --base main --head HEAD --profile diff
+
+# Publish review report to GitHub PR with drift validation and comment idempotency
+pullraptor-publish --report report.json --repo-slug owner/repo --pr 42
 ```
 
 ### Running via Docker
