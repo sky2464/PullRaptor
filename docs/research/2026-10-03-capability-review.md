@@ -22,7 +22,7 @@ Documented capabilities are evidence of advertised product behavior, not measure
 
 ## Capability acceptance catalog
 
-Every row is proposed. “Included” means a 1.0 target with the stated boundary; none is implemented. E01–E06 refer to the master plan.
+Every row is an acceptance target. “Included” means proposed 1.0 scope with the stated boundary; some implementation artifacts now exist, but no row is accepted merely by its presence here. E01–E11 implementation and acceptance states, child plans and task ownership are recorded in the current master plan.
 
 | ID | Capability | Package | 1.0 scope and acceptance boundary |
 |---|---|---|---|
