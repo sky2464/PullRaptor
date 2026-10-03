@@ -215,6 +215,30 @@ def query_ai_provider(
         )
 
 
+def request_ai_proposals_via_transport(
+    selection,
+    policy,
+    budget,
+    *,
+    credential: str = "",
+    model: str = "default",
+    connector=None,
+    send_record=None,
+):
+    """Invoke the bounded transport layer using a pinned context selection."""
+    from pullraptor.ai_transport import invoke_provider
+
+    return invoke_provider(
+        selection,
+        policy,
+        budget,
+        credential=credential,
+        model=model,
+        connector=connector,
+        send_record=send_record,
+    )
+
+
 def request_ai_proposals(
     findings: tuple[Finding, ...],
     context: ExternalContext,

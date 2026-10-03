@@ -41,6 +41,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ai-token", help="Bearer token for AI endpoint (or env PULLRAPTOR_AI_TOKEN)")
     parser.add_argument("--context-issue", help="File containing issue/PR description text for untrusted context")
     parser.add_argument("--context-ci-log", help="File containing CI failure log snippet for untrusted context")
+    parser.add_argument(
+        "--conversation-question",
+        help="Optional follow-up question against the pinned report (offline deterministic path when AI disabled)",
+    )
 
     # MCP server mode
     parser.add_argument("--mcp", action="store_true", help="Start Model Context Protocol (MCP) stdio server")
@@ -151,6 +155,40 @@ def main(argv: list[str] | None = None) -> int:
                 }
                 for p in proposals
             ]
+
+    if args.conversation_question and report.kind == "full":
+        import hashlib
+
+        from pullraptor.ai_context import ContextManifest
+        from pullraptor.conversation import Conversation, answer, deterministic_explanation
+        from pullraptor.models import RecordLimits, canonical_bytes
+
+        limits = RecordLimits()
+        digest = hashlib.sha256(canonical_bytes(report, limits=limits, deadline=deadline)).hexdigest()
+        manifest = ContextManifest(
+            report_digest=digest,
+            head=report.contract.head,
+            blocks=(),
+            retrieval_receipts=(),
+        )
+        convo = Conversation(report_digest=digest, head=report.contract.head, context_manifest=manifest)
+        if args.ai_endpoint:
+            convo_answer = answer(
+                convo,
+                args.conversation_question,
+                digest,
+                current_head=report.contract.head,
+                report=report,
+                limits=limits,
+                ai_enabled=True,
+            )
+        else:
+            convo_answer = deterministic_explanation(report, args.conversation_question)
+        if convo_answer.text:
+            report.execution.setdefault("conversation", [])
+            report.execution["conversation"].append(
+                {"state": convo_answer.state, "text": convo_answer.text},
+            )
 
     # Render report to stdout
     if args.format == "json":

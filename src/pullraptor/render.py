@@ -87,8 +87,8 @@ def render_markdown(
         lines.append("## AI Explanations & Suggestions (Untrusted Proposals)\n")
         lines.append("> [!NOTE]\n> The following explanations are model-generated and untrusted. They do not alter deterministic review findings or grant merge authorization.\n")
         for p in proposals:
-            lines.append(f"### Model Explanation (`{p.get('model', 'unknown')}`)\n")
-            lines.append(f"{p.get('content', '')}\n")
+            lines.append(f"### Model Explanation (`{_escape_md(str(p.get('model', 'unknown')))}`)\n")
+            lines.append(f"{_escape_md(str(p.get('content', '')))}\n")
 
     # Diagnostics
     if report.diagnostics:
