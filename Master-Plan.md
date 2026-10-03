@@ -12,9 +12,11 @@ The initial recommendation was local CLI plus GitHub CI, optional AI, and develo
 
 | Decision | Proposed choice | Reason / consequence |
 |---|---|---|
-| Core runtime | Python 3.12.x only initially; additional minor versions need compatibility tests | Short implementation, built-in AST, TOML, hashing, subprocess, JSON |
+| Core runtime | Python 3.12.x pinned baseline; versions 3.13+ / 3.14+ admitted only after AST parser parity verification | AST node grammar, span semantics, and standard-library stability; prevents silent analyzer divergence across minor versions |
 | Runtime dependencies | Zero third-party packages in the deterministic kernel; Git executable required | No mandatory model SDK, graph database, vector service, web framework, or container |
-| Distribution | Versioned packaged CLI and container, editor/plugin packages, and service connections; source checkout is a development path | No manual PullRaptor clone for customers; declare Python/Git or bundled runtime requirements; review build dependencies and licenses |
+| Local environment | Standard Python 3.12 virtualenv (`.venv`); Conda excluded | Zero-dependency stdlib footprint; avoids heavy Conda binary overlays, ambient path pollution, and dynamic linking interference with `-I -S` subprocess isolation |
+| CI & hostile isolation | Pinned Docker container (`python:3.12-slim`) with egress and credential restrictions | Reproducible cross-platform baseline and disposable execution boundary for untrusted PRs |
+| Distribution | Versioned packaged CLI and Docker container (`python:3.12-slim`), editor/plugin packages, and service connections; source checkout is a development path | No manual PullRaptor clone for customers; declare Python/Git or bundled runtime requirements; review build dependencies and licenses |
 | Integration boundary | Versioned review/report contract shared by CLI, API, MCP and platform adapters | One owned kernel; thin adapters cannot redefine scope, evidence or merge authority |
 | Deployment choice | Offline local, customer CI, hosted service, and private enterprise service | Remote transfer is explicit; hosting is optional and adds separately measured operational cost |
 | Enterprise access | Organization/repository-scoped identity, authorization, audit and retention controls outside the kernel | Credentials stay in narrowly scoped connectors; tenant and worker isolation require acceptance evidence |
@@ -40,7 +42,7 @@ Each package needs its own child specification, implementation plan and acceptan
 | E04 | 0.4 | Optional language workers; start JS/TS and Go, then Java/C#, then Rust/PHP/Ruby/C/C++ | Per-language capability matrix and held-out quality gate; syntax support is not dataflow support | Proposed |
 | E05 | 0.5 | Bounded source-to-sink analysis, authorization obligations, local secret patterns, lockfile advisories, scanner import | Explicit assumptions, taint and sanitizer negatives, redaction, no unsound unreachable suppression | Proposed |
 | E06 | 1.0 | Patch validation, isolated regression runner, reviewed preferences; shared contracts for editor/agent consumers | Patch preconditions, actual execution receipts, clean re-analysis, feature acceptance audit; install/editor deliverables owned by E07/E08 | Proposed |
-| E07 | Distribution track | Packaged CLI, pinned container, release provenance, update/rollback and offline installation | Clean-machine install without manual source clone; runtime/license inventory, provenance verification, uninstall/rollback, artifact review equivalence | Proposed |
+| E07 | Distribution track | Packaged CLI, pinned Docker container (`python:3.12-slim`), release provenance, update/rollback and offline installation | Clean-machine install without manual source clone; runtime/license inventory, provenance verification, uninstall/rollback, artifact review equivalence | Proposed |
 | E08 | Editor/agent track | VS Code extension; AI-editor and terminal-assistant plugin packages; standalone skills and local/remote MCP adapter | Per-client/version/session matrix, credential isolation, bounded protocol, stale snapshot handling, safe rendering and no unauthorized writes | Proposed |
 | E09 | Azure DevOps track | Azure Repos Git connector, Azure Pipelines template/task, service hooks, PR comments/status and organization extension packaging | Trusted-policy isolation, iteration/head/base binding, event retry reconciliation, branch-policy mapping and scoped credentials | Proposed |
 | E10 | Service track | Versioned review API, thin SDK, authenticated completion webhooks, GitHub App, hosted and private enterprise deployments | API compatibility, repository authorization, job/tenant isolation, source-transfer/retention enforcement, webhook replay tests and failure recovery | Proposed |
@@ -60,7 +62,7 @@ The same deterministic kernel produces a revision-bound report in every deployme
 
 | Surface | Customer experience | Delivery owner and acceptance scope |
 |---|---|---|
-| Packaged CLI/container | Install a published release or pull a pinned image; review locally or in their runner | E07; support matrix, explicit runtime prerequisites and no source-checkout requirement |
+| Packaged CLI / Docker container | Install a published release (with standard `.venv` guidance) or pull a pinned `python:3.12-slim` Docker image; review locally or in their runner | E07; support matrix, explicit runtime prerequisites and no source-checkout requirement |
 | VS Code | Install extension, select base/head or immutable local changes, inspect inline findings and coverage | E08; local engine by default, explicit remote endpoint option, safe source locations and stale-result indicators |
 | AI editor client | Install a PullRaptor plugin bundling skills/MCP; also allow standalone MCP/skill installation | E08; client-specific manifest/settings and optional extension compatibility tested separately |
 | Terminal assistant client | Install a versioned PullRaptor plugin or standalone skill/MCP connection; request review/explanation | E08; local terminal, IDE-hosted and cloud sessions are separate compatibility claims |

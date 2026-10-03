@@ -37,6 +37,7 @@ def _safe_git_args() -> list[str]:
         "-c", "core.fsmonitor=false",
         "-c", "diff.external=",
         "-c", "diff.textconv=",
+        "-c", "safe.directory=*",
         "--no-lazy-fetch",
         "--no-replace-objects",
         "--no-optional-locks",

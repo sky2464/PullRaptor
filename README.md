@@ -32,6 +32,20 @@ python3.12 -m pullraptor --base main --head HEAD --format sarif
 python3.12 -m pullraptor --base main --head HEAD --profile diff
 ```
 
+### Running via Docker
+
+Build and run the isolated, pinned `python:3.12-slim` container:
+
+```bash
+docker build -t pullraptor .
+
+# Run test suite
+docker run --rm pullraptor
+
+# Run review on a mounted repository
+docker run --rm -v "$(pwd):/repo" pullraptor python -m pullraptor --repo /repo --base main --head HEAD
+```
+
 ### Exit Codes
 
 - `0`: Requested analysis complete with no blocking findings
