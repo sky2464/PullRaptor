@@ -1,6 +1,6 @@
 {
-  "collected_at": "2026-10-03T13:15:10.538725+00:00",
-  "revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
+  "collected_at": "2026-10-03T13:16:13.208158+00:00",
+  "revision": "adb53bdbdc5fec60280d573b006272702d84382c",
   "tests": [
     {
       "module": "test_ai_adapter",

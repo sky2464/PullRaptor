@@ -132,6 +132,6 @@ test_staged_snapshot_leaves_index_and_working_tree_untouched (test_working_tree.
 test_workdir_snapshot_captures_unstaged_and_untracked_files (test_working_tree.TestWorkingTreeSnapshots.test_workdir_snapshot_captures_unstaged_and_untracked_files) ... ok
 
 ----------------------------------------------------------------------
-Ran 130 tests in 9.185s
+Ran 130 tests in 7.442s
 
 OK
