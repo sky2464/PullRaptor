@@ -19,8 +19,13 @@ def run_bounded(
     env: dict[str, str],
     deadline: Deadline,
     bounds: ProcessBounds,
+    input_bytes: bytes | None = None,
+    max_input_bytes: int = 0,
 ) -> ProcessResult:
     """Run a subprocess with streaming bounded output, isolated environment, and strict deadline.
+
+    When ``input_bytes`` is not ``None``, ``max_input_bytes`` must be a positive cap and the
+    payload must not exceed it before launch. Stdin is closed after the request bytes are written.
 
     Kills the process tree on timeout or output overflow.
     """
@@ -37,12 +42,34 @@ def run_bounded(
             timed_out=True,
         )
 
+    if input_bytes is not None:
+        if max_input_bytes <= 0:
+            return ProcessResult(
+                returncode=-1,
+                stdout=b"",
+                stderr=b"input cap must be positive when input_bytes is set",
+                duration_seconds=0.0,
+                timed_out=False,
+            )
+        if len(input_bytes) > max_input_bytes:
+            return ProcessResult(
+                returncode=-1,
+                stdout=b"",
+                stderr=b"input exceeds max_input_bytes",
+                duration_seconds=0.0,
+                timed_out=False,
+            )
+
+    stdin_target: int | None = subprocess.DEVNULL
+    if input_bytes is not None:
+        stdin_target = subprocess.PIPE
+
     try:
         proc = subprocess.Popen(
             argv,
             cwd=str(cwd),
             env=env,
-            stdin=subprocess.DEVNULL,
+            stdin=stdin_target,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             close_fds=True,
@@ -56,6 +83,17 @@ def run_bounded(
             duration_seconds=time.monotonic() - start_time,
             timed_out=False,
         )
+
+    if input_bytes is not None and proc.stdin is not None:
+        try:
+            proc.stdin.write(input_bytes)
+        except BrokenPipeError:
+            pass
+        finally:
+            try:
+                proc.stdin.close()
+            except OSError:
+                pass
 
     stdout_chunks: list[bytes] = []
     stderr_chunks: list[bytes] = []

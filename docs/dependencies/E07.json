@@ -1,0 +1,98 @@
+{
+  "schema": "pullraptor-dependency-inventory/1",
+  "date": "2026-10-03",
+  "package": "E07",
+  "code_revision": "87a0c9b",
+  "measurement_environment": {
+    "profile": "cloud-agent-linux-x86_64",
+    "python_version": "3.12.3",
+    "python_implementation": "CPython",
+    "git_version": "2.43.0",
+    "git_executable_digest_sha256": "2a8c18fbf43da9f692d75474c72bea9dfd796c260b0f3dfe456376abc3bbd668",
+    "notes": "Digests identify the measured host binary at inventory time; customer environments must record their own ledger before admission."
+  },
+  "kernel_runtime": {
+    "python_packages": [],
+    "role": "Deterministic review kernel (stdlib only)"
+  },
+  "host_prerequisites": [
+    {
+      "name": "python",
+      "version": "3.12.x",
+      "role": "CLI and MCP runtime",
+      "license": "PSF-2.0",
+      "required": true
+    },
+    {
+      "name": "git",
+      "version": "2.43.0",
+      "role": "Snapshot, diff and local capture",
+      "license": "GPL-2.0",
+      "required": true
+    }
+  ],
+  "build_tools": [
+    {
+      "name": "setuptools",
+      "version_constraint": ">=61.0",
+      "role": "Wheel/sdist build backend (build-time only)",
+      "license": "MIT",
+      "digest": "unknown",
+      "notes": "Exact wheel-house version must be pinned in release build receipts before artifact admission."
+    }
+  ],
+  "container_image": {
+    "reference": "docker.io/library/python:3.12-slim",
+    "digest": "unknown",
+    "role": "Default customer container baseline",
+    "notes": "Image digest must be pinned independently in release manifests; mutable tags alone do not establish provenance."
+  },
+  "container_packages": [
+    {
+      "name": "git",
+      "role": "Repository operations inside image",
+      "license": "GPL-2.0",
+      "version": "unknown",
+      "notes": "Exact apt package version recorded at image build time in E07-T2 build receipts."
+    }
+  ],
+  "supported_profiles": [
+    {
+      "id": "local-linux-x86_64",
+      "python": "3.12.x",
+      "git_required": true,
+      "container": false
+    },
+    {
+      "id": "local-macos-arm64",
+      "python": "3.12.x",
+      "git_required": true,
+      "container": false,
+      "notes": "Fresh-machine install evidence not_run on this inventory revision."
+    },
+    {
+      "id": "container-linux-x86_64",
+      "python": "3.12.x",
+      "git_required": true,
+      "container": true,
+      "image_reference": "python:3.12-slim"
+    }
+  ],
+  "entry_points": [
+    {
+      "command": "pullraptor",
+      "module": "pullraptor.__main__:main",
+      "description": "Offline review CLI (--head | --staged | --workdir required for review)"
+    },
+    {
+      "command": "pullraptor-publish",
+      "module": "pullraptor.publisher:main",
+      "description": "Revision-bound publication adapter"
+    },
+    {
+      "command": "pullraptor-mcp",
+      "module": "pullraptor.mcp_server:run_mcp_server",
+      "description": "Local MCP stdio adapter"
+    }
+  ]
+}

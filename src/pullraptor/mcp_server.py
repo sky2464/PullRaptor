@@ -13,7 +13,8 @@ import sys
 import time
 from typing import Any
 
-from pullraptor.git_snapshot import freeze_working_tree
+from pullraptor.git_snapshot import resolve_inputs
+from pullraptor.local_snapshot import capture_local
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, FullReport, Limits, RecordLimits, Report
 from pullraptor.render import render_json, render_markdown
@@ -121,6 +122,10 @@ def _tool_definitions() -> list[dict[str, Any]]:
                         "type": "boolean",
                         "description": "Review uncommitted working tree changes against base",
                     },
+                    "include_untracked": {
+                        "type": "boolean",
+                        "description": "When reviewing workdir, opt in to admitting untracked files (default false)",
+                    },
                     "profile": {
                         "type": "string",
                         "enum": ["structural", "diff"],
@@ -182,6 +187,7 @@ def handle_review(args: dict[str, Any]) -> str:
     start_monotonic = time.monotonic()
     staged = bool(args.get("staged"))
     workdir = bool(args.get("workdir"))
+    include_untracked = bool(args.get("include_untracked"))
     head = args.get("head")
     base = args.get("base")
     profile = args.get("profile")
@@ -190,15 +196,39 @@ def handle_review(args: dict[str, Any]) -> str:
     if profile:
         overrides["profile"] = profile
 
+    limits = Limits()
+    deadline = Deadline(started_at=start_monotonic, duration_seconds=10.0)
+
     if staged or workdir:
         base_ref = base if base is not None else "HEAD"
         is_head_tree = True
-        head_ref = freeze_working_tree(
-            repo=repo_path,
-            limits=Limits(),
-            deadline=Deadline(started_at=start_monotonic, duration_seconds=10.0),
-            staged_only=staged,
+        base_tip, _, _ = resolve_inputs(
+            repo_path,
+            base_ref,
+            "HEAD",
+            limits,
+            deadline,
+            exact_base=True,
         )
+        snapshot = capture_local(
+            repo_path,
+            base_tip,
+            staged_only=staged,
+            include_untracked=include_untracked,
+            limits=limits,
+            deadline=deadline,
+        )
+        if not snapshot.discovery_complete or not snapshot.tree_oid:
+            return json.dumps(
+                {
+                    "status": "capture_incomplete",
+                    "diagnostics": [
+                        {"code": d.code, "message": d.message, "cause": d.cause}
+                        for d in snapshot.diagnostics
+                    ],
+                }
+            )
+        head_ref = snapshot.tree_oid
     else:
         head_ref = head if head is not None else "HEAD"
         base_ref = base if base is not None else "HEAD~1"
