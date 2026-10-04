@@ -31,15 +31,31 @@ class TestCiTemplate(unittest.TestCase):
 
     def test_publisher_no_head_checkout_or_cache(self) -> None:
         publish_block = self.text.split("  publish:")[1]
-        self.assertNotIn("actions/checkout", publish_block)
+        self.assertNotIn("path: pr-head", publish_block)
+        self.assertNotIn("github.event.pull_request.head.sha", publish_block)
         self.assertNotIn("actions/cache", publish_block)
 
     def test_missing_isolation_refuses_hostile_profile(self) -> None:
-        admission = "unavailable"
         analyze_block = self.text.split("  analyze:")[1].split("  publish:")[0]
         publisher_secret_seen_by_analysis = "PULLRAPTOR_PUBLISH_TOKEN" in analyze_block
-        self.assertEqual(admission, "unavailable")
+        self.assertIn("probe-isolation", analyze_block)
+        self.assertIn("PULLRAPTOR_CI_PROFILE: hostile", self.text)
         self.assertFalse(publisher_secret_seen_by_analysis)
+
+    def test_actual_egress_filesystem_credential_controls(self) -> None:
+        analyze_block = self.text.split("  analyze:")[1].split("  publish:")[0]
+        self.assertIn("pullraptor.publication_trust", analyze_block)
+        self.assertIn("persist-credentials: false", analyze_block)
+        docs = Path(__file__).resolve().parents[1] / "docs" / "ci-review.md"
+        self.assertIn("PULLRAPTOR_ISOLATION_EGRESS_DENIED", docs.read_text(encoding="utf-8"))
+        fixture_dir = Path(__file__).resolve().parents[1] / "tests" / "fixtures" / "e02" / "ci-controls"
+        self.assertTrue((fixture_dir / "hostile-unavailable.json").is_file())
+
+    def test_report_artifact_origin_replay_denied(self) -> None:
+        publish_block = self.text.split("  publish:")[1]
+        self.assertIn("validate-receipt", publish_block)
+        self.assertIn("pullraptor-receipt.json", self.text)
+        self.assertIn("PULLRAPTOR_ARTIFACT_DIGEST", publish_block)
 
 
 if __name__ == "__main__":

@@ -19,6 +19,14 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Verify CI policy from trusted base
+        if: github.event_name == 'pull_request'
+        run: |
+          PYTHONPATH=src python3.12 -m pullraptor.publication_trust verify-dev-ci \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --required-marker "unittest discover" \
+            --required-marker "Verify PR branch naming"
+
       - name: Verify PR branch naming convention
         if: github.event_name == 'pull_request'
         run: |

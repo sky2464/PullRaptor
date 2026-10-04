@@ -1,12 +1,38 @@
 {
+  "schema": "pullraptor-install-matrix/1",
+  "date": "2026-10-03",
   "profiles": [
     {
       "id": "python-3.12-linux-x86_64-venv",
+      "inventory_profile_id": "local-linux-x86_64",
       "runtime": "python-3.12",
       "platform": "linux-x86_64",
       "artifact_kinds": ["wheel"],
       "offline": true,
-      "state": "development_verified"
+      "state": "not_run",
+      "notes": "Fresh Linux x86_64 venv install not measured on the construction host; offline wheel protocol covered in development tests."
+    },
+    {
+      "id": "python-3.12-macos-arm64-venv",
+      "inventory_profile_id": "local-macos-arm64",
+      "runtime": "python-3.12",
+      "platform": "darwin-arm64",
+      "artifact_kinds": ["wheel"],
+      "offline": true,
+      "state": "development_verified",
+      "evidence_revision": "0000000000000000000000000000000000000000",
+      "evidence_platform": "darwin-arm64",
+      "notes": "Development host runs offline wheel install and canonical equivalence checks; not independent clean-machine acceptance."
+    },
+    {
+      "id": "python-3.12-linux-x86_64-container",
+      "inventory_profile_id": "container-linux-x86_64",
+      "runtime": "python-3.12",
+      "platform": "linux-x86_64",
+      "artifact_kinds": ["wheel", "container-image"],
+      "offline": true,
+      "state": "not_run",
+      "notes": "Container image install and footprint remain not_run until pinned digest and isolated build receipts exist."
     }
   ],
   "footprint_budgets": {
