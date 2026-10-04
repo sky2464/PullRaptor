@@ -8,8 +8,7 @@ from pathlib import Path
 import sys
 import time
 
-from pullraptor.git_snapshot import resolve_inputs
-from pullraptor.local_snapshot import capture_local
+from pullraptor.local_snapshot import resolve_local_review_refs
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, Limits
 from pullraptor.render import render_json, render_markdown, render_sarif
@@ -28,6 +27,11 @@ def main(argv: list[str] | None = None) -> int:
     head_group.add_argument("--head", help="Head Git ref or commit OID")
     head_group.add_argument("--staged", action="store_true", help="Review staged index changes against base (default: HEAD)")
     head_group.add_argument("--workdir", action="store_true", help="Review uncommitted working tree changes against base (default: HEAD)")
+    parser.add_argument(
+        "--include-untracked",
+        action="store_true",
+        help="When using --workdir, opt in to admitting untracked files (default: excluded)",
+    )
 
     parser.add_argument("--exact-base", action="store_true", help="Compare exact base commit instead of computing merge base")
     parser.add_argument("--profile", choices=["structural", "diff"], default=None, help="Review profile ('structural' or 'diff')")
@@ -70,32 +74,27 @@ def main(argv: list[str] | None = None) -> int:
 
     try:
         if args.staged or args.workdir:
-            base_ref = args.base if args.base is not None else "HEAD"
-            is_head_tree = True
+            if args.staged and args.include_untracked:
+                parser.error("--include-untracked applies only with --workdir")
             limits = Limits()
             deadline = Deadline(started_at=start_monotonic, duration_seconds=10.0)
-            base_tip, _, _ = resolve_inputs(
+            local = resolve_local_review_refs(
                 repo_path,
-                base_ref,
-                "HEAD",
-                limits,
-                deadline,
-                exact_base=True,
-            )
-            snapshot = capture_local(
-                repo_path,
-                base_tip,
                 staged_only=args.staged,
-                include_untracked=False,
+                include_untracked=bool(args.include_untracked),
+                base_ref=args.base,
                 limits=limits,
                 deadline=deadline,
             )
+            snapshot = local.snapshot
             if not snapshot.discovery_complete or not snapshot.tree_oid:
                 sys.stderr.write("PullRaptor: local snapshot capture incomplete\n")
                 for diag in snapshot.diagnostics:
                     sys.stderr.write(f"  - {diag.code}: {diag.message}\n")
                 return 2
-            head_ref = snapshot.tree_oid
+            base_ref = local.base_ref
+            head_ref = local.head_ref
+            is_head_tree = local.is_head_tree
         else:
             if not args.head:
                 parser.error("One of --head, --staged, or --workdir is required")

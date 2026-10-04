@@ -13,8 +13,7 @@ import sys
 import time
 from typing import Any
 
-from pullraptor.git_snapshot import resolve_inputs
-from pullraptor.local_snapshot import capture_local
+from pullraptor.local_snapshot import resolve_local_review_refs
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, FullReport, Limits, RecordLimits, Report
 from pullraptor.mcp_sessions import (
@@ -234,24 +233,15 @@ def handle_review(args: dict[str, Any], *, session: MCPSession | None = None) ->
     deadline = Deadline(started_at=start_monotonic, duration_seconds=10.0)
 
     if staged or workdir:
-        base_ref = base if base is not None else "HEAD"
-        is_head_tree = True
-        base_tip, _, _ = resolve_inputs(
+        local = resolve_local_review_refs(
             repo_path,
-            base_ref,
-            "HEAD",
-            limits,
-            deadline,
-            exact_base=True,
-        )
-        snapshot = capture_local(
-            repo_path,
-            base_tip,
             staged_only=staged,
             include_untracked=include_untracked,
+            base_ref=base,
             limits=limits,
             deadline=deadline,
         )
+        snapshot = local.snapshot
         if not snapshot.discovery_complete or not snapshot.tree_oid:
             return json.dumps(
                 {
@@ -262,7 +252,9 @@ def handle_review(args: dict[str, Any], *, session: MCPSession | None = None) ->
                     ],
                 }
             )
-        head_ref = snapshot.tree_oid
+        base_ref = local.base_ref
+        head_ref = local.head_ref
+        is_head_tree = local.is_head_tree
     else:
         head_ref = head if head is not None else "HEAD"
         base_ref = base if base is not None else "HEAD~1"

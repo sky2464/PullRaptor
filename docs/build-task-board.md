@@ -8,7 +8,7 @@ Coverage: **35 E02–E11 child tasks plus E01 Task 9**, split into **71 cards** 
 
 ## First branch and independent work
 
-Next branch: `feat/e02-publisher-contract-integration`. Read E02, the publication decisions below and the E02 cards. Deliver strict report-to-trusted-context binding, full scope/receipt/location validation and owned lifecycle reconciliation through `publisher.py`; test with inert connectors and no token. Do not equate the existing helper tests with end-to-end publication. Actual same-repository/fork CI and usefulness pilots are separate evidence tasks. The CLI/MCP capture consumer repair can run on its own small branch.
+Publisher integration through `publisher.py` is on `main` (PR #41); end-to-end E02 acceptance and pilots remain open. Next branch: `feat/e02-local-snapshot-consumers` (`E02-T1-CONSUMERS`) — shared `resolve_local_review_refs`, CLI `--include-untracked`, and MCP parity tests. Actual same-repository/fork CI (`E02-T4-TEMPLATE`) and usefulness pilots are separate evidence tasks.
 
 Parallel frontier: E01 assertion/corpus/benchmark preparation; E03 bounded context/transport completion; E07 real artifact/provenance/install preparation; E04 receipt validators and bounded stdin; E05 statement lowering and local secret patterns; E06 refusal-first runner and patch/preference contracts; E08 session wire; E09 connector wire; E10 shared API contract. Follow the exact dependency IDs below and in the registry. Do not open every future branch at once: keep main plus one or two current PR branches; queue the rest.
 
