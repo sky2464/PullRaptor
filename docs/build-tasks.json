@@ -915,7 +915,7 @@
       "plan_task": "Task 1",
       "title": "Finish safe bounded snapshot capture",
       "owner_role": "Local snapshot implementer",
-      "observed_state": "Named card tests pass in trusted dev verification; executable modes, parent-symlink refusal, aggregate byte cap, unmerged-index and index-identity race seams implemented. E02-D02 fixture corpus and E02-A1 acceptance remain open.",
+      "observed_state": "Named card tests pass on main (PR #45); executable modes, parent-symlink refusal, aggregate byte cap, unmerged-index and index-identity race seams implemented. E02-D02 fixture corpus and E02-A1 acceptance remain open.",
       "scope": "Existing LocalSnapshot and bounded Git/process helper; preserve exact admitted bytes/modes, index/ref/worktree state and visible excluded/unsupported entries.",
       "input_paths": [
         "src/pullraptor/local_snapshot.py",
@@ -986,7 +986,7 @@
       "plan_task": "Task 1 CLI integration; E08 Task 1 handoff",
       "title": "Route local CLI and MCP through one snapshot contract",
       "owner_role": "CLI/MCP integration implementer coordinated with E08 owner",
-      "observed_state": "CLI uses capture_local with untracked always false; MCP imports absent freeze_working_tree and follows the old path.",
+      "observed_state": "CLI and MCP route through capture_local with explicit untracked opt-in and shared partial receipts (PR #43). Byte-for-byte parity artifacts and dangling-entry regression guards remain open.",
       "scope": "Local staged/workdir requests only; explicit untracked option default false; no patch/publish/target-execution operation.",
       "input_paths": [
         "src/pullraptor/__main__.py",
@@ -1103,7 +1103,7 @@
         "Base-only/deleted/out-of-range inline location",
         "Current metadata changes between preview and write"
       ],
-      "next_action": "Fix test helper override behavior, add report-versus-context counterexamples, then implement the pinned validator without allowing worker/manifest fields to supply authority.",
+      "next_action": "Add immutable publication-binding fixtures and independent review; wire E02-T2-INTEGRATE publisher refresh paths against the pinned validator without marker-supplied authority.",
       "depends_on": [
         "E02-D01"
       ],
