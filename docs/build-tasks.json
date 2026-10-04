@@ -2701,7 +2701,7 @@
       "plan_task": 3,
       "title": "Detect and redact local secret-risk patterns",
       "owner_role": "Local pattern and value-free presentation engineer; independent privacy reviewer",
-      "observed_state": "Proposed; secret_patterns.py/test_secret_patterns.py absent; SECRET001-003 shapes and numerical thresholds already specified.",
+      "observed_state": "secret_patterns.py implements SECRET001-003 local scanning with value-free observations; tests/test_secret_patterns.py covers card-named adverse cases. Kernel integration and docs/acceptance/E05 fixtures remain open.",
       "scope": [
         "Own local private-key-header, labelled shape and labelled entropy candidates only; no provider/database or validity probe.",
         "SECRET002 quoted ASCII alphanumeric/underscore/hyphen values 32-512; SECRET003 labelled 40-512 with Shannon entropy>=4.0 bits/character.",
