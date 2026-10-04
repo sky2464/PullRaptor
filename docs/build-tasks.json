@@ -1055,7 +1055,7 @@
       "plan_task": "Task 2 pure authorization",
       "title": "Bind report identities, coverage and exact inline locations",
       "owner_role": "Publication contract implementer",
-      "observed_state": "Helper compares two contexts and inventory paths, but not report.contract, complete applicable receipts, full scope or actual diff location.",
+      "observed_state": "validate_publication binds report.contract, full scope digest, receipt completeness and head-side inline eligibility; adverse tests in tests/test_publication_contract.py. Fixture corpus under tests/fixtures/e02/publication-binding/ and E02-A2 acceptance evidence remain open.",
       "scope": "Network-free validator and canonical report/scope binding; keep full partial summaries separate from inline eligibility.",
       "input_paths": [
         "src/pullraptor/publication_contract.py",
