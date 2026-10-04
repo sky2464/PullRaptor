@@ -17,29 +17,90 @@ jobs:
     permissions:
       contents: read
     env:
+      PULLRAPTOR_CI_PROFILE: hostile
       PULLRAPTOR_PR_TITLE: ${{ github.event.pull_request.title }}
       PULLRAPTOR_PR_BODY: ${{ github.event.pull_request.body }}
+      PULLRAPTOR_REPOSITORY_ID: ${{ github.repository }}
+      PULLRAPTOR_PR_NUMBER: ${{ github.event.pull_request.number }}
+      PULLRAPTOR_WORKFLOW_ID: ${{ github.workflow }}
+      PULLRAPTOR_RUN_ID: ${{ github.run_id }}
+      PULLRAPTOR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      PULLRAPTOR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
       - name: Install trusted reviewer artifact
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
         with:
           repository: sky2464/PullRaptor
-          ref: 79a00f32896af7bc3270f8ea583453d0079b2962
+          ref: 8beb6528b3a6643886de5e993088a2cbc2842a90
           path: pullraptor-artifact
           persist-credentials: false
           sparse-checkout: |
             src
             pyproject.toml
 
-      - name: Capture and review head (read-only)
+      - name: Record trusted reviewer digest
+        working-directory: pullraptor-artifact
+        run: |
+          DIGEST=$(python3.12 -c "import hashlib, pathlib; h=hashlib.sha256();
+          for f in sorted(pathlib.Path('src').rglob('*.py')): h.update(f.read_bytes());
+          print(h.hexdigest())")
+          echo "PULLRAPTOR_REVIEWER_DIGEST=$DIGEST" >> "$GITHUB_ENV"
+
+      - name: Acquire PR head (read-only, credential-stripped)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: pr-head
+          persist-credentials: false
+          fetch-depth: 1
+
+      - name: Probe disposable isolation controls
         working-directory: pullraptor-artifact
         env:
           PYTHONPATH: src
         run: |
-          python3.12 -m pullraptor --help
+          python3.12 -m pullraptor.publication_trust probe-isolation
 
-      - name: Egress isolation profile
-        run: echo "admission=unavailable"
+      - name: Run bounded review (no repository script execution)
+        working-directory: pullraptor-artifact
+        env:
+          PYTHONPATH: src
+        run: |
+          python3.12 -m pullraptor \
+            --repo "${{ github.workspace }}/pr-head" \
+            --base "${PULLRAPTOR_BASE_SHA}" \
+            --head "${PULLRAPTOR_HEAD_SHA}" \
+            --exact-base \
+            --ci \
+            --format json \
+            --no-cache \
+            > "${RUNNER_TEMP}/pullraptor-report.json"
+          REPORT_DIGEST=$(python3.12 -c "import hashlib, pathlib; print(hashlib.sha256(pathlib.Path('${RUNNER_TEMP}/pullraptor-report.json').read_bytes()).hexdigest())")
+          echo "PULLRAPTOR_ARTIFACT_DIGEST=$REPORT_DIGEST" >> "$GITHUB_ENV"
+          python3.12 <<'PY'
+          import json, os
+          receipt = {
+              "repository_id": os.environ["PULLRAPTOR_REPOSITORY_ID"],
+              "pr_number": int(os.environ["PULLRAPTOR_PR_NUMBER"]),
+              "workflow_id": os.environ["PULLRAPTOR_WORKFLOW_ID"],
+              "run_id": os.environ["PULLRAPTOR_RUN_ID"],
+              "artifact_digest": os.environ["PULLRAPTOR_ARTIFACT_DIGEST"],
+              "reviewer_digest": os.environ["PULLRAPTOR_REVIEWER_DIGEST"],
+          }
+          path = os.path.join(os.environ["RUNNER_TEMP"], "pullraptor-receipt.json")
+          with open(path, "w", encoding="utf-8") as fh:
+              json.dump(receipt, fh, sort_keys=True)
+              fh.write("\n")
+          PY
+
+      - name: Upload bounded report bundle
+        uses: actions/upload-artifact@65c8c4a0d8807ff9f0cd6bde0bcd0dec0c5fb4fdf # v4.4.3
+        with:
+          name: pullraptor-report
+          path: |
+            ${{ runner.temp }}/pullraptor-report.json
+            ${{ runner.temp }}/pullraptor-receipt.json
+          if-no-files-found: error
 
   publish:
     name: Publish (privileged)
@@ -48,14 +109,49 @@ jobs:
     if: github.event.pull_request.head.repo.full_name == github.repository
     permissions:
       pull-requests: write
+    env:
+      PULLRAPTOR_REPOSITORY_ID: ${{ github.repository }}
+      PULLRAPTOR_PR_NUMBER: ${{ github.event.pull_request.number }}
+      PULLRAPTOR_WORKFLOW_ID: ${{ github.workflow }}
+      PULLRAPTOR_RUN_ID: ${{ github.run_id }}
     steps:
+      - name: Install trusted publisher artifact
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        with:
+          repository: sky2464/PullRaptor
+          ref: 8beb6528b3a6643886de5e993088a2cbc2842a90
+          path: pullraptor-artifact
+          persist-credentials: false
+          sparse-checkout: |
+            src
+            pyproject.toml
+
       - name: Fetch bounded report artifact
         uses: actions/download-artifact@fa0a91b85d8f369360cf09cc0f86126337ad235c # v4.1.8
         with:
           name: pullraptor-report
+          path: report-bundle
+
+      - name: Validate artifact origin (replay denied)
+        working-directory: pullraptor-artifact
+        env:
+          PYTHONPATH: src
+        run: |
+          RECEIPT_PATH="${{ github.workspace }}/report-bundle/pullraptor-receipt.json"
+          REPORT_PATH="${{ github.workspace }}/report-bundle/pullraptor-report.json"
+          DIGEST=$(python3.12 -c "import hashlib, pathlib; print(hashlib.sha256(pathlib.Path('${REPORT_PATH}').read_bytes()).hexdigest())")
+          REVIEWER=$(python3.12 -c "import json; print(json.load(open('${RECEIPT_PATH}'))['reviewer_digest'])")
+          echo "PULLRAPTOR_ARTIFACT_DIGEST=$DIGEST" >> "$GITHUB_ENV"
+          echo "PULLRAPTOR_REVIEWER_DIGEST=$REVIEWER" >> "$GITHUB_ENV"
+          python3.12 -m pullraptor.publication_trust validate-receipt --expected "${RECEIPT_PATH}"
 
       - name: Publish review comment
+        working-directory: pullraptor-artifact
         env:
+          PYTHONPATH: src
           GITHUB_TOKEN: ${{ secrets.PULLRAPTOR_PUBLISH_TOKEN }}
         run: |
-          python3.12 -m pullraptor.publisher --help
+          python3.12 -m pullraptor.publisher \
+            --report "${{ github.workspace }}/report-bundle/pullraptor-report.json" \
+            --repo-slug "${{ github.repository }}" \
+            --pr "${{ github.event.pull_request.number }}"

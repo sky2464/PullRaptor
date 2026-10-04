@@ -1,0 +1,10 @@
+{
+  "profile": "hostile",
+  "controls": {
+    "egress_denied": false,
+    "source_readonly": false,
+    "publisher_credential_absent": true,
+    "process_isolated": false
+  },
+  "expected_admission": "unavailable"
+}

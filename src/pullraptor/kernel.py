@@ -31,6 +31,7 @@ from pullraptor.models import (
     file_scope_key,
     import_scope_key,
 )
+from pullraptor.language_workers import LanguageRegistry
 from pullraptor.parser_worker import EXTRACTOR_DIGEST
 from pullraptor.python_facts import bind_facts, extract_python, resolve_context
 from pullraptor.python_ir import BoundStatementIR
@@ -59,6 +60,7 @@ def review(
     exact_base: bool = False,
     use_cache: bool = True,
     is_head_tree: bool = False,
+    language_registry: LanguageRegistry | None = None,
 ) -> tuple[Report, Deadline, RecordLimits]:
     """Execute a complete, immutable review comparing base and head revisions.
 
@@ -381,6 +383,44 @@ def review(
     # 9. Policy decision
     exit_code = decide(contract, tuple(receipts_list), aligned_findings, tuple(all_diagnostics), config)
 
+    execution: dict[str, Any] = {
+        "duration_ms": int((time.monotonic() - start_time) * 1000),
+        "exit_code": exit_code,
+    }
+    if config.profile == "structural":
+        from pullraptor.review_execution import (
+            collect_advisory_security_observations,
+            dispatch_language_workers_for_changes,
+        )
+
+        changed_paths = tuple(
+            chg.path for chg in chgs if chg.path and chg.path in head_visited
+        )
+        advisories = collect_advisory_security_observations(
+            repo,
+            changed_paths,
+            head_blobs_by_path,
+            head,
+            policy_digest,
+            effective_limits,
+            deadline,
+        )
+        if advisories:
+            execution["advisory_observations"] = advisories
+        if language_registry is not None:
+            worker_records = dispatch_language_workers_for_changes(
+                repo,
+                tuple(chg.path for chg in chgs if chg.path),
+                head_blobs_by_path,
+                head,
+                policy_digest,
+                language_registry,
+                effective_limits,
+                deadline,
+            )
+            if worker_records:
+                execution["language_workers"] = worker_records
+
     report = FullReport(
         schema="1",
         kind="full",
@@ -390,6 +430,6 @@ def review(
         exclusions=(),
         findings=aligned_findings,
         diagnostics=tuple(all_diagnostics),
-        execution={"duration_ms": int((time.monotonic() - start_time) * 1000), "exit_code": exit_code},
+        execution=execution,
     )
     return report, deadline, record_limits

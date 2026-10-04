@@ -1,0 +1,38 @@
+name: Publication trust
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  publication-trust:
+    name: E02 template and trust checks
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify development CI policy from trusted base
+        if: github.event_name == 'pull_request'
+        run: |
+          PYTHONPATH=src python3.12 -m pullraptor.publication_trust verify-dev-ci \
+            --base "${{ github.event.pull_request.base.sha }}" \
+            --required-marker "unittest discover" \
+            --required-marker "Verify PR branch naming"
+
+      - name: Run publication trust and template regressions
+        run: |
+          PYTHONPATH=src:. python3.12 -m unittest \
+            tests.test_publication_trust \
+            tests.test_ci_template \
+            tests.test_publication_contract \
+            tests.test_publisher \
+            -v
