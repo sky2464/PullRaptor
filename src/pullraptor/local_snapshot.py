@@ -13,7 +13,7 @@ import stat
 import subprocess
 import tempfile
 
-from pullraptor.git_snapshot import _git_env, _safe_git_args
+from pullraptor.git_snapshot import _git_env, _safe_git_args, resolve_inputs
 from pullraptor.models import Deadline, Diagnostic, Limits, ProcessBounds
 from pullraptor.process import run_bounded
 
@@ -33,6 +33,52 @@ class LocalSnapshot:
     include_untracked: bool
     discovery_complete: bool
     diagnostics: tuple[Diagnostic, ...]
+
+
+@dataclass(frozen=True)
+class LocalReviewRefs:
+    """Resolved base/head refs for a local staged or workdir review."""
+
+    base_ref: str
+    head_ref: str
+    is_head_tree: bool
+    snapshot: LocalSnapshot
+
+
+def resolve_local_review_refs(
+    repo: Path,
+    *,
+    staged_only: bool,
+    include_untracked: bool,
+    base_ref: str | None,
+    limits: Limits,
+    deadline: Deadline,
+) -> LocalReviewRefs:
+    """Resolve comparison base and captured tree OID for staged/workdir reviews."""
+    resolved_base = base_ref if base_ref is not None else "HEAD"
+    base_tip, _, _ = resolve_inputs(
+        repo,
+        resolved_base,
+        "HEAD",
+        limits,
+        deadline,
+        exact_base=True,
+    )
+    snapshot = capture_local(
+        repo,
+        base_tip,
+        staged_only=staged_only,
+        include_untracked=include_untracked,
+        limits=limits,
+        deadline=deadline,
+    )
+    head_ref = snapshot.tree_oid if snapshot.tree_oid else ""
+    return LocalReviewRefs(
+        base_ref=resolved_base,
+        head_ref=head_ref,
+        is_head_tree=True,
+        snapshot=snapshot,
+    )
 
 
 def _file_identity(st: os.stat_result) -> tuple[int, int, int]:
