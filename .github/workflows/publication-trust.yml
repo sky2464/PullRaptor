@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364e1ed6ad # v4.2.2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
