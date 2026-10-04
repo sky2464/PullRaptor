@@ -10,7 +10,11 @@ import unittest
 from unittest.mock import patch
 
 from pullraptor.git_snapshot import resolve_inputs
-from pullraptor.local_snapshot import capture_local, resolve_repo_git_dir
+from pullraptor.local_snapshot import (
+    _parent_symlink_diagnostic,
+    capture_local,
+    resolve_repo_git_dir,
+)
 from pullraptor.models import Deadline, Diagnostic, Limits
 from tests.helpers import make_repo
 
@@ -181,6 +185,113 @@ class TestLocalSnapshot(unittest.TestCase):
         self.assertEqual(status_before, status_after)
         repo.cleanup()
 
+    def test_capture_executable_mode_exact(self) -> None:
+        repo = make_repo({"run.sh": b"#!/bin/sh\necho hi\n"})
+        script = repo.root / "run.sh"
+        script.chmod(0o755)
+        script.write_text("#!/bin/sh\necho hi\n", encoding="utf-8")
+
+        result = capture_local(
+            repo.root,
+            self._base_tip(repo.root),
+            staged_only=False,
+            include_untracked=False,
+            limits=self.limits,
+            deadline=self.deadline,
+        )
+        self.assertTrue(result.discovery_complete)
+        modes = self._tree_modes(repo.root, result.tree_oid)
+        self.assertEqual(modes.get("run.sh"), "100755")
+        repo.cleanup()
+
+    def test_parent_symlink_refused(self) -> None:
+        repo = make_repo({"hold/base.txt": b"ok\n"})
+        (repo.root / "gate").symlink_to("hold")
+        (repo.root / "hold" / "via.txt").write_text("x\n", encoding="utf-8")
+
+        self.assertIsNotNone(_parent_symlink_diagnostic(repo.root, "gate/via.txt"))
+
+        def fake_paths(*_args, **_kwargs):
+            return ["gate/via.txt"], []
+
+        with patch("pullraptor.local_snapshot._git_tracked_paths", side_effect=fake_paths):
+            result = capture_local(
+                repo.root,
+                self._base_tip(repo.root),
+                staged_only=False,
+                include_untracked=False,
+                limits=self.limits,
+                deadline=self.deadline,
+            )
+        self.assertFalse(result.discovery_complete)
+        self.assertTrue(any(d.cause == "parent_symlink" for d in result.diagnostics))
+        repo.cleanup()
+
+    def test_capture_aggregate_limit_incomplete(self) -> None:
+        repo = make_repo({"a.txt": b"aa\n", "b.txt": b"bb\n"})
+        tight = Limits(max_total_bytes=3)
+        result = capture_local(
+            repo.root,
+            self._base_tip(repo.root),
+            staged_only=False,
+            include_untracked=False,
+            limits=tight,
+            deadline=self.deadline,
+        )
+        self.assertFalse(result.discovery_complete)
+        self.assertTrue(any(d.cause == "max_total_bytes_exceeded" for d in result.diagnostics))
+        repo.cleanup()
+
+    def test_unmerged_index_incomplete(self) -> None:
+        repo = make_repo({"base.txt": b"base\n"})
+        repo.commit({"branch.txt": b"branch\n"}, message="branch commit")
+        subprocess.run(["git", "checkout", "-b", "side"], cwd=repo.root, check=True, capture_output=True)
+        (repo.root / "branch.txt").write_text("side edit\n", encoding="utf-8")
+        repo.commit({"branch.txt": b"side edit\n"}, message="side")
+        subprocess.run(["git", "checkout", "main"], cwd=repo.root, check=True, capture_output=True)
+        (repo.root / "branch.txt").write_text("main edit\n", encoding="utf-8")
+        repo.commit({"branch.txt": b"main edit\n"}, message="main")
+        subprocess.run(["git", "merge", "side"], cwd=repo.root, check=False, capture_output=True)
+
+        result = capture_local(
+            repo.root,
+            self._base_tip(repo.root),
+            staged_only=True,
+            include_untracked=False,
+            limits=self.limits,
+            deadline=self.deadline,
+        )
+        self.assertFalse(result.discovery_complete)
+        self.assertTrue(any(d.cause == "unmerged_index" for d in result.diagnostics))
+        repo.cleanup()
+
+    def test_staged_index_changes_during_capture_incomplete(self) -> None:
+        repo = make_repo({"staged.txt": b"one\n"})
+        (repo.root / "staged.txt").write_text("two\n", encoding="utf-8")
+        subprocess.run(["git", "add", "staged.txt"], cwd=repo.root, check=True, capture_output=True)
+
+        original_identity = capture_local.__globals__["_index_identity"]
+        calls = {"count": 0}
+
+        def racing_identity(path: Path):
+            if path.name == "index":
+                calls["count"] += 1
+                return (calls["count"], 100, 200)
+            return original_identity(path)
+
+        with patch("pullraptor.local_snapshot._index_identity", side_effect=racing_identity):
+            result = capture_local(
+                repo.root,
+                self._base_tip(repo.root),
+                staged_only=True,
+                include_untracked=False,
+                limits=self.limits,
+                deadline=self.deadline,
+            )
+        self.assertFalse(result.discovery_complete)
+        self.assertTrue(any(d.cause == "capture_race" for d in result.diagnostics))
+        repo.cleanup()
+
     def test_worktree_gitdir_file_supported(self) -> None:
         main_repo = make_repo({"base.py": b"a = 1\n"})
         linked_dir = Path(tempfile.mkdtemp(prefix="pullraptor_wt_"))
@@ -220,6 +331,22 @@ class TestLocalSnapshot(unittest.TestCase):
             check=True,
         )
         return {line for line in res.stdout.splitlines() if line}
+
+    def _tree_modes(self, repo_root: Path, tree_oid: str) -> dict[str, str]:
+        res = subprocess.run(
+            ["git", "ls-tree", "-r", tree_oid],
+            cwd=repo_root,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        modes: dict[str, str] = {}
+        for line in res.stdout.splitlines():
+            if not line:
+                continue
+            meta, path = line.split("\t", 1)
+            modes[path] = meta.split()[0]
+        return modes
 
 
 if __name__ == "__main__":

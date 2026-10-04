@@ -86,6 +86,59 @@ def _file_identity(st: os.stat_result) -> tuple[int, int, int]:
     return (st.st_ino, st.st_size, mtime_ns)
 
 
+def _git_file_mode(path: Path) -> str:
+    mode = path.stat().st_mode
+    if mode & (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH):
+        return "100755"
+    return "100644"
+
+
+def _parent_symlink_diagnostic(repo: Path, rel: str) -> Diagnostic | None:
+    """Refuse paths with a symlink among parent components (no-follow ancestor admission)."""
+    parts = Path(rel).parts
+    if not parts:
+        return None
+    current = repo.resolve()
+    for index, part in enumerate(parts):
+        current = current / part
+        if not current.exists():
+            return None
+        if current.is_symlink():
+            return Diagnostic(
+                code="UNSUPPORTED_ENTRY",
+                message="Parent path component is a symlink",
+                path=rel,
+                cause="parent_symlink",
+            )
+        if index < len(parts) - 1 and not current.is_dir():
+            return None
+    return None
+
+
+def _index_identity(index_path: Path) -> tuple[int, int, int] | None:
+    try:
+        st = index_path.stat()
+    except OSError:
+        return None
+    mtime_ns = getattr(st, "st_mtime_ns", int(st.st_mtime * 1_000_000_000))
+    return (st.st_ino, st.st_size, mtime_ns)
+
+
+def _git_has_unmerged_entries(
+    repo: Path,
+    limits: Limits,
+    deadline: Deadline,
+    *,
+    env: dict[str, str],
+) -> bool:
+    bounds = ProcessBounds(max_stdout_bytes=limits.max_diff_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
+    args = tuple(_safe_git_args(repo) + ["ls-files", "-u", "-z"])
+    res = run_bounded(args, cwd=repo, env=env, deadline=deadline, bounds=bounds)
+    if res.returncode != 0:
+        return False
+    return any(chunk for chunk in res.stdout.split(b"\x00") if chunk)
+
+
 def _read_bounded_file(path: Path, limits: Limits) -> tuple[bytes | None, Diagnostic | None, bool]:
     """Read file bytes with no-follow; return (content, diagnostic, race_detected)."""
     try:
@@ -190,7 +243,7 @@ def _git_ls_files_index(
     env: dict[str, str],
 ) -> tuple[list[tuple[str, str, str]], list[Diagnostic]]:
     """Return list of (path, mode, blob_oid) from the index."""
-    bounds = ProcessBounds(max_stdout_bytes=limits.max_total_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
+    bounds = ProcessBounds(max_stdout_bytes=limits.max_diff_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
     args = tuple(_safe_git_args(repo) + ["ls-files", "-s", "-z"])
     res = run_bounded(args, cwd=repo, env=env, deadline=deadline, bounds=bounds)
     if res.returncode != 0:
@@ -228,7 +281,7 @@ def _git_tracked_paths(
     include_untracked: bool,
     env: dict[str, str],
 ) -> tuple[list[str], list[Diagnostic]]:
-    bounds = ProcessBounds(max_stdout_bytes=limits.max_total_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
+    bounds = ProcessBounds(max_stdout_bytes=limits.max_diff_bytes, max_stderr_bytes=limits.max_stderr_bytes, timeout_seconds=5.0)
     args = list(_safe_git_args(repo))
     if include_untracked:
         args.extend(["ls-files", "-z", "--cached", "--others", "--exclude-standard"])
@@ -367,8 +420,20 @@ def capture_local(
     diagnostics: list[Diagnostic] = []
     race = False
     tree_entries: dict[str, tuple[str, str]] = {}
+    aggregate_bytes = 0
+    index_path = _git_index_path(repo, deadline, limits)
+    index_before = _index_identity(index_path) if index_path is not None else None
 
     with _isolated_index_environment(repo, deadline, limits) as git_env:
+        if _git_has_unmerged_entries(repo, limits, deadline, env=git_env):
+            diagnostics.append(
+                Diagnostic(
+                    code="INDEX_CONFLICT",
+                    message="Unmerged index entries present",
+                    cause="unmerged_index",
+                )
+            )
+
         if staged_only:
             index_entries, list_diags = _git_ls_files_index(repo, limits, deadline, env=git_env)
             diagnostics.extend(list_diags)
@@ -399,6 +464,11 @@ def capture_local(
                     )
                     break
 
+                parent_diag = _parent_symlink_diagnostic(repo, rel)
+                if parent_diag is not None:
+                    diagnostics.append(parent_diag)
+                    continue
+
                 full_path = repo / rel
                 if not full_path.exists():
                     continue
@@ -414,6 +484,17 @@ def capture_local(
                 if content is None:
                     continue
 
+                aggregate_bytes += len(content)
+                if aggregate_bytes > limits.max_total_bytes:
+                    diagnostics.append(
+                        Diagnostic(
+                            code="LIMIT_EXCEEDED",
+                            message="Aggregate captured bytes exceed max_total_bytes",
+                            cause="max_total_bytes_exceeded",
+                        )
+                    )
+                    break
+
                 blob_oid = _git_hash_object_w(repo, content, deadline, limits, env=git_env)
                 if blob_oid is None:
                     diagnostics.append(
@@ -425,10 +506,31 @@ def capture_local(
                         )
                     )
                     continue
-                tree_entries[rel] = ("100644", blob_oid)
+                tree_entries[rel] = (_git_file_mode(full_path), blob_oid)
+
+        if index_path is not None and index_before is not None:
+            index_after = _index_identity(index_path)
+            if index_after is not None and index_after != index_before:
+                diagnostics.append(
+                    Diagnostic(
+                        code="CAPTURE_RACE",
+                        message="Repository index changed during capture",
+                        cause="capture_race",
+                    )
+                )
+                race = True
 
         discovery_complete = not race and not any(
-            d.cause in ("capture_race", "git_error", "deadline_exceeded", "max_tracked_entries_exceeded")
+            d.cause
+            in (
+                "capture_race",
+                "git_error",
+                "deadline_exceeded",
+                "max_tracked_entries_exceeded",
+                "max_total_bytes_exceeded",
+                "unmerged_index",
+                "parent_symlink",
+            )
             for d in diagnostics
         )
 

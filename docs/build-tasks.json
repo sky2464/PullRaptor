@@ -915,7 +915,7 @@
       "plan_task": "Task 1",
       "title": "Finish safe bounded snapshot capture",
       "owner_role": "Local snapshot implementer",
-      "observed_state": "Per-file no-follow/read identity and index tree scaffolding exist; workdir mode is flattened, index/global races and aggregate omissions are not fully covered.",
+      "observed_state": "Named card tests pass in trusted dev verification; executable modes, parent-symlink refusal, aggregate byte cap, unmerged-index and index-identity race seams implemented. E02-D02 fixture corpus and E02-A1 acceptance remain open.",
       "scope": "Existing LocalSnapshot and bounded Git/process helper; preserve exact admitted bytes/modes, index/ref/worktree state and visible excluded/unsupported entries.",
       "input_paths": [
         "src/pullraptor/local_snapshot.py",
@@ -964,7 +964,7 @@
         "Executable mode and SHA-256 object store",
         "Filter/fsmonitor sentinels"
       ],
-      "next_action": "Add missing assertions with deterministic race seams, reproduce deviations, then finish capture while saving exact pre/post index/ref/worktree and content manifests.",
+      "next_action": "Add immutable E02-D02 capture fixtures under tests/fixtures/e02/capture/, independent review, and E02-A1 evidence; staged blob admission from index without workdir flattening gaps.",
       "depends_on": [
         "E02-D02",
         "E04-D0"
