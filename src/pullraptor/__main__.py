@@ -8,6 +8,7 @@ from pathlib import Path
 import sys
 import time
 
+from pullraptor.beta_admission import admit_cli_review_flags
 from pullraptor.local_snapshot import resolve_local_review_refs
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, Limits
@@ -56,10 +57,25 @@ def main(argv: list[str] | None = None) -> int:
     # If first argument is 'mcp', run MCP server directly
     raw_args = argv if argv is not None else sys.argv[1:]
     if raw_args and raw_args[0] == "mcp":
+        admitted, message = admit_cli_review_flags(staged=False, workdir=False, include_untracked=False, mcp=True, ai_endpoint=None)
+        if not admitted:
+            sys.stderr.write(message + "\n")
+            return 2
         from pullraptor.mcp_server import run_mcp_server
         return run_mcp_server()
 
     args = parser.parse_args(argv)
+
+    admitted, message = admit_cli_review_flags(
+        staged=bool(args.staged),
+        workdir=bool(args.workdir),
+        include_untracked=bool(args.include_untracked),
+        mcp=bool(args.mcp),
+        ai_endpoint=args.ai_endpoint,
+    )
+    if not admitted:
+        sys.stderr.write(message + "\n")
+        return 2
 
     if args.mcp:
         from pullraptor.mcp_server import run_mcp_server

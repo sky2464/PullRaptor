@@ -27,6 +27,7 @@ class TestWorkingTreeSnapshots(unittest.TestCase):
         self._mcp_env = patch.dict(
             os.environ,
             {
+                "PULLRAPTOR_DEV_ADMIT_EXTENDED": "1",
                 "PULLRAPTOR_MCP_WORKSPACE_ROOT": str(self.repo.root.parent),
                 "PULLRAPTOR_MCP_REPOSITORY_ID": "test-repo",
             },

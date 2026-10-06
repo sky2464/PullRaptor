@@ -12,6 +12,7 @@ from typing import Any
 import urllib.error
 import urllib.request
 
+from pullraptor.beta_admission import admit_console_script
 from pullraptor.models import (
     CoverageReceipt,
     Deadline,
@@ -459,6 +460,10 @@ def publish_report(
 
 def main(argv: list[str] | None = None) -> int:
     """CLI entry point for pullraptor-publish."""
+    admitted, message = admit_console_script("pullraptor-publish")
+    if not admitted:
+        sys.stderr.write(message + "\n")
+        return 2
     parser = argparse.ArgumentParser(
         prog="pullraptor-publish",
         description="Publish PullRaptor review reports to GitHub pull requests",

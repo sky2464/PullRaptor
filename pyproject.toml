@@ -18,7 +18,7 @@ dependencies = []
 [project.scripts]
 pullraptor = "pullraptor.__main__:main"
 pullraptor-publish = "pullraptor.publisher:main"
-pullraptor-mcp = "pullraptor.mcp_server:run_mcp_server"
+pullraptor-mcp = "pullraptor.mcp_server:console_main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

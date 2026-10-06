@@ -1,0 +1,60 @@
+{
+  "schema": "pullraptor-beta-entrypoints/1",
+  "date": "2026-10-05",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "wheel_console_scripts": [
+    {
+      "command": "pullraptor",
+      "module": "pullraptor.__main__:main",
+      "beta_included": true,
+      "acceptance_ids": ["E01-A1", "E01-A2", "E01-A3", "E07-A3"],
+      "admission": "pending_independent",
+      "verification_tests": ["tests/test_cli.py", "tests/test_installed_artifacts.py"]
+    },
+    {
+      "command": "pullraptor-publish",
+      "module": "pullraptor.publisher:main",
+      "beta_included": false,
+      "acceptance_ids": ["E02-A2", "E02-A3", "E02-A4"],
+      "admission": "excluded_contained",
+      "containment": "exit 2 unless PULLRAPTOR_DEV_ADMIT_EXTENDED=1",
+      "verification_tests": ["tests/test_beta_entrypoints.py"]
+    },
+    {
+      "command": "pullraptor-mcp",
+      "module": "pullraptor.mcp_server:run_mcp_server",
+      "beta_included": false,
+      "acceptance_ids": ["E08-A1"],
+      "admission": "excluded_contained",
+      "containment": "exit 2 unless PULLRAPTOR_DEV_ADMIT_EXTENDED=1",
+      "verification_tests": ["tests/test_beta_entrypoints.py"]
+    }
+  ],
+  "cli_flag_gates": [
+    {
+      "flags": ["--staged", "--workdir", "--include-untracked"],
+      "beta_included": false,
+      "acceptance_ids": ["E02-A1"],
+      "containment": "exit 2 unless PULLRAPTOR_DEV_ADMIT_EXTENDED=1"
+    },
+    {
+      "flags": ["--mcp"],
+      "beta_included": false,
+      "acceptance_ids": ["E08-A1"]
+    },
+    {
+      "flags": ["--ai-endpoint"],
+      "beta_included": false,
+      "acceptance_ids": ["E03-A2"]
+    }
+  ],
+  "importable_modules_shipped": {
+    "note": "Full package tree is importable from wheel; beta claims only cover offline CLI review path.",
+    "kernel": "pullraptor.kernel",
+    "excluded_activation": [
+      "pullraptor.publisher",
+      "pullraptor.mcp_server",
+      "service/*"
+    ]
+  }
+}
