@@ -1,11 +1,12 @@
 {
   "card_id": "E01-T9-BENCH",
   "artifact_directory": "benchmark",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "source_revision": "2f7d632613da08126d002c19b358e6cfc675a989",
   "evidence_status": "partial",
-  "synthetic_10k_fixture": "measured_development",
+  "synthetic_10k_fixture": "linux_runner_measured",
   "micro_evidence": "docs/acceptance/artifacts/E01/micro_benchmark.json",
   "development_run": "docs/acceptance/artifacts/E01/benchmark/development-run.json",
   "real_repositories": "docs/acceptance/artifacts/E01/benchmark/real-repositories.json",
-  "measurements": "docs/acceptance/artifacts/E01/benchmark/synthetic-10k-measurements.json"
+  "measurements": "docs/acceptance/artifacts/E01/benchmark/synthetic-10k-measurements.json",
+  "linux_runner": "docs/acceptance/artifacts/E01/benchmark/linux-runner-measurements.json"
 }
