@@ -34,7 +34,6 @@ Date: 2026-10-06. **Candidate source OID:** `f834f19e9b48c90fea35338c6940004b6a5
 
 Container image, update/rollback from prior accepted artifact (BR-18), GitHub publication workflow product acceptance.
 
-## Disposition
+## Packaging addendum (0.1.0b1)
 
-- **beta_subset_accepted:** **yes**
-- **full_E07_accepted:** **no**
+After maintainer sign-off, metadata version aligned to `0.1.0b1` at source OID `097e9ae…`. Rebuilt wheel digest **`d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24`** (`pullraptor-0.1.0b1-py3-none-any.whl`). Packaging-only change; beta subset acceptance carries forward.
