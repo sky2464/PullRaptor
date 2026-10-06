@@ -1,0 +1,24 @@
+{
+  "artifacts": [
+    {
+      "digest": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
+      "entrypoints": [
+        "pullraptor",
+        "pullraptor-publish",
+        "pullraptor-mcp"
+      ],
+      "kind": "wheel",
+      "size": 119190
+    }
+  ],
+  "dependency_inventory": [
+    "kernel-runtime:stdlib-only",
+    "build:setuptools:>=61.0"
+  ],
+  "provenance_ref": "workflow://owner/pullraptor/run/br09-build-2",
+  "runtime_matrix": [
+    "python-3.12"
+  ],
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "version": "0.3.0"
+}

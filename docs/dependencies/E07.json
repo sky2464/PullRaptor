@@ -2,7 +2,7 @@
   "schema": "pullraptor-dependency-inventory/1",
   "date": "2026-10-03",
   "package": "E07",
-  "code_revision": "87a0c9b",
+  "code_revision": "6f1b9d3",
   "measurement_environment": {
     "profile": "cloud-agent-linux-x86_64",
     "python_version": "3.12.3",
@@ -91,7 +91,7 @@
     },
     {
       "command": "pullraptor-mcp",
-      "module": "pullraptor.mcp_server:run_mcp_server",
+      "module": "pullraptor.mcp_server:console_main",
       "description": "Local MCP stdio adapter"
     }
   ]
