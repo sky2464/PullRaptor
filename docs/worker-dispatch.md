@@ -1,5 +1,19 @@
 # Coordinator dispatch and unblock record
 
+## 2026-10-05 planning assignment and release handoff
+
+Initial human scope (2026-10-05 morning): update the Master Plan and release plans/tasks with subagent planning reviews; that tranche excluded implementation and builds. A later human request authorized **implement and build all** beta readiness work per [release plan](superpowers/plans/2026-10-05-beta-release-readiness.md).
+
+Source/trusted-main observation: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. Construction branch: `feat/beta-0.1-release-readiness` at `6f1b9d370f6332e88675d3bf2b681713b6840e44` plus uncommitted changes. [Release manifest](releases/beta-0.1-release-manifest.json) records `ready_for_release: false`. BR-01–BR-14 are **partial** on the branch; BR-07/BR-13 are **blocked** pending independent reviewers; BR-15–BR-17 were not executed (publication requires explicit authorization).
+
+The [18-card release queue](release-tasks.json) and manifest own cross-package status. Construction evidence includes `docs/releases/`, `docs/acceptance/releases/beta-0.1.md`, `src/pullraptor/beta_admission.py`, `tests/test_beta_entrypoints.py`, dual wheel builds under `docs/acceptance/artifacts/E07/builds/`, and development-suite logs. **Exclude unrelated untracked E04–E11 preparation stubs** from the first beta PR unless separately assigned.
+
+PR #46 merged publication binding after #41/#43/#45; PR #47 merged local secret patterns. E07 has byte-identical local dual-build receipts (`pullraptor-0.3.0` wheel at candidate revision); external origin verification, Linux clean install, BR-06 synthetic/real benchmarks, BR-11 recovery rehearsal, maintainer BR-01 version (`0.1.0b1` vs metadata `0.3.0`), and independent BR-07/BR-13 remain open.
+
+**Next coordinator actions:** (1) maintainer BR-01 sign-off on scope and `0.1.0b1`; (2) assign independent BR-07/BR-13 reviewers; (3) scoped PR from construction branch (beta paths only); (4) platform owner for BR-10 linux-x86_64 offline install. Pin immutable source/doc/trusted-base on merge. Gates and independently accepted evidence remain required for publication.
+
+## Historical construction record (2026-10-03)
+
 Date: 2026-10-03. Assigned code/trusted base: `28b623ab1bb238ef11fbf07b29c1c773522a4a42`. Source/static reviews inspected `fbf9f2e659cda27d64b431fe4e690b2accf2a17d`; only the README title differs at the assigned base. Earlier inventories retain their original revisions. Scope: coordinator-owned planning, bounded build task definitions and worker unblock repairs. Product execution, deployment and acceptance are not inferred from this record.
 
 ## Resolved blocker and current authority
