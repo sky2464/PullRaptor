@@ -7,18 +7,25 @@
       "inventory_profile_id": "local-linux-x86_64",
       "runtime": "python-3.12",
       "platform": "linux-x86_64",
-      "artifact_kinds": ["wheel"],
+      "artifact_kinds": [
+        "wheel"
+      ],
       "offline": true,
-      "state": "not_run",
-      "ci_smoke_workflow": ".github/workflows/ci.yml",
-      "notes": "Fresh Linux x86_64 venv install validated in CI on push; committed receipt uploaded as workflow artifact until BR-10 independent acceptance."
+      "state": "development_verified",
+      "notes": "GitHub ubuntu-24.04 workflow; independent BR-10 acceptance still required.",
+      "evidence_revision": "2f7d632613da08126d002c19b358e6cfc675a989",
+      "evidence_platform": "linux-x86_64",
+      "evidence_path": "docs/acceptance/artifacts/E07/install/linux-x86_64-acceptance.json",
+      "workflow_run_id": "37404240057"
     },
     {
       "id": "python-3.12-macos-arm64-venv",
       "inventory_profile_id": "local-macos-arm64",
       "runtime": "python-3.12",
       "platform": "darwin-arm64",
-      "artifact_kinds": ["wheel"],
+      "artifact_kinds": [
+        "wheel"
+      ],
       "offline": true,
       "state": "development_verified",
       "evidence_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
@@ -30,7 +37,10 @@
       "inventory_profile_id": "container-linux-x86_64",
       "runtime": "python-3.12",
       "platform": "linux-x86_64",
-      "artifact_kinds": ["wheel", "container-image"],
+      "artifact_kinds": [
+        "wheel",
+        "container-image"
+      ],
       "offline": true,
       "state": "not_run",
       "notes": "Container image install and footprint remain not_run until pinned digest and isolated build receipts exist."

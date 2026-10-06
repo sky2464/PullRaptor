@@ -1,0 +1,9 @@
+{
+  "collected_at": "2026-10-06T02:27:51.453459+00:00",
+  "source_revision": "2f7d632613da08126d002c19b358e6cfc675a989",
+  "runner_label": "ubuntu-24.04",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "python": "3.12.14",
+  "cpu_count": 4,
+  "target_profile": "2-vCPU/4-GiB class (GitHub-hosted; not independently pinned hardware)"
+}
