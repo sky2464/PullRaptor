@@ -1,0 +1,24 @@
+test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) ... 
+  test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) (case=0) ... FAIL
+  test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) (case=1) ... FAIL
+
+======================================================================
+FAIL: test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) (case=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 61, in test_receipt_gap_status_and_duplicate_scope_denied
+    self.assertFalse(validate_publication(case, context, context, actual_report_digest="f" * 64).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) (case=1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 61, in test_receipt_gap_status_and_duplicate_scope_denied
+    self.assertFalse(validate_publication(case, context, context, actual_report_digest="f" * 64).authorized)
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+FAILED (failures=2)

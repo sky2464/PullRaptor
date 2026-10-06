@@ -1,0 +1,51 @@
+test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) ... 
+  test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-07') ... FAIL
+  test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-08') ... FAIL
+  test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-10') ... FAIL
+  test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY002-counterexample_or_ambiguous-03') ... FAIL
+  test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY003-counterexample_or_ambiguous-10') ... FAIL
+
+======================================================================
+FAIL: test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-07')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_pinned_corpus.py", line 31, in test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary
+    self.assertEqual(len(findings), case['expected_findings'])
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-08')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_pinned_corpus.py", line 31, in test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary
+    self.assertEqual(len(findings), case['expected_findings'])
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY001-counterexample_or_ambiguous-10')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_pinned_corpus.py", line 31, in test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary
+    self.assertEqual(len(findings), case['expected_findings'])
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY002-counterexample_or_ambiguous-03')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_pinned_corpus.py", line 31, in test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary
+    self.assertEqual(len(findings), case['expected_findings'])
+AssertionError: 1 != 0
+
+======================================================================
+FAIL: test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary (tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary) (case='PY003-counterexample_or_ambiguous-10')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_pinned_corpus.py", line 31, in test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary
+    self.assertEqual(len(findings), case['expected_findings'])
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=5)

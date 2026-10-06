@@ -1,0 +1,38 @@
+test_all_full_formats_expose_requested_examined_and_revision_scope (tests.test_e01_output_contract.OutputContractTests.test_all_full_formats_expose_requested_examined_and_revision_scope) ... FAIL
+test_baseline_history_is_not_current_sarif_result (tests.test_e01_output_contract.OutputContractTests.test_baseline_history_is_not_current_sarif_result) ... FAIL
+test_explicit_diff_profile_disclaims_semantic_correctness_security (tests.test_e01_output_contract.OutputContractTests.test_explicit_diff_profile_disclaims_semantic_correctness_security) ... FAIL
+
+======================================================================
+FAIL: test_all_full_formats_expose_requested_examined_and_revision_scope (tests.test_e01_output_contract.OutputContractTests.test_all_full_formats_expose_requested_examined_and_revision_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 117, in test_all_full_formats_expose_requested_examined_and_revision_scope
+    self.assertIn('Requested Scope', md)
+AssertionError: 'Requested Scope' not found in '# PullRaptor Review\n\n**Revisions:** Base `b` → Head `h`\n**Profile:** `structural` | **Status:** Partial\n\n## Scope & Coverage\n\n- [✗] `file:h:6170702e7079:python\\_patterns` (python_patterns): incomplete\n  *Cause:* missing\\_dependency\n\n## Findings\n\n### [PY001] pattern at `app.py:1`\n\n- **Claim:** A pattern\n- **Severity:** advisory (advisory) | **Delta:** newly_detected\n- **Witness:**\n```\nx.append\\(1\\)\n```\n'
+
+======================================================================
+FAIL: test_baseline_history_is_not_current_sarif_result (tests.test_e01_output_contract.OutputContractTests.test_baseline_history_is_not_current_sarif_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 131, in test_baseline_history_is_not_current_sarif_result
+    self.assertEqual(run['results'], [])
+AssertionError: Lists differ: [{'level': 'note', 'locations': [{'physica[394 chars]01'}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'level': 'note', 'locations': [{'physicalLocation': {'artifactLocation': {'uri': 'app.py', 'uriBaseId': '%BASESRCROOT%'}, 'region': {'byteLength': 1, 'byteOffset': 0, 'endColumn': 2, 'endLine': 1, 'startColumn': 1, 'startLine': 1}}}], 'message': {'text': 'A pattern'}, 'properties': {'delta': 'newly_detected', 'evidence_delta': 'added', 'side': 'base', 'snapshot': 'b', 'state': 'supported', 'witness': 'x.append(1)'}, 'ruleId': 'PY001'}
+
+Diff is 916 characters long. Set self.maxDiff to None to see it.
+
+======================================================================
+FAIL: test_explicit_diff_profile_disclaims_semantic_correctness_security (tests.test_e01_output_contract.OutputContractTests.test_explicit_diff_profile_disclaims_semantic_correctness_security)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 140, in test_explicit_diff_profile_disclaims_semantic_correctness_security
+    self.assertIn('Semantic correctness and security were not evaluated', md)
+AssertionError: 'Semantic correctness and security were not evaluated' not found in '# PullRaptor Review\n\n**Revisions:** Base `b` → Head `h`\n**Profile:** `diff` | **Status:** Complete\n\n## Scope & Coverage\n\nNo files required analysis.\n\n## Findings\n\nNo findings detected. Note: empty findings is not a safety or correctness claim.\n'
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (failures=3)

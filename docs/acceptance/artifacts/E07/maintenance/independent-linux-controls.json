@@ -1,0 +1,71 @@
+{
+  "args": [
+    "scripts/maintenance_rehearsal.py",
+    "--source",
+    "/work",
+    "--output",
+    "/evidence",
+    "--wheelhouse",
+    "/work/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse",
+    "--candidate",
+    "/work/tests/fixtures/e07/maintenance/pullraptor-0.1.0b2.dev0-py3-none-any.whl"
+  ],
+  "container_id": "71e341ccb075dbc0eb8ec36289517a91a7978754c31ff126be6c8be3e9b6fcac",
+  "environment_keys": [
+    "PATH",
+    "LANG",
+    "GPG_KEY",
+    "PYTHON_VERSION",
+    "PYTHON_SHA256",
+    "PYTHONDONTWRITEBYTECODE",
+    "PYTHONUNBUFFERED",
+    "PYTHONPATH",
+    "GIT_CONFIG_NOSYSTEM",
+    "GIT_CONFIG_GLOBAL",
+    "PIP_NO_INDEX",
+    "PIP_NO_CACHE_DIR"
+  ],
+  "host_config": {
+    "Binds": [
+      "/Users/chicademy/Documents/Code/PullRaptor:/work:ro",
+      "/Users/chicademy/Documents/Code/PullRaptor/docs/acceptance/artifacts/E07/maintenance/linux-x86_64:/evidence:rw"
+    ],
+    "CapDrop": [
+      "ALL"
+    ],
+    "Memory": 4294967296,
+    "NanoCpus": 2000000000,
+    "NetworkMode": "none",
+    "ReadonlyRootfs": true,
+    "SecurityOpt": [
+      "no-new-privileges",
+      "seccomp={\"defaultAction\":\"SCMP_ACT_ALLOW\",\"syscalls\":[{\"names\":[\"socket\",\"socketpair\",\"connect\",\"bind\",\"listen\",\"accept\",\"accept4\",\"sendto\",\"sendmsg\",\"recvfrom\",\"recvmsg\",\"shutdown\"],\"action\":\"SCMP_ACT_ERRNO\",\"errnoRet\":1}]}"
+    ],
+    "Tmpfs": {
+      "/tmp": "rw,exec,nosuid,nodev,size=1g"
+    }
+  },
+  "image_id": "sha256:ed07287980e32eb4d47a2ace23e1cad8e49d3174fc9a1d0d8e663ce03a550e77",
+  "image_reference": "pullraptor-closure-verification:20261006",
+  "mounts": [
+    {
+      "Destination": "/evidence",
+      "Mode": "rw",
+      "Propagation": "rprivate",
+      "RW": true,
+      "Source": "/Users/chicademy/Documents/Code/PullRaptor/docs/acceptance/artifacts/E07/maintenance/linux-x86_64",
+      "Type": "bind"
+    },
+    {
+      "Destination": "/work",
+      "Mode": "ro",
+      "Propagation": "rprivate",
+      "RW": false,
+      "Source": "/Users/chicademy/Documents/Code/PullRaptor",
+      "Type": "bind"
+    }
+  ],
+  "path": "python3.12",
+  "running": true,
+  "user": ""
+}

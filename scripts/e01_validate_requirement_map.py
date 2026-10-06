@@ -12,6 +12,11 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 MAP_PATH = REPO / "docs" / "acceptance" / "artifacts" / "E01" / "requirement-assertion-fixture-map.json"
 STATIC_PATH = REPO / "docs" / "acceptance" / "artifacts" / "E01" / "2026-10-03-static-inventory.json"
+try:
+    from scripts.e01_build_requirement_map import assertion_inventory, source_identity
+except ModuleNotFoundError:
+    from e01_build_requirement_map import assertion_inventory, source_identity
+
 OVERLAY_PATH = REPO / "docs" / "acceptance" / "artifacts" / "E01" / "task7-task8-assertion-overlay.json"
 
 PLANNED_TASK7 = {
@@ -52,16 +57,63 @@ PLANNED_TASK8 = {
 }
 
 
+def validate_map(data: dict, root: Path = REPO, receipt: dict | None = None) -> list[str]:
+    """Reject unearned or stale result claims without forcing perpetual not_run."""
+    errors = []
+    current_source = source_identity(root)
+    current_bodies = {item["test_id"]: item for item in assertion_inventory(root)}
+    receipt = receipt or data.get("runtime_receipt")
+    cases = {case["test_id"]: case for case in (receipt or {}).get("cases", [])}
+    review_manifest = data.get("assertion_review_manifest")
+    if review_manifest:
+        import hashlib
+        review_path = root / review_manifest["path"]
+        if not review_path.is_file() or hashlib.sha256(review_path.read_bytes()).hexdigest() != review_manifest["sha256"]:
+            errors.append("assertion adequacy review manifest is stale")
+    if receipt and receipt.get("product_source_after", current_source) != current_source:
+        errors.append("product source changed during case collection")
+    if data.get("product_source") != current_source:
+        errors.append("product source manifest is stale")
+    for bucket in ("named_requirements", "unnamed_requirements", "evaluation_invariants"):
+        for row in data.get(bucket, []):
+            requirement = row["requirement_id"]
+            result = row.get("runtime_result", "not_run")
+            if result not in {"passed", "failed", "not_run", "stale"}:
+                errors.append(f"{requirement}: invalid runtime result")
+            if result != "passed":
+                continue
+            bodies = row.get("primary_assertions", [])
+            if row.get("assertion_coverage") != "mapped" or row.get("remaining_gap") or not bodies:
+                errors.append(f"{requirement}: pass without complete reviewed assertion coverage")
+            if not receipt or receipt.get("product_source") != current_source:
+                errors.append(f"{requirement}: missing or stale product receipt")
+            for body in bodies:
+                if not isinstance(body, dict):
+                    errors.append(f"{requirement}: declaration or line-only assertion reference")
+                    continue
+                test_id = body.get("test_id")
+                current = current_bodies.get(test_id)
+                case = cases.get(test_id)
+                if not current or current != body:
+                    errors.append(f"{requirement}: assertion body stale or missing: {test_id}")
+                if not case or case.get("result") != "passed" or case.get("body_sha256") != body.get("body_sha256"):
+                    errors.append(f"{requirement}: case not passed at pinned body: {test_id}")
+    criteria = data.get("acceptance_criteria", {})
+    if any(criteria.get(item) == "passed" for item in ("E01-A1", "E01-A2", "E01-A3")):
+        # A runtime map can never fabricate a separate independent decision.
+        if criteria.get("independent_decision") != "accepted" or not criteria.get("independent_review_receipt"):
+            errors.append("acceptance pass lacks independent review receipt")
+    return errors
+
+
 class RequirementMapTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        if not MAP_PATH.is_file():
-            subprocess.run(
-                [sys.executable, str(REPO / "scripts" / "e01_build_requirement_map.py")],
-                cwd=REPO,
-                check=True,
-            )
-        cls.data = json.loads(MAP_PATH.read_text(encoding="utf-8"))
+        try:
+            from scripts.e01_build_requirement_map import build
+        except ModuleNotFoundError:
+            from e01_build_requirement_map import build
+        cls.data = build()
 
     def test_complete_requirement_inventory(self) -> None:
         static = json.loads(STATIC_PATH.read_text(encoding="utf-8"))
@@ -74,14 +126,8 @@ class RequirementMapTests(unittest.TestCase):
         self.assertEqual(set(overlay["named_task7"]), PLANNED_TASK7)
         self.assertEqual(set(overlay["named_task8"]), PLANNED_TASK8)
 
-    def test_no_acceptance_pass_claims(self) -> None:
-        criteria = self.data["acceptance_criteria"]
-        self.assertEqual(criteria["E01-A1"], "not_run")
-        self.assertEqual(criteria["E01-A2"], "not_run")
-        self.assertEqual(criteria["E01-A3"], "not_run")
-        self.assertEqual(criteria["independent_decision"], "pending")
-        for row in self.data["named_requirements"]:
-            self.assertEqual(row["runtime_result"], "not_run")
+    def test_no_stale_or_unearned_pass_claims(self) -> None:
+        self.assertEqual(validate_map(self.data), [])
 
     def test_historical_blob_changes_marked_stale_field_present(self) -> None:
         self.assertIn("mapping_source_revision", self.data)

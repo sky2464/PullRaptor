@@ -84,17 +84,6 @@ def run_bounded(
             timed_out=False,
         )
 
-    if input_bytes is not None and proc.stdin is not None:
-        try:
-            proc.stdin.write(input_bytes)
-        except BrokenPipeError:
-            pass
-        finally:
-            try:
-                proc.stdin.close()
-            except OSError:
-                pass
-
     stdout_chunks: list[bytes] = []
     stderr_chunks: list[bytes] = []
     stdout_bytes = 0
@@ -104,6 +93,12 @@ def run_bounded(
     stderr_truncated = False
 
     sel = selectors.DefaultSelector()
+    input_offset = 0
+    if input_bytes and proc.stdin is not None:
+        os.set_blocking(proc.stdin.fileno(), False)
+        sel.register(proc.stdin, selectors.EVENT_WRITE, data="stdin")
+    elif proc.stdin is not None:
+        proc.stdin.close()
     if proc.stdout is not None:
         os.set_blocking(proc.stdout.fileno(), False)
         sel.register(proc.stdout, selectors.EVENT_READ, data="stdout")
@@ -132,6 +127,18 @@ def run_bounded(
             for key, _mask in events:
                 stream_type = key.data
                 fileobj = key.fileobj
+                if stream_type == "stdin":
+                    try:
+                        written = os.write(fileobj.fileno(), input_bytes[input_offset:input_offset + 4096])
+                        input_offset += written
+                    except BlockingIOError:
+                        continue
+                    except (BrokenPipeError, OSError):
+                        input_offset = len(input_bytes)
+                    if input_offset == len(input_bytes):
+                        sel.unregister(fileobj)
+                        fileobj.close()
+                    continue
                 try:
                     data = fileobj.read(4096)  # type: ignore
                 except Exception:
@@ -174,6 +181,8 @@ def run_bounded(
                 break
     finally:
         sel.close()
+        if proc.stdin is not None and not proc.stdin.closed:
+            proc.stdin.close()
         if proc.stdout is not None and not proc.stdout.closed:
             try:
                 proc.stdout.close()

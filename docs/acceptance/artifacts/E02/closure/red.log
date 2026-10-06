@@ -1,0 +1,139 @@
+test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) ... 
+  test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) (start=99, end=99) ... FAIL
+  test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) (start=1, end=99) ... FAIL
+test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) ... 
+  test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='workflow_id') ... FAIL
+  test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='repository_id') ... FAIL
+  test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='pr_number') ... FAIL
+  test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='artifact_digest') ... FAIL
+  test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='reviewer_digest') ... FAIL
+test_report_cannot_supply_missing_connector_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_cannot_supply_missing_connector_authority) ... FAIL
+test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) ... 
+  test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='tool_digest') ... FAIL
+  test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='config_digest') ... FAIL
+  test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='profile') ... FAIL
+test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) ... 
+  test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path='', source_occurrence=None, canonical_target=None, relative_level=None, reason='')) ... FAIL
+  test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='a|b', kind='c', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='a', kind='b|c', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason='')) ... FAIL
+  test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=b'', path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason='')) ... FAIL
+
+======================================================================
+FAIL: test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) (start=99, end=99)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 49, in test_invalid_or_out_of_diff_lines_denied
+    self.assertFalse(validate_publication(report, context, context).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) (start=1, end=99)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 49, in test_invalid_or_out_of_diff_lines_denied
+    self.assertFalse(validate_publication(report, context, context).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='workflow_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 34, in test_missing_identity_and_bad_base_or_digest_denied
+    self.assertFalse(validate_publication(report, bad, bad).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='repository_id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 34, in test_missing_identity_and_bad_base_or_digest_denied
+    self.assertFalse(validate_publication(report, bad, bad).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='pr_number')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 34, in test_missing_identity_and_bad_base_or_digest_denied
+    self.assertFalse(validate_publication(report, bad, bad).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='artifact_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 34, in test_missing_identity_and_bad_base_or_digest_denied
+    self.assertFalse(validate_publication(report, bad, bad).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) (field='reviewer_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 34, in test_missing_identity_and_bad_base_or_digest_denied
+    self.assertFalse(validate_publication(report, bad, bad).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_report_cannot_supply_missing_connector_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_cannot_supply_missing_connector_authority)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 55, in test_report_cannot_supply_missing_connector_authority
+    self.assertEqual(code, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='tool_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 42, in test_report_tool_and_config_cannot_choose_authority
+    self.assertFalse(validate_publication(report, context, context).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='config_digest')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 42, in test_report_tool_and_config_cannot_choose_authority
+    self.assertFalse(validate_publication(report, context, context).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) (field='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 42, in test_report_tool_and_config_cannot_choose_authority
+    self.assertFalse(validate_publication(report, context, context).authorized)
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path='', source_occurrence=None, canonical_target=None, relative_level=None, reason=''))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 24, in test_scope_null_empty_and_delimiters_are_distinct
+    self.assertNotEqual(scope_digest_from_scope((left,)), scope_digest_from_scope((right,)))
+AssertionError: 'ff33d8d8240754fc7be9ad6d702fa3fd4db67596744ec15d5246893fe86fa6c9' == 'ff33d8d8240754fc7be9ad6d702fa3fd4db67596744ec15d5246893fe86fa6c9'
+
+======================================================================
+FAIL: test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='a|b', kind='c', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='a', kind='b|c', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 24, in test_scope_null_empty_and_delimiters_are_distinct
+    self.assertNotEqual(scope_digest_from_scope((left,)), scope_digest_from_scope((right,)))
+AssertionError: '7a089b58635973cb311b11ce84039e16dcdff0e88acbac59f9af0c714e6417b7' == '7a089b58635973cb311b11ce84039e16dcdff0e88acbac59f9af0c714e6417b7'
+
+======================================================================
+FAIL: test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) (left=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=None, path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''), right=ScopeEntry(key='key', kind='file', snapshot='tree', capability='diff', path_bytes=b'', path=None, source_occurrence=None, canonical_target=None, relative_level=None, reason=''))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 24, in test_scope_null_empty_and_delimiters_are_distinct
+    self.assertNotEqual(scope_digest_from_scope((left,)), scope_digest_from_scope((right,)))
+AssertionError: 'ff33d8d8240754fc7be9ad6d702fa3fd4db67596744ec15d5246893fe86fa6c9' == 'ff33d8d8240754fc7be9ad6d702fa3fd4db67596744ec15d5246893fe86fa6c9'
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.004s
+
+FAILED (failures=14)
+PullRaptor Publisher: Published review comment 1 on PR #1

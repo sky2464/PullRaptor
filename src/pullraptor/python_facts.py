@@ -3,8 +3,12 @@
 from __future__ import annotations
 
 import hashlib
+import base64
+import json
 from pathlib import Path
+import re
 import sys
+import tempfile
 from typing import Any
 
 from pullraptor.models import (
@@ -17,8 +21,49 @@ from pullraptor.models import (
     ResolvedFacts,
     Snapshot,
     Span,
+    ProcessBounds,
+    decode_record,
 )
-from pullraptor.parser_worker import parse_and_extract
+from pullraptor.parser_worker import EXTRACTOR_DIGEST
+from pullraptor.process import run_bounded
+
+
+def content_record(raw: dict[str, Any]) -> ContentFacts:
+    """Strict occurrence-free fact boundary shared by worker and private cache."""
+    required = {"blob_digest", "runtime_version", "schema_version", "extractor_digest", "symbols", "imports", "pattern_facts", "unsupported_constructs", "relative_locations"}
+    if not isinstance(raw, dict) or set(raw) != required:
+        raise ValueError("invalid fact fields")
+    for field in ("blob_digest", "extractor_digest"):
+        if not isinstance(raw[field], str) or not re.fullmatch(r"[0-9a-f]{64}", raw[field]):
+            raise ValueError("invalid fact identity")
+    if raw["schema_version"] != "1" or not isinstance(raw["runtime_version"], str) or not re.fullmatch(r"\d+\.\d+\.\d+", raw["runtime_version"]):
+        raise ValueError("invalid fact version")
+    for field in ("symbols", "imports", "pattern_facts", "unsupported_constructs", "relative_locations"):
+        if not isinstance(raw[field], list):
+            raise ValueError("invalid fact collection")
+    if raw["relative_locations"] or any(not isinstance(item, str) for item in raw["unsupported_constructs"]):
+        raise ValueError("unsupported relative location record")
+    coordinate_keys = {"start_line", "end_line", "start_byte", "end_byte", "start_column", "end_column"}
+    for field in ("symbols", "imports", "pattern_facts"):
+        for fact in raw[field]:
+            if not isinstance(fact, dict) or not isinstance(fact.get("coords"), dict):
+                raise ValueError("invalid fact record")
+            coords = fact["coords"]
+            if set(coords) != coordinate_keys or any(type(v) is not int for v in coords.values()):
+                raise ValueError("invalid coordinates")
+            Span("fact", "head", **coords)
+            if field == "symbols":
+                if set(fact) != {"kind", "name", "coords"} or fact["kind"] != "function" or not isinstance(fact["name"], str):
+                    raise ValueError("invalid symbol")
+            elif field == "imports":
+                keys = {"kind", "module", "asname", "level", "coords"} | ({"name"} if fact.get("kind") == "import_from" else set())
+                if set(fact) != keys or fact["kind"] not in ("import", "import_from") or type(fact["level"]) is not int or fact["level"] < 0 or any(not isinstance(fact[k], str) for k in keys - {"level", "coords"}):
+                    raise ValueError("invalid import")
+            else:
+                keys = {"rule", "version", "coords", "witness"} | ({"param", "type"} if fact.get("rule") == "PY001" else {"call"} if fact.get("rule") == "PY003" else set())
+                if set(fact) != keys or fact["rule"] not in ("PY001", "PY002", "PY003") or fact["version"] != "1.0" or any(not isinstance(fact[k], str) for k in keys - {"coords"}):
+                    raise ValueError("invalid pattern")
+    return ContentFacts(**{**raw, **{key: tuple(raw[key]) for key in ("symbols", "imports", "pattern_facts", "unsupported_constructs", "relative_locations")}})
 
 
 def extract_python(
@@ -55,7 +100,29 @@ def extract_python(
             ),
         )
 
-    res = parse_and_extract(source)
+    request = json.dumps({"protocol": "pullraptor_worker_v1", "source_base64": base64.b64encode(source).decode("ascii")}, separators=(",", ":")).encode()
+    with tempfile.TemporaryDirectory(prefix="pullraptor-parser-") as neutral:
+        result = run_bounded((sys.executable, "-I", "-S", str(Path(__file__).with_name("parser_worker.py").resolve())),
+            cwd=Path(neutral), env={}, deadline=deadline,
+            bounds=ProcessBounds(limits.record_limits.max_payload_bytes, limits.max_stderr_bytes, limits.parse_timeout_seconds),
+            input_bytes=request, max_input_bytes=min(4_194_304, 4 * ((limits.max_blob_bytes + 2) // 3) + 128))
+    if result.returncode or result.timed_out or result.stdout_truncated or result.stderr_truncated:
+        code = "TIMEOUT" if result.timed_out else "LIMIT_EXCEEDED" if result.stdout_truncated or result.stderr_truncated else "PY_PARSE_FAILED"
+        return FactResult(None, (Diagnostic(code, "Isolated Python extraction did not complete within its trusted bounds.", cause="worker_failure", recovery="Reduce source complexity or retry with an approved limit."),))
+    try:
+        res = decode_record(result.stdout, schema="worker", limits=limits.record_limits)
+        if res.get("protocol") != "pullraptor_worker_v1" or type(res.get("success")) is not bool or set(res) != ({"protocol", "success", "content"} if res["success"] else {"protocol", "success", "error"}):
+            raise ValueError("invalid worker response")
+        if res["success"]:
+            content_facts = content_record(res["content"])
+            if content_facts.blob_digest != hashlib.sha256(source).hexdigest() or content_facts.extractor_digest != EXTRACTOR_DIGEST or content_facts.runtime_version != f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}":
+                raise ValueError("stale worker response")
+        else:
+            err = res["error"]
+            if not isinstance(err, dict) or set(err) != {"code", "message", "line", "column"} or err["code"] != "PY_PARSE_FAILED" or not isinstance(err["message"], str) or type(err["line"]) is not int or type(err["column"]) is not int:
+                raise ValueError("invalid worker error")
+    except (ValueError, KeyError, TypeError):
+        return FactResult(None, (Diagnostic("PY_PARSE_FAILED", "Invalid or stale isolated parser record; semantic review skipped.", cause="invalid_worker_record"),))
     if not res.get("success"):
         err = res.get("error", {})
         return FactResult(
@@ -70,18 +137,6 @@ def extract_python(
             ),
         )
 
-    raw_content = res["content"]
-    content_facts = ContentFacts(
-        blob_digest=raw_content["blob_digest"],
-        runtime_version=raw_content["runtime_version"],
-        schema_version=raw_content["schema_version"],
-        extractor_digest=raw_content["extractor_digest"],
-        symbols=tuple(raw_content["symbols"]),
-        imports=tuple(raw_content["imports"]),
-        pattern_facts=tuple(raw_content["pattern_facts"]),
-        unsupported_constructs=tuple(raw_content["unsupported_constructs"]),
-        relative_locations=tuple(raw_content["relative_locations"]),
-    )
     return FactResult(content=content_facts, diagnostics=())
 
 
@@ -109,6 +164,20 @@ def bind_facts(
     found = any(b.path == path for b in snapshot.blobs)
     if not found:
         raise ValueError(f"Path {path!r} not found in snapshot {snapshot.oid}")
+    lines = source.splitlines(keepends=True)
+    starts = [0]
+    for line in lines:
+        starts.append(starts[-1] + len(line))
+    for record in (*content.symbols, *content.imports, *content.pattern_facts):
+        coords = record["coords"]
+        Span(path, side, **coords)
+        for end in ("start", "end"):
+            line, byte, column = (coords[f"{end}_{suffix}"] for suffix in ("line", "byte", "column"))
+            if line > len(lines) or byte > len(source) or not starts[line - 1] <= byte <= starts[line]:
+                raise ValueError("Fact coordinate is outside bound source")
+            prefix = source[starts[line - 1]:byte]
+            if len(prefix.decode("utf-8", errors="strict")) + 1 != column:
+                raise ValueError("Fact byte and character locations disagree")
 
     return BoundFacts(
         content=content,

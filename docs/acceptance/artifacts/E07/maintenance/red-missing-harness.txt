@@ -1,0 +1,41 @@
+test_interrupted_update_two_actual_filesystem_checkpoints (tests.test_update_recovery.TestUpdateRecovery.test_interrupted_update_two_actual_filesystem_checkpoints) ... FAIL
+test_real_distinct_update_and_corrupt_refusal (tests.test_update_recovery.TestUpdateRecovery.test_real_distinct_update_and_corrupt_refusal) ... FAIL
+test_reports_entrypoints_and_identities_after_every_recovery (tests.test_update_recovery.TestUpdateRecovery.test_reports_entrypoints_and_identities_after_every_recovery) ... FAIL
+
+======================================================================
+FAIL: test_interrupted_update_two_actual_filesystem_checkpoints (tests.test_update_recovery.TestUpdateRecovery.test_interrupted_update_two_actual_filesystem_checkpoints)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 40, in test_interrupted_update_two_actual_filesystem_checkpoints
+    receipt = rehearsal()
+              ^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 18, in rehearsal
+    raise AssertionError("BR18 real cross-version installer harness is missing")
+AssertionError: BR18 real cross-version installer harness is missing
+
+======================================================================
+FAIL: test_real_distinct_update_and_corrupt_refusal (tests.test_update_recovery.TestUpdateRecovery.test_real_distinct_update_and_corrupt_refusal)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 30, in test_real_distinct_update_and_corrupt_refusal
+    receipt = rehearsal()
+              ^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 18, in rehearsal
+    raise AssertionError("BR18 real cross-version installer harness is missing")
+AssertionError: BR18 real cross-version installer harness is missing
+
+======================================================================
+FAIL: test_reports_entrypoints_and_identities_after_every_recovery (tests.test_update_recovery.TestUpdateRecovery.test_reports_entrypoints_and_identities_after_every_recovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 56, in test_reports_entrypoints_and_identities_after_every_recovery
+    receipt = rehearsal()
+              ^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_update_recovery.py", line 18, in rehearsal
+    raise AssertionError("BR18 real cross-version installer harness is missing")
+AssertionError: BR18 real cross-version installer harness is missing
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.002s
+
+FAILED (failures=3)

@@ -1,0 +1,18 @@
+test_missing_side_cannot_default_to_head (tests.test_e02_publication_closure.TestE02Closure.test_missing_side_cannot_default_to_head) ... FAIL
+
+======================================================================
+FAIL: test_missing_side_cannot_default_to_head (tests.test_e02_publication_closure.TestE02Closure.test_missing_side_cannot_default_to_head)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1396, in patched
+    return func(*newargs, **newkeywargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e02_publication_closure.py", line 131, in test_missing_side_cannot_default_to_head
+    self.assertEqual(code, 3)
+AssertionError: 0 != 3
+
+----------------------------------------------------------------------
+Ran 1 test in 0.003s
+
+FAILED (failures=1)
+PullRaptor Publisher: Published review comment 21 on PR #1

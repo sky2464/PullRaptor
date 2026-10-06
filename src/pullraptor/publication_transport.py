@@ -119,13 +119,25 @@ def apply_publication_write(
     deadline: Deadline,
     request_fn: RequestFn,
     marker: str = COMMENT_MARKER,
+    before_write: Callable[[], str | None] | None = None,
 ) -> PublicationWriteResult:
     """Execute create/update with bounded retries and lost-response reconciliation."""
     should_create = bool(pub_plan.create) or owned_comment_id is None
 
+    if before_write is None:
+        return PublicationWriteResult(action="denied", cause="missing_publication_authority")
+
     attempts = 0
     last_err: BaseException | None = None
     while attempts < MAX_TRANSPORT_ATTEMPTS and _deadline_remaining(deadline) > 0:
+        try:
+            denial = before_write()
+        except Exception:
+            denial = "current_authority_unavailable"
+        if denial is not None:
+            return PublicationWriteResult(action="denied", cause=denial, attempts=attempts)
+        if _deadline_remaining(deadline) <= 0:
+            break
         attempts += 1
         try:
             if owned_comment_id is not None:

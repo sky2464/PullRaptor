@@ -1,0 +1,17 @@
+{
+  "command": "env -i HOME=/tmp/pullraptor-br18-test-home PATH=/opt/homebrew/bin:/usr/bin:/bin PYTHONPATH=src PULLRAPTOR_BR18_WHEELHOUSE=/Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse python3.12 -m unittest tests.test_update_recovery tests.test_installed_artifacts.TestInstalledArtifacts.test_install_interrupt_recovery tests.test_installed_artifacts.TestInstalledArtifacts.test_uninstall_no_credentials_remnants tests.test_installed_artifacts.TestInstalledArtifacts.test_br18_prior_wheel_reinstall_rollback tests.test_installed_artifacts.TestInstalledArtifacts.test_update_rollback_prior_accepted_artifact -v",
+  "exit_code": 0,
+  "full_project_regressions": "coordinator_owned",
+  "independent_acceptance": "pending",
+  "raw_output": "green-focused-tests.txt",
+  "raw_output_sha256": "464b4a11bed4a0a1ba73abb7d6e548b91ae077a841f7ec7547d1cf6ae5e89cd6",
+  "schema": "pullraptor-br18-focused-test-run/1",
+  "scope": "BR18 maintained own development fixtures only",
+  "source_files": {
+    "scripts/_maintenance_installer.py": "0196d35dee01a4b60476d16722435df638c6d0db47a8b3373ce402504fc117dd",
+    "scripts/maintenance_rehearsal.py": "b70fc64d28af6c6d316f33761a58b3dcef39d96811f62090b5772c4afcadeea2",
+    "tests/test_installed_artifacts.py": "ad5154abbbceeed8539fc9f90e328436bfedfa4db46334fe222fa67c99559a84",
+    "tests/test_update_recovery.py": "ee3be4fa6425e8dae0659866bd47636207bee83bb871180390f3430e61be754d"
+  },
+  "tests_run": 9
+}

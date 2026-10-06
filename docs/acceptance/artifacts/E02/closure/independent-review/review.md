@@ -1,0 +1,30 @@
+# Independent E02-A2 local-gate review
+
+Date: 2026-10-06. Reviewer: `/root/beta_kernel_review`, independent of the E02 implementation author. Assignment: C01 in the coordinator's acceptance/maintenance closure plan. Baseline source and trusted base: `48bef09d985fbeb42749d1cc6238c74429616a25`. Inspected source is the shared uncommitted implementation; exact source/test/fixture bytes are bound by `review-receipt.json` and `reproduction.json`. Final committed source repin and affected rerun are still required.
+
+**Decision:** Provisionally accept the E02-A2 local publication gate for the exact reviewed bytes. No concrete E02-A2 defect remains from this independent inspection and reproduction. This is not final revision-bound package acceptance, a live connector admission, E02-A3/A4 acceptance, hostile-CI acceptance, beta activation or publication authorization.
+
+## Assertion and authority review
+
+| Obligation | Inspected behavior and independent evidence |
+|---|---|
+| Independent frozen authority | `PublicationContext` and nested `PublicationRange` are frozen records; permitted ranges are an admitted tuple. The literal authority fixture is loaded separately from original report bytes. `publish_report` refuses missing expected authority/callback/raw bytes; legacy connector mappings have no authorization role. Matrix mutation confirms frozen assignment rejection. |
+| Original bytes versus report/artifact/reviewer identities | Original downloaded bytes pass the bounded decoder and receive their own recomputed SHA-256; decoded record must equal the submitted record. Artifact SHA-256, reviewer SHA-256 and semantic tool identity are different pins. The independent matrix retains a literal successful scoped report, rejects whitespace-only raw-byte changes and mismatched submitted dictionaries, and changes semantic report fields with a deliberately repinned byte digest to isolate their downstream rejection. |
+| Full immutable context | Full head/base-tip/comparison-base OIDs are validated against declared SHA-1/SHA-256 width; abbreviated values fail. Every context field is compared, including repository/PR/workflow/run, artifact/reviewer/report/scope, trusted policy/config/tool/profile, ranges and object format. Callback failures or platform head/base mismatches deny. Independent drift observations cover all 17 fields. |
+| Canonical scope | `pullraptor.publication-scope/2` serializes every ScopeEntry field in sorted complete JSON records; null/empty and separator-containing fields remain distinct, and entry order does not affect the digest. Assertion bodies in `test_scope_null_empty_and_delimiters_are_distinct` and `test_scope_digest_covers_all_fields_and_is_order_independent` were inspected and reproduced. Duplicate expected keys, missing/duplicate/foreign/wrong-contract/wrong-capability/gap receipts and incomplete discovery cannot pass. |
+| Side-aware admitted locations | Findings require head side, admitted inventory path and positive ordered line range wholly contained in connector-admitted current diff ranges. Independent cases deny base/deleted/out-of-diff locations, missing side and boolean/string coordinates. Literal scoped success exercises a real finding and matching receipt, not only an empty report. |
+| Pre-write and retry revalidation | Before each actual POST/PATCH attempt, the mandatory guard fetches fresh PR metadata, invokes the trusted callback and reruns the full gate. Independent retry cases mutate each of 17 context fields on the third authority read for both POST and PATCH: one inert failed attempt occurs; the next attempt is denied. Existing reconciliation tests remain regression evidence for wider lifecycle work. |
+| Denial/preview side effects | Independent denied cases assert zero POST/PATCH calls. Valid preview also asserts zero writes. Invalid schema/coordinate cases stop before API writes; LimitFailure denies. The successful case performs exactly one inert POST. Real urllib network access is forbidden in the independent matrix; no target source is executed. |
+| Activation containment | Default beta publisher invocation refuses. The extended developer CLI has no trusted connector adapter and cannot create authority from report/environment strings. No adapter authentication, live publication, actual CI isolation or customer profile is admitted here. |
+
+## Reproduced evidence
+
+- `focused.log`: authorized own-source tests in `/usr/bin/env -i` with Python 3.12.15; exit 0. All 57 focused tests passed. The review uses inspected assertion bodies and the evidence above; the count does not establish acceptance.
+- `reproduce.py`, `reproduction.log`, `reproduction.json`: reviewer-authored inert reproduction; exit 0 with 89 scenario observations. These include successful scoped finding, denied/preview zero-write cases and all-field POST/PATCH retry drift. Scenario outcomes, source hashes and literal fixture hashes are preserved.
+- `review-receipt.json`: exact commands, runtime/platform, environment, artifact hashes and 36 construction source/test/fixture/log identity comparisons, all matching. Broader imported source dependencies are also hashed in `reproduction.json`.
+
+No source or test files were edited by this reviewer. No reviewed-target execution, live API request, external publication, package build, installation or commit occurred. Final coordinator integration must pin source/doc/fixture/runtime identities, rerun affected checks and supersede the provisional decision with a final independent decision. Changed bytes require review/recollection rather than carrying this result forward automatically.
+
+## Remaining scope
+
+E02-A1, E02-A3 and E02-A4 are outside this acceptance decision. Actual trusted upstream connector origin acquisition remains an activation/integration obligation; this gate assumes the callback is connector-owned code with independently obtained current origin/contract/diff data. Actor ownership/lifecycle and actual hostile-CI controls remain pending. Beta publisher admission stays disabled.

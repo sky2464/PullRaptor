@@ -1,0 +1,40 @@
+test_duplicate_alignment_obligations_remain_unknown (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_duplicate_alignment_obligations_remain_unknown) ... FAIL
+test_each_missing_duplicate_foreign_revision_capability_receipt_rejected (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_each_missing_duplicate_foreign_revision_capability_receipt_rejected) ... ok
+test_exhaustive_four_state_policy_decisions (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_exhaustive_four_state_policy_decisions) ... ok
+test_no_longer_detected_preserves_baseline_side_and_never_claims_fixed (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_no_longer_detected_preserves_baseline_side_and_never_claims_fixed) ... FAIL
+test_same_key_context_different_claim_type_cannot_accumulate (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_same_key_context_different_claim_type_cannot_accumulate) ... FAIL
+test_valid_head_claim_survives_unrelated_partial_scope (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_valid_head_claim_survives_unrelated_partial_scope) ... ok
+test_worker_cannot_shrink_coordinator_scope (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_worker_cannot_shrink_coordinator_scope) ... ok
+
+======================================================================
+FAIL: test_duplicate_alignment_obligations_remain_unknown (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_duplicate_alignment_obligations_remain_unknown)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_scope_evidence.py", line 76, in test_duplicate_alignment_obligations_remain_unknown
+    self.assertEqual(aligned[0].delta, 'unknown')
+AssertionError: 'persisting' != 'unknown'
+- persisting
++ unknown
+
+
+======================================================================
+FAIL: test_no_longer_detected_preserves_baseline_side_and_never_claims_fixed (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_no_longer_detected_preserves_baseline_side_and_never_claims_fixed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_scope_evidence.py", line 67, in test_no_longer_detected_preserves_baseline_side_and_never_claims_fixed
+    self.assertEqual(len(aligned), 1)
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_same_key_context_different_claim_type_cannot_accumulate (tests.test_e01_scope_evidence.ScopeEvidenceTests.test_same_key_context_different_claim_type_cannot_accumulate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_scope_evidence.py", line 31, in test_same_key_context_different_claim_type_cannot_accumulate
+    with self.assertRaises(ValueError): accumulate((pattern, defect))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.002s
+
+FAILED (failures=3)

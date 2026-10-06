@@ -1,0 +1,50 @@
+test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) ... ok
+test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) ... ok
+test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) ... ok
+test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) ... ok
+test_failure_variant_present_in_sarif_properties (tests.test_e01_output_contract.OutputContractTests.test_failure_variant_present_in_sarif_properties) ... ok
+test_incomplete_discovery_not_rendered_complete (tests.test_e01_output_contract.OutputContractTests.test_incomplete_discovery_not_rendered_complete) ... ok
+test_markdown_visibly_escapes_controls_bidi_links_and_paths (tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths) ... FAIL
+test_sarif_uri_roundtrip_and_deleted_side (tests.test_e01_output_contract.OutputContractTests.test_sarif_uri_roundtrip_and_deleted_side) ... ok
+test_bool_not_integer (tests.test_models.TestModels.test_bool_not_integer) ... ok
+test_canonical_excludes_execution_metadata (tests.test_models.TestModels.test_canonical_excludes_execution_metadata)
+Duration/cache admission/hit/location changes leave canonical bytes identical; ... ok
+test_content_facts_cannot_carry_occurrence (tests.test_models.TestModels.test_content_facts_cannot_carry_occurrence)
+ContentFacts must not accept path or side. ... ok
+test_duplicate_keys_rejected (tests.test_models.TestModels.test_duplicate_keys_rejected) ... ok
+test_invalid_span_rejected (tests.test_models.TestModels.test_invalid_span_rejected) ... ok
+test_item_accounting_recursive (tests.test_models.TestModels.test_item_accounting_recursive) ... ok
+test_limit_failure_cannot_claim_support_or_complete (tests.test_models.TestModels.test_limit_failure_cannot_claim_support_or_complete) ... ok
+test_malformed_utf8_rejected (tests.test_models.TestModels.test_malformed_utf8_rejected) ... ok
+test_max_aggregate_items_rejected (tests.test_models.TestModels.test_max_aggregate_items_rejected) ... ok
+test_max_depth_rejected (tests.test_models.TestModels.test_max_depth_rejected) ... ok
+test_max_payload_bytes_rejected (tests.test_models.TestModels.test_max_payload_bytes_rejected) ... ok
+test_max_string_bytes_rejected (tests.test_models.TestModels.test_max_string_bytes_rejected) ... ok
+test_nonfinite_json_rejected (tests.test_models.TestModels.test_nonfinite_json_rejected) ... ok
+test_prohibit_unknown_authority_fields (tests.test_models.TestModels.test_prohibit_unknown_authority_fields) ... ok
+test_report_union_strict_tags (tests.test_models.TestModels.test_report_union_strict_tags) ... ok
+test_roundtrip_full_report (tests.test_models.TestModels.test_roundtrip_full_report) ... ok
+test_roundtrip_limit_failure (tests.test_models.TestModels.test_roundtrip_limit_failure) ... ok
+test_surrogate_rejected (tests.test_models.TestModels.test_surrogate_rejected) ... ok
+test_two_missing_imports_have_distinct_keys (tests.test_models.TestModels.test_two_missing_imports_have_distinct_keys) ... ok
+test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
+test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
+test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
+test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
+test_cli_help (tests.test_cli.TestCLI.test_cli_help) ... ok
+test_explicit_diff_profile_scope_statement (tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement) ... ok
+test_stdout_machine_format_stderr_diagnostics (tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics) ... ok
+test_structural_python_complete (tests.test_cli.TestCLI.test_structural_python_complete) ... ok
+
+======================================================================
+FAIL: test_markdown_visibly_escapes_controls_bidi_links_and_paths (tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 56, in test_markdown_visibly_escapes_controls_bidi_links_and_paths
+    self.assertNotIn(active, text)
+AssertionError: '\x1b' unexpectedly found in '# PullRaptor Review\n\n**Revisions:** Base `b` → Head `h`\n**Profile:** `structural` | **Status:** Complete\n\n## Scope & Coverage\n\nNo files required analysis.\n\n## Findings\n\n### [PY001] pattern at `app.py:1`\n\n- **Claim:** \x1b\\[31m\\r\\u202e\\[evil\\]\\(https://example.invalid\\)\n- **Severity:** advisory (advisory) | **Delta:** newly_detected\n- **Witness:**\n```\nx.append\\(1\\)\n```\n\n## Diagnostics\n\n- **GAP** (`\\`\n&lt;script&gt;\\[evil\\]\\(https://example.invalid\\)`): \\[click\\]\\(https://example.invalid\\)\n'
+
+----------------------------------------------------------------------
+Ran 35 tests in 1.454s
+
+FAILED (failures=1)

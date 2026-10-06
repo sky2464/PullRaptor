@@ -1,0 +1,755 @@
+{
+  "schema": "pullraptor.e02-independent-reproduction/1",
+  "runtime": {
+    "python": "3.12.15 (main, Sep 30 2026, 22:04:19) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "executable": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "scope": "E02-A2 local publication gate; no live API or reviewed-target execution",
+  "source_sha256": {
+    "src/pullraptor/publication_contract.py": "49bfa7461cd3c1dfb8a02b3ac0f952708b8ada9dad6deb7d2ab5cda1fb520e0a",
+    "src/pullraptor/publisher.py": "3338888b12dccf98eae9443e042b2cd445d5c4952195d0c464c063736179c2fe",
+    "src/pullraptor/publication_transport.py": "1669f56d0e33207637daa41525275320ed6dcdd3bca8c5f7ee209ce6475549b3",
+    "src/pullraptor/publication_lifecycle.py": "30af8b3689be0dfe4d7733981c1449787c7a5b8b1ac9aaaf72512400c89fa14d",
+    "src/pullraptor/publication_trust.py": "4da403466bcf96fbf8bc3d1415dc087df2713858a1b9e97a2c27b53f848827d4",
+    "src/pullraptor/models.py": "c0740939c13f70f81a74fa4bdea4ad8868cf8ef29f11cf96a503210b2bb09b0d",
+    "src/pullraptor/evidence.py": "2567d7909a4b18909d277f9e311f0154ad2ead21e99044ec277ff2c569276a41",
+    "src/pullraptor/render.py": "36b43cad89a34cc443432d793f1a9b25093b11135faa8c07d6ae4ad62b1765bf",
+    "src/pullraptor/beta_admission.py": "2bedb5dad939f09fa0aff4b4e47fefa37c86900575f35b9ebda168fcb6c4b58b"
+  },
+  "literal_fixture_sha256": {
+    "trusted-inline-report.json": "e7d17d0cff1dc3bbd9b25e4b187821a9ed31d67c7b43d06014d6b7fdd9a85401",
+    "trusted-inline-authority.json": "b29868618cc7b061be6f3aba1d187f9a47b065a782c37fcef42948f0449e80b2"
+  },
+  "observations": [
+    {
+      "scenario": "exact_literal_report_and_independent_authority",
+      "exit_code": 0,
+      "writes": [
+        "POST"
+      ],
+      "api_methods": [
+        "GET",
+        "GET",
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "scenario": "preview_exact_authority",
+      "exit_code": 0,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "missing_expected_authority",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "unavailable_current_authority",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "equal_JSON_whitespace_bytes_changed",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "dict_does_not_match_original_bytes",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "current_authority_drift:repository_id",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:repository_id",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:repository_id",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:pr_number",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:pr_number",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:pr_number",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:workflow_id",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:workflow_id",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:workflow_id",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:run_id",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:run_id",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:run_id",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:artifact_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:artifact_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:artifact_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:reviewer_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:reviewer_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:reviewer_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:head",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:head",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:head",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:base_tip",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:base_tip",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:base_tip",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:comparison_base",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:comparison_base",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:comparison_base",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:policy_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:policy_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:policy_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:scope_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:scope_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:scope_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:config_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:config_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:config_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:tool_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:tool_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:tool_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:profile",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:profile",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:profile",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:report_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:report_digest",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:report_digest",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:permitted_ranges",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:permitted_ranges",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:permitted_ranges",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "current_authority_drift:object_format",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "retry_drift:POST:object_format",
+      "exit_code": 2,
+      "writes": [
+        "POST"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "retry_drift:PATCH:object_format",
+      "exit_code": 2,
+      "writes": [
+        "PATCH"
+      ],
+      "authority_reads": 3,
+      "second_write": "denied"
+    },
+    {
+      "scenario": "abbreviated_identity:head",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "abbreviated_identity:base_tip",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "abbreviated_identity:comparison_base",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "invalid_digest:artifact_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "invalid_digest:reviewer_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "invalid_digest:scope_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "invalid_digest:report_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "report_contract_tampering:tool_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "report_contract_tampering:config_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "report_contract_tampering:profile",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "report_contract_tampering:policy_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "scope_reason_drift",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "duplicate_expected_scope",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "missing_receipt",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "duplicate_receipt",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "receipt_tampering:status",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "receipt_tampering:key",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "receipt_tampering:capability",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "receipt_tampering:contract_digest",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "incomplete_discovery",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "finding_location:side",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "finding_location:path",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "finding_location:start_line",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "finding_location:end_line",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "invalid_coordinate_type:start_line",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "invalid_coordinate_type:end_line",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "invalid_coordinate_type:start_byte",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "invalid_coordinate_type:start_column",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "missing_side",
+      "exit_code": 3,
+      "writes": [],
+      "api_methods": []
+    },
+    {
+      "scenario": "limit_failure",
+      "exit_code": 2,
+      "writes": [],
+      "api_methods": [
+        "GET"
+      ]
+    },
+    {
+      "scenario": "authority_is_frozen",
+      "result": "passed"
+    },
+    {
+      "scenario": "beta_publisher_disabled",
+      "result": "passed"
+    }
+  ],
+  "result": "passed",
+  "final_commit_repin": "pending coordinator integration"
+}

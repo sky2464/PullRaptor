@@ -7,12 +7,14 @@ import unittest
 from pathlib import Path
 
 from pullraptor.models import Finding, FullReport, LimitFailure, ReviewContract, ScopeEntry, Span
-from pullraptor.publication_contract import PublicationContext, scope_digest_from_report, validate_publication
+from pullraptor.publication_contract import PublicationRange, PublicationContext, validate_publication
 
 _FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "e02" / "publication-binding"
 _HEAD = "a" * 40
 _BASE = "b" * 40
 _COMP = "c" * 40
+
+_UNIT_SCOPES = json.loads((Path(__file__).parent / "fixtures/e02/publication-binding/trusted-unit-scope-digests.json").read_text())
 
 
 def _context_for_report(report: FullReport, **overrides: object) -> PublicationContext:
@@ -21,13 +23,18 @@ def _context_for_report(report: FullReport, **overrides: object) -> PublicationC
         "pr_number": 7,
         "workflow_id": "wf-1",
         "run_id": "run-1",
-        "artifact_digest": "art-digest",
-        "reviewer_digest": "rev-digest",
+        "artifact_digest": "d" * 64,
+        "reviewer_digest": "e" * 64,
         "head": _HEAD,
         "base_tip": _BASE,
         "comparison_base": _COMP,
-        "policy_digest": report.contract.policy_digest,
-        "scope_digest": scope_digest_from_report(report),
+        "policy_digest": "policy-a",
+        "scope_digest": _UNIT_SCOPES["file_scope" if report.contract.expected_scope else "empty_scope"],
+        "config_digest": "cfg",
+        "tool_digest": "tool",
+        "profile": "structural",
+        "report_digest": "f" * 64,
+        "permitted_ranges": (PublicationRange("app.py", "head", 1, 3),),
     }
     base.update(overrides)
     return PublicationContext(**base)
@@ -192,7 +199,7 @@ class TestPublicationBindingFixtures(unittest.TestCase):
                     )
                     report = tampered
 
-                decision = validate_publication(report, expected, current)
+                decision = validate_publication(report, expected, current, actual_report_digest="f" * 64)
                 self.assertEqual(decision.authorized, expect["authorized"])
                 self.assertEqual(decision.cause, expect["cause"])
                 if "inline_keys" in expect:
