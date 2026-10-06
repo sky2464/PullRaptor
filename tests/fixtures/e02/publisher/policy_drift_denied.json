@@ -1,0 +1,1 @@
+{"description": "Policy digest drift denies publication", "policy_drift": true, "expect_exit": 2, "expect_cause_substring": "stale_policy", "expect_api_calls_max": 1, "use_pinned_expected": true}

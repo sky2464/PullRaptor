@@ -1055,7 +1055,7 @@
       "plan_task": "Task 2 pure authorization",
       "title": "Bind report identities, coverage and exact inline locations",
       "owner_role": "Publication contract implementer",
-      "observed_state": "validate_publication on main (PR #46); immutable fixture corpus under tests/fixtures/e02/publication-binding/ and docs/acceptance/artifacts/E02/binding/ with replay tests; E02-A2 independent acceptance evidence not_run.",
+      "observed_state": "Construction outputs complete: fixture corpus, construction-receipt.json, validation log, independent-review-request.md. E02-A2 independent acceptance not_run.",
       "scope": "Network-free validator and canonical report/scope binding; keep full partial summaries separate from inline eligibility.",
       "input_paths": [
         "src/pullraptor/publication_contract.py",
@@ -1103,11 +1103,11 @@
         "Base-only/deleted/out-of-range inline location",
         "Current metadata changes between preview and write"
       ],
-      "next_action": "Add immutable publication-binding fixtures and independent review; wire E02-T2-INTEGRATE publisher refresh paths against the pinned validator without marker-supplied authority.",
+      "next_action": "Assign independent E02-A2 reviewer using docs/acceptance/artifacts/E02/binding/independent-review-request.md; no customer publish scope change.",
       "depends_on": [
         "E02-D01"
       ],
-      "construction_status": "waiting_for_task_outputs",
+      "construction_status": "ready",
       "evidence_status": "not_run",
       "decision_reference": "docs/build-interfaces.md",
       "document_revision": "coordinator pins immutable document OID at dispatch",
@@ -1124,7 +1124,7 @@
       "plan_task": "Task 2 actual publisher integration",
       "title": "Integrate trusted binding and owned rendering into publisher",
       "owner_role": "Publisher connector implementer",
-      "observed_state": "publisher.py invokes validate_publication before preview and pre-write refresh; bounded decode/render_markdown path; markdown override ignored; inert transport tests in tests/test_publisher.py. E02-A2/A3 independent acceptance and live pilot evidence not_run.",
+      "observed_state": "publisher.py integrates validate_publication; tests/fixtures/e02/publisher/ and docs/acceptance/artifacts/E02/publisher-preview/ evidence; fixture replay tests. E02-A2/A3 independent acceptance not_run; customer publish still beta-gated.",
       "scope": "Replace legacy summary-only path with bounded typed report/connector inputs, read-only preview and explicit COMMENT write path; no live publication during construction.",
       "input_paths": [
         "src/pullraptor/publisher.py",
@@ -1170,12 +1170,12 @@
         "LimitFailure/incomplete summaries mislabeled clean",
         "Unapproved API destination"
       ],
-      "next_action": "Use the bounded mocked connector to assert zero writes on every denied gate, then wire helpers into the real entry point; keep activation off until operational gates are evidenced.",
+      "next_action": "Independent E02-A2/A3 review and E02-T3 lifecycle/writes cards; keep beta_admission on pullraptor-publish.",
       "depends_on": [
         "E02-D01",
         "E02-T2-BIND"
       ],
-      "construction_status": "waiting_for_task_outputs",
+      "construction_status": "ready",
       "evidence_status": "not_run",
       "decision_reference": "docs/build-interfaces.md",
       "document_revision": "coordinator pins immutable document OID at dispatch",

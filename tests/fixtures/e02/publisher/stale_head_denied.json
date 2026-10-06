@@ -1,0 +1,1 @@
+{"description": "Head drift after artifact pin denies before transport", "head_mismatch": true, "expect_exit": 2, "expect_cause_substring": "stale_head", "expect_api_calls_max": 1}
