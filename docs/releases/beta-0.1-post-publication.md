@@ -15,6 +15,7 @@ Date: 2026-10-06.
 
 ## Release state
 
+- GitHub classification: **pre-release** (`isPrerelease: true` on `v0.1.0b1`; corrected after initial publish)
 - `released_verified`: **true** for declared beta subset
 - Support: [beta-0.1-support.md](beta-0.1-support.md)
 

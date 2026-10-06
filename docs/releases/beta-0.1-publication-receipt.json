@@ -16,5 +16,8 @@
   ],
   "operator": "human_coordinator",
   "publication_decision": "docs/releases/beta-0.1-publication-decision.md",
-  "result": "published"
+  "result": "published",
+  "github_prerelease": true,
+  "github_prerelease_corrected_at": "2026-10-06T04:20:00Z",
+  "github_prerelease_note": "Release edited with gh release edit v0.1.0b1 --prerelease; beta 0.1.x is not stable GA."
 }

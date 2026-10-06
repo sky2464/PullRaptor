@@ -79,7 +79,7 @@ Excluded interfaces remain in the wheel for adapter development but **refuse by 
 3. Assign independent reviewers for BR-07 and BR-13.
 4. Authorize publication (BR-15+) separately from this implementation work.
 
-## Suggested first PR scope (coordinator)
+**Post-publication (2026-10-06):** GitHub Release `v0.1.0b1` was corrected to **pre-release** classification (`gh release edit v0.1.0b1 --prerelease`). Receipt: [beta-0.1-publication-receipt.json](beta-0.1-publication-receipt.json).
 
 **Include:** `docs/releases/`, `docs/acceptance/releases/`, beta-related `docs/acceptance/artifacts/E01/` and `E07/` receipts, `docs/install.md`, `CHANGELOG.md`, `src/pullraptor/beta_admission.py`, entrypoint containment edits (`__main__.py`, `publisher.py`, `mcp_server.py`), `tests/test_beta_entrypoints.py`, related test env fixes, `scripts/e01_benchmark.py`, `scripts/generate_beta_evidence_index.py`, `tests/fixtures/e01/`, coordinator updates to `docs/worker-dispatch.md`, `docs/release-tasks.json`, `Master-Plan.md`.
 
