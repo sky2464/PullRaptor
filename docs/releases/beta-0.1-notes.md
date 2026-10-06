@@ -8,7 +8,7 @@
 | Source revision | `4dcd8ab466a26241c9651e73696495a32127fa09` |
 | Wheel | `pullraptor-0.1.0b1-py3-none-any.whl` |
 | SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
-| Distribution | GitHub Release only (not PyPI) |
+| Distribution | GitHub Release only (not PyPI); **pre-release** (beta, not stable GA) |
 
 ## Install (customer path)
 
