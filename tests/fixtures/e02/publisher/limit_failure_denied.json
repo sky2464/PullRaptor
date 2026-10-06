@@ -1,0 +1,1 @@
+{"description": "LimitFailure report denies at binding gate", "report_kind": "limit_failure", "expect_exit": 3, "expect_stderr_substring": "missing publication context", "expect_api_calls_max": 1}

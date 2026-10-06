@@ -1,0 +1,11 @@
+{
+  "schema": "pullraptor-e02-publisher-fixtures/1",
+  "card": "E02-T2-INTEGRATE",
+  "scenarios": [
+    "preview_zero_writes.json",
+    "stale_head_denied.json",
+    "policy_drift_denied.json",
+    "override_ignored.json",
+    "limit_failure_denied.json"
+  ]
+}

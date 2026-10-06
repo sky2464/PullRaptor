@@ -10,6 +10,8 @@ Trusted development verification for card `E02-T2-BIND` at the implementing revi
 | [tests/test_publication_contract.py](../../../../tests/test_publication_contract.py) | Unit tests named in build card |
 | [tests/test_publication_binding_fixtures.py](../../../../tests/test_publication_binding_fixtures.py) | Replays fixture JSON through `validate_publication` |
 | [validation-log.txt](validation-log.txt) | Captured unittest output at evidence refresh |
+| [construction-receipt.json](construction-receipt.json) | Pinned code OID and validation command |
+| [independent-review-request.md](independent-review-request.md) | E02-A2 reviewer packet (not acceptance) |
 
 ## Publisher integration (E02-T2-INTEGRATE)
 

@@ -1,0 +1,15 @@
+{
+  "schema": "pullraptor-e02-construction-receipt/1",
+  "card": "E02-T2-BIND",
+  "code_revision": "36abc545c20e4c8370bfabf4d4b10af37db22881",
+  "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_publication_contract tests.test_publication_binding_fixtures tests.test_evidence tests.test_models -v",
+  "fixture_manifest": "tests/fixtures/e02/publication-binding/manifest.json",
+  "construction_status": "outputs_complete",
+  "independent_acceptance": "not_run",
+  "evidence_paths": [
+    "docs/acceptance/artifacts/E02/binding/README.md",
+    "docs/acceptance/artifacts/E02/binding/validation-log.txt",
+    "docs/acceptance/artifacts/E02/binding/independent-review-request.md"
+  ]
+}

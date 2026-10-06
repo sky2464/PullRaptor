@@ -1,0 +1,43 @@
+test_actual_lost_post_response_no_duplicate_write (tests.test_publisher.TestPublisher.test_actual_lost_post_response_no_duplicate_write) ... ok
+test_cli_missing_token_error (tests.test_publisher.TestPublisher.test_cli_missing_token_error) ... ok
+test_draft_pr_skipped (tests.test_publisher.TestPublisher.test_draft_pr_skipped) ... ok
+test_foreign_marker_not_updated_by_publisher (tests.test_publisher.TestPublisher.test_foreign_marker_not_updated_by_publisher) ... ok
+test_head_drift_rejected_with_exit_2 (tests.test_publisher.TestPublisher.test_head_drift_rejected_with_exit_2) ... ok
+test_owned_comment_pagination_bounded (tests.test_publisher.TestPublisher.test_owned_comment_pagination_bounded) ... ok
+test_publication_failure_preserves_report (tests.test_publisher.TestPublisher.test_publication_failure_preserves_report) ... PullRaptor Publisher: publication denied (stale_head); refusing to post review.
+ok
+test_publish_new_comment (tests.test_publisher.TestPublisher.test_publish_new_comment) ... ok
+test_publish_preview_zero_writes (tests.test_publisher.TestPublisher.test_publish_preview_zero_writes) ... ok
+test_publisher_calls_binding_gate (tests.test_publisher.TestPublisher.test_publisher_calls_binding_gate) ... ok
+test_publisher_missing_prefix_head_zero_writes (tests.test_publisher.TestPublisher.test_publisher_missing_prefix_head_zero_writes) ... ok
+test_publisher_same_head_policy_scope_drift_zero_writes (tests.test_publisher.TestPublisher.test_publisher_same_head_policy_scope_drift_zero_writes) ... ok
+test_rate_limit_deferred_receipt (tests.test_publisher.TestPublisher.test_rate_limit_deferred_receipt) ... ok
+test_untrusted_override_cannot_bypass_rendering (tests.test_publisher.TestPublisher.test_untrusted_override_cannot_bypass_rendering) ... PullRaptor Publisher: markdown override ignored; using owned renderer only.
+ok
+test_update_existing_comment_idempotency (tests.test_publisher.TestPublisher.test_update_existing_comment_idempotency) ... ok
+test_base_policy_changed_same_head (tests.test_publication_contract.TestPublicationContract.test_base_policy_changed_same_head) ... ok
+test_cross_pr_replay (tests.test_publication_contract.TestPublicationContract.test_cross_pr_replay) ... ok
+test_current_exact_context_authorized (tests.test_publication_contract.TestPublicationContract.test_current_exact_context_authorized) ... ok
+test_deleted_side_location (tests.test_publication_contract.TestPublicationContract.test_deleted_side_location) ... ok
+test_incomplete_receipts_no_inline (tests.test_publication_contract.TestPublicationContract.test_incomplete_receipts_no_inline) ... ok
+test_invalid_side_range_or_deleted_location_denied (tests.test_publication_contract.TestPublicationContract.test_invalid_side_range_or_deleted_location_denied) ... ok
+test_limit_failure_no_inline (tests.test_publication_contract.TestPublicationContract.test_limit_failure_no_inline) ... ok
+test_missing_or_prefix_head_denied (tests.test_publication_contract.TestPublicationContract.test_missing_or_prefix_head_denied) ... ok
+test_report_contract_context_mismatch_denied (tests.test_publication_contract.TestPublicationContract.test_report_contract_context_mismatch_denied) ... ok
+test_scope_capability_revision_collision_denied (tests.test_publication_contract.TestPublicationContract.test_scope_capability_revision_collision_denied) ... ok
+test_wrong_workflow_run_artifact (tests.test_publication_contract.TestPublicationContract.test_wrong_workflow_run_artifact) ... ok
+test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
+test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
+test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
+test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
+test_fixture_scenarios (tests.test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_fixture_scenarios) ... ok
+test_manifest_lists_scenarios (tests.test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_manifest_lists_scenarios) ... ok
+
+----------------------------------------------------------------------
+Ran 32 tests in 0.010s
+
+OK
+PullRaptor Publisher: Published review comment 888 on PR #1
+PullRaptor Publisher: Published review comment None on PR #1
+PullRaptor Publisher: Published review comment 1 on PR #1
+PullRaptor Publisher: Published review comment 55 on PR #1

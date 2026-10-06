@@ -1,0 +1,1 @@
+{"description": "Preview-only path performs no comment POST/PATCH", "preview_only": true, "expect_exit": 0, "expect_api_calls_max": 1}
