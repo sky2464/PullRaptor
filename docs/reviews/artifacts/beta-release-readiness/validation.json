@@ -1,0 +1,23 @@
+{
+  "release_tasks": 18,
+  "referenced_build_cards": 12,
+  "conditional_admission_rows": 20,
+  "acyclic": true,
+  "negative_controls_rejected": [
+    "missing_owner",
+    "duplicate_release_id",
+    "self_dependency",
+    "unknown_build_card",
+    "unearned_acceptance",
+    "missing_optional_gate",
+    "missing_docs_artifact_dependency",
+    "missing_recovery_input",
+    "unowned_output",
+    "admission_before_artifact_producer"
+  ],
+  "local_links_checked": 65,
+  "markdown_json_task_parity": true,
+  "runtime_tests": "not_run",
+  "builds": "not_run",
+  "scope": "static documentation structure and references only; not product acceptance"
+}
