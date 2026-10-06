@@ -1,6 +1,6 @@
 # Beta 0.1.x release decisions (proposed; maintainer confirmation required)
 
-Date: 2026-10-05. Candidate source revision: `6f1b9d370f6332e88675d3bf2b681713b6840e44`. Trusted base inspection: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. This record is implementer-prepared evidence; it is not maintainer approval or independent acceptance.
+Date: 2026-10-06. Candidate source revision: `3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f` (merge of #55). Trusted base inspection: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. This record is implementer-prepared evidence; it is not maintainer approval or independent acceptance.
 
 ## Version and labeling
 

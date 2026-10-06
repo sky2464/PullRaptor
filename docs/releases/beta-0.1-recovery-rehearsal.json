@@ -1,13 +1,29 @@
 {
   "schema": "pullraptor-recovery-rehearsal/1",
-  "date": "2026-10-05",
-  "status": "not_run",
+  "date": "2026-10-06",
+  "status": "implementer_rehearsed_disposable",
   "channel": "disposable_fixture_only",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
   "scenarios": [
-    {"id": "partial_upload", "result": "not_run"},
-    {"id": "ambiguous_response", "result": "not_run"},
-    {"id": "defective_version_quarantine", "result": "not_run"}
+    {
+      "id": "partial_upload",
+      "result": "rehearsed_tabletop",
+      "evidence": "docs/releases/beta-0.1-recovery-runbook.md#scenarios",
+      "note": "Operator walkthrough: halt publish, preserve digest ledger; no live channel used."
+    },
+    {
+      "id": "ambiguous_response",
+      "result": "rehearsed_tabletop",
+      "note": "Reconcile by downloading asset and SHA-256 compare to manifest."
+    },
+    {
+      "id": "defective_version_quarantine",
+      "result": "rehearsed_tabletop",
+      "note": "Quarantine tag; new prerelease version for corrected bytes."
+    }
   ],
   "independent_reviewer": "unassigned",
-  "blocks_br_14_readiness": true
+  "independent_acceptance": "pending",
+  "blocks_br_14_readiness": true,
+  "blocks_publication": true
 }

@@ -1,10 +1,8 @@
 {
   "card_id": "E01-T9-CACHE",
-  "artifact_directory": "cache",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
-  "evidence_status": "partial",
-  "tests": ["tests/test_cache.py", "tests/test_kernel.py"],
-  "log": "docs/acceptance/artifacts/E01/br03-06-focused.log",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "evidence_status": "development_passed",
   "fixture_directory": "tests/fixtures/e01/cache-mutations",
-  "fixture_status": "not_populated"
+  "focused_log": "docs/acceptance/artifacts/E01/cache/focused-cache.log",
+  "independent_acceptance": "pending_BR-07"
 }

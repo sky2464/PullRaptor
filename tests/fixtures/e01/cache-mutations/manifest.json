@@ -1,0 +1,6 @@
+{
+  "schema": "pullraptor-e01-cache-fixtures/1",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "coverage": "tests/test_cache.py mutation and trust cases",
+  "status": "mapped_to_unittests"
+}

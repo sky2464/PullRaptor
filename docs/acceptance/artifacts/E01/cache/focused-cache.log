@@ -1,0 +1,13 @@
+test_cache_symlink_refused (tests.test_cache.TestCache.test_cache_symlink_refused) ... ok
+test_clean_warm_corrupt_cache_identical (tests.test_cache.TestCache.test_clean_warm_corrupt_cache_identical) ... ok
+test_runtime_schema_change_miss (tests.test_cache.TestCache.test_runtime_schema_change_miss) ... ok
+test_review_clean_and_incremental_identical (tests.test_kernel.TestKernel.test_review_clean_and_incremental_identical) ... ok
+test_review_diff_profile (tests.test_kernel.TestKernel.test_review_diff_profile) ... ok
+test_review_structural_python_complete (tests.test_kernel.TestKernel.test_review_structural_python_complete) ... ok
+test_review_with_finding (tests.test_kernel.TestKernel.test_review_with_finding) ... ok
+test_unresolved_import_incomplete_exit2 (tests.test_kernel.TestKernel.test_unresolved_import_incomplete_exit2) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.356s
+
+OK

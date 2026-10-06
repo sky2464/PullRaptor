@@ -8,7 +8,7 @@
   "manifest_path": "manifest.json",
   "product_acceptance": "pending",
   "repository_id": "owner/pullraptor",
-  "run_id": "br09-build-2",
-  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
-  "workflow_digest": "wf-beta-local-rebuild"
+  "run_id": "br09-final-2",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "workflow_digest": "wf-beta-final"
 }

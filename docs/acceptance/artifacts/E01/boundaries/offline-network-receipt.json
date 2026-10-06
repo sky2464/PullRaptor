@@ -1,0 +1,10 @@
+{
+  "schema": "pullraptor-e01-boundary-receipt/1",
+  "check": "offline_review_no_socket",
+  "tests": [
+    "tests/test_e01_offline_boundaries.py"
+  ],
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "result": "passed",
+  "note": "Development verification; independent BR-03 acceptance remains separate."
+}

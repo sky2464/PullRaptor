@@ -1,3 +1,28 @@
+{
+  "collected_at": "2026-10-06T02:25:46.889912+00:00",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "boundary_exit_code": 0,
+  "cache_exit_code": 0,
+  "corpus_exit_code": 0
+}
+
+test_review_cli_does_not_open_sockets (tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_review_cli_does_not_open_sockets) ... ok
+test_subprocess_cli_offline_smoke (tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_subprocess_cli_offline_smoke) ... ok
+test_cli_help (tests.test_cli.TestCLI.test_cli_help) ... ok
+test_explicit_diff_profile_scope_statement (tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement) ... ok
+test_stdout_machine_format_stderr_diagnostics (tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics) ... ok
+test_structural_python_complete (tests.test_cli.TestCLI.test_structural_python_complete) ... ok
+test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
+test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
+test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
+test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.348s
+
+OK
+
+---
 test_cache_symlink_refused (tests.test_cache.TestCache.test_cache_symlink_refused) ... ok
 test_clean_warm_corrupt_cache_identical (tests.test_cache.TestCache.test_clean_warm_corrupt_cache_identical) ... ok
 test_runtime_schema_change_miss (tests.test_cache.TestCache.test_runtime_schema_change_miss) ... ok
@@ -6,6 +31,13 @@ test_review_diff_profile (tests.test_kernel.TestKernel.test_review_diff_profile)
 test_review_structural_python_complete (tests.test_kernel.TestKernel.test_review_structural_python_complete) ... ok
 test_review_with_finding (tests.test_kernel.TestKernel.test_review_with_finding) ... ok
 test_unresolved_import_incomplete_exit2 (tests.test_kernel.TestKernel.test_unresolved_import_incomplete_exit2) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.356s
+
+OK
+
+---
 test_conditional_reraise_not_classified_as_swallowed (tests.test_rules.TestRules.test_conditional_reraise_not_classified_as_swallowed) ... ok
 test_intentional_patterns_never_defect_claim (tests.test_rules.TestRules.test_intentional_patterns_never_defect_claim) ... ok
 test_py001_negatives (tests.test_rules.TestRules.test_py001_negatives) ... ok
@@ -16,45 +48,8 @@ test_py003_negatives (tests.test_rules.TestRules.test_py003_negatives) ... ok
 test_py003_positives (tests.test_rules.TestRules.test_py003_positives) ... ok
 test_shadowed_subprocess_no_shell_claim (tests.test_rules.TestRules.test_shadowed_subprocess_no_shell_claim) ... ok
 test_untrusted_command_not_inferred_from_shell_true (tests.test_rules.TestRules.test_untrusted_command_not_inferred_from_shell_true) ... ok
-test_cli_help (tests.test_cli.TestCLI.test_cli_help) ... ok
-test_explicit_diff_profile_scope_statement (tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement) ... ok
-test_stdout_machine_format_stderr_diagnostics (tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics) ... ok
-test_structural_python_complete (tests.test_cli.TestCLI.test_structural_python_complete) ... ok
-test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
-test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
-test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
-test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
-test_candidate_workflow_no_placeholder_success (tests.test_release_provenance.TestReleaseBuilder.test_candidate_workflow_no_placeholder_success) ... ok
-test_release_builder_emits_complete_manifest (tests.test_release_provenance.TestReleaseBuilder.test_release_builder_emits_complete_manifest) ... ok
-test_release_builder_failure_is_nonzero (tests.test_release_provenance.TestReleaseBuilder.test_release_builder_failure_is_nonzero) ... ok
-test_two_build_evidence_distinct_origins (tests.test_release_provenance.TestReleaseBuilder.test_two_build_evidence_distinct_origins) ... ok
-test_artifact_tampering (tests.test_release_provenance.TestReleaseProvenance.test_artifact_tampering) ... ok
-test_build_dependency_inventory (tests.test_release_provenance.TestReleaseProvenance.test_build_dependency_inventory) ... ok
-test_mutable_tag_insufficient (tests.test_release_provenance.TestReleaseProvenance.test_mutable_tag_insufficient) ... ok
-test_two_builds_reported (tests.test_release_provenance.TestReleaseProvenance.test_two_builds_reported) ... ok
-test_wrong_revision_or_build_origin (tests.test_release_provenance.TestReleaseProvenance.test_wrong_revision_or_build_origin) ... ok
-test_first_install_without_prior_release (tests.test_installed_artifacts.TestInstalledArtifacts.test_first_install_without_prior_release) ... ok
-test_fresh_venv_without_repo_clone (tests.test_installed_artifacts.TestInstalledArtifacts.test_fresh_venv_without_repo_clone) ... ok
-test_install_interrupt_recovery (tests.test_installed_artifacts.TestInstalledArtifacts.test_install_interrupt_recovery) ... ok
-test_install_matrix_honest_profile_states (tests.test_installed_artifacts.TestInstalledArtifacts.test_install_matrix_honest_profile_states) ... ok
-test_install_matrix_inventory_alignment (tests.test_installed_artifacts.TestInstalledArtifacts.test_install_matrix_inventory_alignment) ... ok
-test_install_matrix_present (tests.test_installed_artifacts.TestInstalledArtifacts.test_install_matrix_present) ... ok
-test_installed_completed_report_canonical_equal (tests.test_installed_artifacts.TestInstalledArtifacts.test_installed_completed_report_canonical_equal) ... ok
-test_installed_entrypoints (tests.test_installed_artifacts.TestInstalledArtifacts.test_installed_entrypoints) ... Processing /var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/tmp1d_ro7e8/pullraptor-0.3.0-py3-none-any.whl
-Installing collected packages: pullraptor
-Successfully installed pullraptor-0.3.0
-ok
-test_installed_kernel_byte_footprint (tests.test_installed_artifacts.TestInstalledArtifacts.test_installed_kernel_byte_footprint) ... ok
-test_installed_partial_diagnostics_preserved (tests.test_installed_artifacts.TestInstalledArtifacts.test_installed_partial_diagnostics_preserved) ... ok
-test_installed_profile_footprint (tests.test_installed_artifacts.TestInstalledArtifacts.test_installed_profile_footprint) ... ok
-test_no_source_checkout_on_import_path (tests.test_installed_artifacts.TestInstalledArtifacts.test_no_source_checkout_on_import_path) ... ok
-test_offline_wheel_and_image (tests.test_installed_artifacts.TestInstalledArtifacts.test_offline_wheel_and_image) ... ok
-test_offline_wheel_sdist_install (tests.test_installed_artifacts.TestInstalledArtifacts.test_offline_wheel_sdist_install) ... ok
-test_source_wheel_container_canonical_equal (tests.test_installed_artifacts.TestInstalledArtifacts.test_source_wheel_container_canonical_equal) ... ok
-test_uninstall_no_credentials_remnants (tests.test_installed_artifacts.TestInstalledArtifacts.test_uninstall_no_credentials_remnants) ... ok
-test_update_rollback_prior_accepted_artifact (tests.test_installed_artifacts.TestInstalledArtifacts.test_update_rollback_prior_accepted_artifact) ... skipped 'not_run: no independently accepted prior artifact fixture'
 
 ----------------------------------------------------------------------
-Ran 52 tests in 13.359s
+Ran 10 tests in 0.003s
 
-OK (skipped=1)
+OK
