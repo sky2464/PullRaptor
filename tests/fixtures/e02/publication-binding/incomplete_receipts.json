@@ -1,0 +1,6 @@
+{
+  "description": "Expected scope without matching receipts denies inline publication.",
+  "use_scoped_contract": true,
+  "receipts": [],
+  "expect": {"authorized": false, "cause": "incomplete_receipts", "inline_keys": []}
+}

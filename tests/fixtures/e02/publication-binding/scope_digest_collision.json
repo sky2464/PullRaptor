@@ -1,0 +1,6 @@
+{
+  "description": "Scope digest mismatch denies even when paths appear equal.",
+  "use_scoped_contract": true,
+  "current_context_overrides": {"scope_digest": "0000000000000000000000000000000000000000000000000000000000000000"},
+  "expect": {"authorized": false, "cause": "scope_capability_revision_collision"}
+}

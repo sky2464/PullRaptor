@@ -1,0 +1,5 @@
+{
+  "description": "Base-side finding spans are not eligible for head inline keys.",
+  "finding_side": "base",
+  "expect": {"authorized": false, "cause": "invalid_side_location"}
+}

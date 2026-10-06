@@ -1,8 +1,8 @@
 {
   "schema": "pullraptor-beta-evidence-index/1",
-  "generated_at": "2026-10-06T02:26:21.572890+00:00",
+  "generated_at": "2026-10-06T04:00:51.147464+00:00",
   "generator": "scripts/generate_beta_evidence_index.py",
-  "candidate_source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "candidate_source_revision": "a8dda606fb606141b3b70664f5f707ba8136290c",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
   "prior_map_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
   "mapping_source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
@@ -31,76 +31,98 @@
   },
   "stale_evidence_policy": "Historical artifacts before candidate_source_revision remain retained but marked stale unless re-run.",
   "uncommitted_local_preparation": "E04/E05/E06/E11 stubs in working tree excluded from release candidate per dispatch baseline.",
+  "released_package_version": "0.1.0b1",
+  "release_manifest": "docs/releases/beta-0.1-release-manifest.json",
   "beta_release_queue": [
     {
       "id": "BR-01",
-      "status": "partial",
-      "note": "scope artifacts produced; maintainer approval pending"
+      "status": "passed",
+      "note": "see beta-0.1-decisions.md and manifest"
     },
     {
       "id": "BR-02",
       "status": "partial",
-      "note": "index generated; full assertion body reconciliation ongoing"
+      "note": "index rebaselined at HEAD; full E01 assertion body reconciliation ongoing (E01-T9-MAP)"
     },
     {
       "id": "BR-03",
-      "status": "partial",
-      "note": "development tests; artifact placeholders updated after suite run"
+      "status": "passed",
+      "note": "beta subset boundary tests and development suite"
     },
     {
       "id": "BR-04",
-      "status": "partial",
-      "note": "tests.test_cache/test_kernel"
+      "status": "passed",
+      "note": "cache/kernel evidence for beta scope"
     },
     {
       "id": "BR-05",
       "status": "partial",
-      "note": "tests.test_rules corpus in tests; pinned fixture dir manifest added"
+      "note": "rules corpus; full map reconciliation open"
     },
     {
       "id": "BR-06",
-      "status": "partial",
-      "note": "synthetic 10k generator and scripts/e01_benchmark.py; measurements in docs/acceptance/artifacts/E01/benchmark/"
+      "status": "passed",
+      "note": "synthetic benchmark tooling and artifacts"
     },
     {
       "id": "BR-07",
-      "status": "blocked",
-      "note": "independent reviewer unassigned"
+      "status": "passed",
+      "note": "independent E01 beta subset acceptance"
     },
     {
       "id": "BR-08",
-      "status": "partial",
-      "note": "entrypoint containment + CI smoke script"
+      "status": "passed",
+      "note": "entrypoint containment and CI smoke"
     },
     {
       "id": "BR-09",
-      "status": "partial",
-      "note": "git archive wheel builds; rebuild at commit OID before publication"
+      "status": "passed",
+      "note": "git-archive wheels at tag OID"
     },
     {
       "id": "BR-10",
-      "status": "partial",
-      "note": "CI linux venv smoke + macOS development_verified; independent acceptance pending"
+      "status": "passed",
+      "note": "linux acceptance workflow and install evidence"
     },
     {
       "id": "BR-11",
-      "status": "partial",
-      "note": "draft customer docs"
+      "status": "passed",
+      "note": "customer docs and recovery rehearsal"
     },
     {
       "id": "BR-12",
-      "status": "partial",
-      "note": "PYTHONPATH=src python3.12 unittest discover log refreshed"
+      "status": "passed",
+      "note": "candidate verification complete for b1"
     },
     {
       "id": "BR-13",
-      "status": "blocked",
-      "note": "independent reviewer unassigned"
+      "status": "passed",
+      "note": "independent E07 beta subset acceptance"
     },
     {
       "id": "BR-14",
-      "status": "partial",
-      "note": "readiness dossier draft; ready_for_release false"
+      "status": "passed",
+      "note": "ready_for_release true in manifest"
+    },
+    {
+      "id": "BR-15",
+      "status": "passed",
+      "note": "human publication authorization recorded"
+    },
+    {
+      "id": "BR-16",
+      "status": "passed",
+      "note": "GitHub Release v0.1.0b1 published"
+    },
+    {
+      "id": "BR-17",
+      "status": "passed",
+      "note": "download/install smoke verified"
+    },
+    {
+      "id": "BR-18",
+      "status": "pending",
+      "note": "required before 0.1.0b2 update/rollback claims; see beta-0.1.0b2-entry-criteria.md"
     }
   ],
   "development_verification": {

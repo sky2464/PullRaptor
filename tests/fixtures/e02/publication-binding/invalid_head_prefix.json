@@ -1,0 +1,6 @@
+{
+  "description": "Non-40-hex head values are rejected before inline eligibility.",
+  "expected_context_overrides": {"head": "deadbeef"},
+  "current_context_overrides": {"head": "deadbeef"},
+  "expect": {"authorized": false, "cause": "invalid_head"}
+}

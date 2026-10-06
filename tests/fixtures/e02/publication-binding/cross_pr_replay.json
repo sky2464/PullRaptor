@@ -1,0 +1,6 @@
+{
+  "description": "Artifact bound to a different PR number is replay denied.",
+  "expected_context_overrides": {"pr_number": 1},
+  "current_context_overrides": {"pr_number": 2},
+  "expect": {"authorized": false, "cause": "cross_pr_replay"}
+}

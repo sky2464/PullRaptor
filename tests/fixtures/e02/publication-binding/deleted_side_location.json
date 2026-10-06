@@ -1,0 +1,5 @@
+{
+  "description": "Head-side findings on deleted paths deny publication.",
+  "finding_path": "removed.py",
+  "expect": {"authorized": false, "cause": "deleted_side_location"}
+}

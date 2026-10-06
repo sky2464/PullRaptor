@@ -1,0 +1,6 @@
+{
+  "description": "Matching expected and current platform context authorizes publication preview path.",
+  "expected_context_overrides": {},
+  "current_context_overrides": {},
+  "expect": {"authorized": true, "cause": "authorized"}
+}

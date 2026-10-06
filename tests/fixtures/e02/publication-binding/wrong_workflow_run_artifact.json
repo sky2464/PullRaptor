@@ -1,0 +1,6 @@
+{
+  "description": "Workflow run identity must match artifact pinning.",
+  "expected_context_overrides": {"run_id": "run-1"},
+  "current_context_overrides": {"run_id": "run-2"},
+  "expect": {"authorized": false, "cause": "wrong_workflow_run_artifact"}
+}

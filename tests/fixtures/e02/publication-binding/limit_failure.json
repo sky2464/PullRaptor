@@ -1,0 +1,5 @@
+{
+  "description": "Limit-failure reports never authorize inline publication.",
+  "report_kind": "limit_failure",
+  "expect": {"authorized": false, "cause": "limit_failure", "inline_keys": []}
+}
