@@ -1,14 +1,14 @@
 {
   "artifacts": [
     {
-      "digest": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
+      "digest": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
       "entrypoints": [
         "pullraptor",
         "pullraptor-publish",
         "pullraptor-mcp"
       ],
       "kind": "wheel",
-      "size": 119190
+      "size": 106984
     }
   ],
   "dependency_inventory": [
@@ -19,6 +19,6 @@
   "runtime_matrix": [
     "python-3.12"
   ],
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
   "version": "0.3.0"
 }

@@ -3,9 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import io
 import json
+import os
+import shutil
 import subprocess
 import sys
+import tarfile
+import tempfile
 import tomllib
 from pathlib import Path
 
@@ -43,13 +48,83 @@ __all__ = (
 BUILDER_COMMAND = "PYTHONPATH=src python3.12 release/build.py"
 
 
+def _wheel_python() -> str:
+    if sys.version_info[:2] == (3, 12):
+        return sys.executable
+    candidate = shutil.which("python3.12")
+    if candidate:
+        return candidate
+    raise RuntimeError("python_3.12_required_for_wheel_build")
+
+
+def _assert_revision_exists(repo_root: Path, revision: str) -> None:
+    result = subprocess.run(
+        ["git", "-C", str(repo_root), "cat-file", "-e", f"{revision}^{{commit}}"],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode != 0:
+        raise ValueError("source_revision_not_found_in_repository")
+
+
+def _build_wheel_bytes(repo_root: Path, source_revision: str) -> bytes:
+    """Build wheel bytes from an exact committed tree (git archive), not the working copy."""
+    _assert_revision_exists(repo_root, source_revision)
+    wheel_python = _wheel_python()
+    with tempfile.TemporaryDirectory(prefix="pullraptor-release-archive-") as tmp:
+        extract_root = Path(tmp) / "tree"
+        extract_root.mkdir()
+        archive = subprocess.run(
+            ["git", "-C", str(repo_root), "archive", "--format=tar", source_revision],
+            check=False,
+            capture_output=True,
+        )
+        if archive.returncode != 0:
+            raise RuntimeError(archive.stderr.decode("utf-8", errors="replace") or "git_archive_failed")
+        with tarfile.open(fileobj=io.BytesIO(archive.stdout), mode="r:") as tar:
+            tar.extractall(extract_root, filter="data")
+        staging = Path(tmp) / "wheels"
+        staging.mkdir()
+        env = os.environ.copy()
+        env.setdefault("SOURCE_DATE_EPOCH", "0")
+        result = subprocess.run(
+            [
+                wheel_python,
+                "-m",
+                "pip",
+                "wheel",
+                str(extract_root),
+                "--no-deps",
+                "-w",
+                str(staging),
+            ],
+            capture_output=True,
+            text=True,
+            env=env,
+        )
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr or result.stdout or "wheel_build_failed")
+        wheels = sorted(staging.glob("*.whl"))
+        if len(wheels) != 1:
+            raise RuntimeError("expected_exactly_one_wheel")
+        return wheels[0].read_bytes()
+
+
 def _read_inventory(repo_root: Path) -> dict:
     path = repo_root / "docs" / "dependencies" / "E07.json"
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def _project_version(repo_root: Path) -> str:
-    pyproject = tomllib.loads((repo_root / "pyproject.toml").read_text(encoding="utf-8"))
+def _project_version(repo_root: Path, source_revision: str) -> str:
+    shown = subprocess.run(
+        ["git", "-C", str(repo_root), "show", f"{source_revision}:pyproject.toml"],
+        capture_output=True,
+        text=True,
+    )
+    if shown.returncode != 0:
+        pyproject = tomllib.loads((repo_root / "pyproject.toml").read_text(encoding="utf-8"))
+        return str(pyproject["project"]["version"])
+    pyproject = tomllib.loads(shown.stdout)
     return str(pyproject["project"]["version"])
 
 
@@ -69,32 +144,6 @@ def _resolve_source_revision(repo_root: Path, explicit: str | None) -> str:
     return revision
 
 
-def _build_wheel_bytes(repo_root: Path) -> bytes:
-    staging = repo_root / "build" / "release-staging"
-    staging.mkdir(parents=True, exist_ok=True)
-    result = subprocess.run(
-        [
-            sys.executable,
-            "-m",
-            "pip",
-            "wheel",
-            str(repo_root),
-            "--no-deps",
-            "-w",
-            str(staging),
-        ],
-        cwd=repo_root,
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(result.stderr or result.stdout or "wheel_build_failed")
-    wheels = sorted(staging.glob("*.whl"))
-    if len(wheels) != 1:
-        raise RuntimeError("expected_exactly_one_wheel")
-    return wheels[0].read_bytes()
-
-
 def produce_release_candidate(
     repo_root: Path,
     output_dir: Path,
@@ -105,12 +154,12 @@ def produce_release_candidate(
     """Build wheel artifact bytes and emit a candidate manifest (not public release acceptance)."""
     revision = _resolve_source_revision(repo_root, source_revision)
     inventory = _read_inventory(repo_root)
-    wheel_bytes = _build_wheel_bytes(repo_root)
+    wheel_bytes = _build_wheel_bytes(repo_root, revision)
     entrypoints = entrypoints_from_inventory_doc(inventory)
     wheel = artifact_identity_from_bytes("wheel", wheel_bytes, entrypoints=entrypoints)
     origin = load_build_origin_from_environ((wheel.digest,), environ=environ)
     manifest = ReleaseManifest(
-        version=_project_version(repo_root),
+        version=_project_version(repo_root, revision),
         source_revision=revision,
         artifacts=(wheel,),
         runtime_matrix=runtime_matrix_from_inventory_doc(inventory),
@@ -129,6 +178,7 @@ def produce_release_candidate(
     dump_manifest(manifest, output_dir / "manifest.json")
     receipt = {
         "builder_command": BUILDER_COMMAND,
+        "build_method": "git_archive_exact_revision",
         "candidate_only": True,
         "product_acceptance": "pending",
         "source_revision": revision,

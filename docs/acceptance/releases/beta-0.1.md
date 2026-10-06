@@ -6,8 +6,8 @@ Date: 2026-10-05. **Readiness:** not ready for release. **Publication:** not aut
 
 | Field | Value |
 |---|---|
-| Source revision | `6f1b9d370f6332e88675d3bf2b681713b6840e44` |
-| Wheel SHA-256 | `397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e` |
+| Source revision | `f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74` (rebuild at merge commit after PR lands) |
+| Wheel SHA-256 | `b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700` (git archive + SOURCE_DATE_EPOCH build; prior `6f1b9d3` receipt stale) |
 | Scope | `docs/releases/beta-0.1-scope.json` |
 | Manifest | `docs/releases/beta-0.1-release-manifest.json` |
 
@@ -20,7 +20,7 @@ Date: 2026-10-05. **Readiness:** not ready for release. **Publication:** not aut
 
 ## Authorization states
 
-- `ready_for_release`: **false** (BR-07/13 blocked; recovery rehearsal not_run; benchmarks incomplete)
+- `ready_for_release`: **false** (BR-07/13 blocked; recovery rehearsal not_run; independent benchmark acceptance pending)
 - `publication_authorized`: **false** (BR-15 not executed)
 - `released_verified`: **false** (BR-17 not applicable)
 

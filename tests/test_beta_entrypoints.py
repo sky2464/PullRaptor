@@ -26,6 +26,11 @@ class TestBetaEntrypoints(unittest.TestCase):
             text=True,
         )
 
+    def test_publish_help_refuses_without_dev_override(self) -> None:
+        proc = self._run_module("pullraptor.publisher", ["--help"])
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("pullraptor-publish", proc.stderr)
+
     def test_publish_script_refuses_without_dev_override(self) -> None:
         proc = self._run_module(
             "pullraptor.publisher",

@@ -8,7 +8,9 @@ Source/trusted-main observation: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. Con
 
 The [18-card release queue](release-tasks.json) and manifest own cross-package status. Construction evidence includes `docs/releases/`, `docs/acceptance/releases/beta-0.1.md`, `src/pullraptor/beta_admission.py`, `tests/test_beta_entrypoints.py`, dual wheel builds under `docs/acceptance/artifacts/E07/builds/`, and development-suite logs. **Exclude unrelated untracked E04–E11 preparation stubs** from the first beta PR unless separately assigned.
 
-PR #46 merged publication binding after #41/#43/#45; PR #47 merged local secret patterns. E07 has byte-identical local dual-build receipts (`pullraptor-0.3.0` wheel at candidate revision); external origin verification, Linux clean install, BR-06 synthetic/real benchmarks, BR-11 recovery rehearsal, maintainer BR-01 version (`0.1.0b1` vs metadata `0.3.0`), and independent BR-07/BR-13 remain open.
+Construction branch work includes CI beta install smoke (`scripts/ci_beta_install_smoke.sh`), git-archive release builds (`release/build.py`), and E01 synthetic benchmark tooling. **Rebuild candidate wheels at the merge commit OID before publication.**
+
+PR #46 merged publication binding after #41/#43/#45; PR #47 merged local secret patterns. E07 dual-build receipts must match `git archive` bytes at the pinned revision; Linux offline install is exercised in CI (artifact upload); macOS development host uses `f95fd1b…` evidence revision (not placeholder zeros). BR-06 synthetic measurements collected via `scripts/e01_benchmark.py` when run on a 3.12 host. Maintainer BR-01 version (`0.1.0b1` vs metadata `0.3.0`), independent BR-07/BR-13, and recovery rehearsal remain open.
 
 **Next coordinator actions:** (1) maintainer BR-01 sign-off on scope and `0.1.0b1`; (2) assign independent BR-07/BR-13 reviewers; (3) scoped PR from construction branch (beta paths only); (4) platform owner for BR-10 linux-x86_64 offline install. Pin immutable source/doc/trusted-base on merge. Gates and independently accepted evidence remain required for publication.
 

@@ -45,12 +45,48 @@ jobs:
         run: |
           PYTHONPATH=src:. python3 -m unittest discover -s tests -v
 
-      - name: Install package and verify CLI entrypoints
+      - name: Install package and verify beta CLI containment
         run: |
           pip install -e .
-          pullraptor --help
-          pullraptor-publish --help
-          pullraptor --workdir
+          bash scripts/ci_beta_install_smoke.sh
+
+      - name: Record linux-x86_64 offline wheel install smoke
+        run: |
+          export PULLRAPTOR_WORKFLOW_DIGEST="${{ hashFiles('.github/workflows/ci.yml') }}"
+          export PULLRAPTOR_RUN_ID="${{ github.run_id }}-ci-linux-install"
+          export PULLRAPTOR_REPOSITORY_ID="${{ github.repository }}"
+          PYTHONPATH=src python3.12 release/build.py --output-dir build/ci-release-candidate
+          python3.12 -m venv /tmp/pr-beta-venv
+          /tmp/pr-beta-venv/bin/pip install --no-index build/ci-release-candidate/*.whl
+          PATH="/tmp/pr-beta-venv/bin:$PATH" bash scripts/ci_beta_install_smoke.sh
+          mkdir -p docs/acceptance/artifacts/E07/install
+          python3.12 - <<'PY'
+          import json, subprocess, hashlib, glob
+          from pathlib import Path
+          wheel = Path(glob.glob("build/ci-release-candidate/*.whl")[0])
+          digest = hashlib.sha256(wheel.read_bytes()).hexdigest()
+          rev = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          receipt = {
+              "schema": "pullraptor-install-receipt/1",
+              "profile_id": "python-3.12-linux-x86_64-venv",
+              "platform": "linux-x86_64",
+              "runtime": "python-3.12",
+              "operation": "offline_wheel_venv_install",
+              "result": "development_verified",
+              "source_revision": rev,
+              "artifact_digest_sha256": digest,
+              "workflow": "ci.yml",
+              "note": "CI job smoke; independent BR-10 acceptance remains pending.",
+          }
+          out = Path("docs/acceptance/artifacts/E07/install/linux-x86_64-ci-smoke.json")
+          out.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Upload linux install smoke receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: e07-linux-install-smoke
+          path: docs/acceptance/artifacts/E07/install/linux-x86_64-ci-smoke.json
 
       - name: Verify PullRaptor self-review
         run: |

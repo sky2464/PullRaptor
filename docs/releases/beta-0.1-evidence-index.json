@@ -1,8 +1,8 @@
 {
   "schema": "pullraptor-beta-evidence-index/1",
-  "generated_at": "2026-10-06T01:45:58.249801+00:00",
+  "generated_at": "2026-10-06T02:01:56.808136+00:00",
   "generator": "scripts/generate_beta_evidence_index.py",
-  "candidate_source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "candidate_source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
   "prior_map_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
   "mapping_source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
@@ -60,7 +60,7 @@
     {
       "id": "BR-06",
       "status": "partial",
-      "note": "micro benchmark only; 10k fixture not_run"
+      "note": "synthetic 10k generator and scripts/e01_benchmark.py; measurements in docs/acceptance/artifacts/E01/benchmark/"
     },
     {
       "id": "BR-07",
@@ -70,17 +70,17 @@
     {
       "id": "BR-08",
       "status": "partial",
-      "note": "entrypoint containment implemented"
+      "note": "entrypoint containment + CI smoke script"
     },
     {
       "id": "BR-09",
       "status": "partial",
-      "note": "local dual build receipts when run"
+      "note": "git archive wheel builds; rebuild at commit OID before publication"
     },
     {
       "id": "BR-10",
       "status": "partial",
-      "note": "development install tests; clean-machine pending"
+      "note": "CI linux venv smoke + macOS development_verified; independent acceptance pending"
     },
     {
       "id": "BR-11",
@@ -90,7 +90,7 @@
     {
       "id": "BR-12",
       "status": "partial",
-      "note": "full unittest on candidate"
+      "note": "PYTHONPATH=src python3.12 unittest discover log refreshed"
     },
     {
       "id": "BR-13",

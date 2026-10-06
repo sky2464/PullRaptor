@@ -1,4 +1,13 @@
 {
-  "status": "not_run",
-  "pairs": []
+  "status": "development_measured",
+  "pairs": [
+    {
+      "repository": "pullraptor-self",
+      "base": "HEAD~1",
+      "head": "HEAD",
+      "exit_code": 0,
+      "completed": true,
+      "stderr_tail": ""
+    }
+  ]
 }
