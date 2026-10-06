@@ -1,0 +1,18 @@
+{
+  "collected_at": "2026-10-06T01:44:46.375422+00:00",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "fixture_class": "micro_smoke_not_synthetic_10k",
+  "micro": {
+    "status": "development_smoke_only",
+    "repetitions": 30,
+    "p95_seconds": 0.018832582980394363,
+    "note": "Not the E01 10k-file corpus; see tests/fixtures/e01/benchmark/manifest.json"
+  },
+  "synthetic_10k": {
+    "status": "not_run"
+  },
+  "real_repositories": {
+    "status": "not_run",
+    "path": "real-repositories.json"
+  }
+}

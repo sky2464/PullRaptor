@@ -1,7 +1,9 @@
 {
   "card_id": "E01-T9-CORPUS",
   "artifact_directory": "corpus",
-  "scheduled_rows": 1,
-  "evidence_status": "not_run",
-  "claim_limit": "Placeholder until the assigned card saves fixtures and raw outputs."
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "evidence_status": "partial",
+  "manifest": "tests/fixtures/e01/corpus/manifest.json",
+  "tests": ["tests/test_rules.py"],
+  "independent_label_review": "pending"
 }

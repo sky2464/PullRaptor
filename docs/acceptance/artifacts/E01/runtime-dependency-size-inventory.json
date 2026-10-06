@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-05",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "kernel_python_packages": 0,
+  "wheel_bytes": 119190,
+  "wheel_bytes_budget": 5242880,
+  "interpreter": "not_measured_separately",
+  "git": "host_prerequisite",
+  "notes": "Measured from docs/acceptance/artifacts/E07/builds/candidate-1 wheel at candidate revision."
+}
