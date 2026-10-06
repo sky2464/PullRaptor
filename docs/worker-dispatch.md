@@ -10,8 +10,7 @@
 | Independent reviewers | E01 and E07 beta subset accepted (see scope JSON) |
 | Customer verification | BR-17 download, digest, venv install, smoke |
 | Published wheel SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
-| Published wheel SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
-| Manifest | [beta-0.1-release-manifest.json](releases/beta-0.1-release-manifest.json) |
+| Manifest file | [beta-0.1-release-manifest.json](releases/beta-0.1-release-manifest.json) |
 
 **Next coordinator actions:** (1) docs/install and Master Plan aligned with manifest (hygiene PR); (2) prune merged release branches; (3) assign `E02-T2-BIND` evidence fixtures and `E02-T2-INTEGRATE` on `feat/e02-publisher-integrate`; (4) parallel E01 Task 9 / BR-02 rebaseline; (5) defer `0.1.0b2` until [beta-0.1.0b2-entry-criteria.md](releases/beta-0.1.0b2-entry-criteria.md) triggers. Do not enable customer `pullraptor-publish` until E02 acceptance and capability gates authorize it.
 
