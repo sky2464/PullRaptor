@@ -1,9 +1,8 @@
 {
   "card_id": "E01-T9-CORPUS",
-  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
-  "evidence_status": "development_passed",
-  "manifest": "tests/fixtures/e01/corpus/manifest.json",
-  "focused_log": "docs/acceptance/artifacts/E01/corpus/focused-corpus.log",
-  "user_flows": "docs/acceptance/artifacts/E01/user-flows/source-cli-smoke.md",
-  "independent_label_review": "pending_BR-05"
+  "code_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
+  "evidence_status": "development_verified_partial",
+  "validation_log": "corpus/validation-log.txt",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_rules",
+  "claim_limit": "Does not pass E01-A1\u2013A3; beta subset only accepted."
 }

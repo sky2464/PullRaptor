@@ -1,0 +1,10 @@
+{
+  "schema": "pullraptor-prior-artifact/1",
+  "package_version": "0.1.0b1",
+  "tag": "v0.1.0b1",
+  "source_revision": "4dcd8ab466a26241c9651e73696495a32127fa09",
+  "wheel_filename": "pullraptor-0.1.0b1-py3-none-any.whl",
+  "sha256": "d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24",
+  "fixture_path": "tests/fixtures/e07/pullraptor-0.1.0b1-py3-none-any.whl",
+  "acceptance_note": "Independently accepted beta subset artifact; BR-18 rollback baseline."
+}

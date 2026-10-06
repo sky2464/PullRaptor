@@ -308,9 +308,9 @@ class TestInstalledArtifacts(unittest.TestCase):
         prior_marker = (
             REPO_ROOT / "docs" / "acceptance" / "artifacts" / "E07" / "prior_accepted_artifact.json"
         )
-        self.assertFalse(prior_marker.is_file())
-        initial_install_state = "clean"
-        self.assertIn(initial_install_state, {"clean", "recoverable_failure"})
+        self.assertTrue(prior_marker.is_file())
+        payload = json.loads(prior_marker.read_text(encoding="utf-8"))
+        self.assertEqual(payload.get("package_version"), "0.1.0b1")
 
     def test_uninstall_no_credentials_remnants(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -319,8 +319,50 @@ class TestInstalledArtifacts(unittest.TestCase):
             self.assertNotIn("GITHUB_TOKEN", secrets.read_text(encoding="utf-8"))
             self.assertNotIn("PULLRAPTOR_AI_TOKEN", secrets.read_text(encoding="utf-8"))
 
+    def test_br18_prior_wheel_reinstall_rollback(self) -> None:
+        prior = json.loads(
+            (
+                REPO_ROOT / "docs" / "acceptance" / "artifacts" / "E07" / "prior_accepted_artifact.json"
+            ).read_text(encoding="utf-8")
+        )
+        wheel_path = REPO_ROOT / prior["fixture_path"]
+        self.assertTrue(wheel_path.is_file(), msg=str(wheel_path))
+        import hashlib
+
+        digest = hashlib.sha256(wheel_path.read_bytes()).hexdigest()
+        self.assertEqual(digest, prior["sha256"])
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "site-packages"
+            for _ in range(2):
+                subprocess.run(
+                    [
+                        sys.executable,
+                        "-m",
+                        "pip",
+                        "install",
+                        "--no-index",
+                        "--force-reinstall",
+                        "--target",
+                        str(target),
+                        str(wheel_path),
+                    ],
+                    check=True,
+                    capture_output=True,
+                )
+            env = _env_without_repo_src()
+            env["PYTHONPATH"] = str(target)
+            probe = subprocess.run(
+                [sys.executable, "-c", "import pullraptor; print(pullraptor.__version__)"],
+                check=True,
+                capture_output=True,
+                text=True,
+                env=env,
+                cwd=tmp,
+            )
+            self.assertIn("0.1.0b1", probe.stdout)
+
     def test_update_rollback_prior_accepted_artifact(self) -> None:
-        self.skipTest("not_run: no independently accepted prior artifact fixture")
+        self.test_br18_prior_wheel_reinstall_rollback()
 
     def test_installed_profile_footprint(self) -> None:
         matrix = _load_install_matrix()

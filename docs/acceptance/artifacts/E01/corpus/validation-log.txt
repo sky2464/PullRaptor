@@ -1,0 +1,15 @@
+test_conditional_reraise_not_classified_as_swallowed (tests.test_rules.TestRules.test_conditional_reraise_not_classified_as_swallowed) ... ok
+test_intentional_patterns_never_defect_claim (tests.test_rules.TestRules.test_intentional_patterns_never_defect_claim) ... ok
+test_py001_negatives (tests.test_rules.TestRules.test_py001_negatives) ... ok
+test_py001_positives (tests.test_rules.TestRules.test_py001_positives) ... ok
+test_py002_negatives (tests.test_rules.TestRules.test_py002_negatives) ... ok
+test_py002_positives (tests.test_rules.TestRules.test_py002_positives) ... ok
+test_py003_negatives (tests.test_rules.TestRules.test_py003_negatives) ... ok
+test_py003_positives (tests.test_rules.TestRules.test_py003_positives) ... ok
+test_shadowed_subprocess_no_shell_claim (tests.test_rules.TestRules.test_shadowed_subprocess_no_shell_claim) ... ok
+test_untrusted_command_not_inferred_from_shell_true (tests.test_rules.TestRules.test_untrusted_command_not_inferred_from_shell_true) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.005s
+
+OK

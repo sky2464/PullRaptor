@@ -1,3 +1,11 @@
+Processing /var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/tmp2j_q9nn5/pullraptor-0.1.0b1-py3-none-any.whl
+Installing collected packages: pullraptor
+Successfully installed pullraptor-0.1.0b1
+PULLRAPTOR_ADMISSION=unavailable
+PullRaptor Publisher: Published review comment 888 on PR #1
+PullRaptor Publisher: Published review comment None on PR #1
+PullRaptor Publisher: Published review comment 1 on PR #1
+PullRaptor Publisher: Published review comment 55 on PR #1
 test_ai_proposals_do_not_alter_canonical_report (test_ai_adapter.TestAIAdapter.test_ai_proposals_do_not_alter_canonical_report) ... ok
 test_build_safe_prompt_neutralizes_injection (test_ai_adapter.TestAIAdapter.test_build_safe_prompt_neutralizes_injection) ... ok
 test_max_requests_zero_skips_network (test_ai_adapter.TestAIAdapter.test_max_requests_zero_skips_network) ... ok
@@ -86,6 +94,12 @@ test_image_cli_default (test_distribution_metadata.TestDistributionMetadata.test
 test_no_global_safe_directory_wildcard (test_distribution_metadata.TestDistributionMetadata.test_no_global_safe_directory_wildcard) ... ok
 test_no_runtime_dependencies (test_distribution_metadata.TestDistributionMetadata.test_no_runtime_dependencies) ... ok
 test_python_minor_claim_matches_acceptance (test_distribution_metadata.TestDistributionMetadata.test_python_minor_claim_matches_acceptance) ... ok
+test_review_cli_does_not_open_sockets (test_e01_offline_boundaries.TestE01OfflineBoundaries.test_review_cli_does_not_open_sockets) ... ok
+test_subprocess_cli_offline_smoke (test_e01_offline_boundaries.TestE01OfflineBoundaries.test_subprocess_cli_offline_smoke) ... ok
+test_complete_requirement_inventory (test_e01_requirement_map.TestE01RequirementMap.test_complete_requirement_inventory) ... ok
+test_historical_blob_changes_marked_stale_field_present (test_e01_requirement_map.TestE01RequirementMap.test_historical_blob_changes_marked_stale_field_present) ... ok
+test_no_acceptance_pass_claims (test_e01_requirement_map.TestE01RequirementMap.test_no_acceptance_pass_claims) ... ok
+test_task7_task8_overlay_covers_planned_names (test_e01_requirement_map.TestE01RequirementMap.test_task7_task8_overlay_covers_planned_names) ... ok
 test_deprovision_and_key_rotation (test_enterprise_identity.TestEnterpriseIdentity.test_deprovision_and_key_rotation) ... ok
 test_each_report_cache_repo_permission (test_enterprise_identity.TestEnterpriseIdentity.test_each_report_cache_repo_permission) ... ok
 test_same_email_cross_tenant_denied (test_enterprise_identity.TestEnterpriseIdentity.test_same_email_cross_tenant_denied) ... ok
@@ -108,10 +122,7 @@ test_install_matrix_honest_profile_states (test_installed_artifacts.TestInstalle
 test_install_matrix_inventory_alignment (test_installed_artifacts.TestInstalledArtifacts.test_install_matrix_inventory_alignment) ... ok
 test_install_matrix_present (test_installed_artifacts.TestInstalledArtifacts.test_install_matrix_present) ... ok
 test_installed_completed_report_canonical_equal (test_installed_artifacts.TestInstalledArtifacts.test_installed_completed_report_canonical_equal) ... ok
-test_installed_entrypoints (test_installed_artifacts.TestInstalledArtifacts.test_installed_entrypoints) ... Processing /var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/tmp2jqqw7t9/pullraptor-0.3.0-py3-none-any.whl
-Installing collected packages: pullraptor
-Successfully installed pullraptor-0.3.0
-ok
+test_installed_entrypoints (test_installed_artifacts.TestInstalledArtifacts.test_installed_entrypoints) ... ok
 test_installed_kernel_byte_footprint (test_installed_artifacts.TestInstalledArtifacts.test_installed_kernel_byte_footprint) ... ok
 test_installed_partial_diagnostics_preserved (test_installed_artifacts.TestInstalledArtifacts.test_installed_partial_diagnostics_preserved) ... ok
 test_installed_profile_footprint (test_installed_artifacts.TestInstalledArtifacts.test_installed_profile_footprint) ... ok
@@ -199,6 +210,8 @@ test_stdin_input_requires_positive_cap (test_process.TestProcess.test_stdin_inpu
 test_stdin_over_cap_rejected_before_launch (test_process.TestProcess.test_stdin_over_cap_rejected_before_launch) ... ok
 test_timeout_and_process_tree_cleanup (test_process.TestProcess.test_timeout_and_process_tree_cleanup) ... ok
 test_worker_environment_has_no_credentials (test_process.TestProcess.test_worker_environment_has_no_credentials) ... ok
+test_fixture_scenarios_match_validator (test_publication_binding_fixtures.TestPublicationBindingFixtures.test_fixture_scenarios_match_validator) ... ok
+test_manifest_lists_replay_files (test_publication_binding_fixtures.TestPublicationBindingFixtures.test_manifest_lists_replay_files) ... ok
 test_base_policy_changed_same_head (test_publication_contract.TestPublicationContract.test_base_policy_changed_same_head) ... ok
 test_cross_pr_replay (test_publication_contract.TestPublicationContract.test_cross_pr_replay) ... ok
 test_current_exact_context_authorized (test_publication_contract.TestPublicationContract.test_current_exact_context_authorized) ... ok
@@ -241,6 +254,8 @@ test_rate_limit_deferred_receipt (test_publisher.TestPublisher.test_rate_limit_d
 test_untrusted_override_cannot_bypass_rendering (test_publisher.TestPublisher.test_untrusted_override_cannot_bypass_rendering) ... PullRaptor Publisher: markdown override ignored; using owned renderer only.
 ok
 test_update_existing_comment_idempotency (test_publisher.TestPublisher.test_update_existing_comment_idempotency) ... ok
+test_fixture_scenarios (test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_fixture_scenarios) ... ok
+test_manifest_lists_scenarios (test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_manifest_lists_scenarios) ... ok
 test_ambiguous_module_no_external_fallback (test_python_facts.TestPythonFacts.test_ambiguous_module_no_external_fallback) ... ok
 test_import_side_effect_not_executed (test_python_facts.TestPythonFacts.test_import_side_effect_not_executed) ... ok
 test_isolated_startup_ignores_site_and_paths (test_python_facts.TestPythonFacts.test_isolated_startup_ignores_site_and_paths) ... ok
@@ -331,11 +346,6 @@ test_staged_snapshot_leaves_index_and_working_tree_untouched (test_working_tree.
 test_workdir_snapshot_captures_unstaged_and_untracked_files (test_working_tree.TestWorkingTreeSnapshots.test_workdir_snapshot_captures_unstaged_and_untracked_files) ... ok
 
 ----------------------------------------------------------------------
-Ran 323 tests in 26.221s
+Ran 333 tests in 52.556s
 
 OK (skipped=1)
-PULLRAPTOR_ADMISSION=unavailable
-PullRaptor Publisher: Published review comment 888 on PR #1
-PullRaptor Publisher: Published review comment None on PR #1
-PullRaptor Publisher: Published review comment 1 on PR #1
-PullRaptor Publisher: Published review comment 55 on PR #1

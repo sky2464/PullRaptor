@@ -56,7 +56,7 @@ def main() -> int:
             {"id": "BR-15", "status": "passed", "note": "human publication authorization recorded"},
             {"id": "BR-16", "status": "passed", "note": "GitHub Release v0.1.0b1 published"},
             {"id": "BR-17", "status": "passed", "note": "download/install smoke verified"},
-            {"id": "BR-18", "status": "pending", "note": "required before 0.1.0b2 update/rollback claims; see beta-0.1.0b2-entry-criteria.md"}
+            {"id": "BR-18", "status": "partial", "note": "prior artifact fixture + reinstall rehearsal; interrupted update and independent review open"}
         ],
         "development_verification": {
             "command": "PYTHONPATH=src python3.12 -m unittest discover -s tests -v",

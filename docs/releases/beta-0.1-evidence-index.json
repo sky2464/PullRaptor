@@ -1,11 +1,11 @@
 {
   "schema": "pullraptor-beta-evidence-index/1",
-  "generated_at": "2026-10-06T04:00:51.147464+00:00",
+  "generated_at": "2026-10-06T04:28:39.617596+00:00",
   "generator": "scripts/generate_beta_evidence_index.py",
-  "candidate_source_revision": "a8dda606fb606141b3b70664f5f707ba8136290c",
+  "candidate_source_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
-  "prior_map_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
-  "mapping_source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "prior_map_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
+  "mapping_source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
   "beta_scope": "docs/releases/beta-0.1-scope.json",
   "release_tasks": "docs/release-tasks.json",
   "e01_assertion_map_summary": {
@@ -121,8 +121,8 @@
     },
     {
       "id": "BR-18",
-      "status": "pending",
-      "note": "required before 0.1.0b2 update/rollback claims; see beta-0.1.0b2-entry-criteria.md"
+      "status": "partial",
+      "note": "prior artifact fixture + reinstall rehearsal; interrupted update and independent review open"
     }
   ],
   "development_verification": {

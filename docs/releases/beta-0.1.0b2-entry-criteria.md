@@ -12,7 +12,7 @@ Human label **beta 0.1.x** patch releases after the first accepted artifact (`0.
 | Gate | Requirement |
 |---|---|
 | Prior artifact | `0.1.0b1` remains the accepted rollback baseline ([beta-0.1-release-manifest.json](beta-0.1-release-manifest.json)) |
-| BR-18 | Execute update/interrupted-update/rollback rehearsal from [release-tasks.json](../release-tasks.json) **before** advertising update or rollback support |
+| BR-18 | Execute update/interrupted-update/rollback rehearsal from [release-tasks.json](../release-tasks.json) **before** advertising update or rollback support (partial reinstall evidence: [beta-0.1-maintenance.md](beta-0.1-maintenance.md)) |
 | Build | Rebuild wheel with [release/build.py](../../release/build.py) at merge OID (`git archive`, Python 3.12, `SOURCE_DATE_EPOCH=0`) |
 | Evidence | Refresh manifest, dual-build receipts, and install smoke (CI + BR-17-style download check) |
 | Scope | No widening of beta capability gates without new acceptance; `pullraptor-publish` stays refused for customers until E02 gates authorize |

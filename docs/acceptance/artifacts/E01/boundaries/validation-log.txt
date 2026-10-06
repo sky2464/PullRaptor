@@ -1,0 +1,78 @@
+test_bool_not_integer (tests.test_models.TestModels.test_bool_not_integer) ... ok
+test_canonical_excludes_execution_metadata (tests.test_models.TestModels.test_canonical_excludes_execution_metadata)
+Duration/cache admission/hit/location changes leave canonical bytes identical; ... ok
+test_content_facts_cannot_carry_occurrence (tests.test_models.TestModels.test_content_facts_cannot_carry_occurrence)
+ContentFacts must not accept path or side. ... ok
+test_duplicate_keys_rejected (tests.test_models.TestModels.test_duplicate_keys_rejected) ... ok
+test_invalid_span_rejected (tests.test_models.TestModels.test_invalid_span_rejected) ... ok
+test_item_accounting_recursive (tests.test_models.TestModels.test_item_accounting_recursive) ... ok
+test_limit_failure_cannot_claim_support_or_complete (tests.test_models.TestModels.test_limit_failure_cannot_claim_support_or_complete) ... ok
+test_malformed_utf8_rejected (tests.test_models.TestModels.test_malformed_utf8_rejected) ... ok
+test_max_aggregate_items_rejected (tests.test_models.TestModels.test_max_aggregate_items_rejected) ... ok
+test_max_depth_rejected (tests.test_models.TestModels.test_max_depth_rejected) ... ok
+test_max_payload_bytes_rejected (tests.test_models.TestModels.test_max_payload_bytes_rejected) ... ok
+test_max_string_bytes_rejected (tests.test_models.TestModels.test_max_string_bytes_rejected) ... ok
+test_nonfinite_json_rejected (tests.test_models.TestModels.test_nonfinite_json_rejected) ... ok
+test_prohibit_unknown_authority_fields (tests.test_models.TestModels.test_prohibit_unknown_authority_fields) ... ok
+test_report_union_strict_tags (tests.test_models.TestModels.test_report_union_strict_tags) ... ok
+test_roundtrip_full_report (tests.test_models.TestModels.test_roundtrip_full_report) ... ok
+test_roundtrip_limit_failure (tests.test_models.TestModels.test_roundtrip_limit_failure) ... ok
+test_surrogate_rejected (tests.test_models.TestModels.test_surrogate_rejected) ... ok
+test_two_missing_imports_have_distinct_keys (tests.test_models.TestModels.test_two_missing_imports_have_distinct_keys) ... ok
+test_ci_override_cannot_weaken_required_scope (tests.test_config.TestConfig.test_ci_override_cannot_weaken_required_scope) ... ok
+test_defaults_exact (tests.test_config.TestConfig.test_defaults_exact) ... ok
+test_glob_semantics (tests.test_config.TestConfig.test_glob_semantics) ... ok
+test_minimum_finalization_capacity (tests.test_config.TestConfig.test_minimum_finalization_capacity) ... ok
+test_unknown_key_error (tests.test_config.TestConfig.test_unknown_key_error) ... ok
+test_output_flood_stopped (tests.test_process.TestProcess.test_output_flood_stopped) ... ok
+test_run_bounded_success (tests.test_process.TestProcess.test_run_bounded_success) ... ok
+test_shared_deadline_not_reset (tests.test_process.TestProcess.test_shared_deadline_not_reset) ... ok
+test_stdin_input_delivered_and_closed (tests.test_process.TestProcess.test_stdin_input_delivered_and_closed) ... ok
+test_stdin_input_requires_positive_cap (tests.test_process.TestProcess.test_stdin_input_requires_positive_cap) ... ok
+test_stdin_over_cap_rejected_before_launch (tests.test_process.TestProcess.test_stdin_over_cap_rejected_before_launch) ... ok
+test_timeout_and_process_tree_cleanup (tests.test_process.TestProcess.test_timeout_and_process_tree_cleanup) ... ok
+test_worker_environment_has_no_credentials (tests.test_process.TestProcess.test_worker_environment_has_no_credentials) ... ok
+test_binary_and_deleted_file_preserved (tests.test_snapshot.TestSnapshot.test_binary_and_deleted_file_preserved) ... ok
+test_dirty_tree_ignored (tests.test_snapshot.TestSnapshot.test_dirty_tree_ignored) ... ok
+test_merge_base_not_base_tip (tests.test_snapshot.TestSnapshot.test_merge_base_not_base_tip) ... ok
+test_nul_metadata_paths (tests.test_snapshot.TestSnapshot.test_nul_metadata_paths) ... ok
+test_option_like_ref_rejected (tests.test_snapshot.TestSnapshot.test_option_like_ref_rejected) ... ok
+test_refs_pinned_before_read (tests.test_snapshot.TestSnapshot.test_refs_pinned_before_read) ... ok
+test_replace_objects_ignored (tests.test_snapshot.TestSnapshot.test_replace_objects_ignored) ... ok
+test_symlink_and_submodule_not_followed (tests.test_snapshot.TestSnapshot.test_symlink_and_submodule_not_followed) ... ok
+test_attributes_cannot_hide_source (tests.test_diff.TestDiff.test_attributes_cannot_hide_source) ... ok
+test_changes_detects_addition_and_modification (tests.test_diff.TestDiff.test_changes_detects_addition_and_modification) ... ok
+test_hostile_external_diff_textconv_fsmonitor_not_executed (tests.test_diff.TestDiff.test_hostile_external_diff_textconv_fsmonitor_not_executed) ... ok
+test_ambiguous_module_no_external_fallback (tests.test_python_facts.TestPythonFacts.test_ambiguous_module_no_external_fallback) ... ok
+test_import_side_effect_not_executed (tests.test_python_facts.TestPythonFacts.test_import_side_effect_not_executed) ... ok
+test_isolated_startup_ignores_site_and_paths (tests.test_python_facts.TestPythonFacts.test_isolated_startup_ignores_site_and_paths) ... ok
+test_local_subprocess_shadows_external_model (tests.test_python_facts.TestPythonFacts.test_local_subprocess_shadows_external_model) ... ok
+test_maximum_source_base64_fits_protocol (tests.test_python_facts.TestPythonFacts.test_maximum_source_base64_fits_protocol) ... ok
+test_missing_external_module_partial (tests.test_python_facts.TestPythonFacts.test_missing_external_module_partial) ... ok
+test_nested_functions_not_outer_mutation (tests.test_python_facts.TestPythonFacts.test_nested_functions_not_outer_mutation) ... ok
+test_new_module_resolves_previous_miss (tests.test_python_facts.TestPythonFacts.test_new_module_resolves_previous_miss) ... ok
+test_oversized_source_not_sent_to_worker (tests.test_python_facts.TestPythonFacts.test_oversized_source_not_sent_to_worker) ... ok
+test_parameter_reassignment (tests.test_python_facts.TestPythonFacts.test_parameter_reassignment) ... ok
+test_parse_failure_preserves_diff_coverage (tests.test_python_facts.TestPythonFacts.test_parse_failure_preserves_diff_coverage) ... ok
+test_resolving_x_leaves_y_missing (tests.test_python_facts.TestPythonFacts.test_resolving_x_leaves_y_missing) ... ok
+test_scope_shadowing_and_aliases (tests.test_python_facts.TestPythonFacts.test_scope_shadowing_and_aliases) ... ok
+test_stdlib_identity_not_missing_context (tests.test_python_facts.TestPythonFacts.test_stdlib_identity_not_missing_context) ... ok
+test_subprocess_alias_modeled (tests.test_python_facts.TestPythonFacts.test_subprocess_alias_modeled) ... ok
+test_timeout_or_worker_crash_partial (tests.test_python_facts.TestPythonFacts.test_timeout_or_worker_crash_partial) ... ok
+test_unicode_columns_crlf_exact (tests.test_python_facts.TestPythonFacts.test_unicode_columns_crlf_exact) ... ok
+test_wrong_blob_or_span_rejected (tests.test_python_facts.TestPythonFacts.test_wrong_blob_or_span_rejected) ... ok
+test_all_evidence_accumulations (tests.test_evidence.TestEvidence.test_all_evidence_accumulations) ... ok
+test_base_parse_failure_delta_unknown (tests.test_evidence.TestEvidence.test_base_parse_failure_delta_unknown) ... ok
+test_conflict_not_blocker (tests.test_evidence.TestEvidence.test_conflict_not_blocker) ... ok
+test_different_claim_or_revision_cannot_accumulate (tests.test_evidence.TestEvidence.test_different_claim_or_revision_cannot_accumulate) ... ok
+test_duplicate_or_foreign_receipt_rejected (tests.test_evidence.TestEvidence.test_duplicate_or_foreign_receipt_rejected) ... ok
+test_fatal_diagnostic_exit3 (tests.test_evidence.TestEvidence.test_fatal_diagnostic_exit3) ... ok
+test_incomplete_precedes_finding_exit (tests.test_evidence.TestEvidence.test_incomplete_precedes_finding_exit) ... ok
+test_missing_receipt_cannot_complete (tests.test_evidence.TestEvidence.test_missing_receipt_cannot_complete) ... ok
+test_old_sink_new_witness_retained (tests.test_evidence.TestEvidence.test_old_sink_new_witness_retained) ... ok
+test_shifted_line_same_obligation (tests.test_evidence.TestEvidence.test_shifted_line_same_obligation) ... ok
+
+----------------------------------------------------------------------
+Ran 71 tests in 4.997s
+
+OK

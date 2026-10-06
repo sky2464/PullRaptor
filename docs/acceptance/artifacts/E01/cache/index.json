@@ -1,8 +1,8 @@
 {
   "card_id": "E01-T9-CACHE",
-  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
-  "evidence_status": "development_passed",
-  "fixture_directory": "tests/fixtures/e01/cache-mutations",
-  "focused_log": "docs/acceptance/artifacts/E01/cache/focused-cache.log",
-  "independent_acceptance": "pending_BR-07"
+  "code_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
+  "evidence_status": "development_verified_partial",
+  "validation_log": "cache/validation-log.txt",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_cache tests.test_kernel",
+  "claim_limit": "Does not pass E01-A1\u2013A3; beta subset only accepted."
 }
