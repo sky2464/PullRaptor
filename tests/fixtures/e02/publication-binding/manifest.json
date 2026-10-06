@@ -1,0 +1,19 @@
+{
+  "schema": "pullraptor-e02-publication-binding-fixtures/1",
+  "card": "E02-T2-BIND",
+  "acceptance_scope": "E02-A2 construction corpus (not independent acceptance)",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_publication_contract tests.test_publication_binding_fixtures -v",
+  "scenarios": [
+    "authorized_exact_context.json",
+    "base_policy_changed_same_head.json",
+    "cross_pr_replay.json",
+    "wrong_workflow_run_artifact.json",
+    "invalid_head_prefix.json",
+    "report_contract_context_mismatch.json",
+    "incomplete_receipts.json",
+    "scope_digest_collision.json",
+    "invalid_side_location.json",
+    "deleted_side_location.json",
+    "limit_failure.json"
+  ]
+}

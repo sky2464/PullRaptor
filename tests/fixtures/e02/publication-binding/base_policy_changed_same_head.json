@@ -1,0 +1,6 @@
+{
+  "description": "Policy digest drift with unchanged head denies with stale_policy.",
+  "expected_context_overrides": {},
+  "current_context_overrides": {"policy_digest": "policy-b"},
+  "expect": {"authorized": false, "cause": "stale_policy"}
+}

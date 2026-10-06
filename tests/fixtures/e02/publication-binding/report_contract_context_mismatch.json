@@ -1,0 +1,5 @@
+{
+  "description": "Report contract policy must match bound publication context.",
+  "contract_overrides": {"policy_digest": "other-policy"},
+  "expect": {"authorized": false, "cause": "report_contract_context_mismatch"}
+}
