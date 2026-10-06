@@ -1,6 +1,6 @@
 {
   "date": "2026-10-06",
-  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
+  "source_revision": "f834f19e9b48c90fea35338c6940004b6a5fc459",
   "builder_command": "PYTHONPATH=src python3.12 release/build.py",
   "build_method": "git_archive_exact_revision",
   "builds": [
