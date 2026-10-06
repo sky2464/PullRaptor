@@ -1,0 +1,17 @@
+{
+  "schema": "pullraptor-e01-corpus-manifest/1",
+  "date": "2026-10-05",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "rules": ["PY001", "PY002", "PY003"],
+  "license": "Apache-2.0",
+  "immutable": true,
+  "primary_evidence": "tests/test_rules.py",
+  "e2e_fixtures_directory": "tests/fixtures/e01/e2e",
+  "case_counts": {
+    "note": "Rule cases are embedded in unittest sources at this revision; independent label review pending BR-05 step 2.",
+    "PY001": "see tests/test_rules.py",
+    "PY002": "see tests/test_rules.py",
+    "PY003": "see tests/test_rules.py"
+  },
+  "acceptance_artifacts": "docs/acceptance/artifacts/E01/corpus/"
+}

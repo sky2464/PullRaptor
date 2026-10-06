@@ -1,7 +1,13 @@
 {
   "card_id": "E01-T9-RECORDS",
   "artifact_directory": "boundaries",
-  "scheduled_rows": 74,
-  "evidence_status": "not_run",
-  "claim_limit": "Placeholder until the assigned card saves fixtures and raw outputs."
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "evidence_status": "partial",
+  "development_verification": {
+    "command": "PYTHONPATH=src python3.12 -m unittest discover -s tests -v",
+    "log": "docs/acceptance/artifacts/E01/unittest_discover_verbose.log",
+    "focused_log": "docs/acceptance/artifacts/E01/br03-06-focused.log",
+    "result": "passed_384_tests_1_skipped_at_collection"
+  },
+  "gaps": ["End-to-end socket/DNS denial receipt", "Dedicated tests/fixtures/e01/boundaries raw fixtures"]
 }
