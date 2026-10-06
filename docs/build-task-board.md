@@ -8,7 +8,7 @@ Coverage: **35 E02–E11 child tasks plus E01 Task 9**, split into **71 cards** 
 
 ## First branch and independent work
 
-Publisher integration through `publisher.py` is on `main` (PR #41); CLI/MCP local snapshot consumers are on `main` (PR #43); capture hardening is on `main` (PR #45). Next branch: `feat/e02-publication-binding` (`E02-T2-BIND`). Actual same-repository/fork CI (`E02-T4-TEMPLATE`) and usefulness pilots are separate evidence tasks.
+Publisher integration through `publisher.py` is on `main` (PR #41); CLI/MCP local snapshot consumers are on `main` (PR #43); capture hardening is on `main` (PR #45); publication binding validator on `main` (PR #46, card `E02-T2-BIND` — fixtures and E02-A2 acceptance evidence remain open). Next construction branch: `feat/e02-publisher-integrate` (`E02-T2-INTEGRATE`, then lifecycle/writes). Actual same-repository/fork CI (`E02-T4-TEMPLATE`) and usefulness pilots are separate evidence tasks.
 
 Parallel frontier: E01 assertion/corpus/benchmark preparation; E03 bounded context/transport completion; E07 real artifact/provenance/install preparation; E04 receipt validators and bounded stdin; E05 statement lowering and local secret patterns; E06 refusal-first runner and patch/preference contracts; E08 session wire; E09 connector wire; E10 shared API contract. Follow the exact dependency IDs below and in the registry. Do not open every future branch at once: keep main plus one or two current PR branches; queue the rest.
 

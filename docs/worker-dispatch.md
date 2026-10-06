@@ -1,5 +1,20 @@
 # Coordinator dispatch and unblock record
 
+## 2026-10-06 post-publication (beta 0.1.0b1 on main)
+
+| Field | Value |
+|---|---|
+| Tag / source OID | `4dcd8ab466a26241c9651e73696495a32127fa09` |
+| Package version | `0.1.0b1` |
+| Manifest | `ready_for_release`, `publication_authorized`, `released_verified` **true** |
+| Independent reviewers | E01 and E07 beta subset accepted (see scope JSON) |
+| Customer verification | BR-17 download, digest, venv install, smoke |
+| Published wheel SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
+| Published wheel SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
+| Manifest | [beta-0.1-release-manifest.json](releases/beta-0.1-release-manifest.json) |
+
+**Next coordinator actions:** (1) docs/install and Master Plan aligned with manifest (hygiene PR); (2) prune merged release branches; (3) assign `E02-T2-BIND` evidence fixtures and `E02-T2-INTEGRATE` on `feat/e02-publisher-integrate`; (4) parallel E01 Task 9 / BR-02 rebaseline; (5) defer `0.1.0b2` until [beta-0.1.0b2-entry-criteria.md](releases/beta-0.1.0b2-entry-criteria.md) triggers. Do not enable customer `pullraptor-publish` until E02 acceptance and capability gates authorize it.
+
 ## 2026-10-06 independent acceptance assignment (beta 0.1.x)
 
 | Field | Value |
@@ -15,19 +30,9 @@
 | E07 mode/paths | `verify`; `docs/acceptance/artifacts/E07/independent-review.md`, `docs/acceptance/E07.md` |
 | Publication | GitHub Release `v0.1.0b1`; BR-15 requires human_coordinator authorization |
 
-## 2026-10-05 planning assignment and release handoff
+Historical note (2026-10-05): construction on `feat/beta-0.1-release-readiness` preceded merge to `main` and publication. The [release manifest](releases/beta-0.1-release-manifest.json) now records publication complete; the paragraphs below are retained for audit trail only.
 
-Initial human scope (2026-10-05 morning): update the Master Plan and release plans/tasks with subagent planning reviews; that tranche excluded implementation and builds. A later human request authorized **implement and build all** beta readiness work per [release plan](superpowers/plans/2026-10-05-beta-release-readiness.md).
-
-Source/trusted-main observation: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. Construction branch: `feat/beta-0.1-release-readiness` at `6f1b9d370f6332e88675d3bf2b681713b6840e44` plus uncommitted changes. [Release manifest](releases/beta-0.1-release-manifest.json) records `ready_for_release: false`. BR-01–BR-14 are **partial** on the branch; BR-07/BR-13 are **blocked** pending independent reviewers; BR-15–BR-17 were not executed (publication requires explicit authorization).
-
-The [18-card release queue](release-tasks.json) and manifest own cross-package status. Construction evidence includes `docs/releases/`, `docs/acceptance/releases/beta-0.1.md`, `src/pullraptor/beta_admission.py`, `tests/test_beta_entrypoints.py`, dual wheel builds under `docs/acceptance/artifacts/E07/builds/`, and development-suite logs. **Exclude unrelated untracked E04–E11 preparation stubs** from the first beta PR unless separately assigned.
-
-Construction branch work includes CI beta install smoke (`scripts/ci_beta_install_smoke.sh`), git-archive release builds (`release/build.py`), and E01 synthetic benchmark tooling. **Rebuild candidate wheels at the merge commit OID before publication.**
-
-PR #46 merged publication binding after #41/#43/#45; PR #47 merged local secret patterns. E07 dual-build receipts must match `git archive` bytes at the pinned revision; Linux offline install is exercised in CI (artifact upload); macOS development host uses `f95fd1b…` evidence revision (not placeholder zeros). BR-06 synthetic measurements collected via `scripts/e01_benchmark.py` when run on a 3.12 host. Maintainer BR-01 version (`0.1.0b1` vs metadata `0.3.0`), independent BR-07/BR-13, and recovery rehearsal remain open.
-
-**Next coordinator actions:** (1) maintainer BR-01 sign-off on scope and `0.1.0b1`; (2) assign independent BR-07/BR-13 reviewers; (3) scoped PR from construction branch (beta paths only); (4) platform owner for BR-10 linux-x86_64 offline install. Pin immutable source/doc/trusted-base on merge. Gates and independently accepted evidence remain required for publication.
+Construction branch work includes CI beta install smoke (`scripts/ci_beta_install_smoke.sh`), git-archive release builds (`release/build.py`), and E01 synthetic benchmark tooling. Candidate wheels for `0.1.0b1` were rebuilt at merge/tag OID `4dcd8ab…` before publication.
 
 ## Historical construction record (2026-10-03)
 
@@ -63,7 +68,7 @@ The [build board](build-task-board.md) and [machine-readable cards](build-tasks.
 
 Use the assigned code/trusted base above. At actual dispatch, supply the immutable document OID containing this registry, decisions and applicable child plan. Verify every input at that revision, including code inputs if a later PR changes them. An unrun acceptance command is future work; a future output file is not a missing input. “Ready” means local construction can begin under a pinned assignment; task-output predecessors and actual component admission are enforced where consumed. This queue does not silently execute tests or activate live capabilities.
 
-Publisher contract integration (`feat/e02-publisher-contract-integration`, merged via PR #41) bound reports through `publisher.py` with inert connector tests. CLI/MCP `capture_local` consumer parity (`E02-T1-CONSUMERS`) merged via PR #43; capture hardening merged via PR #45. Next construction branch: `feat/e02-publication-binding` (`E02-T2-BIND`); then `E02-T2-INTEGRATE` / `E02-T4-TEMPLATE` or independent E03/E04 frontier cards per the build board. Independent E01 evidence, E03 completion, E07 distribution and later-package local contracts can proceed from the registry frontier. Keep at most main plus one or two current PR branches.
+Publisher contract integration (`feat/e02-publisher-contract-integration`, merged via PR #41) bound reports through `publisher.py` with inert connector tests. CLI/MCP `capture_local` consumer parity (`E02-T1-CONSUMERS`) merged via PR #43; capture hardening merged via PR #45; publication binding validator merged via PR #46 (`E02-T2-BIND` implementation partial — fixtures/evidence open). Next construction branch: `feat/e02-publisher-integrate` (`E02-T2-INTEGRATE`); then `E02-T3-LIFECYCLE` / `E02-T3-WRITES` / `E02-T4-TEMPLATE` or independent E03/E04 frontier cards per the build board. Keep at most main plus one or two current PR branches.
 
 Construction order is a graph of reviewed task outputs. It does not use whole E10/E11/E08 package acceptance as a cycle. Local service contracts/jobs precede enterprise grants/policy essentials; accepted E10-A1/A2 and E11-A1/A2 then gate actual remote pilots. E10-A4 owns CLI/API/SDK profile evidence; E08-A4 consumes it for remote MCP parity; E11-A3 accepts operational readiness. E06 pure plans/refusal behavior can be built before actual synthetic control evaluation; actual target launch still requires independently accepted E06-A2.
 
