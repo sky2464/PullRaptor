@@ -1,7 +1,7 @@
 {
   "schema": "pullraptor-publication-status/1",
   "date": "2026-10-06",
-  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "source_revision": "f834f19e9b48c90fea35338c6940004b6a5fc459",
   "ready_for_release": false,
   "publication_authorized": false,
   "released_verified": false,

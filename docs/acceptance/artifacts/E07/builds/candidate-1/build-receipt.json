@@ -9,6 +9,6 @@
   "product_acceptance": "pending",
   "repository_id": "owner/pullraptor",
   "run_id": "br09-final-1",
-  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
-  "workflow_digest": "wf-beta-final"
+  "source_revision": "f834f19e9b48c90fea35338c6940004b6a5fc459",
+  "workflow_digest": "wf-beta-final-f834f19"
 }
