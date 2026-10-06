@@ -1,0 +1,20 @@
+{
+  "schema": "pullraptor-publication-receipt/1",
+  "date": "2026-10-06",
+  "package_version": "0.1.0b1",
+  "tag": "v0.1.0b1",
+  "source_revision": "4dcd8ab466a26241c9651e73696495a32127fa09",
+  "channel": "github_release",
+  "repository": "sky2464/PullRaptor",
+  "release_url": "https://github.com/sky2464/PullRaptor/releases/tag/v0.1.0b1",
+  "artifacts": [
+    {
+      "filename": "pullraptor-0.1.0b1-py3-none-any.whl",
+      "sha256": "d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24",
+      "size_bytes": 107012
+    }
+  ],
+  "operator": "human_coordinator",
+  "publication_decision": "docs/releases/beta-0.1-publication-decision.md",
+  "result": "published"
+}

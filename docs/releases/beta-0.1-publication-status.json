@@ -4,15 +4,6 @@
   "source_revision": "097e9ae6fdad6ec5c10934e26f8e0fa56c8eaf4c",
   "ready_for_release": true,
   "publication_authorized": true,
-  "released_verified": false,
-  "blocking_gates": [
-    {
-      "id": "BR-15",
-      "reason": "Awaiting publication-decision.md go record on this revision."
-    },
-    {
-      "id": "BR-17",
-      "reason": "Customer download verification after BR-16."
-    }
-  ]
+  "released_verified": true,
+  "blocking_gates": []
 }
