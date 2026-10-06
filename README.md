@@ -2,7 +2,7 @@
 
 PullRaptor is an offline, local-first pull request reviewer built around the difference between two immutable revisions and the evidence needed to explain that difference.
 
-**Beta 0.1.x (in preparation):** proposed scope is wheel offline CLI with exact `--base`/`--head` review only. See `docs/releases/beta-0.1-notes.md` and `docs/install.md`. Staged/workdir, publisher, and MCP are not beta claims and refuse by default on the readiness branch.
+**Beta 0.1.x (released):** [v0.1.0b1](https://github.com/sky2464/PullRaptor/releases/tag/v0.1.0b1) — wheel offline CLI with exact `--base`/`--head` review only. See [docs/releases/beta-0.1-notes.md](docs/releases/beta-0.1-notes.md) and [docs/install.md](docs/install.md). Staged/workdir, publisher, and MCP are not beta claims and refuse by default.
 
 Its promise is simple: **show what changed, what may break, why a finding deserves attention, and what remains unexamined.**
 
