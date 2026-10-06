@@ -1,0 +1,19 @@
+test_duplicate_response_unknown_fields_and_crash_are_partial (tests.test_e01_parser_contract.ParserContractTests.test_duplicate_response_unknown_fields_and_crash_are_partial) ... ok
+test_exact_maximum_source_fits_isolated_base64_protocol (tests.test_e01_parser_contract.ParserContractTests.test_exact_maximum_source_fits_isolated_base64_protocol) ... ok
+test_oversized_source_rejected_before_any_worker_launch (tests.test_e01_parser_contract.ParserContractTests.test_oversized_source_rejected_before_any_worker_launch) ... ok
+test_unicode_crlf_coordinates_are_source_derived_exact (tests.test_e01_parser_contract.ParserContractTests.test_unicode_crlf_coordinates_are_source_derived_exact) ... ok
+test_unsupported_minor_runtime_is_not_admitted (tests.test_e01_parser_contract.ParserContractTests.test_unsupported_minor_runtime_is_not_admitted) ... FAIL
+test_wrong_span_and_unknown_path_rejected_when_binding (tests.test_e01_parser_contract.ParserContractTests.test_wrong_span_and_unknown_path_rejected_when_binding) ... ok
+
+======================================================================
+FAIL: test_unsupported_minor_runtime_is_not_admitted (tests.test_e01_parser_contract.ParserContractTests.test_unsupported_minor_runtime_is_not_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_parser_contract.py", line 69, in test_unsupported_minor_runtime_is_not_admitted
+    self.assertTrue(any(item.code == 'RUNTIME_UNSUPPORTED' and item.recovery for item in result.diagnostics))
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.441s
+
+FAILED (failures=1)

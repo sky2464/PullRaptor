@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -43,7 +44,12 @@ class SyntheticFixture:
 
 
 def _run(cmd: list[str], *, cwd: Path) -> None:
-    subprocess.run(cmd, cwd=cwd, check=True, capture_output=True)
+    subprocess.run(cmd, cwd=cwd, check=True, capture_output=True, env={
+        "PATH": os.environ.get("PATH", os.defpath),
+        "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull,
+        "GIT_AUTHOR_DATE": "2000-01-01T00:00:00Z",
+        "GIT_COMMITTER_DATE": "2000-01-01T00:00:00Z",
+    })
 
 
 def _tree_entry_count(root: Path, ref: str) -> int:
@@ -89,25 +95,19 @@ def generate_fixture(output_parent: Path | None = None) -> SyntheticFixture:
         rel = py_dir / f"mod_{idx:03d}.py"
         rel.write_text(f"VALUE = {idx}\n\ndef run() -> int:\n    return VALUE\n", encoding="utf-8")
 
+    # Budget both revisions before creating data: the head is exactly 128 MiB.
+    additions = "".join(f"# change {line}\n" for line in range(MAX_CHANGED_LINES // MAX_CHANGED_PYTHON))
+    head_growth = len(additions.encode("utf-8")) * MAX_CHANGED_PYTHON
+    python_bytes = sum(p.stat().st_size for p in py_dir.iterdir())
+    data_count = TARGET_ENTRIES - MAX_PYTHON_FILES
+    data_budget = TARGET_BYTES - python_bytes - head_growth
     docs_dir = root / "docs" / "inventory"
     docs_dir.mkdir(parents=True)
-    entries_so_far = MAX_PYTHON_FILES
-    chunk_size = 16_384
-    chunks_needed = max(0, (TARGET_BYTES // chunk_size) - 1)
-    for chunk_idx in range(chunks_needed):
-        if entries_so_far >= TARGET_ENTRIES - 1:
-            break
-        path = docs_dir / f"blob_{chunk_idx:05d}.bin"
-        payload = hashlib.sha256(f"chunk-{chunk_idx}".encode()).digest() * (chunk_size // 32)
-        path.write_bytes(payload[:chunk_size])
-        entries_so_far += 1
-
-    filler_dir = root / "meta"
-    filler_dir.mkdir()
-    while entries_so_far < TARGET_ENTRIES:
-        path = filler_dir / f"entry_{entries_so_far:05d}.txt"
-        path.write_text(f"entry={entries_so_far}\n", encoding="utf-8")
-        entries_so_far += 1
+    quotient, remainder = divmod(data_budget, data_count)
+    for index in range(data_count):
+        size = quotient + (1 if index < remainder else 0)
+        seed = hashlib.sha256(f"owned-fixture-{index}".encode()).digest()
+        (docs_dir / f"blob_{index:05d}.bin").write_bytes((seed * ((size + 31) // 32))[:size])
 
     _run(["git", "add", "-A"], cwd=root)
     _run(["git", "commit", "-m", "base synthetic fixture"], cwd=root)
@@ -121,7 +121,7 @@ def generate_fixture(output_parent: Path | None = None) -> SyntheticFixture:
         rel = py_dir / f"mod_{idx:03d}.py"
         lines = rel.read_text(encoding="utf-8").splitlines()
         extra = min(100, MAX_CHANGED_LINES - changed_lines)
-        lines.extend(f"# change {line}\n" for line in range(extra))
+        lines.extend(f"# change {line}" for line in range(extra))
         rel.write_text("\n".join(lines) + "\n", encoding="utf-8")
         changed_lines += extra
         changed_files += 1

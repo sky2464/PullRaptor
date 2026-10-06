@@ -1,0 +1,112 @@
+test_bool_and_string_inline_coordinates_are_not_coerced (tests.test_e02_publication_closure.TestE02Closure.test_bool_and_string_inline_coordinates_are_not_coerced) ... PullRaptor Publisher: invalid report schema: start_line must be an integer, got <class 'bool'>
+PullRaptor Publisher: invalid report schema: start_line must be an integer, got <class 'str'>
+ok
+test_customer_beta_publisher_remains_disabled (tests.test_e02_publication_closure.TestE02Closure.test_customer_beta_publisher_remains_disabled) ... PullRaptor beta 0.1.x excludes console script 'pullraptor-publish'. See docs/releases/beta-0.1-scope.json. Development-only override: PULLRAPTOR_DEV_ADMIT_EXTENDED=1.
+ok
+test_each_retry_rechecks_all_connector_authority (tests.test_e02_publication_closure.TestE02Closure.test_each_retry_rechecks_all_connector_authority) ... PullRaptor Publisher: publication denied (current_authority_unavailable); refusing write.
+PullRaptor Publisher: publication denied (current_authority_unavailable); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (stale_policy); refusing write.
+PullRaptor Publisher: publication denied (scope_capability_revision_collision); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (cross_pr_replay); refusing write.
+PullRaptor Publisher: publication denied (current_authority_unavailable); refusing write.
+PullRaptor Publisher: publication denied (current_authority_unavailable); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (stale_policy); refusing write.
+PullRaptor Publisher: publication denied (scope_capability_revision_collision); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (wrong_workflow_run_artifact); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (context_mismatch); refusing write.
+PullRaptor Publisher: publication denied (cross_pr_replay); refusing write.
+ok
+test_exact_report_bytes_are_required_even_when_json_is_equal (tests.test_e02_publication_closure.TestE02Closure.test_exact_report_bytes_are_required_even_when_json_is_equal) ... PullRaptor Publisher: missing_report_bytes; refusing write.
+PullRaptor Publisher: publication denied (report_bytes_mismatch); refusing to post review.
+PullRaptor Publisher: report_bytes_mismatch; refusing write.
+ok
+test_exact_trusted_inline_fixture_can_publish (tests.test_e02_publication_closure.TestE02Closure.test_exact_trusted_inline_fixture_can_publish) ... ok
+test_invalid_or_out_of_diff_lines_denied (tests.test_e02_publication_closure.TestE02Closure.test_invalid_or_out_of_diff_lines_denied) ... ok
+test_missing_identity_and_bad_base_or_digest_denied (tests.test_e02_publication_closure.TestE02Closure.test_missing_identity_and_bad_base_or_digest_denied) ... ok
+test_missing_side_cannot_default_to_head (tests.test_e02_publication_closure.TestE02Closure.test_missing_side_cannot_default_to_head) ... PullRaptor Publisher: invalid report schema: 'side'
+ok
+test_receipt_gap_status_and_duplicate_scope_denied (tests.test_e02_publication_closure.TestE02Closure.test_receipt_gap_status_and_duplicate_scope_denied) ... ok
+test_report_cannot_supply_missing_connector_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_cannot_supply_missing_connector_authority) ... PullRaptor Publisher: missing_publication_authority; refusing write.
+ok
+test_report_tool_and_config_cannot_choose_authority (tests.test_e02_publication_closure.TestE02Closure.test_report_tool_and_config_cannot_choose_authority) ... ok
+test_scope_digest_covers_all_fields_and_is_order_independent (tests.test_e02_publication_closure.TestE02Closure.test_scope_digest_covers_all_fields_and_is_order_independent) ... ok
+test_scope_null_empty_and_delimiters_are_distinct (tests.test_e02_publication_closure.TestE02Closure.test_scope_null_empty_and_delimiters_are_distinct) ... ok
+test_unavailable_authority_denies_before_first_write (tests.test_e02_publication_closure.TestE02Closure.test_unavailable_authority_denies_before_first_write) ... PullRaptor Publisher: publication denied (current_authority_unavailable); refusing to post review.
+ok
+test_base_policy_changed_same_head (tests.test_publication_contract.TestPublicationContract.test_base_policy_changed_same_head) ... ok
+test_cross_pr_replay (tests.test_publication_contract.TestPublicationContract.test_cross_pr_replay) ... ok
+test_current_exact_context_authorized (tests.test_publication_contract.TestPublicationContract.test_current_exact_context_authorized) ... ok
+test_deleted_side_location (tests.test_publication_contract.TestPublicationContract.test_deleted_side_location) ... ok
+test_incomplete_receipts_no_inline (tests.test_publication_contract.TestPublicationContract.test_incomplete_receipts_no_inline) ... ok
+test_invalid_side_range_or_deleted_location_denied (tests.test_publication_contract.TestPublicationContract.test_invalid_side_range_or_deleted_location_denied) ... ok
+test_limit_failure_no_inline (tests.test_publication_contract.TestPublicationContract.test_limit_failure_no_inline) ... ok
+test_missing_or_prefix_head_denied (tests.test_publication_contract.TestPublicationContract.test_missing_or_prefix_head_denied) ... ok
+test_report_contract_context_mismatch_denied (tests.test_publication_contract.TestPublicationContract.test_report_contract_context_mismatch_denied) ... ok
+test_scope_capability_revision_collision_denied (tests.test_publication_contract.TestPublicationContract.test_scope_capability_revision_collision_denied) ... ok
+test_wrong_workflow_run_artifact (tests.test_publication_contract.TestPublicationContract.test_wrong_workflow_run_artifact) ... ok
+test_fixture_scenarios_match_validator (tests.test_publication_binding_fixtures.TestPublicationBindingFixtures.test_fixture_scenarios_match_validator) ... ok
+test_manifest_lists_replay_files (tests.test_publication_binding_fixtures.TestPublicationBindingFixtures.test_manifest_lists_replay_files) ... ok
+test_changed_witness_renews_review (tests.test_publication_lifecycle.TestPublicationLifecycle.test_changed_witness_renews_review) ... ok
+test_dismissal_not_resolution (tests.test_publication_lifecycle.TestPublicationLifecycle.test_dismissal_not_resolution) ... ok
+test_duplicate_delivery_no_second_comment (tests.test_publication_lifecycle.TestPublicationLifecycle.test_duplicate_delivery_no_second_comment) ... ok
+test_foreign_marker_not_updated (tests.test_publication_lifecycle.TestPublicationLifecycle.test_foreign_marker_not_updated) ... ok
+test_post_timeout_reconcile_owner (tests.test_publication_lifecycle.TestPublicationLifecycle.test_post_timeout_reconcile_owner) ... ok
+test_ten_inline_cap_full_summary (tests.test_publication_lifecycle.TestPublicationLifecycle.test_ten_inline_cap_full_summary) ... ok
+test_matching_receipt_authorized (tests.test_publication_trust.TestArtifactReceipt.test_matching_receipt_authorized) ... ok
+test_report_artifact_origin_replay_denied (tests.test_publication_trust.TestArtifactReceipt.test_report_artifact_origin_replay_denied) ... ok
+test_head_cannot_elevate_permissions (tests.test_publication_trust.TestCiWorkflowPolicy.test_head_cannot_elevate_permissions) ... ok
+test_verify_dev_ci_against_repo (tests.test_publication_trust.TestCiWorkflowPolicy.test_verify_dev_ci_against_repo) ... ok
+test_actual_egress_filesystem_credential_controls (tests.test_publication_trust.TestIsolationAdmission.test_actual_egress_filesystem_credential_controls) ... ok
+test_probe_cli_refuses_without_controls (tests.test_publication_trust.TestIsolationAdmission.test_probe_cli_refuses_without_controls) ... ok
+test_refuse_unavailable_hostile_exits_nonzero (tests.test_publication_trust.TestIsolationAdmission.test_refuse_unavailable_hostile_exits_nonzero) ... PullRaptor: hostile CI profile refused (admission=unavailable; missing_controls:egress)
+ok
+test_actual_lost_post_response_no_duplicate_write (tests.test_publisher.TestPublisher.test_actual_lost_post_response_no_duplicate_write) ... ok
+test_cli_missing_token_error (tests.test_publisher.TestPublisher.test_cli_missing_token_error) ... ok
+test_draft_pr_skipped (tests.test_publisher.TestPublisher.test_draft_pr_skipped) ... ok
+test_foreign_marker_not_updated_by_publisher (tests.test_publisher.TestPublisher.test_foreign_marker_not_updated_by_publisher) ... ok
+test_head_drift_rejected_with_exit_2 (tests.test_publisher.TestPublisher.test_head_drift_rejected_with_exit_2) ... ok
+test_owned_comment_pagination_bounded (tests.test_publisher.TestPublisher.test_owned_comment_pagination_bounded) ... ok
+test_publication_failure_preserves_report (tests.test_publisher.TestPublisher.test_publication_failure_preserves_report) ... PullRaptor Publisher: publication denied (stale_head); refusing to post review.
+ok
+test_publish_new_comment (tests.test_publisher.TestPublisher.test_publish_new_comment) ... ok
+test_publish_preview_zero_writes (tests.test_publisher.TestPublisher.test_publish_preview_zero_writes) ... ok
+test_publisher_calls_binding_gate (tests.test_publisher.TestPublisher.test_publisher_calls_binding_gate) ... ok
+test_publisher_missing_prefix_head_zero_writes (tests.test_publisher.TestPublisher.test_publisher_missing_prefix_head_zero_writes) ... ok
+test_publisher_same_head_policy_scope_drift_zero_writes (tests.test_publisher.TestPublisher.test_publisher_same_head_policy_scope_drift_zero_writes) ... ok
+test_rate_limit_deferred_receipt (tests.test_publisher.TestPublisher.test_rate_limit_deferred_receipt) ... ok
+test_untrusted_override_cannot_bypass_rendering (tests.test_publisher.TestPublisher.test_untrusted_override_cannot_bypass_rendering) ... PullRaptor Publisher: markdown override ignored; using owned renderer only.
+ok
+test_update_existing_comment_idempotency (tests.test_publisher.TestPublisher.test_update_existing_comment_idempotency) ... ok
+test_fixture_scenarios (tests.test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_fixture_scenarios) ... ok
+test_manifest_lists_scenarios (tests.test_publisher_fixture_scenarios.TestPublisherFixtureScenarios.test_manifest_lists_scenarios) ... ok
+
+----------------------------------------------------------------------
+Ran 57 tests in 0.142s
+
+OK
+PullRaptor Publisher: Published review comment 21 on PR #1
+PULLRAPTOR_ADMISSION=unavailable
+PullRaptor Publisher: Published review comment 888 on PR #1
+PullRaptor Publisher: Published review comment None on PR #1
+PullRaptor Publisher: Published review comment 1 on PR #1
+PullRaptor Publisher: Published review comment 55 on PR #1

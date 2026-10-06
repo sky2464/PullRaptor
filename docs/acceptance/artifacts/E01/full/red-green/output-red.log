@@ -1,0 +1,145 @@
+test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) ... 
+  test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) (format='render_markdown') ... FAIL
+  test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) (format='render_sarif') ... FAIL
+test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) ... 
+  test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) (format='render_markdown') ... FAIL
+  test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) (format='render_sarif') ... FAIL
+test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) ... 
+  test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) (format='render_markdown') ... FAIL
+  test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) (format='render_sarif') ... FAIL
+test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) ... 
+  test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='json') ... ERROR
+  test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='markdown') ... FAIL
+  test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='sarif') ... FAIL
+test_failure_variant_present_in_sarif_properties (tests.test_e01_output_contract.OutputContractTests.test_failure_variant_present_in_sarif_properties) ... ERROR
+test_incomplete_discovery_not_rendered_complete (tests.test_e01_output_contract.OutputContractTests.test_incomplete_discovery_not_rendered_complete) ... FAIL
+test_markdown_visibly_escapes_controls_bidi_links_and_paths (tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths) ... FAIL
+test_sarif_uri_roundtrip_and_deleted_side (tests.test_e01_output_contract.OutputContractTests.test_sarif_uri_roundtrip_and_deleted_side) ... FAIL
+
+======================================================================
+ERROR: test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 97, in test_cli_render_overflow_returns_schema_valid_failure_all_formats
+    code = main(['--repo', '.', '--head', 'h', '--format', output_format])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/__main__.py", line 210, in main
+    rendered = render_json(report, limits=record_limits, deadline=deadline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/render.py", line 111, in render_json
+    raw_bytes = canonical_bytes(report, limits=limits, deadline=deadline)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/models.py", line 568, in canonical_bytes
+    return encode_record(cleaned, limits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/models.py", line 532, in encode_record
+    raise ValueError(f"Encoded bytes ({len(encoded)}) exceeds max_payload_bytes ({limits.max_payload_bytes})")
+ValueError: Encoded bytes (20657) exceeds max_payload_bytes (16384)
+
+======================================================================
+ERROR: test_failure_variant_present_in_sarif_properties (tests.test_e01_output_contract.OutputContractTests.test_failure_variant_present_in_sarif_properties)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 86, in test_failure_variant_present_in_sarif_properties
+    self.assertEqual(run['properties']['report']['kind'], 'limit_failure')
+                     ~~~^^^^^^^^^^^^^^
+KeyError: 'properties'
+
+======================================================================
+FAIL: test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) (format='render_markdown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 31, in test_all_formats_obey_report_byte_limit
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) (format='render_sarif')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 31, in test_all_formats_obey_report_byte_limit
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) (format='render_markdown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 46, in test_all_formats_obey_report_item_limit
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) (format='render_sarif')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 46, in test_all_formats_obey_report_item_limit
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) (format='render_markdown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 39, in test_all_formats_obey_work_cutoff
+    with self.assertRaises(TimeoutError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) (format='render_sarif')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 39, in test_all_formats_obey_work_cutoff
+    with self.assertRaises(TimeoutError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='markdown')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 98, in test_cli_render_overflow_returns_schema_valid_failure_all_formats
+    self.assertEqual(code, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) (format='sarif')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 98, in test_cli_render_overflow_returns_schema_valid_failure_all_formats
+    self.assertEqual(code, 2)
+AssertionError: 0 != 2
+
+======================================================================
+FAIL: test_incomplete_discovery_not_rendered_complete (tests.test_e01_output_contract.OutputContractTests.test_incomplete_discovery_not_rendered_complete)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 64, in test_incomplete_discovery_not_rendered_complete
+    self.assertNotIn('**Status:** Complete', text)
+AssertionError: '**Status:** Complete' unexpectedly found in '# PullRaptor Review\n\n**Revisions:** Base `b` → Head `h`\n**Profile:** `structural` | **Status:** Complete\n\n## Scope & Coverage\n\nNo files required analysis.\n\n## Findings\n\n### [PY001] pattern at `app.py:1`\n\n- **Claim:** A pattern\n- **Severity:** advisory (advisory) | **Delta:** newly_detected\n- **Witness:**\n```\nx.append(1)\n```\n'
+
+======================================================================
+FAIL: test_markdown_visibly_escapes_controls_bidi_links_and_paths (tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 56, in test_markdown_visibly_escapes_controls_bidi_links_and_paths
+    self.assertNotIn(active, text)
+AssertionError: '\r' unexpectedly found in '# PullRaptor Review\n\n**Revisions:** Base `b` → Head `h`\n**Profile:** `structural` | **Status:** Complete\n\n## Scope & Coverage\n\nNo files required analysis.\n\n## Findings\n\n### [PY001] pattern at `app.py:1`\n\n- **Claim:** [31m\r[evil](https://example.invalid)\n- **Severity:** advisory (advisory) | **Delta:** newly_detected\n- **Witness:**\n```\nx.append(1)\n```\n\n## Diagnostics\n\n- **GAP** (``\n<script>[evil](https://example.invalid)`): [click](https://example.invalid)\n'
+
+======================================================================
+FAIL: test_sarif_uri_roundtrip_and_deleted_side (tests.test_e01_output_contract.OutputContractTests.test_sarif_uri_roundtrip_and_deleted_side)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_output_contract.py", line 75, in test_sarif_uri_roundtrip_and_deleted_side
+    self.assertNotIn('?', location['uri'])
+AssertionError: '?' unexpectedly found in 'dir/a?#% é.py'
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.007s
+
+FAILED (failures=11, errors=2)

@@ -1,0 +1,15 @@
+test_cold_worker_timeout_warm_completion_requires_full_clean_replay (tests.test_e01_cache_sequences.CacheSequenceTests.test_cold_worker_timeout_warm_completion_requires_full_clean_replay) ... ok
+test_full_canonical_clean_warm_corrupt_absent_mutation_sequence (tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence) ... ok
+test_review_clean_and_incremental_identical (tests.test_kernel.TestKernel.test_review_clean_and_incremental_identical) ... ok
+test_review_diff_profile (tests.test_kernel.TestKernel.test_review_diff_profile) ... ok
+test_review_structural_python_complete (tests.test_kernel.TestKernel.test_review_structural_python_complete) ... ok
+test_review_with_finding (tests.test_kernel.TestKernel.test_review_with_finding) ... ok
+test_unresolved_import_incomplete_exit2 (tests.test_kernel.TestKernel.test_unresolved_import_incomplete_exit2) ... ok
+test_both_present_python_sides_have_independent_scope_receipts (tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts) ... ok
+test_failed_discovery_cannot_seal_complete_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_failed_discovery_cannot_seal_complete_scope) ... ok
+test_static_import_closure_cycles_and_unrelated_malformed_file (tests.test_e01_core_regressions.CoreRegressionTests.test_static_import_closure_cycles_and_unrelated_malformed_file) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 15.709s
+
+OK

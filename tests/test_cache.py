@@ -8,24 +8,25 @@ import unittest
 
 from pullraptor.cache import cache_key, load_facts, store_facts
 from pullraptor.models import ContentFacts, Limits
+from pullraptor.parser_worker import EXTRACTOR_DIGEST
 
 
 class TestCache(unittest.TestCase):
     def setUp(self) -> None:
         self.temp_dir = tempfile.mkdtemp(prefix="pullraptor_test_cache_")
-        self.cache_dir = Path(self.temp_dir)
+        self.cache_dir = Path(self.temp_dir).resolve()
         self.limits = Limits()
 
     def tearDown(self) -> None:
         import shutil
         shutil.rmtree(self.temp_dir, ignore_errors=True)
 
-    def _make_sample_facts(self, digest: str = "abc123") -> ContentFacts:
+    def _make_sample_facts(self, digest: str = "a" * 64) -> ContentFacts:
         return ContentFacts(
             blob_digest=digest,
             runtime_version="3.12.15",
             schema_version="1",
-            extractor_digest="ext1",
+            extractor_digest=EXTRACTOR_DIGEST,
             symbols=(),
             imports=(),
             pattern_facts=(),
@@ -70,7 +71,7 @@ class TestCache(unittest.TestCase):
         store_facts(self.cache_dir, key, facts, self.limits)
 
         # Create symlink pointing to cache entry
-        symlink_key = "symlink_key"
+        symlink_key = "f" * 64
         symlink_file = self.cache_dir / f"{symlink_key}.json"
         try:
             symlink_file.symlink_to(self.cache_dir / f"{key}.json")

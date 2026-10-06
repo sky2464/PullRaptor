@@ -8,8 +8,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from pullraptor.publication_contract import PublicationContext, scope_digest_from_report
-from pullraptor.publisher import publish_report, report_from_decoded
+from pullraptor.publisher import report_from_decoded
+from tests.test_publisher import _publish_trusted, _expected_context
 
 _FIXTURE_DIR = Path(__file__).resolve().parent / "fixtures" / "e02" / "publisher"
 _HEAD = "a" * 40
@@ -86,20 +86,7 @@ class TestPublisherFixtureScenarios(unittest.TestCase):
                 if raw.get("policy_drift"):
                     mock_api.return_value = (200, _pr_payload())
                     connector = dict(_CONNECTOR, policy_digest="pol-changed")
-                    full = report_from_decoded(_report_dict())
-                    pinned = PublicationContext(
-                        repository_id="owner/repo",
-                        pr_number=1,
-                        workflow_id=_CONNECTOR["workflow_id"],
-                        run_id=_CONNECTOR["run_id"],
-                        artifact_digest=_CONNECTOR["artifact_digest"],
-                        reviewer_digest=_CONNECTOR["reviewer_digest"],
-                        head=_HEAD,
-                        base_tip=_BASE,
-                        comparison_base=_COMP,
-                        policy_digest="pol1",
-                        scope_digest=scope_digest_from_report(full),
-                    )
+                    pinned = _expected_context()
                 else:
                     mock_api.return_value = (200, _pr_payload())
                     connector = dict(_CONNECTOR)
@@ -127,7 +114,7 @@ class TestPublisherFixtureScenarios(unittest.TestCase):
                     kwargs["markdown_override"] = str(raw["markdown_override"])
 
                 with patch("sys.stderr", stderr), patch("sys.stdout", stdout):
-                    code = publish_report(**kwargs)
+                    code = _publish_trusted(**kwargs)
 
                 self.assertEqual(code, raw["expect_exit"])
                 if "expect_cause_substring" in raw:

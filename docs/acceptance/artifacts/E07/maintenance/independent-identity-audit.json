@@ -1,0 +1,28 @@
+{
+  "candidate_sha256": "65760772de233829c4462ba0d5f8e6eff389d15146a566ac9cf4950c7ca4882c",
+  "package_differences": {
+    "pullraptor/__init__.py": {
+      "after_sha256": "00cf4110509dfb35ebae8256413efb22707b915177df223278571656208de60b",
+      "before_sha256": "5efb784b64f05395af96fedb13b070734eb625db1fa988498e79278d68bc1b65"
+    },
+    "pullraptor/maintenance_fixture.py": {
+      "after_sha256": "83559819d4917b17e42bcaf8f0bd188b418388c9c871e704c887b843ddfbc367",
+      "before_sha256": null
+    }
+  },
+  "package_file_counts": {
+    "candidate": 38,
+    "prior": 37
+  },
+  "prior_sha256": "d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24",
+  "reviewed_source_files": {
+    "scripts/_maintenance_installer.py": "0196d35dee01a4b60476d16722435df638c6d0db47a8b3373ce402504fc117dd",
+    "scripts/maintenance_rehearsal.py": "b70fc64d28af6c6d316f33761a58b3dcef39d96811f62090b5772c4afcadeea2",
+    "tests/test_installed_artifacts.py": "ad5154abbbceeed8539fc9f90e328436bfedfa4db46334fe222fa67c99559a84",
+    "tests/test_update_recovery.py": "ee3be4fa6425e8dae0659866bd47636207bee83bb871180390f3430e61be754d"
+  },
+  "schema": "pullraptor-br18-independent-identity-audit/1",
+  "source_archive_sha256": "29a5bac131f538f3f700588d64a5d335cfbbda0f5735fe5ef98515b857b9dbef",
+  "source_bundle_sha256": "59531f44a378c7289686916b8ed74479253775dc3f3fa9e726e7450a56a91979",
+  "source_provenance_sha256": "bab76796a3ccec892037d38587e8e1536dc92161f762bb46b0278784084dd5e2"
+}

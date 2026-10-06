@@ -8,6 +8,13 @@ import time
 from typing import Any, Union
 
 
+class LimitExceeded(ValueError, TimeoutError):
+    """Trusted resource exhaustion; carries no source-controlled advice."""
+    def __init__(self, cause: str, name: str, cap: int | float | None, observed: int | float | None):
+        self.cause, self.name, self.cap, self.observed = cause, name, cap, observed
+        super().__init__(f"{name} resource limit exceeded")
+
+
 @dataclass(frozen=True)
 class RecordLimits:
     """Limits on decoded and encoded record structures."""
@@ -334,6 +341,10 @@ class Config:
     use_cache: bool = True
     cache_dir: str | None = None
     max_cache_bytes: int = 268_435_456
+    max_report_bytes: int = 8_388_608
+    max_report_items: int = 1_000_000
+    max_report_depth: int = 64
+    max_report_string_bytes: int = 4_194_304
 
 
 @dataclass(frozen=True)
@@ -412,7 +423,7 @@ def _check_nesting_and_size(payload: bytes, limits: RecordLimits) -> None:
             elif b in (ord(b"{"), ord(b"[")):
                 depth += 1
                 if depth > limits.max_depth:
-                    raise ValueError(f"Nesting depth ({depth}) exceeds max_depth ({limits.max_depth})")
+                    raise LimitExceeded("record_limit_exceeded", "max_depth", limits.max_depth, depth)
             elif b in (ord(b"}"), ord(b"]")):
                 depth -= 1
                 if depth < 0:
@@ -428,25 +439,19 @@ def _validate_tree_bounds(obj: Any, limits: RecordLimits, state: dict[str, int])
         except UnicodeEncodeError as err:
             raise ValueError("String contains lone surrogate") from err
         if len(encoded) > limits.max_string_bytes:
-            raise ValueError(
-                f"String length ({len(encoded)} bytes) exceeds max_string_bytes ({limits.max_string_bytes})"
-            )
+            raise LimitExceeded("record_limit_exceeded", "max_string_bytes", limits.max_string_bytes, len(encoded))
     elif isinstance(obj, dict):
         for k, v in obj.items():
             state["items"] += 1
             if state["items"] > limits.max_aggregate_items:
-                raise ValueError(
-                    f"Aggregate item count ({state['items']}) exceeds max_aggregate_items ({limits.max_aggregate_items})"
-                )
+                raise LimitExceeded("record_limit_exceeded", "max_aggregate_items", limits.max_aggregate_items, state["items"])
             _validate_tree_bounds(k, limits, state)
             _validate_tree_bounds(v, limits, state)
     elif isinstance(obj, list):
         for item in obj:
             state["items"] += 1
             if state["items"] > limits.max_aggregate_items:
-                raise ValueError(
-                    f"Aggregate item count ({state['items']}) exceeds max_aggregate_items ({limits.max_aggregate_items})"
-                )
+                raise LimitExceeded("record_limit_exceeded", "max_aggregate_items", limits.max_aggregate_items, state["items"])
             _validate_tree_bounds(item, limits, state)
 
 
@@ -529,7 +534,8 @@ def encode_record(data: dict[str, Any], limits: RecordLimits) -> bytes:
     text = json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=False, allow_nan=False)
     encoded = text.encode("utf-8")
     if len(encoded) > limits.max_payload_bytes:
-        raise ValueError(f"Encoded bytes ({len(encoded)}) exceeds max_payload_bytes ({limits.max_payload_bytes})")
+        raise LimitExceeded("report_limit_exceeded", "max_payload_bytes", limits.max_payload_bytes, len(encoded))
+    _check_nesting_and_size(encoded, limits)
     return encoded
 
 
@@ -551,7 +557,7 @@ def canonical_bytes(report: Report, *, limits: RecordLimits, deadline: Deadline)
     """
     if report.kind == "full":
         if deadline.is_work_exhausted():
-            raise TimeoutError("Deadline work cutoff exceeded during canonical serialization")
+            raise LimitExceeded("deadline_exceeded", "work_cutoff", deadline.duration_seconds - deadline.reserve_seconds, None)
         assert isinstance(report, FullReport)
         # Exclude execution metadata
         raw: dict[str, Any] = {
@@ -565,11 +571,14 @@ def canonical_bytes(report: Report, *, limits: RecordLimits, deadline: Deadline)
             "diagnostics": [asdict(d) for d in report.diagnostics],
         }
         cleaned = _clean_for_canonical(raw)
-        return encode_record(cleaned, limits)
+        encoded = encode_record(cleaned, limits)
+        if deadline.is_work_exhausted():
+            raise LimitExceeded("deadline_exceeded", "work_cutoff", deadline.duration_seconds - deadline.reserve_seconds, None)
+        return encoded
 
     elif report.kind == "limit_failure":
         if deadline.is_final_exhausted():
-            raise TimeoutError("Deadline final cutoff exceeded during limit failure serialization")
+            raise LimitExceeded("deadline_exceeded", "final_cutoff", deadline.duration_seconds, None)
         assert isinstance(report, LimitFailure)
         raw = {
             "schema": report.schema,

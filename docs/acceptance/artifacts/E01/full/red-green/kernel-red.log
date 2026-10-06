@@ -1,0 +1,77 @@
+test_cache_location_controls_do_not_change_semantic_identity (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_location_controls_do_not_change_semantic_identity) ... FAIL
+test_cache_inside_reviewed_tree_not_admitted (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_inside_reviewed_tree_not_admitted) ... ERROR
+
+======================================================================
+ERROR: test_cache_inside_reviewed_tree_not_admitted (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_inside_reviewed_tree_not_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 62, in test_cache_inside_reviewed_tree_not_admitted
+    result, _, _ = review(repo.root, repo.commit_ids[0], head,
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/kernel.py", line 265, in review
+    bound, diags = _extract_for_blob(blob, "head", head_snap)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/kernel.py", line 229, in _extract_for_blob
+    bound = bind_facts(facts, source, snap, blob.path, side)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/python_facts.py", line 101, in bind_facts
+    raise ValueError(
+ValueError: Blob digest mismatch during binding: expected <MagicMock name='load_facts().blob_digest' id='4438997520'>, got 4205c4809ab1b080fd32b6bf9640e5feaa6d1b69bf9fa684954ab710157ec141
+
+======================================================================
+FAIL: test_cache_location_controls_do_not_change_semantic_identity (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_location_controls_do_not_change_semantic_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 53, in test_cache_location_controls_do_not_change_semantic_identity
+    self.assertEqual(first.contract.config_digest, second.contract.config_digest)
+AssertionError: '746ba4ca438615d35bbf84e480f73b72f4a48e3bb7d959a1aa50c487d4f38d13' != '3459ebc026ad8d2121f1d249bdd6c053b9f779f349ce76f1f211e0edf0c41f19'
+- 746ba4ca438615d35bbf84e480f73b72f4a48e3bb7d959a1aa50c487d4f38d13
++ 3459ebc026ad8d2121f1d249bdd6c053b9f779f349ce76f1f211e0edf0c41f19
+
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.028s
+
+FAILED (failures=1, errors=1)
+test_cache_inside_reviewed_tree_not_admitted (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_inside_reviewed_tree_not_admitted) ... FAIL
+test_slow_preparation_short_policy_still_bounded (tests.test_e01_core_regressions.CoreRegressionTests.test_slow_preparation_short_policy_still_bounded) ... FAIL
+
+======================================================================
+FAIL: test_cache_inside_reviewed_tree_not_admitted (tests.test_e01_core_regressions.CoreRegressionTests.test_cache_inside_reviewed_tree_not_admitted)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 65, in test_cache_inside_reviewed_tree_not_admitted
+    load.assert_not_called()
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 910, in assert_not_called
+    raise AssertionError(msg)
+AssertionError: Expected 'load_facts' to not have been called. Called 2 times.
+Calls: [call(PosixPath('/tmp/pullraptor_test_repo_pugxq5il/cache'), 'd4cbda4a5086f1d38b4344e84a88c17e8e5081de1b968fca84dea4e4a037f521', Limits(max_tracked_entries=10000, max_blob_bytes=2097152, max_total_bytes=134217728, parse_timeout_seconds=2.0, review_timeout_seconds=60.0, failure_reserve_seconds=2.0, max_cache_bytes=268435456, max_diff_bytes=8388608, max_stderr_bytes=65536, record_limits=RecordLimits(max_depth=64, max_aggregate_items=100000, max_string_bytes=4194304, max_payload_bytes=8388608))),
+ call(PosixPath('/tmp/pullraptor_test_repo_pugxq5il/cache'), '101c06f412093872ba0febe8d63cf164877bdf73a83e169996ffffdb4c6f3098', Limits(max_tracked_entries=10000, max_blob_bytes=2097152, max_total_bytes=134217728, parse_timeout_seconds=2.0, review_timeout_seconds=60.0, failure_reserve_seconds=2.0, max_cache_bytes=268435456, max_diff_bytes=8388608, max_stderr_bytes=65536, record_limits=RecordLimits(max_depth=64, max_aggregate_items=100000, max_string_bytes=4194304, max_payload_bytes=8388608)))].
+
+======================================================================
+FAIL: test_slow_preparation_short_policy_still_bounded (tests.test_e01_core_regressions.CoreRegressionTests.test_slow_preparation_short_policy_still_bounded)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 77, in test_slow_preparation_short_policy_still_bounded
+    result, deadline, _ = review(Path('.'), 'b', 'h', started_at=start, use_cache=False)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/kernel.py", line 74, in review
+    base_tip, comparison_base, head = resolve_inputs(
+                                      ^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.12/3.12.15/Frameworks/Python.framework/Versions/3.12/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 71, in stalled
+    self.assertEqual(deadline.work_cutoff, start + 1)
+AssertionError: 318601.985428958 != 318544.985428958
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.455s
+
+FAILED (failures=2)

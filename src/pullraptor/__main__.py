@@ -11,7 +11,7 @@ import time
 from pullraptor.beta_admission import admit_cli_review_flags
 from pullraptor.local_snapshot import resolve_local_review_refs
 from pullraptor.kernel import review
-from pullraptor.models import Deadline, Limits
+from pullraptor.models import Deadline, Limits, LimitExceeded, LimitFailure
 from pullraptor.render import render_json, render_markdown, render_sarif
 
 
@@ -205,13 +205,18 @@ def main(argv: list[str] | None = None) -> int:
                 {"state": convo_answer.state, "text": convo_answer.text},
             )
 
-    # Render report to stdout
-    if args.format == "json":
-        rendered = render_json(report, limits=record_limits, deadline=deadline)
-    elif args.format == "sarif":
-        rendered = render_sarif(report, limits=record_limits, deadline=deadline)
-    else:
-        rendered = render_markdown(report, limits=record_limits, deadline=deadline)
+    # Render under the same controls, with only fixed failure using reserve.
+    renderer = {"json": render_json, "sarif": render_sarif, "markdown": render_markdown}[args.format]
+    try:
+        rendered = renderer(report, limits=record_limits, deadline=deadline)
+    except LimitExceeded as error:
+        contract = getattr(report, "contract", None)
+        known = {key: getattr(contract, key, None) for key in ("base_tip", "comparison_base", "head", "policy_digest")}
+        known["reviewer_digest"] = getattr(contract, "tool_digest", None)
+        report = LimitFailure("1", "limit_failure", known, 2, False, True, error.cause,
+                              {"name": error.name, "cap": error.cap, "observed": error.observed},
+                              tuple({"domain": name, "count": None} for name in ("findings", "scope", "diagnostics")))
+        rendered = renderer(report, limits=record_limits, deadline=deadline)
 
     sys.stdout.write(rendered + "\n")
 

@@ -1,17 +1,25 @@
 {
-  "schema": "pullraptor-e01-corpus-manifest/1",
-  "date": "2026-10-05",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
-  "rules": ["PY001", "PY002", "PY003"],
+  "schema": "pullraptor-e01-corpus-manifest/2",
+  "language": "Python",
+  "rule_version": "1.0",
   "license": "Apache-2.0",
-  "immutable": true,
-  "primary_evidence": "tests/test_rules.py",
-  "e2e_fixtures_directory": "tests/fixtures/e01/e2e",
-  "case_counts": {
-    "note": "Rule cases are embedded in unittest sources at this revision; independent label review pending BR-05 step 2.",
-    "PY001": "see tests/test_rules.py",
-    "PY002": "see tests/test_rules.py",
-    "PY003": "see tests/test_rules.py"
+  "cases": "cases.json",
+  "cases_sha256": "3cd57943370db4f2ca105f24bc1ff94d9f29c24ab1f6276bd17f1c7df3a063a3",
+  "rules": {
+    "PY001": {
+      "positive": 10,
+      "counterexample_or_ambiguous": 10
+    },
+    "PY002": {
+      "positive": 10,
+      "counterexample_or_ambiguous": 10
+    },
+    "PY003": {
+      "positive": 10,
+      "counterexample_or_ambiguous": 10
+    }
   },
-  "acceptance_artifacts": "docs/acceptance/artifacts/E01/corpus/"
+  "label_owner": "implementation author",
+  "independent_label_review": "pending",
+  "claim_limit": "Pattern fixtures; no held-out accuracy or default blocking evidence"
 }

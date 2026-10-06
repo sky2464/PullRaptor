@@ -1,0 +1,148 @@
+[
+  {
+    "argv": [
+      "git",
+      "init",
+      "--initial-branch=feat/br18-private-fixture",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Initialized empty Git repository in /private/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source/.git/\n"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source",
+      "add",
+      "."
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source",
+      "commit",
+      "-m",
+      "test: private unpublished BR18 version fixture"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "[feat/br18-private-fixture (root-commit) d6ee0f4] test: private unpublished BR18 version fixture\n 40 files changed, 10555 insertions(+)\n create mode 100644 README.md\n create mode 100644 pyproject.toml\n create mode 100644 src/pullraptor/__init__.py\n create mode 100644 src/pullraptor/__main__.py\n create mode 100644 src/pullraptor/ai_adapter.py\n create mode 100644 src/pullraptor/ai_context.py\n create mode 100644 src/pullraptor/ai_transport.py\n create mode 100644 src/pullraptor/azure_connector.py\n create mode 100644 src/pullraptor/beta_admission.py\n create mode 100644 src/pullraptor/cache.py\n create mode 100644 src/pullraptor/config.py\n create mode 100644 src/pullraptor/conversation.py\n create mode 100644 src/pullraptor/diff.py\n create mode 100644 src/pullraptor/evidence.py\n create mode 100644 src/pullraptor/git_snapshot.py\n create mode 100644 src/pullraptor/kernel.py\n create mode 100644 src/pullraptor/language_workers.py\n create mode 100644 src/pullraptor/local_snapshot.py\n create mode 100644 src/pullraptor/maintenance_fixture.py\n create mode 100644 src/pullraptor/mcp_server.py\n create mode 100644 src/pullraptor/mcp_sessions.py\n create mode 100644 src/pullraptor/models.py\n create mode 100644 src/pullraptor/parser_worker.py\n create mode 100644 src/pullraptor/patches.py\n create mode 100644 src/pullraptor/process.py\n create mode 100644 src/pullraptor/publication_contract.py\n create mode 100644 src/pullraptor/publication_lifecycle.py\n create mode 100644 src/pullraptor/publication_transport.py\n create mode 100644 src/pullraptor/publication_trust.py\n create mode 100644 src/pullraptor/publisher.py\n create mode 100644 src/pullraptor/python_cfg.py\n create mode 100644 src/pullraptor/python_facts.py\n create mode 100644 src/pullraptor/python_ir.py\n create mode 100644 src/pullraptor/python_lowering.py\n create mode 100644 src/pullraptor/release_provenance.py\n create mode 100644 src/pullraptor/render.py\n create mode 100644 src/pullraptor/review_execution.py\n create mode 100644 src/pullraptor/rules.py\n create mode 100644 src/pullraptor/secret_patterns.py\n create mode 100644 src/pullraptor/security_flow.py\n"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source",
+      "rev-parse",
+      "HEAD"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "d6ee0f4229dd89f29e3038a03b069a0d313a56de\n"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source",
+      "rev-parse",
+      "HEAD^{tree}"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "d113e736150e6814589cec2fd707f43ddd4ab820\n"
+  },
+  {
+    "argv": [
+      "git",
+      "-C",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source",
+      "bundle",
+      "create",
+      "/Users/chicademy/Documents/Code/PullRaptor/tests/fixtures/e07/maintenance/candidate-source.bundle",
+      "HEAD"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "/opt/homebrew/opt/python@3.12/bin/python3.12",
+      "-I",
+      "-m",
+      "venv",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/build-venv"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": ""
+  },
+  {
+    "argv": [
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/build-venv/bin/python",
+      "-I",
+      "-m",
+      "pip",
+      "install",
+      "--no-index",
+      "--no-deps",
+      "--no-cache-dir",
+      "--no-compile",
+      "/Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/pip-26.2.1-py3-none-any.whl",
+      "/Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/setuptools-84.0.0-py3-none-any.whl",
+      "/Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/wheel-0.48.0-py3-none-any.whl",
+      "/Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/packaging-26.0-py3-none-any.whl"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Processing /Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/pip-26.2.1-py3-none-any.whl\nProcessing /Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/setuptools-84.0.0-py3-none-any.whl\nProcessing /Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/wheel-0.48.0-py3-none-any.whl\nProcessing /Users/chicademy/Documents/Code/PullRaptor/.superpowers/sdd/acceptance-maintenance-closure/wheelhouse/packaging-26.0-py3-none-any.whl\npip is already installed with the same version as the provided wheel. Use --force-reinstall to force an installation of the wheel.\nInstalling collected packages: wheel, setuptools, packaging\n\nSuccessfully installed packaging-26.0 setuptools-84.0.0 wheel-0.48.0\n"
+  },
+  {
+    "argv": [
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/build-venv/bin/python",
+      "-I",
+      "-c",
+      "import importlib.metadata as m; print(m.version('pip'))"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "26.2.1\n"
+  },
+  {
+    "argv": [
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/build-venv/bin/python",
+      "-I",
+      "-m",
+      "pip",
+      "wheel",
+      "--no-index",
+      "--no-deps",
+      "--no-build-isolation",
+      "--no-cache-dir",
+      "--wheel-dir",
+      "/Users/chicademy/Documents/Code/PullRaptor/tests/fixtures/e07/maintenance",
+      "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source"
+    ],
+    "cwd": "/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7",
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "Processing /var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/private-candidate-source\n  Preparing metadata (pyproject.toml): started\n  Preparing metadata (pyproject.toml): finished with status 'done'\nBuilding wheels for collected packages: pullraptor\n  Building wheel for pullraptor (pyproject.toml): started\n  Building wheel for pullraptor (pyproject.toml): finished with status 'done'\n  Created wheel for pullraptor: filename=pullraptor-0.1.0b2.dev0-py3-none-any.whl size=107414 sha256=65760772de233829c4462ba0d5f8e6eff389d15146a566ac9cf4950c7ca4882c\n  Stored in directory: /private/var/folders/hv/l25nr97d2q1c8npd9d7wmvjr0000gn/T/pullraptor-br18-build-bqc_opb7/pip-ephem-wheel-cache-mgs4gncs/wheels/77/df/9f/55546c6a0323d23cadfc631f3fa210da316157a7387d77efed\nSuccessfully built pullraptor\n"
+  }
+]

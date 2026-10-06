@@ -1,0 +1,42 @@
+test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) ... 
+  test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'def f(x=set()): x.add(1)') ... FAIL
+  test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'def f(x=list()): x.append(1)') ... FAIL
+  test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'try: pass\nexcept BaseException: pass') ... FAIL
+test_structural_other_language_partial_exit2 (tests.test_e01_core_regressions.CoreRegressionTests.test_structural_other_language_partial_exit2) ... FAIL
+
+======================================================================
+FAIL: test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'def f(x=set()): x.add(1)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 42, in test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope
+    self.assertFalse(any(item.rule == rule for item in findings))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'def f(x=list()): x.append(1)')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 42, in test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope
+    self.assertFalse(any(item.rule == rule for item in findings))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope) (source=b'try: pass\nexcept BaseException: pass')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 42, in test_constructor_defaults_and_typed_handlers_are_outside_pattern_scope
+    self.assertFalse(any(item.rule == rule for item in findings))
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_structural_other_language_partial_exit2 (tests.test_e01_core_regressions.CoreRegressionTests.test_structural_other_language_partial_exit2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 22, in test_structural_other_language_partial_exit2
+    self.assertEqual(value.execution['exit_code'], 2)
+AssertionError: 0 != 2
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.366s
+
+FAILED (failures=4)

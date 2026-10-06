@@ -3,7 +3,11 @@
 
 from __future__ import annotations
 
+import argparse
+import hashlib
 import json
+import math
+import os
 import resource
 import statistics
 import subprocess
@@ -21,6 +25,7 @@ REPETITIONS = 30
 sys.path.insert(0, str(REPO / "src"))
 
 from pullraptor.kernel import review  # noqa: E402
+from pullraptor.models import FullReport, canonical_bytes  # noqa: E402
 
 
 def _revision() -> str:
@@ -37,7 +42,7 @@ def _peak_rss_bytes() -> int:
 
 def _p95(samples: list[float]) -> float:
     ordered = sorted(samples)
-    idx = int(0.95 * (len(ordered) - 1))
+    idx = max(0, math.ceil(0.95 * len(ordered)) - 1)
     return ordered[idx]
 
 
@@ -78,13 +83,16 @@ def _ensure_fixture() -> dict:
 def _review_once(repo: Path, base_ref: str, head_ref: str, *, warm: bool) -> tuple[float, int]:
     resource.getrusage(resource.RUSAGE_SELF)  # baseline
     start = time.perf_counter()
-    review(
+    report, deadline, limits = review(
         repo=repo,
         base_ref=base_ref,
         head_ref=head_ref,
         use_cache=warm,
         exact_base=True,
     )
+    if not isinstance(report, FullReport) or report.execution.get("exit_code") not in (0, 1):
+        raise ValueError("incomplete benchmark review cannot be measured as success")
+    canonical_bytes(report, limits=limits, deadline=deadline)
     elapsed = time.perf_counter() - start
     return elapsed, _peak_rss_bytes()
 
@@ -146,7 +154,7 @@ def _real_repository_pair() -> dict:
         "base": "HEAD~1",
         "head": "HEAD",
         "exit_code": proc.returncode,
-        "completed": proc.returncode in {0, 1, 2, 3},
+        "completed": proc.returncode in {0, 1},
         "stderr_tail": proc.stderr[-500:] if proc.stderr else "",
     }
 

@@ -1,0 +1,13 @@
+test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) ... ok
+test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) ... ok
+test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) ... ok
+test_ci_override_cannot_weaken_required_scope (tests.test_config.TestConfig.test_ci_override_cannot_weaken_required_scope) ... ok
+test_defaults_exact (tests.test_config.TestConfig.test_defaults_exact) ... ok
+test_glob_semantics (tests.test_config.TestConfig.test_glob_semantics) ... ok
+test_minimum_finalization_capacity (tests.test_config.TestConfig.test_minimum_finalization_capacity) ... ok
+test_unknown_key_error (tests.test_config.TestConfig.test_unknown_key_error) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.001s
+
+OK

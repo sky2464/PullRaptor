@@ -3,6 +3,9 @@
 
 from __future__ import annotations
 
+import argparse
+import ast
+import hashlib
 import json
 import subprocess
 from datetime import datetime, timezone
@@ -47,6 +50,47 @@ EVALUATION_INVARIANTS: list[dict[str, object]] = [
 ]
 
 
+def source_identity(root: Path = REPO) -> dict[str, object]:
+    """Pin product bytes separately from test/evidence/document revisions."""
+    files = {str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
+             for path in sorted((root / "src").rglob("*.py"))}
+    digest = hashlib.sha256(json.dumps(files, sort_keys=True).encode()).hexdigest()
+    return {"files": files, "sha256": digest}
+
+
+def assertion_inventory(root: Path = REPO) -> list[dict[str, object]]:
+    """Locate actual assertion expressions; this does not establish adequacy."""
+    inventory = []
+    for path in sorted((root / "tests").glob("test_*.py")):
+        source = path.read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        for owner in tree.body:
+            if not isinstance(owner, ast.ClassDef):
+                continue
+            for function in owner.body:
+                if not isinstance(function, ast.FunctionDef) or not function.name.startswith("test_"):
+                    continue
+                assertions = []
+                for node in ast.walk(function):
+                    is_assert = isinstance(node, ast.Assert)
+                    is_call = (isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                               and node.func.attr.startswith("assert"))
+                    if is_assert or is_call:
+                        expression = ast.get_source_segment(source, node)
+                        assertions.append({"line": node.lineno, "end_line": node.end_lineno,
+                                           "expression": expression,
+                                           "sha256": hashlib.sha256(expression.encode()).hexdigest()})
+                if assertions:
+                    body = ast.get_source_segment(source, function)
+                    inventory.append({"path": str(path.relative_to(root)),
+                        "test_id": f"tests.{path.stem}.{owner.name}.{function.name}",
+                        "test_name": function.name, "line": function.lineno,
+                        "end_line": function.end_lineno, "body_sha256": hashlib.sha256(body.encode()).hexdigest(),
+                        "file_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+                        "assertions": sorted(assertions, key=lambda item: item["line"])})
+    return inventory
+
+
 def _git_head() -> str:
     out = subprocess.run(
         ["git", "rev-parse", "HEAD"],
@@ -76,10 +120,48 @@ def _merge_task78(
     return entry if isinstance(entry, dict) else None
 
 
-def build() -> dict[str, object]:
+def _apply_review(row: dict[str, object], reviews: dict, bodies: dict, receipt: dict | None) -> None:
+    review = reviews.get(row["requirement_id"])
+    if not review:
+        return
+    selected, stale = [], False
+    for reference in review.get("tests", []):
+        body = bodies.get(reference["test_id"])
+        if not body or body["body_sha256"] != reference["body_sha256"]:
+            stale = True
+        elif body:
+            selected.append(body)
+    row.update(primary_assertions=selected, review_basis=review.get("review_basis"),
+               remaining_gap=review.get("remaining_gap", ""),
+               assertion_coverage=review["assertion_coverage"], mapping_kind="explicit_body_review")
+    if stale:
+        row.update(assertion_coverage="partial", runtime_result="stale",
+                   remaining_gap="Assertion body changed after adequacy review; re-review required.")
+        return
+    if row["assertion_coverage"] == "mapped" and not selected:
+        row.update(assertion_coverage="unmapped", remaining_gap="Reviewed assertion body absent.")
+    if not receipt or row["assertion_coverage"] != "mapped":
+        return
+    if receipt.get("product_source") != source_identity():
+        row["runtime_result"] = "stale"
+        return
+    cases = {case["test_id"]: case for case in receipt.get("cases", [])}
+    matched = [cases.get(body["test_id"]) for body in selected]
+    if any(case and case.get("result") == "failed" for case in matched):
+        row["runtime_result"] = "failed"
+    elif matched and all(case and case.get("result") == "passed" and
+                         case.get("body_sha256") == body["body_sha256"] for case, body in zip(matched, selected)):
+        row["runtime_result"] = "passed"
+
+
+def build(receipt: dict[str, object] | None = None) -> dict[str, object]:
     static = json.loads(STATIC_INVENTORY.read_text(encoding="utf-8"))
     overlay = json.loads(OVERLAY.read_text(encoding="utf-8"))
     mapping_revision = static["source_revision"]
+    bodies = assertion_inventory()
+    by_name = {}
+    for body in bodies:
+        by_name.setdefault(body["test_name"], []).append(body)
     head = _git_head()
 
     named_rows: list[dict[str, object]] = []
@@ -132,6 +214,18 @@ def build() -> dict[str, object]:
                 "expected_result": "not_run",
             }
 
+        actual = by_name.get(planned, [])
+        row["primary_assertions"] = actual
+        if actual:
+            # An exact name and an assertion body locate evidence, but semantic
+            # adequacy still needs a reviewed mapping, including adverse cases.
+            row["assertion_coverage"] = "partial"
+            row["mapping_kind"] = "body_located_review_pending"
+            row["remaining_gap"] = (str(row.get("remaining_gap", "")) +
+                "; current assertion bodies pinned; requirement adequacy review pending").strip("; ")
+        else:
+            row["assertion_coverage"] = "unmapped"
+            row["mapping_kind"] = "no_current_assertion_body"
         cov = row["assertion_coverage"]
         if cov in coverage_counts:
             coverage_counts[str(cov)] += 1
@@ -171,6 +265,14 @@ def build() -> dict[str, object]:
             }
         )
 
+    review_path = REPO / "tests/fixtures/e01/assertion-reviews.json"
+    reviews = json.loads(review_path.read_text())["requirements"] if review_path.is_file() else {}
+    by_id = {body["test_id"]: body for body in bodies}
+    for row in named_rows + unnamed_rows + eval_rows:
+        _apply_review(row, reviews, by_id, receipt)
+    coverage_counts = {bucket: sum(row["assertion_coverage"] == bucket for row in named_rows)
+                       for bucket in ("mapped", "partial", "unmapped", "declaration_only")}
+
     partial_or_unmapped = sum(
         1
         for r in named_rows
@@ -182,14 +284,20 @@ def build() -> dict[str, object]:
         "date": datetime.now(timezone.utc).date().isoformat(),
         "producer_card": "E01-T9-MAP",
         "document_revision": head,
+        "product_source": source_identity(),
+        "evidence_revision": head,
+        "assertion_review_manifest": {"path": str(review_path.relative_to(REPO)), "sha256": hashlib.sha256(review_path.read_bytes()).hexdigest() if review_path.is_file() else None},
+        "runtime_receipt": receipt,
+        "assertion_inventory": bodies,
         "mapping_source_revision": mapping_revision,
         "trusted_base_revision": static.get("trusted_base_revision", mapping_revision),
-        "method": "Merge static declaration inventory, cache/output assertion map overlay, and evaluation invariants; no imports or suite execution.",
+        "method": "Locate and pin current AST assertion expressions for historical requirement inventory; explicit adequacy review and case receipts required for pass. No suite execution.",
         "input_artifacts": [
             str(STATIC_INVENTORY.relative_to(REPO)),
             str(CACHE_MAP.relative_to(REPO)),
             str(OVERLAY.relative_to(REPO)),
             "docs/evaluation.md",
+            "tests/fixtures/e01/assertion-reviews.json",
         ],
         "acceptance_criteria": {
             "E01-A1": "not_run",
@@ -233,10 +341,15 @@ def build() -> dict[str, object]:
 
 
 def main() -> int:
-    ARTIFACTS.mkdir(parents=True, exist_ok=True)
-    payload = build()
-    OUTPUT.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {OUTPUT} ({payload['summary']['named_plan_tests']} named rows)")
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, default=OUTPUT)
+    parser.add_argument("--receipt", type=Path)
+    args = parser.parse_args()
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    receipt = json.loads(args.receipt.read_text()) if args.receipt else None
+    payload = build(receipt)
+    args.output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    print(f"Wrote {args.output} ({payload['summary']['named_plan_tests']} named rows)")
     return 0
 
 

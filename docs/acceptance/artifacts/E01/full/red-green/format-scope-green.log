@@ -1,0 +1,24 @@
+test_all_formats_obey_report_byte_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit) ... ok
+test_all_formats_obey_report_item_limit (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit) ... ok
+test_all_formats_obey_work_cutoff (tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff) ... ok
+test_all_full_formats_expose_requested_examined_and_revision_scope (tests.test_e01_output_contract.OutputContractTests.test_all_full_formats_expose_requested_examined_and_revision_scope) ... ok
+test_baseline_history_is_not_current_sarif_result (tests.test_e01_output_contract.OutputContractTests.test_baseline_history_is_not_current_sarif_result) ... ok
+test_cli_render_overflow_returns_schema_valid_failure_all_formats (tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats) ... ok
+test_explicit_diff_profile_disclaims_semantic_correctness_security (tests.test_e01_output_contract.OutputContractTests.test_explicit_diff_profile_disclaims_semantic_correctness_security) ... ok
+test_failure_variant_present_in_sarif_properties (tests.test_e01_output_contract.OutputContractTests.test_failure_variant_present_in_sarif_properties) ... ok
+test_incomplete_discovery_not_rendered_complete (tests.test_e01_output_contract.OutputContractTests.test_incomplete_discovery_not_rendered_complete) ... ok
+test_markdown_visibly_escapes_controls_bidi_links_and_paths (tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths) ... ok
+test_sarif_uri_roundtrip_and_deleted_side (tests.test_e01_output_contract.OutputContractTests.test_sarif_uri_roundtrip_and_deleted_side) ... ok
+test_cli_help (tests.test_cli.TestCLI.test_cli_help) ... ok
+test_explicit_diff_profile_scope_statement (tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement) ... ok
+test_stdout_machine_format_stderr_diagnostics (tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics) ... ok
+test_structural_python_complete (tests.test_cli.TestCLI.test_structural_python_complete) ... ok
+test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
+test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
+test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
+test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
+
+----------------------------------------------------------------------
+Ran 19 tests in 2.001s
+
+OK

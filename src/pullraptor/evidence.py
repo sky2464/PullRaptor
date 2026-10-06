@@ -1,6 +1,7 @@
 """PullRaptor evidence accumulation, finding alignment, and policy decision logic."""
 
 from __future__ import annotations
+from dataclasses import replace
 
 from pullraptor.models import (
     Config,
@@ -23,7 +24,7 @@ def accumulate(evidence: tuple[Evidence, ...]) -> tuple[bool, bool]:
 
     first = evidence[0]
     for e in evidence[1:]:
-        if e.claim_key != first.claim_key or e.context != first.context:
+        if e.claim_key != first.claim_key or e.context != first.context or e.claim_type != first.claim_type:
             raise ValueError(
                 f"Cannot accumulate evidence across different claims or contexts: "
                 f"({first.claim_key}, {first.context}) vs ({e.claim_key}, {e.context})"
@@ -65,15 +66,22 @@ def align_findings(
             for f in head
         )
 
-    base_map: dict[tuple[str, str, str, str, str], Finding] = {
-        (f.rule, f.version, f.obligation, f.anchor, f.span.path): f for f in base
-    }
+    def identity(f: Finding):
+        return (f.rule, f.version, f.obligation, f.anchor, f.span.path)
+    base_map = {}
+    head_counts = {}
+    for finding in base:
+        base_map.setdefault(identity(finding), []).append(finding)
+    for finding in head:
+        head_counts[identity(finding)] = head_counts.get(identity(finding), 0) + 1
 
     aligned: list[Finding] = []
     for hf in head:
         key = (hf.rule, hf.version, hf.obligation, hf.anchor, hf.span.path)
-        if key in base_map:
-            bf = base_map[key]
+        if len(base_map.get(key, ())) > 1 or head_counts[key] > 1:
+            delta = evidence_delta = "unknown"
+        elif key in base_map:
+            bf = base_map[key][0]
             delta = "persisting"
             evidence_delta = "unchanged" if hf.witness == bf.witness else "changed"
         else:
@@ -98,6 +106,8 @@ def align_findings(
             )
         )
 
+    aligned.extend(replace(f, delta="no_longer_detected", evidence_delta="removed")
+                   for f in base if identity(f) not in head_counts)
     return tuple(aligned)
 
 
@@ -109,6 +119,8 @@ def validate_receipts(
     expected_map = {entry.key: entry for entry in contract.expected_scope}
     seen_keys: set[str] = set()
     diagnostics: list[Diagnostic] = []
+    if len(expected_map) != len(contract.expected_scope):
+        diagnostics.append(Diagnostic("DUPLICATE_SCOPE", "Coordinator scope contains duplicate identities.", cause="duplicate_scope"))
 
     for r in receipts:
         if r.contract_digest != contract.policy_digest:
@@ -186,6 +198,8 @@ def decide(
     # 2: Check completeness of scope and analysis
     if not contract.discovery_complete:
         return 2
+    if validate_receipts(contract, receipts):
+        return 2
 
     # Receipt validation failure
     receipt_validation_codes = {
@@ -209,7 +223,7 @@ def decide(
 
     # 1: Check for active blockers (must be supported and not conflicted)
     for f in findings:
-        if f.policy_class == "blocker" and f.state == "supported":
+        if f.span.side == "head" and f.policy_class == "blocker" and f.state == "supported":
             return 1
 
     # 0: Complete with no blockers

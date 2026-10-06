@@ -1,0 +1,25 @@
+{
+  "repository_id": "owner/repo",
+  "pr_number": 1,
+  "workflow_id": "wf-1",
+  "run_id": "run-1",
+  "artifact_digest": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "reviewer_digest": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "base_tip": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "comparison_base": "cccccccccccccccccccccccccccccccccccccccc",
+  "policy_digest": "pol1",
+  "config_digest": "cfg1",
+  "tool_digest": "tool1",
+  "profile": "structural",
+  "scope_digest": "23badf2d066bdfb1450c20e210d1c5a8a45a99d663f7f02632ad6eab85f21f88",
+  "report_digest": "e7d17d0cff1dc3bbd9b25e4b187821a9ed31d67c7b43d06014d6b7fdd9a85401",
+  "permitted_ranges": [
+    {
+      "path": "app.py",
+      "side": "head",
+      "start_line": 1,
+      "end_line": 3
+    }
+  ]
+}
