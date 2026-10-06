@@ -726,7 +726,7 @@
       "title": "Validate patch-beta updates and rollback against accepted prior artifact",
       "owner_role": "Maintenance/release owner",
       "mode": "implement/verify",
-      "status": "pending",
+      "status": "partial",
       "depends_on": [
         "BR-17"
       ],
@@ -748,9 +748,9 @@
       ],
       "completion": "Patch-release update/rollback evidence accepted for the claimed profiles; never fabricate prior acceptance.",
       "operation_gate": "Conditional: subsequent beta/update/rollback claim; not a first-beta blocker",
-      "evidence_status": "not_run",
+      "evidence_status": "partial",
       "review_owner": "Coordinator assigns a reviewer independent of the implementer",
-      "next_action": "Before a subsequent beta or update/rollback promise, use the independently accepted initial artifact as prior-version fixture; test update, interrupted update, rollback and report preservation.",
+      "next_action": "Complete interrupted-update and full installed-artifacts suite logs; independent review before advertising rollback.",
       "allowed_modify_paths": [
         "docs/releases/beta-0.1-maintenance.md",
         "docs/acceptance/artifacts/E07/install/"

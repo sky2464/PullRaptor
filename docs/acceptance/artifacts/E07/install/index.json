@@ -1,0 +1,8 @@
+{
+  "card_id": "BR-18",
+  "evidence_status": "partial",
+  "prior_artifact": "../prior_accepted_artifact.json",
+  "maintenance_procedure": "../../../releases/beta-0.1-maintenance.md",
+  "rehearsal_log": "br18-rehearsal-log.txt",
+  "claim_limit": "Reinstall rollback only; does not authorize 0.1.0b2 tag or customer rollback marketing without independent review."
+}

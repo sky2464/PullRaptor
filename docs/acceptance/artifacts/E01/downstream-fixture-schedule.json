@@ -1,12 +1,12 @@
 {
   "kind": "downstream_fixture_schedule",
-  "date": "2026-10-03",
+  "date": "2026-10-06",
   "source_artifacts": [
     "docs/acceptance/artifacts/E01/requirement-assertion-fixture-map.json",
     "docs/acceptance/artifacts/E01/2026-10-03-cache-output-assertion-map.md"
   ],
   "mapping_source_revision": "132f817e96dfd9de21051c9389a7112b6dc6f084",
-  "document_revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
+  "document_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
   "acceptance_criteria": {
     "E01-A1": "not_run",
     "E01-A2": "not_run",

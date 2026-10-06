@@ -1,6 +1,6 @@
 {
-  "collected_at": "2026-10-03T22:11:20.654936+00:00",
-  "revision": "e4010efcb22e2c576b84c5f4aae77c03d1ddca24",
+  "collected_at": "2026-10-06T04:24:19.814581+00:00",
+  "revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
   "tests": [
     {
       "module": "test_ai_adapter",
@@ -163,6 +163,61 @@
       "test": "test_request_ai_proposals_via_transport_wrapper"
     },
     {
+      "module": "test_azure_connector",
+      "class": "TestAzureConnector",
+      "test": "test_wrong_org_repository_denied"
+    },
+    {
+      "module": "test_azure_connector",
+      "class": "TestAzureConnector",
+      "test": "test_iteration_exact_binding"
+    },
+    {
+      "module": "test_azure_connector",
+      "class": "TestAzureConnector",
+      "test": "test_same_head_target_policy_drift"
+    },
+    {
+      "module": "test_azure_connector",
+      "class": "TestAzureConnector",
+      "test": "test_expired_credentials_unavailable"
+    },
+    {
+      "module": "test_azure_connector",
+      "class": "TestAzureConnector",
+      "test": "test_event_refs_not_authoritative"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_publish_help_refuses_without_dev_override"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_publish_script_refuses_without_dev_override"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_mcp_script_refuses_without_dev_override"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_cli_mcp_flag_refuses"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_cli_staged_refuses"
+    },
+    {
+      "module": "test_beta_entrypoints",
+      "class": "TestBetaEntrypoints",
+      "test": "test_dev_override_allows_publish_parse_path"
+    },
+    {
       "module": "test_cache",
       "class": "TestCache",
       "test": "test_clean_warm_corrupt_cache_identical"
@@ -201,6 +256,16 @@
       "module": "test_ci_template",
       "class": "TestCiTemplate",
       "test": "test_missing_isolation_refuses_hostile_profile"
+    },
+    {
+      "module": "test_ci_template",
+      "class": "TestCiTemplate",
+      "test": "test_actual_egress_filesystem_credential_controls"
+    },
+    {
+      "module": "test_ci_template",
+      "class": "TestCiTemplate",
+      "test": "test_report_artifact_origin_replay_denied"
     },
     {
       "module": "test_cli",
@@ -378,6 +443,61 @@
       "test": "test_customer_no_source_clone"
     },
     {
+      "module": "test_e01_offline_boundaries",
+      "class": "TestE01OfflineBoundaries",
+      "test": "test_review_cli_does_not_open_sockets"
+    },
+    {
+      "module": "test_e01_offline_boundaries",
+      "class": "TestE01OfflineBoundaries",
+      "test": "test_subprocess_cli_offline_smoke"
+    },
+    {
+      "module": "test_e01_requirement_map",
+      "class": "TestE01RequirementMap",
+      "test": "test_complete_requirement_inventory"
+    },
+    {
+      "module": "test_e01_requirement_map",
+      "class": "TestE01RequirementMap",
+      "test": "test_task7_task8_overlay_covers_planned_names"
+    },
+    {
+      "module": "test_e01_requirement_map",
+      "class": "TestE01RequirementMap",
+      "test": "test_no_acceptance_pass_claims"
+    },
+    {
+      "module": "test_e01_requirement_map",
+      "class": "TestE01RequirementMap",
+      "test": "test_historical_blob_changes_marked_stale_field_present"
+    },
+    {
+      "module": "test_enterprise_identity",
+      "class": "TestEnterpriseIdentity",
+      "test": "test_wrong_issuer_audience_expiry"
+    },
+    {
+      "module": "test_enterprise_identity",
+      "class": "TestEnterpriseIdentity",
+      "test": "test_same_email_cross_tenant_denied"
+    },
+    {
+      "module": "test_enterprise_identity",
+      "class": "TestEnterpriseIdentity",
+      "test": "test_each_report_cache_repo_permission"
+    },
+    {
+      "module": "test_enterprise_identity",
+      "class": "TestEnterpriseIdentity",
+      "test": "test_deprovision_and_key_rotation"
+    },
+    {
+      "module": "test_enterprise_identity",
+      "class": "TestEnterpriseIdentity",
+      "test": "test_stale_grants_before_publish_denied"
+    },
+    {
       "module": "test_evidence",
       "class": "TestEvidence",
       "test": "test_all_evidence_accumulations"
@@ -426,6 +546,91 @@
       "module": "test_evidence",
       "class": "TestEvidence",
       "test": "test_incomplete_precedes_finding_exit"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_install_matrix_present"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_install_matrix_inventory_alignment"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_install_matrix_honest_profile_states"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_offline_wheel_sdist_install"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_offline_wheel_and_image"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_fresh_venv_without_repo_clone"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_no_source_checkout_on_import_path"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_installed_entrypoints"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_installed_completed_report_canonical_equal"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_source_wheel_container_canonical_equal"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_installed_partial_diagnostics_preserved"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_install_interrupt_recovery"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_first_install_without_prior_release"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_uninstall_no_credentials_remnants"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_update_rollback_prior_accepted_artifact"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_installed_profile_footprint"
+    },
+    {
+      "module": "test_installed_artifacts",
+      "class": "TestInstalledArtifacts",
+      "test": "test_installed_kernel_byte_footprint"
     },
     {
       "module": "test_kernel",
@@ -515,6 +720,31 @@
     {
       "module": "test_local_snapshot",
       "class": "TestLocalSnapshot",
+      "test": "test_capture_executable_mode_exact"
+    },
+    {
+      "module": "test_local_snapshot",
+      "class": "TestLocalSnapshot",
+      "test": "test_parent_symlink_refused"
+    },
+    {
+      "module": "test_local_snapshot",
+      "class": "TestLocalSnapshot",
+      "test": "test_capture_aggregate_limit_incomplete"
+    },
+    {
+      "module": "test_local_snapshot",
+      "class": "TestLocalSnapshot",
+      "test": "test_unmerged_index_incomplete"
+    },
+    {
+      "module": "test_local_snapshot",
+      "class": "TestLocalSnapshot",
+      "test": "test_staged_index_changes_during_capture_incomplete"
+    },
+    {
+      "module": "test_local_snapshot",
+      "class": "TestLocalSnapshot",
       "test": "test_worktree_gitdir_file_supported"
     },
     {
@@ -581,6 +811,41 @@
       "module": "test_mcp_server",
       "class": "TestMCPServer",
       "test": "test_mcp_event_loop_io"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_cross_repo_session_report_denied"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_no_implicit_review_on_get"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_duplicate_keys_unknown_fields_rejected"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_oversized_message_bounded"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_eviction_explicit"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessions",
+      "test": "test_version_negotiation_strict"
+    },
+    {
+      "module": "test_mcp_sessions",
+      "class": "TestMCPSessionReviewFlow",
+      "test": "test_review_then_get_findings_by_digest"
     },
     {
       "module": "test_models",
@@ -678,6 +943,36 @@
       "test": "test_prohibit_unknown_authority_fields"
     },
     {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_old_blob_mode_mismatch"
+    },
+    {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_stale_head"
+    },
+    {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_traversal_symlink_and_submodule_denied"
+    },
+    {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_workflow_policy_path_denied"
+    },
+    {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_exact_no_fuzz_application"
+    },
+    {
+      "module": "test_patches",
+      "class": "TestPatches",
+      "test": "test_rename_delete_not_admitted"
+    },
+    {
       "module": "test_process",
       "class": "TestProcess",
       "test": "test_run_bounded_success"
@@ -718,6 +1013,16 @@
       "test": "test_stdin_over_cap_rejected_before_launch"
     },
     {
+      "module": "test_publication_binding_fixtures",
+      "class": "TestPublicationBindingFixtures",
+      "test": "test_manifest_lists_replay_files"
+    },
+    {
+      "module": "test_publication_binding_fixtures",
+      "class": "TestPublicationBindingFixtures",
+      "test": "test_fixture_scenarios_match_validator"
+    },
+    {
       "module": "test_publication_contract",
       "class": "TestPublicationContract",
       "test": "test_base_policy_changed_same_head"
@@ -741,6 +1046,26 @@
       "module": "test_publication_contract",
       "class": "TestPublicationContract",
       "test": "test_deleted_side_location"
+    },
+    {
+      "module": "test_publication_contract",
+      "class": "TestPublicationContract",
+      "test": "test_report_contract_context_mismatch_denied"
+    },
+    {
+      "module": "test_publication_contract",
+      "class": "TestPublicationContract",
+      "test": "test_incomplete_receipts_no_inline"
+    },
+    {
+      "module": "test_publication_contract",
+      "class": "TestPublicationContract",
+      "test": "test_scope_capability_revision_collision_denied"
+    },
+    {
+      "module": "test_publication_contract",
+      "class": "TestPublicationContract",
+      "test": "test_invalid_side_range_or_deleted_location_denied"
     },
     {
       "module": "test_publication_contract",
@@ -781,6 +1106,41 @@
       "module": "test_publication_lifecycle",
       "class": "TestPublicationLifecycle",
       "test": "test_ten_inline_cap_full_summary"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestArtifactReceipt",
+      "test": "test_report_artifact_origin_replay_denied"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestArtifactReceipt",
+      "test": "test_matching_receipt_authorized"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestIsolationAdmission",
+      "test": "test_actual_egress_filesystem_credential_controls"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestIsolationAdmission",
+      "test": "test_refuse_unavailable_hostile_exits_nonzero"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestIsolationAdmission",
+      "test": "test_probe_cli_refuses_without_controls"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestCiWorkflowPolicy",
+      "test": "test_head_cannot_elevate_permissions"
+    },
+    {
+      "module": "test_publication_trust",
+      "class": "TestCiWorkflowPolicy",
+      "test": "test_verify_dev_ci_against_repo"
     },
     {
       "module": "test_publisher",
@@ -835,7 +1195,37 @@
     {
       "module": "test_publisher",
       "class": "TestPublisher",
+      "test": "test_actual_lost_post_response_no_duplicate_write"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_owned_comment_pagination_bounded"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_foreign_marker_not_updated_by_publisher"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
+      "test": "test_rate_limit_deferred_receipt"
+    },
+    {
+      "module": "test_publisher",
+      "class": "TestPublisher",
       "test": "test_publication_failure_preserves_report"
+    },
+    {
+      "module": "test_publisher_fixture_scenarios",
+      "class": "TestPublisherFixtureScenarios",
+      "test": "test_manifest_lists_scenarios"
+    },
+    {
+      "module": "test_publisher_fixture_scenarios",
+      "class": "TestPublisherFixtureScenarios",
+      "test": "test_fixture_scenarios"
     },
     {
       "module": "test_python_facts",
@@ -1078,6 +1468,66 @@
       "test": "test_py003_negatives"
     },
     {
+      "module": "test_secret_patterns",
+      "class": "TestSecretPatterns",
+      "test": "test_secret_never_in_report_log_cache"
+    },
+    {
+      "module": "test_secret_patterns",
+      "class": "TestSecretPatterns",
+      "test": "test_examples_and_placeholders_advisory"
+    },
+    {
+      "module": "test_secret_patterns",
+      "class": "TestSecretPatterns",
+      "test": "test_high_entropy_not_verified_credential"
+    },
+    {
+      "module": "test_secret_patterns",
+      "class": "TestSecretPatterns",
+      "test": "test_unicode_location"
+    },
+    {
+      "module": "test_secret_patterns",
+      "class": "TestSecretPatterns",
+      "test": "test_no_remote_probe"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_sanitizer_only_return_value"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_wrong_context_sanitizer"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_ambiguous_alias_weak_update"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_unknown_call_propagates"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_loop_monotone_converges"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_transfer_cap_partial"
+    },
+    {
+      "module": "test_security_flow",
+      "class": "TestSecurityFlow",
+      "test": "test_cfg_exhausted_shared_deadline"
+    },
+    {
       "module": "test_service_api",
       "class": "TestServiceAPIContracts",
       "test": "test_arbitrary_url_path_denied"
@@ -1101,6 +1551,36 @@
       "module": "test_service_api",
       "class": "TestServiceAPIContracts",
       "test": "test_sdk_coverage_roundtrip"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_idempotency_all_semantic_inputs"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_tenant_key_collision_denied"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_cancel_worker_race"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_crash_recovery_partial"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_report_write_failure_not_completed"
+    },
+    {
+      "module": "test_service_jobs",
+      "class": "TestServiceJobs",
+      "test": "test_queue_storage_quota"
     },
     {
       "module": "test_snapshot",
@@ -1161,9 +1641,34 @@
       "module": "test_working_tree",
       "class": "TestWorkingTreeSnapshots",
       "test": "test_cli_workdir_flag"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_cli_untracked_default_excluded"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_cli_untracked_explicit_opt_in"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_mcp_local_snapshot_uses_current_capture"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_cli_mcp_local_snapshot_canonical_equal"
+    },
+    {
+      "module": "test_working_tree",
+      "class": "TestWorkingTreeSnapshots",
+      "test": "test_local_partial_receipt_survives_adapter"
     }
   ],
-  "test_count": 232,
+  "test_count": 333,
   "inventory": {
     "production_modules": [
       "__init__.py",
@@ -1171,6 +1676,8 @@
       "ai_adapter.py",
       "ai_context.py",
       "ai_transport.py",
+      "azure_connector.py",
+      "beta_admission.py",
       "cache.py",
       "config.py",
       "conversation.py",
@@ -1181,21 +1688,29 @@
       "language_workers.py",
       "local_snapshot.py",
       "mcp_server.py",
+      "mcp_sessions.py",
       "models.py",
       "parser_worker.py",
+      "patches.py",
       "process.py",
       "publication_contract.py",
       "publication_lifecycle.py",
+      "publication_transport.py",
+      "publication_trust.py",
       "publisher.py",
+      "python_cfg.py",
       "python_facts.py",
       "python_ir.py",
       "python_lowering.py",
       "release_provenance.py",
       "render.py",
-      "rules.py"
+      "review_execution.py",
+      "rules.py",
+      "secret_patterns.py",
+      "security_flow.py"
     ],
-    "production_module_count": 27,
-    "production_line_count": 7408,
+    "production_module_count": 37,
+    "production_line_count": 10450,
     "runtime_dependencies": [],
     "python_baseline": "3.12.x"
   }

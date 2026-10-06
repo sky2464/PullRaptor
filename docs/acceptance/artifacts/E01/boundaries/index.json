@@ -1,8 +1,8 @@
 {
   "card_id": "E01-T9-RECORDS",
-  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
-  "evidence_status": "development_passed",
-  "offline_network_receipt": "docs/acceptance/artifacts/E01/boundaries/offline-network-receipt.json",
-  "focused_log": "docs/acceptance/artifacts/E01/boundaries/focused-boundary.log",
-  "independent_acceptance": "pending_BR-07"
+  "code_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
+  "evidence_status": "development_verified_partial",
+  "validation_log": "boundaries/validation-log.txt",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_models tests.test_config tests.test_process tests.test_snapshot tests.test_diff tests.test_python_facts tests.test_evidence",
+  "claim_limit": "Does not pass E01-A1\u2013A3; beta subset only accepted."
 }

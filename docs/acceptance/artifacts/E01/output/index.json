@@ -1,7 +1,8 @@
 {
   "card_id": "E01-T9-OUTPUT",
-  "artifact_directory": "output",
-  "scheduled_rows": 27,
-  "evidence_status": "not_run",
-  "claim_limit": "Placeholder until the assigned card saves fixtures and raw outputs."
+  "code_revision": "9ab52bf55a71b16a3bd36af1993c993e2cc08dc1",
+  "evidence_status": "development_verified_partial",
+  "validation_log": "output/validation-log.txt",
+  "validation_command": "PYTHONPATH=src python3.12 -m unittest tests.test_cli tests.test_render tests.test_models tests.test_config",
+  "claim_limit": "Does not pass E01-A1\u2013A3; beta subset only accepted."
 }

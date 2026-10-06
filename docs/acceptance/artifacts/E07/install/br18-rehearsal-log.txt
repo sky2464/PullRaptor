@@ -1,0 +1,7 @@
+test_br18_prior_wheel_reinstall_rollback (tests.test_installed_artifacts.TestInstalledArtifacts.test_br18_prior_wheel_reinstall_rollback) ... ok
+test_update_rollback_prior_accepted_artifact (tests.test_installed_artifacts.TestInstalledArtifacts.test_update_rollback_prior_accepted_artifact) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 2.241s
+
+OK
