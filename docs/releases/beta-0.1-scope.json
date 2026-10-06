@@ -1,9 +1,10 @@
 {
   "schema": "pullraptor-beta-scope/1",
   "human_label": "beta-0.1.x",
-  "date": "2026-10-05",
-  "status": "proposed_pending_maintainer",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "date": "2026-10-06",
+  "status": "maintainer_approved",
+  "source_revision": "f834f19e9b48c90fea35338c6940004b6a5fc459",
+  "code_head_at_assignment": "d56aae623e1daaedb2127f2607761c5198e29f12",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
   "package_version_proposed": "0.1.0b1",
   "package_version_current_metadata": "0.3.0",
@@ -81,10 +82,13 @@
   },
   "owners": {
     "release_maintainer": "human_coordinator",
-    "evidence_owner": "feat/beta-0.1-release-readiness_implementer",
-    "independent_e01_reviewer": "unassigned",
-    "independent_e07_reviewer": "unassigned",
-    "publication_operator": "unassigned"
+    "publication_operator": "human_coordinator",
+    "publication_channel": "github.com/sky2464/PullRaptor/releases",
+    "evidence_owner": "implementer_prs_55_58",
+    "implementer_exclusion": "Authors/reviewers of PRs #55-#58 and this acceptance branch",
+    "independent_e01_reviewer": "sme_reviewer_agent_e01_2026_10_06",
+    "independent_e07_reviewer": "sme_reviewer_agent_e07_2026_10_06",
+    "reviewer_persona": "docs/personas/reviewer.md"
   },
   "evidence_documents": [
     "docs/releases/beta-0.1-decisions.md",

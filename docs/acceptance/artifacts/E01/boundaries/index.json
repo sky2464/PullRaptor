@@ -1,6 +1,6 @@
 {
   "card_id": "E01-T9-RECORDS",
-  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
   "evidence_status": "development_passed",
   "offline_network_receipt": "docs/acceptance/artifacts/E01/boundaries/offline-network-receipt.json",
   "focused_log": "docs/acceptance/artifacts/E01/boundaries/focused-boundary.log",

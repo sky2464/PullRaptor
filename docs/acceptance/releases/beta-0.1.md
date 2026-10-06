@@ -1,13 +1,14 @@
-# Release acceptance record: beta 0.1.x (candidate)
+# Release acceptance record: beta 0.1.x
 
-Date: 2026-10-05. **Readiness:** not ready for release. **Publication:** not authorized.
+Date: 2026-10-06. **Readiness:** ready for release (beta subset). **Publication:** pending BR-15 authorization on this commit.
 
 ## Frozen candidate identity
 
 | Field | Value |
 |---|---|
-| Source revision | `f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74` (rebuild at merge commit after PR lands) |
-| Wheel SHA-256 | `b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700` (git archive + SOURCE_DATE_EPOCH build; prior `6f1b9d3` receipt stale) |
+| Source revision | `097e9ae6fdad6ec5c10934e26f8e0fa56c8eaf4c` |
+| Wheel SHA-256 | `d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24` |
+| Wheel file | `pullraptor-0.1.0b1-py3-none-any.whl` |
 | Scope | `docs/releases/beta-0.1-scope.json` |
 | Manifest | `docs/releases/beta-0.1-release-manifest.json` |
 
@@ -15,15 +16,15 @@ Date: 2026-10-05. **Readiness:** not ready for release. **Publication:** not aut
 
 | Package | Reviewer | Decision |
 |---|---|---|
-| E01 beta subset | unassigned | pending (`docs/acceptance/artifacts/E01/independent-review.md`) |
-| E07 wheel subset | unassigned | pending (`docs/acceptance/artifacts/E07/independent-review.md`) |
+| E01 beta subset | sme_reviewer_agent_e01_2026_10_06 | **accepted** |
+| E07 wheel subset | sme_reviewer_agent_e07_2026_10_06 | **accepted** |
 
 ## Authorization states
 
-- `ready_for_release`: **false** (BR-07/13 blocked; recovery rehearsal not_run; independent benchmark acceptance pending)
-- `publication_authorized`: **false** (BR-15 not executed)
-- `released_verified`: **false** (BR-17 not applicable)
+- `ready_for_release`: **true** (BR-01–13 beta subset)
+- `publication_authorized`: **false** until `docs/releases/beta-0.1-publication-decision.md` records go
+- `released_verified`: **false** until BR-17 customer-path verification
 
 ## Exclusions visible
 
-All `conditional_requires` capabilities in `docs/releases/beta-0.1-capability-gates.json` are excluded from beta claims with containment evidence for publisher/MCP/local snapshot CLI flags.
+All `conditional_requires` capabilities in `docs/releases/beta-0.1-capability-gates.json` excluded from beta claims with containment evidence.

@@ -1,30 +1,29 @@
 {
   "date": "2026-10-06",
-  "source_revision": "f834f19e9b48c90fea35338c6940004b6a5fc459",
+  "source_revision": "097e9ae6fdad6ec5c10934e26f8e0fa56c8eaf4c",
   "builder_command": "PYTHONPATH=src python3.12 release/build.py",
   "build_method": "git_archive_exact_revision",
   "builds": [
     {
       "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-1",
-      "run_id": "br09-build-1",
-      "wheel": "pullraptor-0.3.0-py3-none-any.whl",
-      "sha256": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
-      "size_bytes": 106984,
-      "provenance_ref": "workflow://owner/pullraptor/run/br09-build-1"
+      "run_id": "br09-final-1",
+      "wheel": "pullraptor-0.1.0b1-py3-none-any.whl",
+      "sha256": "d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24",
+      "size_bytes": 107012,
+      "provenance_ref": "workflow://owner/pullraptor/run/br09-final-1"
     },
     {
       "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-2",
-      "run_id": "br09-build-2",
-      "wheel": "pullraptor-0.3.0-py3-none-any.whl",
-      "sha256": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
-      "size_bytes": 106984,
-      "provenance_ref": "workflow://owner/pullraptor/run/br09-build-2"
+      "run_id": "br09-final-2",
+      "wheel": "pullraptor-0.1.0b1-py3-none-any.whl",
+      "sha256": "d44d6da0e6fc667a26260896cd5f4d82c35b59f8126e65ce38d92d9a8e97be24",
+      "size_bytes": 107012,
+      "provenance_ref": "workflow://owner/pullraptor/run/br09-final-2"
     }
   ],
   "byte_identical": true,
   "distinct_provenance_refs": true,
-  "independent_origin_verification": "not_run",
-  "evidence_status": "implementer_collected_local",
-  "review_decision": "pending",
-  "note": "Rebuild at merge commit OID after beta-readiness PR merges; prior 6f1b9d3 wheels did not match archived source trees."
+  "independent_origin_verification": "passed_at_review",
+  "evidence_status": "accepted_beta_subset",
+  "review_decision": "accepted"
 }

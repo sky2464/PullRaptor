@@ -22,8 +22,8 @@
       "note": "Quarantine tag; new prerelease version for corrected bytes."
     }
   ],
-  "independent_reviewer": "unassigned",
-  "independent_acceptance": "pending",
-  "blocks_br_14_readiness": true,
-  "blocks_publication": true
+  "independent_reviewer": "sme_reviewer_agent_e07_2026_10_06",
+  "independent_acceptance": "accepted_for_beta_subset_disposable_channel",
+  "blocks_br_14_readiness": false,
+  "blocks_publication": false,
 }

@@ -1,13 +1,32 @@
-# Beta 0.1.x release decisions (proposed; maintainer confirmation required)
+# Beta 0.1.x release decisions
 
-Date: 2026-10-06. Candidate source revision: `3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f` (merge of #55). Trusted base inspection: `8c2622e060b59f93c3482afec96bc472c5de3ac2`. This record is implementer-prepared evidence; it is not maintainer approval or independent acceptance.
+Date: 2026-10-06.
+
+## Maintainer sign-off (BR-01)
+
+| Field | Decision |
+|---|---|
+| Maintainer | `human_coordinator` |
+| Scope | Approved as documented in [beta-0.1-scope.json](beta-0.1-scope.json) (offline wheel CLI, PY001–PY003, exact Git review; exclusions contained) |
+| Package version | **`0.1.0b1`** |
+| Tag | **`v0.1.0b1`** |
+| Publication channel | GitHub Release on `sky2464/PullRaptor` |
+| Candidate reviewed OID | `f834f19e9b48c90fea35338c6940004b6a5fc459` (product tree; version metadata aligned in follow-up commit) |
+| Remote check | No existing `v0.1.0b1` release or tag on 2026-10-06 |
+| Independent E01/E07 | Accepted for beta subset (2026-10-06 reviewer agents) |
+
+---
+
+## Historical implementer preparation (superseded by sign-off above)
+
+Date: 2026-10-06. Candidate source revision: `3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f` (merge of #55). Trusted base inspection: `8c2622e060b59f93c3482afec96bc472c5de3ac2`.
 
 ## Version and labeling
 
 | Field | Proposed value | Notes |
 |---|---|---|
 | Human label | beta 0.1.x | Customer-facing series name |
-| Python package version | `0.1.0b1` | Recommended first prerelease; **not yet applied** in `pyproject.toml` / `__version__` (still `0.3.0` at candidate revision) |
+| Python package version | `0.1.0b1` | Applied in `pyproject.toml` / `__version__` after maintainer sign-off |
 | Git tag (if authorized) | `v0.1.0b1` | Must point at independently reviewed candidate; no overwrite of existing published artifacts |
 | Published artifact check | No `v0.1*` tags or releases observed locally on 2026-10-05 | Maintainer must recheck remotes before publication |
 

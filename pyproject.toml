@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools==84.0.0", "wheel==0.48.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pullraptor"
-version = "0.3.0"
+version = "0.1.0b1"
 description = "Deterministic offline pull request reviewer with verified coverage"
 readme = "README.md"
 requires-python = ">=3.12,<3.13"

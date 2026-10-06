@@ -4,7 +4,7 @@
   "tests": [
     "tests/test_e01_offline_boundaries.py"
   ],
-  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
   "result": "passed",
   "note": "Development verification; independent BR-03 acceptance remains separate."
 }

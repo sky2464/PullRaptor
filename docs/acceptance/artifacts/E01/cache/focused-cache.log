@@ -8,6 +8,6 @@ test_review_with_finding (tests.test_kernel.TestKernel.test_review_with_finding)
 test_unresolved_import_incomplete_exit2 (tests.test_kernel.TestKernel.test_unresolved_import_incomplete_exit2) ... ok
 
 ----------------------------------------------------------------------
-Ran 8 tests in 1.356s
+Ran 8 tests in 1.445s
 
 OK
