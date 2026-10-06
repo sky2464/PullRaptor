@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
   "synthetic_10k_fixture": {
-    "status": "not_run",
+    "status": "development_measured",
     "requirements": {
       "entries": 10000,
       "total_bytes": 134217728,
@@ -11,14 +11,14 @@
       "changed_python_files_max": 20,
       "changed_lines_max": 2000
     },
-    "generator": "not_implemented_at_candidate_revision"
+    "generator": "scripts/generate_e01_synthetic_10k_fixture.py"
   },
   "micro_fixture_evidence": "docs/acceptance/artifacts/E01/micro_benchmark.json",
   "runner_spec": {
     "vcpu": 2,
     "memory_gib": 4,
     "platform": "linux-x86_64",
-    "status": "not_run_for_synthetic_fixture"
+    "status": "development_measured"
   },
   "budgets": {
     "cold_p95_seconds_max": 30,

@@ -5,16 +5,17 @@
   "publication_authorized": false,
   "released_verified": false,
   "date": "2026-10-05",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
   "proposed_package_version": "0.1.0b1",
   "built_package_version_metadata": "0.3.0",
+  "rebuild_note": "Candidate wheels must be rebuilt with release/build.py at the merge commit OID (git archive) after this PR lands; prior 6f1b9d3 receipts were stale.",
   "artifacts": [
     {
       "kind": "wheel",
       "filename": "pullraptor-0.3.0-py3-none-any.whl",
-      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
-      "size_bytes": 119190,
+      "sha256": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
+      "size_bytes": 106984,
       "evidence": "docs/acceptance/artifacts/E07/builds/candidate-1/"
     }
   ],

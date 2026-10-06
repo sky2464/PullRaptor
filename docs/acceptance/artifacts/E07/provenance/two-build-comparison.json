@@ -1,25 +1,30 @@
 {
-  "date": "2026-10-05",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "date": "2026-10-06",
+  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
   "builder_command": "PYTHONPATH=src python3.12 release/build.py",
+  "build_method": "git_archive_exact_revision",
   "builds": [
     {
       "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-1",
       "run_id": "br09-build-1",
       "wheel": "pullraptor-0.3.0-py3-none-any.whl",
-      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
-      "size_bytes": 119190
+      "sha256": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
+      "size_bytes": 106984,
+      "provenance_ref": "workflow://owner/pullraptor/run/br09-build-1"
     },
     {
       "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-2",
       "run_id": "br09-build-2",
       "wheel": "pullraptor-0.3.0-py3-none-any.whl",
-      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
-      "size_bytes": 119190
+      "sha256": "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700",
+      "size_bytes": 106984,
+      "provenance_ref": "workflow://owner/pullraptor/run/br09-build-2"
     }
   ],
   "byte_identical": true,
+  "distinct_provenance_refs": true,
   "independent_origin_verification": "not_run",
   "evidence_status": "implementer_collected_local",
-  "review_decision": "pending"
+  "review_decision": "pending",
+  "note": "Rebuild at merge commit OID after beta-readiness PR merges; prior 6f1b9d3 wheels did not match archived source trees."
 }

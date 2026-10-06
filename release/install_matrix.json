@@ -10,7 +10,8 @@
       "artifact_kinds": ["wheel"],
       "offline": true,
       "state": "not_run",
-      "notes": "Fresh Linux x86_64 venv install not measured on the construction host; offline wheel protocol covered in development tests."
+      "ci_smoke_workflow": ".github/workflows/ci.yml",
+      "notes": "Fresh Linux x86_64 venv install validated in CI on push; committed receipt uploaded as workflow artifact until BR-10 independent acceptance."
     },
     {
       "id": "python-3.12-macos-arm64-venv",
@@ -20,7 +21,7 @@
       "artifact_kinds": ["wheel"],
       "offline": true,
       "state": "development_verified",
-      "evidence_revision": "0000000000000000000000000000000000000000",
+      "evidence_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
       "evidence_platform": "darwin-arm64",
       "notes": "Development host runs offline wheel install and canonical equivalence checks; not independent clean-machine acceptance."
     },

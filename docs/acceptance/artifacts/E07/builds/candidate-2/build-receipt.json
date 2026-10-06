@@ -1,13 +1,14 @@
 {
   "artifact_digests": [
-    "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e"
+    "b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700"
   ],
+  "build_method": "git_archive_exact_revision",
   "builder_command": "PYTHONPATH=src python3.12 release/build.py",
   "candidate_only": true,
   "manifest_path": "manifest.json",
   "product_acceptance": "pending",
   "repository_id": "owner/pullraptor",
   "run_id": "br09-build-2",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
-  "workflow_digest": "wf-beta-local"
+  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
+  "workflow_digest": "wf-beta-local-rebuild"
 }
