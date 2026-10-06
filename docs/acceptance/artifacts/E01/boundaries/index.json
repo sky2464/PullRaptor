@@ -1,13 +1,8 @@
 {
   "card_id": "E01-T9-RECORDS",
-  "artifact_directory": "boundaries",
-  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
-  "evidence_status": "partial",
-  "development_verification": {
-    "command": "PYTHONPATH=src python3.12 -m unittest discover -s tests -v",
-    "log": "docs/acceptance/artifacts/E01/unittest_discover_verbose.log",
-    "focused_log": "docs/acceptance/artifacts/E01/br03-06-focused.log",
-    "result": "passed_384_tests_1_skipped_at_collection"
-  },
-  "gaps": ["End-to-end socket/DNS denial receipt", "Dedicated tests/fixtures/e01/boundaries raw fixtures"]
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "evidence_status": "development_passed",
+  "offline_network_receipt": "docs/acceptance/artifacts/E01/boundaries/offline-network-receipt.json",
+  "focused_log": "docs/acceptance/artifacts/E01/boundaries/focused-boundary.log",
+  "independent_acceptance": "pending_BR-07"
 }

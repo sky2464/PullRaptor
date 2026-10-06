@@ -1,0 +1,102 @@
+name: Beta Linux acceptance
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/e01_benchmark.py"
+      - "scripts/generate_e01_synthetic_10k_fixture.py"
+      - "scripts/ci_beta_install_smoke.sh"
+      - "release/build.py"
+      - ".github/workflows/beta-linux-acceptance.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  linux-benchmark-and-install:
+    name: E01 benchmark and E07 install (linux-x86_64)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Record runner identity
+        run: |
+          python3.12 - <<'PY'
+          import json, os, platform, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          rev = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          out = Path("docs/acceptance/artifacts/E01/benchmark/linux-runner-identity.json")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          payload = {
+              "collected_at": datetime.now(timezone.utc).isoformat(),
+              "source_revision": rev,
+              "runner_label": "ubuntu-24.04",
+              "platform": platform.platform(),
+              "python": platform.python_version(),
+              "cpu_count": os.cpu_count(),
+              "target_profile": "2-vCPU/4-GiB class (GitHub-hosted; not independently pinned hardware)",
+          }
+          out.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Run synthetic 10k benchmark
+        run: PYTHONPATH=src python3.12 scripts/e01_benchmark.py
+
+      - name: Copy linux measurement receipt
+        run: |
+          cp docs/acceptance/artifacts/E01/benchmark/synthetic-10k-measurements.json \
+            docs/acceptance/artifacts/E01/benchmark/linux-runner-measurements.json
+
+      - name: Build release candidate and offline venv install
+        env:
+          PULLRAPTOR_WORKFLOW_DIGEST: ${{ hashFiles('.github/workflows/beta-linux-acceptance.yml') }}
+          PULLRAPTOR_RUN_ID: ${{ github.run_id }}-linux-acceptance
+          PULLRAPTOR_REPOSITORY_ID: ${{ github.repository }}
+        run: |
+          PYTHONPATH=src python3.12 release/build.py --output-dir build/linux-release-candidate
+          python3.12 -m venv /tmp/pr-linux-venv
+          /tmp/pr-linux-venv/bin/pip install --no-index build/linux-release-candidate/*.whl
+          PATH="/tmp/pr-linux-venv/bin:$PATH" bash scripts/ci_beta_install_smoke.sh
+          python3.12 - <<'PY'
+          import glob, hashlib, json, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          wheel = Path(glob.glob("build/linux-release-candidate/*.whl")[0])
+          digest = hashlib.sha256(wheel.read_bytes()).hexdigest()
+          rev = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+          receipt = {
+              "schema": "pullraptor-install-receipt/1",
+              "profile_id": "python-3.12-linux-x86_64-venv",
+              "platform": "linux-x86_64",
+              "runtime": "python-3.12",
+              "operation": "offline_wheel_venv_install",
+              "result": "development_verified",
+              "source_revision": rev,
+              "artifact_digest_sha256": digest,
+              "workflow": "beta-linux-acceptance.yml",
+              "collected_at": datetime.now(timezone.utc).isoformat(),
+              "note": "GitHub-hosted linux-x86_64; independent BR-10 acceptance still required.",
+          }
+          out = Path("docs/acceptance/artifacts/E07/install/linux-x86_64-acceptance.json")
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Upload linux acceptance bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: beta-linux-acceptance-${{ github.run_id }}
+          path: |
+            docs/acceptance/artifacts/E01/benchmark/linux-runner-identity.json
+            docs/acceptance/artifacts/E01/benchmark/linux-runner-measurements.json
+            docs/acceptance/artifacts/E01/benchmark/synthetic-10k-measurements.json
+            docs/acceptance/artifacts/E07/install/linux-x86_64-acceptance.json

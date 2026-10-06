@@ -5,11 +5,11 @@
   "publication_authorized": false,
   "released_verified": false,
   "date": "2026-10-05",
-  "source_revision": "f95fd1b33af5b040fc3fa4ea2e1f1b3604b8fa74",
+  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
   "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
   "proposed_package_version": "0.1.0b1",
   "built_package_version_metadata": "0.3.0",
-  "rebuild_note": "Candidate wheels must be rebuilt with release/build.py at the merge commit OID (git archive) after this PR lands; prior 6f1b9d3 receipts were stale.",
+  "rebuild_note": "Wheels built via git archive at source_revision; merge commit 3f725e3 (#55) plus subsequent acceptance commits require rebuild before publication.",
   "artifacts": [
     {
       "kind": "wheel",

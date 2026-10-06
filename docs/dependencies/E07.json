@@ -2,7 +2,7 @@
   "schema": "pullraptor-dependency-inventory/1",
   "date": "2026-10-03",
   "package": "E07",
-  "code_revision": "6f1b9d3",
+  "code_revision": "3f725e3",
   "measurement_environment": {
     "profile": "cloud-agent-linux-x86_64",
     "python_version": "3.12.3",
@@ -34,11 +34,31 @@
   "build_tools": [
     {
       "name": "setuptools",
-      "version_constraint": ">=61.0",
+      "version": "84.0.0",
+      "version_constraint": "==84.0.0",
       "role": "Wheel/sdist build backend (build-time only)",
       "license": "MIT",
-      "digest": "unknown",
-      "notes": "Exact wheel-house version must be pinned in release build receipts before artifact admission."
+      "digest": "sha256:51a52592b3b99e102b609654876bd65f19f999935166d1352678931132b0c670",
+      "wheel": "setuptools-84.0.0-py3-none-any.whl",
+      "notes": "Pinned for reproducible release candidate builds on Python 3.12."
+    },
+    {
+      "name": "wheel",
+      "version": "0.48.0",
+      "version_constraint": "==0.48.0",
+      "role": "PEP 427 wheel build (build-time only)",
+      "license": "MIT",
+      "digest": "pinned_at_build_host",
+      "notes": "Record exact hash in build receipt when wheel-house is frozen."
+    },
+    {
+      "name": "pip",
+      "version": "26.2.1",
+      "version_constraint": "==26.2.1",
+      "role": "Isolated wheel build invocation (build-time only)",
+      "license": "MIT",
+      "digest": "pinned_at_build_host",
+      "notes": "CI uses actions/setup-python bundled pip; hash recorded per runner receipt."
     }
   ],
   "container_image": {

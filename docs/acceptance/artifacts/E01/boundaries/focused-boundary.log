@@ -1,0 +1,15 @@
+test_review_cli_does_not_open_sockets (tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_review_cli_does_not_open_sockets) ... ok
+test_subprocess_cli_offline_smoke (tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_subprocess_cli_offline_smoke) ... ok
+test_cli_help (tests.test_cli.TestCLI.test_cli_help) ... ok
+test_explicit_diff_profile_scope_statement (tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement) ... ok
+test_stdout_machine_format_stderr_diagnostics (tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics) ... ok
+test_structural_python_complete (tests.test_cli.TestCLI.test_structural_python_complete) ... ok
+test_empty_findings_not_safety_claim (tests.test_render.TestRender.test_empty_findings_not_safety_claim) ... ok
+test_limit_failure_rendering_sarif (tests.test_render.TestRender.test_limit_failure_rendering_sarif) ... ok
+test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdown_fence_html_link_breakout) ... ok
+test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 1.348s
+
+OK
