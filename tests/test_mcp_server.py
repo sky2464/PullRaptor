@@ -30,6 +30,7 @@ class TestMCPServer(unittest.TestCase):
         self._workspace_patch = patch.dict(
             os.environ,
             {
+                "PULLRAPTOR_DEV_ADMIT_EXTENDED": "1",
                 "PULLRAPTOR_MCP_WORKSPACE_ROOT": str(self.repo_root.parent),
                 "PULLRAPTOR_MCP_REPOSITORY_ID": "test-repo",
             },

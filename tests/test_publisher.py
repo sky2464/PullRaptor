@@ -179,7 +179,11 @@ class TestPublisher(unittest.TestCase):
 
     def test_cli_missing_token_error(self) -> None:
         err = io.StringIO()
-        with patch("sys.stderr", err), patch.dict("os.environ", {}, clear=True):
+        with patch("sys.stderr", err), patch.dict(
+            "os.environ",
+            {"PULLRAPTOR_DEV_ADMIT_EXTENDED": "1"},
+            clear=True,
+        ):
             code = main([
                 "--report", "-",
                 "--repo-slug", "owner/repo",

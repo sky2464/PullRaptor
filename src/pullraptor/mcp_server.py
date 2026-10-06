@@ -13,6 +13,7 @@ import sys
 import time
 from typing import Any
 
+from pullraptor.beta_admission import admit_console_script
 from pullraptor.local_snapshot import resolve_local_review_refs
 from pullraptor.kernel import review
 from pullraptor.models import Deadline, FullReport, Limits, RecordLimits, Report
@@ -631,5 +632,14 @@ def run_mcp_server(input_stream=None, output_stream=None, *, session: MCPSession
     return 0
 
 
+def console_main() -> int:
+    """Console script entry (`pullraptor-mcp`) with beta scope admission."""
+    admitted, message = admit_console_script("pullraptor-mcp")
+    if not admitted:
+        sys.stderr.write(message + "\n")
+        return 2
+    return run_mcp_server()
+
+
 if __name__ == "__main__":
-    sys.exit(run_mcp_server())
+    sys.exit(console_main())
