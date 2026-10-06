@@ -1,0 +1,13 @@
+{
+  "schema": "pullraptor-recovery-rehearsal/1",
+  "date": "2026-10-05",
+  "status": "not_run",
+  "channel": "disposable_fixture_only",
+  "scenarios": [
+    {"id": "partial_upload", "result": "not_run"},
+    {"id": "ambiguous_response", "result": "not_run"},
+    {"id": "defective_version_quarantine", "result": "not_run"}
+  ],
+  "independent_reviewer": "unassigned",
+  "blocks_br_14_readiness": true
+}

@@ -1,0 +1,95 @@
+{
+  "schema": "pullraptor-beta-scope/1",
+  "human_label": "beta-0.1.x",
+  "date": "2026-10-05",
+  "status": "proposed_pending_maintainer",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
+  "package_version_proposed": "0.1.0b1",
+  "package_version_current_metadata": "0.3.0",
+  "runtime": {
+    "python": "3.12.x",
+    "git_executable": "required",
+    "kernel_third_party_packages": 0
+  },
+  "artifacts_included": ["wheel"],
+  "artifacts_excluded": ["container-image", "vscode-extension", "github-app", "mcp-remote"],
+  "console_scripts": {
+    "included": ["pullraptor"],
+    "shipped_excluded_contained": ["pullraptor-publish", "pullraptor-mcp"],
+    "containment_module": "pullraptor.beta_admission",
+    "containment_tests": "tests/test_beta_entrypoints.py"
+  },
+  "cli_commands": {
+    "review_offline_exact_git": {
+      "included": true,
+      "flags": ["--repo", "--base", "--head", "--exact-base", "--profile", "--format", "--no-cache", "--ci"]
+    },
+    "local_snapshot": {
+      "included": false,
+      "flags": ["--staged", "--workdir", "--include-untracked"],
+      "acceptance": ["E02-A1"]
+    },
+    "mcp": { "included": false, "acceptance": ["E08-A1"] },
+    "ai_network": { "included": false, "acceptance": ["E03-A1", "E03-A2", "E03-A3"] }
+  },
+  "rules": {
+    "tier": "advisory_python_initial",
+    "included_rule_ids": ["PY001", "PY002", "PY003"],
+    "accuracy_claim": "none_without_held_out_study"
+  },
+  "report_formats": ["markdown", "json", "sarif"],
+  "language_tiers": {
+    "generic_diff": "included",
+    "python_structural": "included",
+    "additional_languages": "excluded"
+  },
+  "platform_profiles_candidate": [
+    {
+      "id": "python-3.12-linux-x86_64-venv",
+      "platform": "linux-x86_64",
+      "admission": "pending_br_10"
+    },
+    {
+      "id": "python-3.12-macos-arm64-venv",
+      "platform": "darwin-arm64",
+      "admission": "pending_br_10"
+    }
+  ],
+  "capability_catalog_F01_F32": {
+    "included_summary": [
+      "F01 exact revision scope",
+      "F03 offline local CLI review",
+      "F09 actionable coverage diagnostics",
+      "F23 private cache",
+      "F25 bounded JSON/Markdown/SARIF",
+      "F31 deterministic kernel receipts"
+    ],
+    "excluded_or_deferred": [
+      "F02/F05/F10 CI publication",
+      "F04/F06/F11 optional AI summaries",
+      "F07/F08/F16 additional language tiers",
+      "F12-F22 security expansion",
+      "F24-F32 delivery surfaces beyond offline wheel CLI"
+    ],
+    "reference": "Master-Plan.md capability table"
+  },
+  "delivery_amendments": {
+    "E01": "in_scope_subset",
+    "E07": "wheel_subset_only",
+    "E02_E11": "excluded_from_beta_claims"
+  },
+  "owners": {
+    "release_maintainer": "human_coordinator",
+    "evidence_owner": "feat/beta-0.1-release-readiness_implementer",
+    "independent_e01_reviewer": "unassigned",
+    "independent_e07_reviewer": "unassigned",
+    "publication_operator": "unassigned"
+  },
+  "evidence_documents": [
+    "docs/releases/beta-0.1-decisions.md",
+    "docs/releases/beta-0.1-capability-gates.json",
+    "docs/releases/beta-0.1-evidence-index.json",
+    "docs/releases/beta-0.1-entrypoints.json"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "schema": "pullraptor-release-manifest/1",
+  "human_label": "beta-0.1.x",
+  "ready_for_release": false,
+  "publication_authorized": false,
+  "released_verified": false,
+  "date": "2026-10-05",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "trusted_base_revision": "8c2622e060b59f93c3482afec96bc472c5de3ac2",
+  "proposed_package_version": "0.1.0b1",
+  "built_package_version_metadata": "0.3.0",
+  "artifacts": [
+    {
+      "kind": "wheel",
+      "filename": "pullraptor-0.3.0-py3-none-any.whl",
+      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
+      "size_bytes": 119190,
+      "evidence": "docs/acceptance/artifacts/E07/builds/candidate-1/"
+    }
+  ],
+  "build_origins": [
+    "docs/acceptance/artifacts/E07/builds/candidate-1/build-receipt.json",
+    "docs/acceptance/artifacts/E07/builds/candidate-2/build-receipt.json"
+  ],
+  "scope": "docs/releases/beta-0.1-scope.json",
+  "capability_gates": "docs/releases/beta-0.1-capability-gates.json",
+  "evidence_index": "docs/releases/beta-0.1-evidence-index.json",
+  "independent_reviews": {
+    "E01": "docs/acceptance/artifacts/E01/independent-review.md",
+    "E07": "docs/acceptance/artifacts/E07/independent-review.md"
+  },
+  "recovery_rehearsal": "docs/releases/beta-0.1-recovery-rehearsal.json",
+  "br_tasks": {
+    "BR-01": "partial",
+    "BR-02": "partial",
+    "BR-03": "partial",
+    "BR-04": "partial",
+    "BR-05": "partial",
+    "BR-06": "partial",
+    "BR-07": "blocked",
+    "BR-08": "partial",
+    "BR-09": "partial",
+    "BR-10": "partial",
+    "BR-11": "partial",
+    "BR-12": "partial",
+    "BR-13": "blocked",
+    "BR-14": "partial"
+  }
+}
