@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-05",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "builder_command": "PYTHONPATH=src python3.12 release/build.py",
+  "builds": [
+    {
+      "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-1",
+      "run_id": "br09-build-1",
+      "wheel": "pullraptor-0.3.0-py3-none-any.whl",
+      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
+      "size_bytes": 119190
+    },
+    {
+      "output_dir": "docs/acceptance/artifacts/E07/builds/candidate-2",
+      "run_id": "br09-build-2",
+      "wheel": "pullraptor-0.3.0-py3-none-any.whl",
+      "sha256": "397308789ed691d784fd0fe5ec003204a37c7e4983d6a14834edf91f2d6fc91e",
+      "size_bytes": 119190
+    }
+  ],
+  "byte_identical": true,
+  "independent_origin_verification": "not_run",
+  "evidence_status": "implementer_collected_local",
+  "review_decision": "pending"
+}
