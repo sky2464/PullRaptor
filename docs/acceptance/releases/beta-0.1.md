@@ -22,8 +22,8 @@ Date: 2026-10-06. **Readiness:** ready for release (beta subset). **Publication:
 ## Authorization states
 
 - `ready_for_release`: **true** (BR-01–13 beta subset)
-- `publication_authorized`: **false** until `docs/releases/beta-0.1-publication-decision.md` records go
-- `released_verified`: **false** until BR-17 customer-path verification
+- `publication_authorized`: **true** ([publication-decision.md](../../releases/beta-0.1-publication-decision.md) GO 2026-10-06)
+- `released_verified`: **true** ([post-publication.md](../../releases/beta-0.1-post-publication.md))
 
 ## Exclusions visible
 
