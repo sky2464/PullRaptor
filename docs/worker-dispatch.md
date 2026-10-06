@@ -1,5 +1,20 @@
 # Coordinator dispatch and unblock record
 
+## 2026-10-06 independent acceptance assignment (beta 0.1.x)
+
+| Field | Value |
+|---|---|
+| Candidate source OID | `f834f19e9b48c90fea35338c6940004b6a5fc459` |
+| Wheel SHA-256 | `b1d8df90023868ba666408318d96a1075720082faf6a86c51e6af42ecc05f700` |
+| Code HEAD (docs-only delta) | `d56aae623e1daaedb2127f2607761c5198e29f12` |
+| Trusted base | `8c2622e060b59f93c3482afec96bc472c5de3ac2` |
+| E01 reviewer | `sme_reviewer_agent_e01_2026_10_06` (persona: `docs/personas/reviewer.md`) |
+| E07 reviewer | `sme_reviewer_agent_e07_2026_10_06` (separate session; same persona) |
+| Implementer exclusion | PRs #55–#58 construction; excluded from independent acceptance |
+| E01 mode/paths | `verify`; `docs/acceptance/artifacts/E01/independent-review.md`, `docs/acceptance/E01.md` |
+| E07 mode/paths | `verify`; `docs/acceptance/artifacts/E07/independent-review.md`, `docs/acceptance/E07.md` |
+| Publication | GitHub Release `v0.1.0b1`; BR-15 requires human_coordinator authorization |
+
 ## 2026-10-05 planning assignment and release handoff
 
 Initial human scope (2026-10-05 morning): update the Master Plan and release plans/tasks with subagent planning reviews; that tranche excluded implementation and builds. A later human request authorized **implement and build all** beta readiness work per [release plan](superpowers/plans/2026-10-05-beta-release-readiness.md).

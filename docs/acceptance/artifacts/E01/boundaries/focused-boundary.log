@@ -10,6 +10,6 @@ test_markdown_fence_html_link_breakout (tests.test_render.TestRender.test_markdo
 test_unicode_sarif_character_columns (tests.test_render.TestRender.test_unicode_sarif_character_columns) ... ok
 
 ----------------------------------------------------------------------
-Ran 10 tests in 1.348s
+Ran 10 tests in 1.444s
 
 OK

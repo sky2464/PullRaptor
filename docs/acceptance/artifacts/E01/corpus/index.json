@@ -1,6 +1,6 @@
 {
   "card_id": "E01-T9-CORPUS",
-  "source_revision": "3f725e3dbc65e9437ffd64a9e4586deb09f7ea8f",
+  "source_revision": "d56aae623e1daaedb2127f2607761c5198e29f12",
   "evidence_status": "development_passed",
   "manifest": "tests/fixtures/e01/corpus/manifest.json",
   "focused_log": "docs/acceptance/artifacts/E01/corpus/focused-corpus.log",
