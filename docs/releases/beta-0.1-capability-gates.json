@@ -1,0 +1,158 @@
+{
+  "schema": "pullraptor-beta-capability-gates/1",
+  "date": "2026-10-05",
+  "scope_document": "docs/releases/beta-0.1-scope.json",
+  "source_revision": "6f1b9d370f6332e88675d3bf2b681713b6840e44",
+  "included_core": {
+    "offline_wheel_cli": {
+      "enabled": true,
+      "acceptance_ids": ["E01-A1", "E01-A2", "E01-A3", "E07-A1", "E07-A2", "E07-A3"],
+      "existing_cards": ["E01-T9-*", "E07-T1-INVENTORY", "E07-T2-BUILD", "E07-T2-VERIFY", "E07-T3-INSTALL"],
+      "evidence_paths": [
+        "docs/acceptance/artifacts/E01/",
+        "docs/acceptance/artifacts/E07/"
+      ],
+      "admission": "pending_independent",
+      "independent_decision": "pending",
+      "review_owner": "unassigned"
+    }
+  },
+  "conditional_requires": [
+    {
+      "capability": "local_snapshots",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E02-A1"],
+      "existing_cards": ["E02-D02", "E02-T1-CAPTURE", "E02-T1-CONSUMERS"],
+      "evidence_records": ["docs/acceptance/E02.md"],
+      "containment": "CLI refuses --staged/--workdir; tests/test_beta_entrypoints.py",
+      "admission": "excluded",
+      "independent_decision": "not_applicable_beta_subset"
+    },
+    {
+      "capability": "github_ci_publication",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E02-A1", "E02-A2", "E02-A3", "E02-A4"],
+      "existing_cards": ["E02-T2-INTEGRATE", "E02-T3-LIFECYCLE", "E02-T3-WRITES", "E02-T4-TEMPLATE", "E02-T4-PILOT-ACCEPT"],
+      "evidence_records": ["docs/acceptance/E02.md"],
+      "containment": "pullraptor-publish refuses; tests/test_beta_entrypoints.py",
+      "admission": "excluded",
+      "independent_decision": "not_applicable_beta_subset"
+    },
+    {
+      "capability": "container",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E07-A1", "E07-A2", "E07-A3"],
+      "evidence_records": ["docs/acceptance/E07.md"],
+      "admission": "excluded",
+      "independent_decision": "not_applicable_beta_subset"
+    },
+    {
+      "capability": "ai",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E03-A1", "E03-A2", "E03-A3"],
+      "evidence_records": ["docs/acceptance/E03.md"],
+      "containment": "CLI refuses --ai-endpoint",
+      "admission": "excluded"
+    },
+    {
+      "capability": "additional_languages",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E04-A1", "E04-A2", "E04-A3"],
+      "evidence_records": ["docs/acceptance/E04.md"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "modeled_security",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E05-A1", "E05-A2"],
+      "evidence_records": ["docs/acceptance/E05.md"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "local_secret_patterns",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E05-A3"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "external_security_imports",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E05-A4"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "patch_validation",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E06-A1", "E06-A3"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "target_execution",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E06-A2"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "preferences",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E06-A4"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "local_mcp",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E08-A1"],
+      "containment": "pullraptor-mcp and --mcp refuse",
+      "admission": "excluded"
+    },
+    {
+      "capability": "native_editor",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E08-A2", "E02-A1"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "assistant_packages",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E08-A1", "E08-A3"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "remote_mcp",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E08-A4", "E10-A1", "E10-A2", "E10-A4", "E11-A1", "E11-A2"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "azure",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E09-A1", "E09-A2", "E09-A3"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "local_service",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E10-A1", "E10-A2"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "remote_service",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E10-A1", "E10-A2", "E10-A3", "E10-A4", "E11-A1", "E11-A2"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "enterprise",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E11-A1", "E11-A2", "E11-A3"],
+      "admission": "excluded"
+    },
+    {
+      "capability": "usefulness_pilot",
+      "enabled_in_beta": false,
+      "acceptance_ids": ["E02-A1", "E02-A2", "E02-A3", "E02-A4"],
+      "admission": "excluded"
+    }
+  ],
+  "br_14_rule": "Every enabled row must have independent accepted admission; excluded rows require containment evidence."
+}
