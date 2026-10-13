@@ -1,0 +1,24 @@
+test_both_present_python_sides_have_independent_scope_receipts (tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts) ... FAIL
+test_failed_discovery_cannot_seal_complete_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_failed_discovery_cannot_seal_complete_scope) ... FAIL
+test_static_import_closure_cycles_and_unrelated_malformed_file (tests.test_e01_core_regressions.CoreRegressionTests.test_static_import_closure_cycles_and_unrelated_malformed_file) ... ok
+
+======================================================================
+FAIL: test_both_present_python_sides_have_independent_scope_receipts (tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 90, in test_both_present_python_sides_have_independent_scope_receipts
+    self.assertIn((repo.commit_ids[0], 'app.py'), expected)
+AssertionError: ('3860641b75e2facacc7497f596de004fb2492fd8', 'app.py') not found in {('1157f141c97cfa8f74905b363c2c1587fdb05191', 'app.py')}
+
+======================================================================
+FAIL: test_failed_discovery_cannot_seal_complete_scope (tests.test_e01_core_regressions.CoreRegressionTests.test_failed_discovery_cannot_seal_complete_scope)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_core_regressions.py", line 101, in test_failed_discovery_cannot_seal_complete_scope
+    self.assertFalse(value.contract.discovery_complete)
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 3 tests in 1.484s
+
+FAILED (failures=2)

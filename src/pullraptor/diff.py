@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 import re
+import tempfile
 from typing import Any
 
-from pullraptor.git_snapshot import _git_env, _safe_git_args
+from pullraptor.git_snapshot import _git_env, _safe_git_args, read_blob
 from pullraptor.models import (
     BlobRef,
     Change,
@@ -15,6 +16,7 @@ from pullraptor.models import (
     Limits,
     ProcessBounds,
     Snapshot,
+    LimitExceeded,
 )
 from pullraptor.process import run_bounded
 
@@ -68,14 +70,14 @@ def _compute_blob_diff(
     head_oid: str | None,
     limits: Limits,
     deadline: Deadline,
-) -> tuple[DiffHunk, ...]:
+) -> tuple[tuple[DiffHunk, ...], int]:
     """Compute isolated diff between two blob object IDs without repository attributes."""
     # Use empty blob if added or deleted
     oid1 = base_oid if base_oid else _EMPTY_BLOB_SHA1
     oid2 = head_oid if head_oid else _EMPTY_BLOB_SHA1
 
     if oid1 == oid2:
-        return ()
+        return (), 0
 
     env = _git_env()
     bounds = ProcessBounds(
@@ -84,11 +86,25 @@ def _compute_blob_diff(
         timeout_seconds=limits.parse_timeout_seconds,
     )
     # Using git diff with raw blob hashes isolates comparison from working tree attributes
-    cmd = tuple(_safe_git_args(repo) + ["diff", "--no-color", "--no-ext-diff", "-U3", oid1, oid2])
-    res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
+    if base_oid is None or head_oid is None:
+        # An empty blob need not exist in the inspected repository. Compare
+        # immutable bytes in a neutral owned directory without writing Git objects.
+        with tempfile.TemporaryDirectory(prefix="pullraptor-diff-") as neutral:
+            file = Path(neutral) / "blob"
+            file.write_bytes(read_blob(repo, head_oid or base_oid, limits, deadline))
+            before, after = ("/dev/null", str(file)) if base_oid is None else (str(file), "/dev/null")
+            cmd = tuple(_safe_git_args(repo) + ["diff", "--no-index", "--no-color", "--no-ext-diff", "--no-textconv", "-U3", "--", before, after])
+            res = run_bounded(cmd, cwd=Path(neutral), env=env, deadline=deadline, bounds=bounds)
+    else:
+        cmd = tuple(_safe_git_args(repo) + ["diff", "--no-color", "--no-ext-diff", "--no-textconv", "-U3", oid1, oid2])
+        res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
+    if res.stdout_truncated or res.stderr_truncated or res.timed_out:
+        raise LimitExceeded("deadline_exceeded" if res.timed_out else "output_limit", "diff_bytes", limits.max_diff_bytes, None)
+    if res.returncode not in (0, 1):
+        raise ValueError("Immutable blob diff failed")
 
     diff_text = res.stdout.decode("utf-8", errors="replace")
-    return _parse_hunks(diff_text)
+    return _parse_hunks(diff_text), len(res.stdout)
 
 
 def changes(
@@ -109,15 +125,17 @@ def changes(
     for path_bytes in all_paths:
         base_blob = base_by_path.get(path_bytes)
         head_blob = head_by_path.get(path_bytes)
+        remaining = replace(limits, max_diff_bytes=limits.max_diff_bytes - total_diff_bytes)
+        raw_bytes = 0
 
         if base_blob is None and head_blob is not None:
             kind = "added"
             path = head_blob.path
-            hunks = _compute_blob_diff(repo, None, head_blob.blob_oid, limits, deadline)
+            hunks, raw_bytes = _compute_blob_diff(repo, None, head_blob.blob_oid, remaining, deadline)
         elif base_blob is not None and head_blob is None:
             kind = "deleted"
             path = base_blob.path
-            hunks = _compute_blob_diff(repo, base_blob.blob_oid, None, limits, deadline)
+            hunks, raw_bytes = _compute_blob_diff(repo, base_blob.blob_oid, None, remaining, deadline)
         elif base_blob is not None and head_blob is not None:
             if base_blob.blob_oid == head_blob.blob_oid and base_blob.mode == head_blob.mode:
                 continue
@@ -127,17 +145,12 @@ def changes(
                 hunks = ()
             else:
                 kind = "modified"
-                hunks = _compute_blob_diff(repo, base_blob.blob_oid, head_blob.blob_oid, limits, deadline)
+                hunks, raw_bytes = _compute_blob_diff(repo, base_blob.blob_oid, head_blob.blob_oid, remaining, deadline)
         else:
             continue
 
         # Check total diff bytes budget
-        hunk_bytes = sum(len(line.encode("utf-8")) for h in hunks for line in h.lines)
-        if total_diff_bytes + hunk_bytes > limits.max_diff_bytes:
-            # Bounded output reached: omit further hunks
-            hunks = ()
-        else:
-            total_diff_bytes += hunk_bytes
+        total_diff_bytes += raw_bytes
 
         results.append(
             Change(

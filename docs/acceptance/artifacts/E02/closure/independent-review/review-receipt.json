@@ -1,0 +1,226 @@
+{
+  "schema": "pullraptor.e02-independent-review-receipt/1",
+  "criterion": "E02-A2",
+  "baseline_source_oid": "48bef09d985fbeb42749d1cc6238c74429616a25",
+  "trusted_base_oid": "48bef09d985fbeb42749d1cc6238c74429616a25",
+  "source_state": "uncommitted_shared_branch_final_commit_repin_pending",
+  "reviewer": "/root/beta_kernel_review; independent of E02 implementation author",
+  "runtime": {
+    "python": "3.12.15 (main, Sep 30 2026, 22:04:19) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "executable": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "environment": {
+    "ambient_environment": "cleared via /usr/bin/env -i",
+    "PATH": "/opt/homebrew/bin:/usr/bin:/bin",
+    "PYTHONPATH": "src:.",
+    "api": "inert patched local responses; urllib real network explicitly refused in independent matrix"
+  },
+  "commands": [
+    "/usr/bin/env -i PATH=/opt/homebrew/bin:/usr/bin:/bin PYTHONPATH=src:. /opt/homebrew/bin/python3.12 -m unittest tests.test_e02_publication_closure tests.test_publication_contract tests.test_publication_binding_fixtures tests.test_publication_lifecycle tests.test_publication_trust tests.test_publisher tests.test_publisher_fixture_scenarios -v",
+    "/usr/bin/env -i PATH=/opt/homebrew/bin:/usr/bin:/bin PYTHONPATH=src:. /opt/homebrew/bin/python3.12 docs/acceptance/artifacts/E02/closure/independent-review/reproduce.py"
+  ],
+  "focused_suite_exit_code": 0,
+  "independent_matrix_exit_code": 0,
+  "construction_identity_checks": [
+    {
+      "path": "src/pullraptor/publication_contract.py",
+      "sha256": "49bfa7461cd3c1dfb8a02b3ac0f952708b8ada9dad6deb7d2ab5cda1fb520e0a",
+      "matches_construction": true
+    },
+    {
+      "path": "src/pullraptor/publisher.py",
+      "sha256": "3338888b12dccf98eae9443e042b2cd445d5c4952195d0c464c063736179c2fe",
+      "matches_construction": true
+    },
+    {
+      "path": "src/pullraptor/publication_transport.py",
+      "sha256": "1669f56d0e33207637daa41525275320ed6dcdd3bca8c5f7ee209ce6475549b3",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/test_e02_publication_closure.py",
+      "sha256": "c1fb12902415cea7485e8d2d48d95409bcf5b5ca36911b8719bf0f932662f0ad",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/test_publication_contract.py",
+      "sha256": "8a323d1ab62ea77ccf9e33287e137d869b84fce843ef94e8ae70827e17b69b51",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/test_publication_binding_fixtures.py",
+      "sha256": "d22b968d055be9d76e27017e4988cbdb602a4b1690637271cb9d2198364adfaf",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/test_publisher.py",
+      "sha256": "831696354eb8b01672360aded3d35bb206fa7008a70e68b80fb1fa643720b149",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/test_publisher_fixture_scenarios.py",
+      "sha256": "517c034e10591bc219ea14ceeb9e07d82be8c7c5b6b81941e0b263b8dbf747df",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/authorized_exact_context.json",
+      "sha256": "7efd9ffb078c0d27aac79a18a1b8d5e158adaf56114aa7e9f702cb665c66381f",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/base_policy_changed_same_head.json",
+      "sha256": "a54e970c3d02d5f77cd3854f0281bc42188268ee625546e1adc1bb5f03b4acb2",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/cross_pr_replay.json",
+      "sha256": "65df5276d2d5fb3936830114d2570ca6ebe26068793b44204955d08618f94f5b",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/deleted_side_location.json",
+      "sha256": "17e8bea2c93e85536d3fe109555ec5718fa488ef3f59e12ff1910c2b7cac67ad",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/incomplete_receipts.json",
+      "sha256": "856bf90d7e197b053930ae72749833e3afc0ff8ba020e999d51a3af7ac0f9efa",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/invalid_head_prefix.json",
+      "sha256": "70b78188f441a867f342c9c2ee4d10abb9e5e29c7c2d7ef246f9b2f57c8f6e72",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/invalid_side_location.json",
+      "sha256": "a4b5aae9403012bd963c75befda597b2156ff0e07b9b7fa568fbb0bc746a7368",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/limit_failure.json",
+      "sha256": "f6e51cb3a8090fcdbda943314e09ab77a130f5a506cf63c400c0ea0a6f3176a1",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/manifest.json",
+      "sha256": "110a75a52fa6884ff9337c73220cdd1f3dec883802dc5ec147a20e6570f39e5b",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/report_contract_context_mismatch.json",
+      "sha256": "ad1f240d4423c5a4ffefd50f7a9738ecf68d3a9dbdcdb0630030f9ab7a25a14c",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/scope_digest_collision.json",
+      "sha256": "513244b0a8b2c0d7225ea540b87ea2a722e00d8c7282dcd37ea296ac18e3f8fd",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/trusted-authority.json",
+      "sha256": "6fe0e44bf2a3cf2a5a2bf4b2876d67cb024d9f3bfaf1ace0d5d36d488112545f",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/trusted-inline-authority.json",
+      "sha256": "b29868618cc7b061be6f3aba1d187f9a47b065a782c37fcef42948f0449e80b2",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/trusted-unit-scope-digests.json",
+      "sha256": "650db83592ef4f34013293192ee670c5ba08942974c11bdd4eeb7645db1eea70",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publication-binding/wrong_workflow_run_artifact.json",
+      "sha256": "e8bd1270007b5699a6f17ad68c11174973b26992e0c8e106c551d64522fd3fd0",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/limit_failure_denied.json",
+      "sha256": "e866523bf4862f5b2a616d99051e7b2542cc1a2094408e9711c2deb036405db1",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/manifest.json",
+      "sha256": "fa4ace11d95ce1f82d66db70c0213552abe8c0a77cdcd33283f033d90b212371",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/override_ignored.json",
+      "sha256": "ac8277f5680f166a803effc9f0117fb0884f4ea91d0d9676dc19402477e6c6fd",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/policy_drift_denied.json",
+      "sha256": "b05d06b24abb8fe8b53f4b99c4bc21e055bdbd6e0cc568ad6e07ccd0dad9cc10",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/preview_zero_writes.json",
+      "sha256": "2d5b743d3927d4b86a3690334ddc6e6bef50d742e47452200ad4ae63ad1adc33",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/stale_head_denied.json",
+      "sha256": "2bac03a3e0d8beda1e531d39b4754817ba20354af5bf382260128400afbdf693",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/trusted-inline-report.json",
+      "sha256": "e7d17d0cff1dc3bbd9b25e4b187821a9ed31d67c7b43d06014d6b7fdd9a85401",
+      "matches_construction": true
+    },
+    {
+      "path": "tests/fixtures/e02/publisher/trusted-report.json",
+      "sha256": "dd7a2762eb8c3ec693d72e7432b2ebba5272758bc765b3914d6fe22bc73ef758",
+      "matches_construction": true
+    },
+    {
+      "path": "docs/acceptance/artifacts/E02/closure/red.log",
+      "sha256": "ef8bea76bd866db3410b77f380cd7b08931dcc3e286211b6ba8a339b9acaae86",
+      "matches_construction": true
+    },
+    {
+      "path": "docs/acceptance/artifacts/E02/closure/receipt-red.log",
+      "sha256": "d8fab06172a25d3becf139b6c23cc04451088fc40cfbb207747c26f481a64091",
+      "matches_construction": true
+    },
+    {
+      "path": "docs/acceptance/artifacts/E02/closure/coordinates-red.log",
+      "sha256": "5a056b391f08685cf0dfce5b867d11184f16a3955b0064be95040dd4cd1382b6",
+      "matches_construction": true
+    },
+    {
+      "path": "docs/acceptance/artifacts/E02/closure/missing-side-red.log",
+      "sha256": "6d9453dd3dfcccf8a0917a2f0212201ccdc1cfa8898880da56292e6f00fdc518",
+      "matches_construction": true
+    },
+    {
+      "path": "docs/acceptance/artifacts/E02/closure/green.log",
+      "sha256": "1254f8d8991dad9d0c01f5c4f4270398de8af39313dfb246ea932ea325c82624",
+      "matches_construction": true
+    }
+  ],
+  "construction_identity_mismatches": [],
+  "review_artifacts": {
+    "focused.log": "d6520dacf75c541975fff0a29ac433cbd1a6f3e75b4f1714d596ec5fe040c6fa",
+    "reproduce.py": "accbd337fba04fce9ac50b22f146169a07b1ff4a7143d588a417067118442820",
+    "reproduction.log": "4fcacf7552827bae6db8f26aaf76af5128280419fb32c919e8c0fdb33e568ed1",
+    "reproduction.json": "9ee0714484a9f241553f034990b6f29a3361ff41d242453656319b67749f3cdd"
+  },
+  "decision": "provisionally_accepted_local_E02_A2_gate_for_exact_reviewed_bytes",
+  "criterion_final_status": "pending_final_commit_repin_and_affected_rerun",
+  "E02_A1_A3_A4": "not_accepted_by_this_review",
+  "live_publication": "not_run",
+  "hostile_CI": "not_run",
+  "beta_publisher": "disabled",
+  "review_end_source_identity_check": "matched final independent reproduction source hashes",
+  "recollection": "Shared models.py changed during review; inspected resource-limit/encoding delta and reran both focused suite and independent matrix; both exit 0.",
+  "decision_document_sha256": {
+    "docs/acceptance/artifacts/E02/closure/independent-review/review.md": "09b1046a7c310a26c280735e690be42bb4bc5265703654401df10d9888316d5f",
+    "docs/acceptance/E02.md": "cd13c9b72d72e6b8e473bf9b6d13f400707176e3348b5cf8689a35422a33646a"
+  }
+}

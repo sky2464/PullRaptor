@@ -3,26 +3,14 @@
 from __future__ import annotations
 
 import fnmatch
+import math
+from dataclasses import fields
 from typing import Any
 import tomllib
 
 from pullraptor.models import Config
 
-ALLOWED_CONFIG_KEYS = {
-    "profile",
-    "max_tracked_entries",
-    "max_blob_bytes",
-    "max_total_bytes",
-    "parse_timeout_seconds",
-    "review_timeout_seconds",
-    "failure_reserve_seconds",
-    "path_include",
-    "path_exclude",
-    "source_suffixes",
-    "use_cache",
-    "cache_dir",
-    "max_cache_bytes",
-}
+ALLOWED_CONFIG_KEYS = {item.name for item in fields(Config)}
 
 
 def matches_path(path: str, patterns: tuple[str, ...]) -> bool:
@@ -46,6 +34,7 @@ def _check_ci_weakening(base_vals: dict[str, Any], override_vals: dict[str, Any]
         "max_total_bytes",
         "review_timeout_seconds",
         "parse_timeout_seconds",
+        "max_report_bytes", "max_report_items", "max_report_depth", "max_report_string_bytes",
     ]
     for key in numeric_thresholds:
         if key in override_vals:
@@ -61,10 +50,40 @@ def _check_ci_weakening(base_vals: dict[str, Any], override_vals: dict[str, Any]
         if not override_exclude.issubset(base_exclude):
             raise ValueError("CI override cannot weaken required scope by adding path exclusions")
 
+    if "source_suffixes" in override_vals and set(base_vals.get("source_suffixes", Config().source_suffixes)) - set(override_vals["source_suffixes"]):
+        raise ValueError("CI override cannot weaken required source classification")
+
     if "path_include" in override_vals:
         base_include = base_vals.get("path_include", ())
         if base_include and set(override_vals["path_include"]) != set(base_include):
             raise ValueError("CI override cannot weaken required scope by modifying path_include")
+
+
+def _validate_values(values: dict[str, Any]) -> None:
+    defaults = Config()
+    for name in ALLOWED_CONFIG_KEYS:
+        value = values.get(name, getattr(defaults, name))
+        if name in {"path_include", "path_exclude", "source_suffixes"}:
+            if not isinstance(value, (tuple, list)) or any(not isinstance(item, str) or not item for item in value):
+                raise ValueError(f"{name} must be a list of nonempty strings")
+        elif name == "profile":
+            if value not in {"structural", "diff"}:
+                raise ValueError("profile must be structural or diff")
+        elif name == "use_cache":
+            if type(value) is not bool:
+                raise ValueError("use_cache must be boolean")
+        elif name == "cache_dir":
+            if value is not None and (not isinstance(value, str) or not value or "\x00" in value):
+                raise ValueError("cache_dir must be a nonempty path string or null")
+        elif name.endswith("seconds"):
+            if type(value) not in {int, float} or not math.isfinite(value) or value <= 0:
+                raise ValueError(f"{name} must be finite and positive")
+        elif type(value) is not int or value <= 0:
+            raise ValueError(f"{name} must be a positive integer")
+    for name, minimum in (("max_report_bytes", 16384), ("max_report_items", 128),
+                          ("max_report_depth", 8), ("max_report_string_bytes", 256)):
+        if values.get(name, getattr(defaults, name)) < minimum:
+            raise ValueError(f"{name} must be >= {minimum} for reserved failure output")
 
 
 def load_config(
@@ -98,10 +117,11 @@ def load_config(
             if k not in ALLOWED_CONFIG_KEYS:
                 raise ValueError(f"Unknown configuration key in override: {k!r}")
 
-        if ci:
-            _check_ci_weakening(base_vals, overrides)
-
         effective_vals.update(overrides)
+
+    _validate_values(effective_vals)
+    if ci and overrides:
+        _check_ci_weakening(base_vals, overrides)
 
     # Convert list values to immutable tuples
     for list_key in ("path_include", "path_exclude", "source_suffixes"):

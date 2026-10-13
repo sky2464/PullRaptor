@@ -1,0 +1,1455 @@
+{
+  "schema": "pullraptor-e01-assertion-reviews/1",
+  "review_owner": "implementation author",
+  "independent_adequacy_review": "pending",
+  "requirements": {
+    "T1.test_bool_not_integer": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_bool_not_integer",
+          "body_sha256": "ef2378dc732d526af87224fe4b294102e949a543b32887b5ef94f1e0930a7d17"
+        }
+      ],
+      "review_basis": "Shared span decoder rejects booleans in each supplied integer field.",
+      "remaining_gap": ""
+    },
+    "T1.test_canonical_excludes_execution_metadata": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_canonical_excludes_execution_metadata",
+          "body_sha256": "77c1beb4bc90012d8489f2b7e6ef9d7affa6c8824c5bed0d3a14b0959275f106"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T1.test_content_facts_cannot_carry_occurrence": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_content_facts_cannot_carry_occurrence",
+          "body_sha256": "9d5f10c6a24fd971414a72164449dbc4020a93a94b10f8fe58b8dd47d60ae3c4"
+        }
+      ],
+      "review_basis": "Facts expose no occurrence fields and constructor rejects occurrence keyword.",
+      "remaining_gap": ""
+    },
+    "T1.test_duplicate_keys_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_duplicate_keys_rejected",
+          "body_sha256": "98042ff9f6df9d423af252d43ddadd4bc9e6bee36436316f5bf90746d5f0182b"
+        }
+      ],
+      "review_basis": "Duplicate object keys cause strict decode rejection.",
+      "remaining_gap": ""
+    },
+    "T1.test_invalid_span_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_invalid_span_rejected",
+          "body_sha256": "bc98fad89d6d05fcb5fa09dfc3f1e75a834a6f0a55ef0bc1cd482183952c047e"
+        }
+      ],
+      "review_basis": "Invalid side,line,byte,column bounds each reject construction.",
+      "remaining_gap": ""
+    },
+    "T1.test_item_accounting_recursive": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_item_accounting_recursive",
+          "body_sha256": "25b45d1799177d8c5e59c6815afacfceb7746c1097be756085056f7b93a3f33a"
+        }
+      ],
+      "review_basis": "Nested arrays/object members count recursively against the item budget.",
+      "remaining_gap": ""
+    },
+    "T1.test_limit_failure_cannot_claim_support_or_complete": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_limit_failure_cannot_claim_support_or_complete",
+          "body_sha256": "635bd3eb2ac82734cd2d8b3bf28e24c6d5dd008d31b1aadf815728b7faab01f9"
+        }
+      ],
+      "review_basis": "Failure envelope rejects completion/support authority fields.",
+      "remaining_gap": ""
+    },
+    "T1.test_nonfinite_json_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_nonfinite_json_rejected",
+          "body_sha256": "2f5746f14f37f9a4e33f42187048735c3231ac23a4d7bbf6d483fe173266dc2e"
+        }
+      ],
+      "review_basis": "NaN and infinities reject in shared decoder.",
+      "remaining_gap": ""
+    },
+    "T1.test_report_union_strict_tags": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_report_union_strict_tags",
+          "body_sha256": "d0e3ce42201f523e30cb6c93771516d942012151a6f40f9c7a1e6b97ebe0975b"
+        }
+      ],
+      "review_basis": "Report decoder rejects unknown kind.",
+      "remaining_gap": ""
+    },
+    "T1.test_two_missing_imports_have_distinct_keys": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_models.TestModels.test_two_missing_imports_have_distinct_keys",
+          "body_sha256": "c6baca39aec6019571064853a15e42bc0667700f54d0a85fc7c86903cf88f7ef"
+        }
+      ],
+      "review_basis": "Independent x/y import lookup keys cannot collide.",
+      "remaining_gap": ""
+    },
+    "T2.test_ci_override_cannot_weaken_required_scope": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_config.TestConfig.test_ci_override_cannot_weaken_required_scope",
+          "body_sha256": "2d808c8c79cb77b6f32d4a9bded612d208a5500e40b6a06515984a0a8664d200"
+        }
+      ],
+      "review_basis": "Base policy/profile/limits/exclusions enforced against CI overrides.",
+      "remaining_gap": ""
+    },
+    "T2.test_defaults_exact": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_config.TestConfig.test_defaults_exact",
+          "body_sha256": "47f0d3b971f887463e0f4b131be9431ec65dda7268dc6f8d5ce42475e36e7bb2"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T2.test_glob_semantics": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_config.TestConfig.test_glob_semantics",
+          "body_sha256": "66a6c2c659dc83a51165472e2d165251aab8cba0e8cd246319beffff1c7e06d4"
+        }
+      ],
+      "review_basis": "Case-sensitive normalized fnmatch includes tested slash behavior.",
+      "remaining_gap": ""
+    },
+    "T2.test_minimum_finalization_capacity": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_config.TestConfig.test_minimum_finalization_capacity",
+          "body_sha256": "f52ffeed74c533ef54a06583e5e26cda36745c4c38709eef7e9219d293f747f6"
+        },
+        {
+          "test_id": "tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity",
+          "body_sha256": "cc68c88bfc27392c107c0566ab0a4200836663b9d49c5e50ab0868b53980687f"
+        },
+        {
+          "test_id": "tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected",
+          "body_sha256": "fe78a227aab6abee295bd0cc13aab64c1046659ad30cc3108edd54286fe24437"
+        }
+      ],
+      "review_basis": "Duration,reserve and all failure-envelope byte/item/depth/string minima checked at boundary and invalid types denied.",
+      "remaining_gap": ""
+    },
+    "T2.test_unknown_key_error": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_config.TestConfig.test_unknown_key_error",
+          "body_sha256": "f72e00b62c9a2aa1de1aaf0f59f770ed2535316bd9d23ab6c6fbae26f08ae226"
+        }
+      ],
+      "review_basis": "Unknown policy and override keys reject.",
+      "remaining_gap": ""
+    },
+    "T3.test_ambient_git_config_ignored": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_attributes_cannot_hide_source": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_diff.TestDiff.test_attributes_cannot_hide_source",
+          "body_sha256": "417aa5f7ebb945d1029d0679987f4495fbd1fa4130bf1670afdad9d772492ad1"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_binary_and_deleted_file_preserved": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_binary_and_deleted_file_preserved",
+          "body_sha256": "94af32cea9437b9523c323e2042d190282369d4a86b07777c59110bac8165a80"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_dirty_tree_ignored": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_dirty_tree_ignored",
+          "body_sha256": "5acda7a06bfca551ff5df05788b685432a357cd7eabf7ce21d52d3abca3c80e6"
+        }
+      ],
+      "review_basis": "Committed blob bytes remain unchanged after dirty working-file edit.",
+      "remaining_gap": ""
+    },
+    "T3.test_hostile_external_diff_textconv_fsmonitor_not_executed": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_diff.TestDiff.test_hostile_external_diff_textconv_fsmonitor_not_executed",
+          "body_sha256": "4dcbb8880d739b81a3949b6a579933c21e35d3055426bb4d268b424f7bf1ae60"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_inherited_handles_closed": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_large_text_diff_bounded": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_merge_base_not_base_tip": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_merge_base_not_base_tip",
+          "body_sha256": "77d808e465bfec2eb2b6f355df5fea0f040fa960235545419adc7766af37cc1a"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_multiple_merge_bases_rejected": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_non_utf8_path_reported": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_nul_metadata_paths": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_nul_metadata_paths",
+          "body_sha256": "d19aefaa72dc095a09067cc956ad6c4ce485780b203cd691bc46b5fe184d5d08"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_option_like_ref_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_option_like_ref_rejected",
+          "body_sha256": "c018b4fcbf3465529e52d39105e4ec20e29ca3e32eb32b12c1aac2962fccd8d3"
+        }
+      ],
+      "review_basis": "Both base and head option-like refs are rejected.",
+      "remaining_gap": ""
+    },
+    "T3.test_output_flood_stopped": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_process.TestProcess.test_output_flood_stopped",
+          "body_sha256": "372aea7b3622241c4023926dabf07c8aa3bd32a234bd175479ba14f583990443"
+        }
+      ],
+      "review_basis": "100000-byte child output is capped at50bytes and marked truncated.",
+      "remaining_gap": ""
+    },
+    "T3.test_promisor_object_never_lazy_fetches": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_refs_pinned_before_read": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_refs_pinned_before_read",
+          "body_sha256": "2c2f7b11d6635d3b21f6b68210a751205ee835ab5ade1fd53b5bd89dfc24df46"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_replace_objects_ignored": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_replace_objects_ignored",
+          "body_sha256": "dd0d3e53e83efde5a65caf5ee5c035583cdc31f65de3e768b91903d50f92d2e9"
+        }
+      ],
+      "review_basis": "Actual Git replace mapping cannot alter immutable blob reads.",
+      "remaining_gap": ""
+    },
+    "T3.test_shallow_missing_object_incomplete": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T3.test_shared_deadline_not_reset": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_process.TestProcess.test_shared_deadline_not_reset",
+          "body_sha256": "8719425b120f0b1c0eaf4d7dedc6d089694b6f17387699f565b4c5074554db9b"
+        }
+      ],
+      "review_basis": "Per-process5second allowance remains bounded by previously started shared deadline.",
+      "remaining_gap": ""
+    },
+    "T3.test_symlink_and_submodule_not_followed": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_symlink_and_submodule_not_followed",
+          "body_sha256": "0473f632131a64577fb13fe4fd00c528be24e482b84e63dc822b839d6365c542"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T3.test_worker_environment_has_no_credentials": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_process.TestProcess.test_worker_environment_has_no_credentials",
+          "body_sha256": "2e12b3bba9226c3ef89a3bf0e07d25eb5c18d42780e46f35c6e93523892c516e"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_ambiguous_module_no_external_fallback": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_ambiguous_module_no_external_fallback",
+          "body_sha256": "af13b2b47936383f4edc549c5d8c525072c2c02eee36b2d892c94534ccf123de"
+        }
+      ],
+      "review_basis": "Two repository candidates yield ambiguous import and explicit diagnostic.",
+      "remaining_gap": ""
+    },
+    "T4.test_import_side_effect_not_executed": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_import_side_effect_not_executed",
+          "body_sha256": "f81a90d71dc59bb8c384e3db558dafe176e39309505890cfb42fb515b0768bf0"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_isolated_startup_ignores_site_and_paths": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_parser_process_boundary.ParserBoundary.test_extraction_uses_neutral_isolated_worker",
+          "body_sha256": "f2a05a6ba50716ff5509e8212e01b95826a7384e33e9755ebd6ebc8dd97ebc8e"
+        }
+      ],
+      "review_basis": "Actual Popen has -I/-S, no PYTHONPATH/credential and neutral cwd.",
+      "remaining_gap": ""
+    },
+    "T4.test_local_subprocess_shadows_external_model": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_local_subprocess_shadows_external_model",
+          "body_sha256": "b6cf8472abd2921f41345e5901ea6367503aa2fb2da9f985deaecefb9b19aa80"
+        }
+      ],
+      "review_basis": "Local tracked subprocess.py wins over stdlib classification.",
+      "remaining_gap": ""
+    },
+    "T4.test_maximum_source_base64_fits_protocol": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_maximum_source_base64_fits_protocol",
+          "body_sha256": "f8e14037f444ac75c311328f676848bbcaf1eb2c56e6ee207186a77b758b6b05"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_missing_external_module_partial": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_missing_external_module_partial",
+          "body_sha256": "2b9d5230a30a12b12a1bad71bb26db7e927ba7718b22a85a1856ab3650e69c84"
+        }
+      ],
+      "review_basis": "Missing thirdparty module yields unresolved context diagnosis.",
+      "remaining_gap": ""
+    },
+    "T4.test_missing_import_diagnostic": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T4.test_nested_functions_not_outer_mutation": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_nested_functions_not_outer_mutation",
+          "body_sha256": "2b3c37d4335a882d60201f5be35f6d03c8c4ea014d813e3da60b6b5aa435b95d"
+        }
+      ],
+      "review_basis": "Nested function mutation not attributed to outer default.",
+      "remaining_gap": ""
+    },
+    "T4.test_neutral_worker_cwd": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_parser_process_boundary.ParserBoundary.test_extraction_uses_neutral_isolated_worker",
+          "body_sha256": "f2a05a6ba50716ff5509e8212e01b95826a7384e33e9755ebd6ebc8dd97ebc8e"
+        }
+      ],
+      "review_basis": "Actual extraction observes one isolated child with neutral cwd, absolute -I/-S and sanitized environment.",
+      "remaining_gap": ""
+    },
+    "T4.test_new_module_resolves_previous_miss": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_new_module_resolves_previous_miss",
+          "body_sha256": "1cd0df034956fc35e0278bfa7f3a797fa3ac31a9db6ae7ff2f4811e79091e967"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_oversized_source_not_sent_to_worker": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_oversized_source_not_sent_to_worker",
+          "body_sha256": "01fc6c4fec36849cfbf79adbc3d1f0d0425ef4ed426ce256e3a7691bf3f6391a"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_parameter_reassignment": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_parameter_reassignment",
+          "body_sha256": "539526c2f276f4f0afad87cfbf919ab54a78227c7e914a554815fcef835e559d"
+        }
+      ],
+      "review_basis": "Reassigned default parameter suppresses literal-default mutation claim.",
+      "remaining_gap": ""
+    },
+    "T4.test_parse_failure_preserves_diff_coverage": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_parse_failure_preserves_diff_coverage",
+          "body_sha256": "d2d61183c2ed46d7b1fe69fd058853f3f8897e1e91260de0bfcf078e1ba77f9c"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_resolving_x_leaves_y_missing": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_resolving_x_leaves_y_missing",
+          "body_sha256": "6b4b6510d1907d5556ea26479d93637cd43dfc5ece5079687d3b75711b3b5d61"
+        }
+      ],
+      "review_basis": "Resolved stdlib target and missing target remain distinct classifications.",
+      "remaining_gap": ""
+    },
+    "T4.test_scope_shadowing_and_aliases": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_scope_shadowing_and_aliases",
+          "body_sha256": "2f145158e06aa4646b5ce2dbdc241be464e5d6fbb88ee6217c5b35d6f070db28"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_stdlib_identity_not_missing_context": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_stdlib_identity_not_missing_context",
+          "body_sha256": "56e614807fc6c4dc7a78687d0d792c1bb78d9e541e9f42eb87b26fc148eee30b"
+        }
+      ],
+      "review_basis": "json/os classified from exact-runtime stdlib without unresolved receipts.",
+      "remaining_gap": ""
+    },
+    "T4.test_subprocess_alias_modeled": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_subprocess_alias_modeled",
+          "body_sha256": "2ce43d8f2ea76f49a07d42bc2698bfca847ce9fb6e41e26fb70eec007e7a01c3"
+        },
+        {
+          "test_id": "tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary",
+          "body_sha256": "9703878d238227a61d18a62f927b97566e9533dbb64d11cf43dfebaf56c781e0"
+        }
+      ],
+      "review_basis": "Alias parser facts and pinned rule corpus establish actual advisory callable patterns.",
+      "remaining_gap": ""
+    },
+    "T4.test_timeout_or_worker_crash_partial": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_timeout_or_worker_crash_partial",
+          "body_sha256": "11726f81a8d4c8b284fa5d6755a56cbc9cce64d11adf474eb4ee5cc289695d73"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_unicode_columns_crlf_exact": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_unicode_columns_crlf_exact",
+          "body_sha256": "9dd07571f7ae9cd3cc7a302eba2eba06d35384acfa6450518a88f9aac30dcbda"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T4.test_worker_duplicate_fields_partial": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T4.test_wrong_blob_or_span_rejected": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_python_facts.TestPythonFacts.test_wrong_blob_or_span_rejected",
+          "body_sha256": "1246bc3c1b3e8038b678067e8abb2419a47e23f27cdd13688f52785768957c9d"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T5.test_conditional_reraise_not_classified_as_swallowed": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_rules.TestRules.test_conditional_reraise_not_classified_as_swallowed",
+          "body_sha256": "0a87bfa5f080b1beb1f6cc9aba720f6c9f4e2ddae8440a04ce226342ead3af45"
+        }
+      ],
+      "review_basis": "Conditional re-raise abstains from PY002.",
+      "remaining_gap": ""
+    },
+    "T5.test_intentional_patterns_never_defect_claim": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_rules.TestRules.test_intentional_patterns_never_defect_claim",
+          "body_sha256": "a65b07226b8f8464b0ec9ba489e60e6075abb4a15142a7452f96a1bf49e2f985"
+        }
+      ],
+      "review_basis": "Intentional mutable-default pattern remains advisory without defect language.",
+      "remaining_gap": ""
+    },
+    "T5.test_shadowed_subprocess_no_shell_claim": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_rules.TestRules.test_shadowed_subprocess_no_shell_claim",
+          "body_sha256": "c4c1d712cc713be27663e6351a569bb8921e7cb2a6e7aef3f97fba0b20ab0363"
+        }
+      ],
+      "review_basis": "User-defined subprocess object yields no stdlib shell finding.",
+      "remaining_gap": ""
+    },
+    "T5.test_untrusted_command_not_inferred_from_shell_true": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_rules.TestRules.test_untrusted_command_not_inferred_from_shell_true",
+          "body_sha256": "7376811c7d14c62966117de0ae0deb6a6f2a4456ae6e7a76446aced607a86465"
+        }
+      ],
+      "review_basis": "Shell=True yields pattern advice without injection/input/exploit claim.",
+      "remaining_gap": ""
+    },
+    "T6.test_all_evidence_accumulations": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_all_evidence_accumulations",
+          "body_sha256": "a5db54467bb088a823e29e499778385b8d808de82b0c76a91674290fd4b8dab7"
+        }
+      ],
+      "review_basis": "All16support/refute input pairs assert componentwise accumulation.",
+      "remaining_gap": ""
+    },
+    "T6.test_ambiguous_rename_unknown": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T6.test_base_parse_failure_delta_unknown": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_base_parse_failure_delta_unknown",
+          "body_sha256": "ea9a3000e3418ef59e3808f96ca2ef5cfa345af00355a4233fe6aac682a244d9"
+        }
+      ],
+      "review_basis": "Unsupported baseline comparison preserves unknown deltas.",
+      "remaining_gap": ""
+    },
+    "T6.test_conflict_not_blocker": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_conflict_not_blocker",
+          "body_sha256": "6bcf7df27b93b687ae75d540b22c18a6759bfd948ab7d5e3d89c5f4257a34911"
+        }
+      ],
+      "review_basis": "Conflicted evidence cannot satisfy configured blocker.",
+      "remaining_gap": ""
+    },
+    "T6.test_different_claim_or_revision_cannot_accumulate": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_different_claim_or_revision_cannot_accumulate",
+          "body_sha256": "cd3f038a15783b0de44009f3cc0714cc0447ba005d791a1b6fabc7e6757a6fd9"
+        },
+        {
+          "test_id": "tests.test_e01_scope_evidence.ScopeEvidenceTests.test_same_key_context_different_claim_type_cannot_accumulate",
+          "body_sha256": "aa1d9fd1b5a0a7402d1130bb30998fdf81fae3f3ae243eb9d346fe9cecb931bf"
+        }
+      ],
+      "review_basis": "Claim key,context and pattern-versus-defect type each prevent authority transfer.",
+      "remaining_gap": ""
+    },
+    "T6.test_duplicate_or_foreign_receipt_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_duplicate_or_foreign_receipt_rejected",
+          "body_sha256": "79ac0caf740d47931b7cdbad760b784be5adb774323d7f1a04fbc76762ffd2f8"
+        }
+      ],
+      "review_basis": "Duplicate/foreign keys rejected by trusted scope validator.",
+      "remaining_gap": ""
+    },
+    "T6.test_fatal_diagnostic_exit3": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_fatal_diagnostic_exit3",
+          "body_sha256": "d71c82556f6a6260e0daffa516713e1317aa95720a30a036eb2c707f4084351c"
+        }
+      ],
+      "review_basis": "Tool failure wins with exit3.",
+      "remaining_gap": ""
+    },
+    "T6.test_incomplete_precedes_finding_exit": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_incomplete_precedes_finding_exit",
+          "body_sha256": "58b43d479b885321e953315cffd7296ef72838eaea054d1b0d71718f54ee1c74"
+        }
+      ],
+      "review_basis": "Required incomplete receipt/discovery overrides a supported blocker.",
+      "remaining_gap": ""
+    },
+    "T6.test_missing_receipt_cannot_complete": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_missing_receipt_cannot_complete",
+          "body_sha256": "b18bd795d366122f248c7adb54702ba5fc6edcb12cdfe769908e56dfb2ef1c93"
+        }
+      ],
+      "review_basis": "Missing required receipt creates diagnostic and exit2.",
+      "remaining_gap": ""
+    },
+    "T6.test_old_sink_new_witness_retained": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_old_sink_new_witness_retained",
+          "body_sha256": "86d8b76a7a556877b179cc9c3e2cc44073114ce09a04e126c63c0869f2eaec7a"
+        }
+      ],
+      "review_basis": "Changed witness remains persisting obligation with evidence_delta changed.",
+      "remaining_gap": ""
+    },
+    "T6.test_shifted_line_same_obligation": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_evidence.TestEvidence.test_shifted_line_same_obligation",
+          "body_sha256": "0ce8a7299c337c7534ee3b8e3a863110725ec46b78350ee66ac8d9d9802fbed4"
+        }
+      ],
+      "review_basis": "Same path/obligation/witness aligns despite line and byte movement.",
+      "remaining_gap": ""
+    },
+    "T6.test_valid_head_claim_survives_unrelated_partial": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_scope_evidence.ScopeEvidenceTests.test_valid_head_claim_survives_unrelated_partial_scope",
+          "body_sha256": "5251c0050cb08867ac2fd8f39d9efd72dd2b9c53e5f657b9cf1b7cc3f094da8f"
+        }
+      ],
+      "review_basis": "Supported local head observation persists with unknown comparison and whole-review exit2.",
+      "remaining_gap": ""
+    },
+    "T6.test_worker_cannot_shrink_scope": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_scope_evidence.ScopeEvidenceTests.test_worker_cannot_shrink_coordinator_scope",
+          "body_sha256": "a938e2898a60fa57cb21ada7e1ef860adca646e2aff65cfe631cac79361d034c"
+        }
+      ],
+      "review_basis": "Omitted required receipts cannot mutate coordinator expected scope or authorize completion.",
+      "remaining_gap": ""
+    },
+    "T6.test_wrong_revision_or_capability_rejected": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_scope_evidence.ScopeEvidenceTests.test_each_missing_duplicate_foreign_revision_capability_receipt_rejected",
+          "body_sha256": "abf14cbb9d6fedc88515fca3221706f3c02a1852d06e05aa5d790ec18ecb44ef"
+        }
+      ],
+      "review_basis": "Independent wrong-context/revision/capability keys reject and enforce exit2.",
+      "remaining_gap": ""
+    },
+    "T7.test_all_extractor_components_invalidate": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_atomic_interrupted_write_miss": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_cache_symlink_or_reparse_refused": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_ci_cache_off": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_clean_warm_corrupt_cache_identical": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence",
+          "body_sha256": "e95fca684bf119546587220ce2b3e1af097e50fc71023a86492de71bfeaa26cc"
+        }
+      ],
+      "review_basis": "Full5mode canonical bytes/coverage/diagnostics tested through7mutations.",
+      "remaining_gap": "Schema-valid foreign omitted-fact provenance and warm-hit assertion still require separate controls."
+    },
+    "T7.test_full_manifest_resolution_recomputed": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence",
+          "body_sha256": "e95fca684bf119546587220ce2b3e1af097e50fc71023a86492de71bfeaa26cc"
+        },
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts",
+          "body_sha256": "12cfda3436a844f69b9147885b142747f535e8921e52b564140aa52a53eed520"
+        }
+      ],
+      "review_basis": "Dependency deletion/restoration and baseline/head closures rebuilt.",
+      "remaining_gap": "Warmhit must explicitly prove rules/resolution rerun."
+    },
+    "T7.test_incomplete_discovery_cannot_seal_complete_scope": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_failed_discovery_cannot_seal_complete_scope",
+          "body_sha256": "848f867bbcc95c3dc59f1f7e2da91944aa8133c89adbfc3c0448e638d773f506"
+        }
+      ],
+      "review_basis": "Parse failure returns incomplete receipts/exit2 and cannot seal discovery complete.",
+      "remaining_gap": ""
+    },
+    "T7.test_runtime_schema_change_miss": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_cache.TestCache.test_runtime_schema_change_miss",
+          "body_sha256": "79f21e0243d56b3393a08b69d6ecb09b1e1f98e79a2d4c30d007bc8757a5c80a"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T7.test_same_blob_different_paths_rebound": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_schema_valid_foreign_cache_ignored": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_scope_import_closure_fixed_point": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_static_import_closure_cycles_and_unrelated_malformed_file",
+          "body_sha256": "1e9131a383297da37b96b9f9e2094ed651939f5402e9f08f5f6837d91871eeb5"
+        },
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts",
+          "body_sha256": "12cfda3436a844f69b9147885b142747f535e8921e52b564140aa52a53eed520"
+        }
+      ],
+      "review_basis": "Both revision graphs discover transitive/cyclic import closure without unrelated malformed file.",
+      "remaining_gap": ""
+    },
+    "T7.test_shared_permissions_cache_disabled": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_size_cap": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T7.test_slow_preparation_short_policy_still_bounded": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_slow_preparation_short_policy_still_bounded",
+          "body_sha256": "e5221650cbf5cca373431185761f788fc23846741f4497531e4fc614fce7cad8"
+        }
+      ],
+      "review_basis": "Controlled stalled preparation obeys original1s work/3s final deadline and produces failure envelope.",
+      "remaining_gap": ""
+    },
+    "T7.test_unrelated_malformed_file_not_required": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_static_import_closure_cycles_and_unrelated_malformed_file",
+          "body_sha256": "1e9131a383297da37b96b9f9e2094ed651939f5402e9f08f5f6837d91871eeb5"
+        }
+      ],
+      "review_basis": "Unrelated malformed tracked Python is inventory-visible but excluded from requested structural closure.",
+      "remaining_gap": ""
+    },
+    "T7.test_unresolved_context_required": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_config_error_exit3": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_core_network_disabled": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_review_cli_does_not_open_sockets",
+          "body_sha256": "02e9fb7cb5f728fdd69ebd99fd0ea650b454bedd3bca142213b8ad4f68a4df09"
+        },
+        {
+          "test_id": "tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_subprocess_cli_offline_smoke",
+          "body_sha256": "f3d80b91a73fb23c0a4b06750bbfd827b89a3bb7177e40f7a8a5d60c25f3b14d"
+        }
+      ],
+      "review_basis": "Complete CLI socket+DNS denial, positive controls and inherited macOS OS network denial; Linux independent profile receipt separate.",
+      "remaining_gap": ""
+    },
+    "T8.test_deleted_line_sarif_side": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_empty_findings_not_safety_claim": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_render.TestRender.test_empty_findings_not_safety_claim",
+          "body_sha256": "ce3661dbb3fe9eb0ed2dc620a5e57f39cb1203929e7f670745bad29835126338"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T8.test_explicit_diff_profile_scope_statement": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_cli.TestCLI.test_explicit_diff_profile_scope_statement",
+          "body_sha256": "efe9b0abd5653cd4e6334f8b168dadac7ed3448948e9958dbcf4f32b5424cc75"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T8.test_links_only_from_trusted_identity": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_markdown_fence_html_link_breakout": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_render.TestRender.test_markdown_fence_html_link_breakout",
+          "body_sha256": "24a8e4fae5e528292989efcb24c37e811c7f2bd9043cb841a73e0ff8e3df36cc"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths",
+          "body_sha256": "af5d62db19405457d7e8d4030c384624ec46001df75f47fd06cb232b8c1aa982"
+        }
+      ],
+      "review_basis": "Raw HTML and active Markdown link syntax rejected while literal data escaped.",
+      "remaining_gap": ""
+    },
+    "T8.test_recovery_guidance_not_attacker_commands": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_report_byte_limit_never_complete": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit",
+          "body_sha256": "27219c59ab79f358e9fee1de2c3b9a49f092425c73a4590b860fc366298fc001"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit",
+          "body_sha256": "ba8e18c88e6fd0735726532f0e132690c20cc5bf26ec31503c82e8aee6cc62a7"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats",
+          "body_sha256": "6720c18fca7af7c96ad0119d72a7f72a784e334873455e0575e6159dfdfb0521"
+        }
+      ],
+      "review_basis": "Every renderer enforces budgets; CLI emits bounded fixed failure and returns2.",
+      "remaining_gap": ""
+    },
+    "T8.test_requested_and_examined_scope_visible": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "T8.test_stdout_machine_format_stderr_diagnostics": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_cli.TestCLI.test_stdout_machine_format_stderr_diagnostics",
+          "body_sha256": "aa90ebe50835e42dcf57e31d68e7c1b49c974dbbbbcdee793bf42d6540f7c3bb"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T8.test_structural_other_language_partial_exit2": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_structural_other_language_partial_exit2",
+          "body_sha256": "d796a8311088fe639bf60b6af87b0b6002c571a98159f36d1d900a2212e115f8"
+        }
+      ],
+      "review_basis": "Changed JS has required scopes/receipts and trusted recovery with exit2.",
+      "remaining_gap": ""
+    },
+    "T8.test_structural_python_complete": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_cli.TestCLI.test_structural_python_complete",
+          "body_sha256": "013312ac8fa9c3801e7aad297cfe33505a48073fb270df19fb96958df737eed3"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T8.test_terminal_escape_controls_and_bidi": {
+      "assertion_coverage": "mapped",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths",
+          "body_sha256": "af5d62db19405457d7e8d4030c384624ec46001df75f47fd06cb232b8c1aa982"
+        }
+      ],
+      "review_basis": "RawESC/CR/bidi absent and visible textual escapes preserved across claim/diagnostic/path fields.",
+      "remaining_gap": ""
+    },
+    "T8.test_unicode_sarif_character_columns": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_render.TestRender.test_unicode_sarif_character_columns",
+          "body_sha256": "f602aaf6459a51addae364e1e9dd9b0657ed6f4d1e1bb8819302c7720abb69e3"
+        }
+      ],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "Required adverse outcomes and exact scope adequacy not established by existing body."
+    },
+    "T8.test_uri_reserved_segments_roundtrip": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Requirement inventoried from kernel plan; existing bodies inspected for actual outcome checks.",
+      "remaining_gap": "No assertion body currently covers this named obligation."
+    },
+    "EVAL.immutable_comparison": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Immutable comparison invariant evidence not yet assembled."
+    },
+    "EVAL.safe_ingestion": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Safe ingestion invariant evidence not yet assembled."
+    },
+    "EVAL.location_fidelity": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Location fidelity invariant evidence not yet assembled."
+    },
+    "EVAL.scope_honesty": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Scope honesty invariant evidence not yet assembled."
+    },
+    "EVAL.differential_reporting": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Differential reporting invariant evidence not yet assembled."
+    },
+    "EVAL.cache_correctness": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Cache correctness invariant evidence not yet assembled."
+    },
+    "EVAL.pattern_restraint": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Pattern restraint invariant evidence not yet assembled."
+    },
+    "EVAL.offline_behavior": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Offline behavior invariant evidence not yet assembled."
+    },
+    "EVAL.resource_limits": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Resource limits invariant evidence not yet assembled."
+    },
+    "EVAL.independent_scope": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Independent scope invariant evidence not yet assembled."
+    },
+    "EVAL.strict_records": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Strict records invariant evidence not yet assembled."
+    },
+    "EVAL.cache_admission": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Cache admission invariant evidence not yet assembled."
+    },
+    "EVAL.process_authority": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Process authority invariant evidence not yet assembled."
+    },
+    "EVAL.safe_presentation": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Safe presentation invariant evidence not yet assembled."
+    },
+    "EVAL.recovery_guidance": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Recovery guidance invariant evidence not yet assembled."
+    },
+    "EVAL.external_import_scope": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full External/import scope invariant evidence not yet assembled."
+    },
+    "EVAL.failure_output": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "Evaluation required invariant inspected against exact-case evidence.",
+      "remaining_gap": "Full Failure output invariant evidence not yet assembled."
+    },
+    "U7-01": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence",
+          "body_sha256": "e95fca684bf119546587220ce2b3e1af097e50fc71023a86492de71bfeaa26cc"
+        }
+      ],
+      "review_basis": "7mutations compare5modes complete canonical logical reports.",
+      "remaining_gap": "Assert realwarmhit and schema-valid inadmissible cache; independent label review pending."
+    },
+    "U7-02": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence",
+          "body_sha256": "e95fca684bf119546587220ce2b3e1af097e50fc71023a86492de71bfeaa26cc"
+        }
+      ],
+      "review_basis": "Rename,dependencydelete/add,headpolicyproposal,witnessshift,exceed/recover checked.",
+      "remaining_gap": "Trusted policy mutation and independently labeled delta/scope transitions missing."
+    },
+    "U7-03": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_cache_sequences.CacheSequenceTests.test_cold_worker_timeout_warm_completion_requires_full_clean_replay",
+          "body_sha256": "4372c1472606b58212ed253d2104217d4b3100d47ac4d25dc864c4d3b65f1671"
+        }
+      ],
+      "review_basis": "Injected cold worker timeout has visible incomplete receipts/exit2; warmcache0 then cleanreplay full equality.",
+      "remaining_gap": "Actual wall-time cold/warm cutoff receipt and explicit warmhit count not yet checked."
+    },
+    "U7-04": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_slow_preparation_short_policy_still_bounded",
+          "body_sha256": "e5221650cbf5cca373431185761f788fc23846741f4497531e4fc614fce7cad8"
+        }
+      ],
+      "review_basis": "Shared preparation1s/3s exact bound and fixedfailure checked.",
+      "remaining_gap": "Configured3s policy/recomputation after successful preparation and serialization reserve consumption missing."
+    },
+    "U7-05": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U7-05: content-only cache, current occurrence binding; plan 147,155",
+      "remaining_gap": "No inspection of stored bytes for raw source/model data or occurrence fields; no stored malformed occurrence record/rebinding test. Real relative facts/spans must be cached once and rebound to distinct revision/path/side occurrences. Proposed `E01-CACHE-CONTENT-BOUNDARY`."
+    },
+    "U7-06": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_cache_location_controls_do_not_change_semantic_identity",
+          "body_sha256": "a5467766238e87ee52d40c4a2577336f4f808b7d2548200a38a78eb3e68eae1d"
+        },
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_cache_inside_reviewed_tree_not_admitted",
+          "body_sha256": "dd713b504f1605127e9757514443bdb49a8338e672833d1458a36f1ace3188a7"
+        }
+      ],
+      "review_basis": "Operationalcache location/enabled controls cannot alter semantic identity or expectedreceipts.",
+      "remaining_gap": "Actual cachemiss/admissiondiagnostic changes acrossreview not yet pinned."
+    },
+    "U7-07": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U7-07: private, descriptor-relative, no-follow, external cache; plan 154, evaluation 30",
+      "remaining_gap": "No owner/file permissions, ancestor redirects/races, outside-reviewed-tree admission or OS capability-disabled fixture. Define supported OS controls and explicit unavailable outcome before assigning verification. Proposed `E01-CACHE-ADMISSION`."
+    },
+    "U7-08": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U7-08: foreign/shared/restored schema-valid omissions and actual extractor invalidation; plan 147,150,154",
+      "remaining_gap": "A checksum-valid omitted-fact record must stay untrusted; positive emitted-fact validation cannot establish absence of omitted facts. Inventory actual digest inputs, then test every component change and cache identity mismatch. Proposed `E01-CACHE-IDENTITIES`."
+    },
+    "U7-09": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts",
+          "body_sha256": "12cfda3436a844f69b9147885b142747f535e8921e52b564140aa52a53eed520"
+        },
+        {
+          "test_id": "tests.test_snapshot.TestSnapshot.test_merge_base_not_base_tip",
+          "body_sha256": "77d808e465bfec2eb2b6f355df5fea0f040fa960235545419adc7766af37cc1a"
+        }
+      ],
+      "review_basis": "Independent base/head scope and comparisonbase pins verified.",
+      "remaining_gap": "Single resolution call +conflicting baseTip/mergeBase/head policy fixture needed."
+    },
+    "U7-10": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_both_present_python_sides_have_independent_scope_receipts",
+          "body_sha256": "12cfda3436a844f69b9147885b142747f535e8921e52b564140aa52a53eed520"
+        },
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_static_import_closure_cycles_and_unrelated_malformed_file",
+          "body_sha256": "1e9131a383297da37b96b9f9e2094ed651939f5402e9f08f5f6837d91871eeb5"
+        },
+        {
+          "test_id": "tests.test_e01_core_regressions.CoreRegressionTests.test_failed_discovery_cannot_seal_complete_scope",
+          "body_sha256": "848f867bbcc95c3dc59f1f7e2da91944aa8133c89adbfc3c0448e638d773f506"
+        },
+        {
+          "test_id": "tests.test_e01_scope_evidence.ScopeEvidenceTests.test_each_missing_duplicate_foreign_revision_capability_receipt_rejected",
+          "body_sha256": "abf14cbb9d6fedc88515fca3221706f3c02a1852d06e05aa5d790ec18ecb44ef"
+        }
+      ],
+      "review_basis": "Bothroots,cycles,partialdiscovery and foreign/revision/capability rejection pinned.",
+      "remaining_gap": "Two unresolvedlookups resolvedone at orchestration scope/recovery layer missing."
+    },
+    "U7-11": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U7-11: aggregate admitted-source/text bounds and recovery; plan 154, evaluation 27,35",
+      "remaining_gap": "No aggregate snapshot/text-diff budget boundary, deterministic affected capability/recovery, safe fallback or completed replay equality assertion. Proposed `E01-AGGREGATE-BUDGETS`."
+    },
+    "U7-12": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U7-12: rerun rules/resolution and reconstruct both revision outputs; plan 147,154\u2013155",
+      "remaining_gap": "Missing cache-hit evidence that rules/policy/resolution rerun, no stale lookup survives, both revisions are rebuilt, and local sound observations survive unrelated partial scope. Proposed `E01-REVISION-REBUILD`."
+    },
+    "U8-01": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-01: partial status, identities and coverage in every format; plan 169,171, evaluation 22,28",
+      "remaining_gap": "Full/partial JSON, Markdown and SARIF must expose base tip/comparison base/head, requested/examined scope, discovery and receipt status, affected capability/cause and trusted recovery. Include empty findings under partial coverage. Proposed `E01-FORMAT-SCOPE`."
+    },
+    "U8-02": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_byte_limit",
+          "body_sha256": "27219c59ab79f358e9fee1de2c3b9a49f092425c73a4590b860fc366298fc001"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_report_item_limit",
+          "body_sha256": "ba8e18c88e6fd0735726532f0e132690c20cc5bf26ec31503c82e8aee6cc62a7"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_cli_render_overflow_returns_schema_valid_failure_all_formats",
+          "body_sha256": "6720c18fca7af7c96ad0119d72a7f72a784e334873455e0575e6159dfdfb0521"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_failure_variant_present_in_sarif_properties",
+          "body_sha256": "7175bb3e3f1b7a66385955bba85361c9c11ac4e574b7eadd76d0c9f9e25a7c03"
+        }
+      ],
+      "review_basis": "Budget exhaustions cause fixedfailure allformats and explicitexit2.",
+      "remaining_gap": "Fullscope item exhaustion CLI fallback and depth/string renderer limits missing."
+    },
+    "U8-03": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_all_formats_obey_work_cutoff",
+          "body_sha256": "386731321c92f9b758e90f556113269bdfb89c7b1b6b3396ecb9b45e65c8e4b1"
+        }
+      ],
+      "review_basis": "Fullrenderer workcutoff is shared.",
+      "remaining_gap": "CLI deadlinefallback withinreserve and deadline expiry duringencoding missing."
+    },
+    "U8-04": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity",
+          "body_sha256": "cc68c88bfc27392c107c0566ab0a4200836663b9d49c5e50ab0868b53980687f"
+        },
+        {
+          "test_id": "tests.test_config.TestConfig.test_minimum_finalization_capacity",
+          "body_sha256": "f52ffeed74c533ef54a06583e5e26cda36745c4c38709eef7e9219d293f747f6"
+        }
+      ],
+      "review_basis": "Byte/item/depth/string/minimumduration/reserve config validated.",
+      "remaining_gap": "CLI configdenial/boundary outputs missing."
+    },
+    "U8-05": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-05: output backpressure, closed pipes and supported-OS deadline enforcement; plan 168",
+      "remaining_gap": "Child-process output bounds are not CLI stdout enforcement. Missing blocked stdout/closed pipe, bounded finalization/termination behavior, preserved exit semantics, actual OS control observations and explicit unsupported-control outcome. Proposed `E01-CLI-OUTPUT-CHANNEL`."
+    },
+    "U8-06": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_review_cli_does_not_open_sockets",
+          "body_sha256": "02e9fb7cb5f728fdd69ebd99fd0ea650b454bedd3bca142213b8ad4f68a4df09"
+        },
+        {
+          "test_id": "tests.test_e01_offline_boundaries.TestE01OfflineBoundaries.test_subprocess_cli_offline_smoke",
+          "body_sha256": "f3d80b91a73fb23c0a4b06750bbfd827b89a3bb7177e40f7a8a5d60c25f3b14d"
+        }
+      ],
+      "review_basis": "Full CLI with DNS/socketdenial and OSinheritedmacOSpositivecontrol.",
+      "remaining_gap": "CLI filesystem/processsentinels, adverseflows and Linuxdeniednetwork receipt pending."
+    },
+    "U8-07": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_markdown_visibly_escapes_controls_bidi_links_and_paths",
+          "body_sha256": "af5d62db19405457d7e8d4030c384624ec46001df75f47fd06cb232b8c1aa982"
+        },
+        {
+          "test_id": "tests.test_e01_output_contract.OutputContractTests.test_sarif_uri_roundtrip_and_deleted_side",
+          "body_sha256": "4deb34467a5b4f2b97b7cb92d4f26071b056c1005455f81b19bfb2f463bc6f94"
+        }
+      ],
+      "review_basis": "Visiblecontrols,HTML/link/pathescaping andURIreservedsegmentroundtrip.",
+      "remaining_gap": "Every displayfield, trustednavigationorigin and SARIFhistory refusal not yet complete."
+    },
+    "U8-08": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-08: baseline-only/deleted findings stay history; plan 171, evaluation 21",
+      "remaining_gap": "Missing baseline history identity/properties and absence from current SARIF results, exact rename/deletion locations, mixed baseline/head records and side-aware label assertions. Proposed `E01-SARIF-SIDES`."
+    },
+    "U8-09": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-09: decoded-character columns without rereading mutable tree; plan 171, evaluation 21",
+      "remaining_gap": "Missing source-derived exact Unicode/CRLF/multiline location assertions and a changed/unavailable working-tree fixture proving render uses bound immutable coordinates only. Proposed `E01-LOCATION-TO-OUTPUT`."
+    },
+    "U8-10": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-10: stable trusted recovery for object/runtime/import/budget failures; plan 171, evaluation 33",
+      "remaining_gap": "Pin capability/cause/recovery IDs and expected trusted action; source/head text must not add executable advice, destinations or authority. Compare across formats and replay after recovery. Proposed `E01-RECOVERY-FLOW`."
+    },
+    "U8-11": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-11: reject unsupported Python minor runtime; plan 171",
+      "remaining_gap": "Missing explicit runtime rejection/diagnostic/exit fixture, supported Python 3.12 identity capture and compatibility statement. A future verifier must supply the assigned runtime; the current host was not surveyed. Proposed `E01-RUNTIME-CONTRACT`."
+    },
+    "U8-12": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-12: actual local commands and independent user flow; plan 172\u2013174, Task 9 E01-A3",
+      "remaining_gap": "Pin positive/negative/mixed-language repositories and the three documented command expectations; save exact outputs/exits later. Independent local-review/summary/exact-line/scope-recovery acceptance is not supplied by this artifact. Proposed `E01-LOCAL-FLOW-INVENTORY`."
+    },
+    "U8-13": {
+      "assertion_coverage": "unmapped",
+      "tests": [],
+      "review_basis": "U8-13: resource/import/dependency/size audit and performance; plan 173, Task 9 E01-A3, evaluation 85\u201393",
+      "remaining_gap": "Supported runtime/Git identities, import/subprocess/size/license inventory, pinned 2-vCPU/4-GiB 10,000-file fixture, at least 30 cold/warm repetitions, raw RSS/timing/p95 and actual enforcement remain unrun/unmapped here. Proposed `E01-BENCHMARK-INVENTORY`."
+    },
+    "U8-14": {
+      "assertion_coverage": "partial",
+      "tests": [
+        {
+          "test_id": "tests.test_e01_pinned_corpus.PinnedCorpusTests.test_each_pinned_rule_case_has_expected_pattern_and_advisory_boundary",
+          "body_sha256": "9703878d238227a61d18a62f927b97566e9533dbb64d11cf43dfebaf56c781e0"
+        }
+      ],
+      "review_basis": "Licensed60case corpus checks precise advisory/nondefect claims.",
+      "remaining_gap": "CompleteCLI/mutation advisorymatrix and independentwholekernelreview pending."
+    }
+  }
+}

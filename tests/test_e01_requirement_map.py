@@ -54,13 +54,8 @@ PLANNED_TASK8 = {
 class TestE01RequirementMap(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        if not MAP_PATH.is_file():
-            subprocess.run(
-                [sys.executable, str(REPO / "scripts" / "e01_build_requirement_map.py")],
-                cwd=REPO,
-                check=True,
-            )
-        cls.data = json.loads(MAP_PATH.read_text(encoding="utf-8"))
+        from scripts.e01_build_requirement_map import build
+        cls.data = build()
 
     def test_complete_requirement_inventory(self) -> None:
         static = json.loads(STATIC_PATH.read_text(encoding="utf-8"))
@@ -73,14 +68,12 @@ class TestE01RequirementMap(unittest.TestCase):
         self.assertEqual(set(overlay["named_task7"]), PLANNED_TASK7)
         self.assertEqual(set(overlay["named_task8"]), PLANNED_TASK8)
 
-    def test_no_acceptance_pass_claims(self) -> None:
-        criteria = self.data["acceptance_criteria"]
-        self.assertEqual(criteria["E01-A1"], "not_run")
-        self.assertEqual(criteria["E01-A2"], "not_run")
-        self.assertEqual(criteria["E01-A3"], "not_run")
-        self.assertEqual(criteria["independent_decision"], "pending")
-        for row in self.data["named_requirements"]:
-            self.assertEqual(row["runtime_result"], "not_run")
+    def test_no_stale_or_unearned_pass_claims(self) -> None:
+        from scripts.e01_validate_requirement_map import validate_map
+        self.assertEqual(validate_map(self.data), [])
+        forged = json.loads(json.dumps(self.data))
+        forged["named_requirements"][0]["runtime_result"] = "passed"
+        self.assertTrue(validate_map(forged))
 
     def test_historical_blob_changes_marked_stale_field_present(self) -> None:
         self.assertIn("mapping_source_revision", self.data)

@@ -1,5 +1,10 @@
 # Coordinator dispatch and unblock record
 
+## Authorized acceptance/maintenance closure (current human request)
+
+Baseline code/trusted base: `48bef09d985fbeb42749d1cc6238c74429616a25`; documentation baseline contains E01 Task 9, E02 binding/integration and BR-18 cards. The human explicitly requests implementation and development verification of [the closure plan](superpowers/plans/2026-10-05-acceptance-maintenance-closure.md). Coordinator: current assistant. Work branch: `feat/acceptance-maintenance-closure`. Pin later source/document/fixture revisions at evidence collection. Customer publisher activation, new release publication and reviewed-target execution are not assigned. Independent reviewers are separate from scope implementers. Execution/evidence status is maintained in the closure checklist; historical beta decisions remain unchanged.
+
+
 ## 2026-10-06 post-publication (beta 0.1.0b1 on main)
 
 | Field | Value |

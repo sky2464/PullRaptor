@@ -5,6 +5,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 import shutil
+import re
 import tempfile
 
 from pullraptor.models import (
@@ -30,6 +31,7 @@ def _git_supports_global_option(option: str) -> bool:
             capture_output=True,
             timeout=5.0,
             check=False,
+            env={"PATH": "/usr/bin:/bin:/usr/local/bin", "GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": "/dev/null"},
         )
     except (OSError, subprocess.SubprocessError):
         return False
@@ -56,6 +58,7 @@ def _safe_git_args(repo: Path) -> list[str]:
     return [
         _GIT_BIN,
         "-c", "core.fsmonitor=false",
+        "-c", "core.hooksPath=/dev/null",
         "-c", "diff.external=",
         "-c", "diff.textconv=",
         "-c", f"safe.directory={trusted_repo}",
@@ -195,8 +198,10 @@ def read_snapshot(repo: Path, oid: str, limits: Limits, deadline: Deadline) -> S
     )
     cmd = tuple(_safe_git_args(repo) + ["ls-tree", "-r", "-z", "-l", "--full-name", oid])
     res = run_bounded(cmd, cwd=repo, env=env, deadline=deadline, bounds=bounds)
-    if res.returncode != 0:
+    if res.returncode != 0 or res.stdout_truncated or res.stderr_truncated or res.timed_out:
         raise ValueError(f"Failed to read snapshot {oid}: {res.stderr.decode('utf-8', errors='replace').strip()}")
+    if res.stdout and not res.stdout.endswith(b"\x00"):
+        raise ValueError("Incomplete snapshot metadata")
 
     blobs: list[BlobRef] = []
     diagnostics: list[Diagnostic] = []
@@ -209,17 +214,21 @@ def read_snapshot(repo: Path, oid: str, limits: Limits, deadline: Deadline) -> S
         try:
             meta, path_bytes = raw.split(b"\t", 1)
         except ValueError:
-            continue
+            raise ValueError("Malformed snapshot metadata")
 
         meta_parts = meta.split()
-        if len(meta_parts) < 4:
-            continue
+        if len(meta_parts) != 4:
+            raise ValueError("Malformed snapshot metadata")
 
         mode = meta_parts[0].decode("ascii", errors="replace")
         entry_type = meta_parts[1].decode("ascii", errors="replace")
         blob_oid = meta_parts[2].decode("ascii", errors="replace")
         size_str = meta_parts[3].decode("ascii", errors="replace")
         size = int(size_str) if size_str.isdigit() else 0
+        if (mode not in {"100644", "100755", "120000", "160000"} or entry_type not in {"blob", "commit"}
+                or not re.fullmatch(r"[0-9a-f]{40}|[0-9a-f]{64}", blob_oid)
+                or not path_bytes or (entry_type == "blob" and not size_str.isdigit())):
+            raise ValueError("Invalid snapshot record")
 
         # Try decoding path as UTF-8
         try:

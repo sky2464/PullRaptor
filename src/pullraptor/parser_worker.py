@@ -8,11 +8,70 @@ from __future__ import annotations
 import ast
 import base64
 import hashlib
+import importlib.util
 import json
+from pathlib import Path
 import sys
 from typing import Any
 
-EXTRACTOR_DIGEST = "extractor_v1_py312"
+def extractor_identity() -> str:
+    """Invalidate facts when extraction or binding normalization changes."""
+    root = Path(__file__).resolve().parent
+    digest = hashlib.sha256(b"pullraptor-extractor-v2\0")
+    for name in ("parser_worker.py", "python_facts.py", "models.py"):
+        digest.update(name.encode() + b"\0" + (root / name).read_bytes())
+    return digest.hexdigest()
+
+
+EXTRACTOR_DIGEST = extractor_identity()
+
+
+def _lexical_bindings(tree: ast.AST) -> tuple[dict[ast.AST, ast.AST], dict[ast.AST, dict[str, str | None]]]:
+    """Conservative lexical import identity; a rebinding never proves stdlib identity."""
+    parents = {child: parent for parent in ast.walk(tree) for child in ast.iter_child_nodes(parent)}
+    scopes = {}
+    scope_types = (ast.Module, ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef, ast.Lambda)
+    for scope in ast.walk(tree):
+        if not isinstance(scope, scope_types):
+            continue
+        aliases: dict[str, str | None] = {}
+        rebound: set[str] = set()
+        if isinstance(scope, (ast.FunctionDef, ast.AsyncFunctionDef, ast.Lambda)):
+            args = scope.args
+            rebound.update(a.arg for a in (*args.posonlyargs, *args.args, *args.kwonlyargs))
+            rebound.update(a.arg for a in (args.vararg, args.kwarg) if a is not None)
+        pending = list(ast.iter_child_nodes(scope))
+        while pending:
+            node = pending.pop()
+            if isinstance(node, scope_types):
+                if hasattr(node, "name"):
+                    rebound.add(node.name)
+                continue
+            if isinstance(node, ast.Import):
+                for alias in node.names:
+                    aliases[alias.asname or alias.name.split(".")[0]] = alias.name
+            elif isinstance(node, ast.ImportFrom):
+                for alias in node.names:
+                    aliases[alias.asname or alias.name] = f"{node.module}.{alias.name}" if not node.level else None
+            elif isinstance(node, ast.Name) and isinstance(node.ctx, (ast.Store, ast.Del)):
+                rebound.add(node.id)
+            elif isinstance(node, (ast.Global, ast.Nonlocal)):
+                rebound.update(node.names)
+            elif isinstance(node, ast.ExceptHandler) and node.name:
+                rebound.add(node.name)
+            pending.extend(ast.iter_child_nodes(node))
+        aliases.update({name: None for name in rebound})
+        scopes[scope] = aliases
+    return parents, scopes
+
+
+def _import_identity(node: ast.AST, name: str, parents: dict, scopes: dict) -> str | None:
+    cursor = node
+    while cursor in parents:
+        cursor = parents[cursor]
+        if cursor in scopes and name in scopes[cursor]:
+            return scopes[cursor][name]
+    return None
 
 
 def _compute_coordinates(source_bytes: bytes, node: ast.AST) -> dict[str, int]:
@@ -76,6 +135,7 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
     imports: list[dict[str, Any]] = []
     pattern_facts: list[dict[str, Any]] = []
     unsupported_constructs: list[str] = []
+    parents, scopes = _lexical_bindings(tree)
 
     # Map aliases to module names: alias -> module
     import_aliases: dict[str, str] = {}
@@ -134,10 +194,6 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
                     elif isinstance(default_val, ast.Set):
                         is_mutable = True
                         mut_type = "set"
-                    elif isinstance(default_val, ast.Call) and isinstance(default_val.func, ast.Name):
-                        if default_val.func.id in ("list", "dict", "set"):
-                            is_mutable = True
-                            mut_type = default_val.func.id
 
                     if is_mutable and mut_type is not None:
                         param_name = arg_def.arg
@@ -157,6 +213,9 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
                                         if not reassigned:
                                             mutated = True
                                             mutation_witness = f"Subscript write: {param_name}[...]"
+                            elif isinstance(stmt, ast.AnnAssign):
+                                if isinstance(stmt.target, ast.Name) and stmt.target.id == param_name and stmt.value is not None:
+                                    reassigned = True
                             elif isinstance(stmt, ast.AugAssign):
                                 if isinstance(stmt.target, ast.Name) and stmt.target.id == param_name:
                                     reassigned = True
@@ -190,14 +249,7 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
         # Check PY002: bare exception handler
         elif isinstance(node, ast.Try):
             for handler in node.handlers:
-                # Bare except: handler.type is None or handler.type is BaseException
-                is_bare = False
                 if handler.type is None:
-                    is_bare = True
-                elif isinstance(handler.type, ast.Name) and handler.type.id == "BaseException":
-                    is_bare = True
-
-                if is_bare:
                     # Check body is straight-line statements with optional terminal return and no raise
                     has_raise = False
                     has_branching = False
@@ -224,14 +276,14 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
                 obj_name = node.func.value.id
                 method_name = node.func.attr
                 # Check if obj_name is subprocess or alias for subprocess
-                orig_mod = import_aliases.get(obj_name, obj_name)
+                orig_mod = _import_identity(node, obj_name, parents, scopes)
                 if orig_mod == "subprocess" and method_name in ("run", "Popen", "call", "check_call", "check_output"):
                     is_subp = True
                     call_name = method_name
             elif isinstance(node.func, ast.Name):
                 # e.g. from subprocess import run
-                orig_target = import_aliases.get(node.func.id, "")
-                if orig_target.startswith("subprocess."):
+                orig_target = _import_identity(node, node.func.id, parents, scopes)
+                if orig_target and orig_target.startswith("subprocess."):
                     func_target = orig_target.split(".", 1)[1]
                     if func_target in ("run", "Popen", "call", "check_call", "check_output"):
                         is_subp = True
@@ -267,21 +319,31 @@ def parse_and_extract(source_bytes: bytes) -> dict[str, Any]:
 
 def main() -> None:
     """CLI worker protocol handler."""
-    raw_in = sys.stdin.buffer.read()
-    if not raw_in:
+    # Fixed protocol cap precedes allocation; coordinator separately enforces its
+    # potentially stricter per-blob cap. This worker never executes source.
+    raw_in = sys.stdin.buffer.read(4_194_305)
+    if not raw_in or len(raw_in) > 4_194_304:
         sys.exit(1)
 
     try:
-        req = json.loads(raw_in.decode("utf-8"))
+        # Load only the installed trusted sibling codec; -I -S never admits the
+        # reviewed directory, ambient PYTHONPATH or site startup modules.
+        spec = importlib.util.spec_from_file_location("_pullraptor_worker_models", Path(__file__).with_name("models.py"))
+        codec = importlib.util.module_from_spec(spec)
+        sys.modules[spec.name] = codec
+        spec.loader.exec_module(codec)
+        req = codec.decode_record(raw_in, schema="worker", limits=codec.RecordLimits(max_payload_bytes=4_194_304))
     except Exception:
         sys.exit(1)
 
-    if req.get("protocol") != "pullraptor_worker_v1":
+    if not isinstance(req, dict) or set(req) != {"protocol", "source_base64"} or req["protocol"] != "pullraptor_worker_v1":
         sys.exit(2)
 
     source_b64 = req.get("source_base64", "")
     try:
-        source_bytes = base64.b64decode(source_b64)
+        if not isinstance(source_b64, str):
+            raise ValueError("invalid source encoding")
+        source_bytes = base64.b64decode(source_b64, validate=True)
     except Exception:
         sys.exit(1)
 
@@ -290,7 +352,7 @@ def main() -> None:
         "protocol": "pullraptor_worker_v1",
         **res,
     }
-    sys.stdout.buffer.write(json.dumps(out_payload).encode("utf-8"))
+    sys.stdout.buffer.write(codec.encode_record(out_payload, codec.RecordLimits()))
     sys.exit(0)
 
 

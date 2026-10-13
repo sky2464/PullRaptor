@@ -93,7 +93,7 @@ except:
             b"def f(x=[]): x[0] = 1",
             b"def f(d={}): d['a'] = 1",
             b"def f(d={}): d.update({'a': 1})",
-            b"def f(s=set()): s.add(1)",
+            b"def f(s={1}): s.add(1)",
         ]
         for idx, code in enumerate(cases):
             with self.subTest(case=idx):
@@ -129,9 +129,9 @@ except:
             b"try:\n    pass\nexcept:\n    x = 1",
             b"try:\n    pass\nexcept:\n    print('error')",
             b"try:\n    pass\nexcept:\n    pass\n    return",
-            b"try:\n    pass\nexcept BaseException:\n    pass",
-            b"try:\n    pass\nexcept BaseException:\n    return 0",
-            b"try:\n    pass\nexcept BaseException:\n    log('err')",
+            b"try:\n    pass\nexcept:\n    pass",
+            b"try:\n    pass\nexcept:\n    return 0",
+            b"try:\n    pass\nexcept:\n    log('err')",
             b"try:\n    x = 1\nexcept:\n    x = 0",
             b"try:\n    pass\nexcept:\n    do_fallback()\n    return None",
         ]

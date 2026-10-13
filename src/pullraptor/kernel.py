@@ -2,6 +2,9 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
+import json
+
 import hashlib
 import os
 from pathlib import Path
@@ -22,6 +25,7 @@ from pullraptor.models import (
     Finding,
     FullReport,
     LimitFailure,
+    LimitExceeded,
     Limits,
     RecordLimits,
     Report,
@@ -67,27 +71,42 @@ def review(
     Returns the canonical Report, active Deadline, and RecordLimits.
     """
     start_time = started_at if started_at is not None else time.monotonic()
-    initial_deadline = Deadline(started_at=start_time, duration_seconds=60.0, reserve_seconds=2.0)
+    initial_deadline = Deadline(started_at=start_time, duration_seconds=3.0, reserve_seconds=2.0)
     record_limits = RecordLimits()
 
-    # 1. Resolve immutable Git commits
-    base_tip, comparison_base, head = resolve_inputs(
-        repo, base_ref, head_ref, Limits(), initial_deadline, exact_base=exact_base, is_head_tree=is_head_tree
-    )
+    base_tip = comparison_base = head = None
+    policy_digest = None
+    try:
+        # 1. Resolve immutable Git commits
+        base_tip, comparison_base, head = resolve_inputs(
+            repo, base_ref, head_ref, Limits(), initial_deadline, exact_base=exact_base, is_head_tree=is_head_tree
+        )
 
-    # 2. Read base-tip snapshot to discover trusted policy (.pullraptor.toml)
-    base_tip_snap = read_snapshot(repo, base_tip, Limits(), initial_deadline)
-    policy_blob = next((b for b in base_tip_snap.blobs if b.path == ".pullraptor.toml"), None)
-    if policy_blob is not None:
-        policy_bytes = read_blob(repo, policy_blob.blob_oid, Limits(), initial_deadline)
-        policy_digest = hashlib.sha256(policy_bytes).hexdigest()
-    else:
-        policy_bytes = None
-        policy_digest = "default_policy"
+        # 2. Read base-tip snapshot to discover trusted policy (.pullraptor.toml)
+        base_tip_snap = read_snapshot(repo, base_tip, Limits(), initial_deadline)
+        policy_blob = next((b for b in base_tip_snap.blobs if b.path == ".pullraptor.toml"), None)
+        if policy_blob is not None:
+            policy_bytes = read_blob(repo, policy_blob.blob_oid, Limits(), initial_deadline)
+            policy_digest = hashlib.sha256(policy_bytes).hexdigest()
+        else:
+            policy_bytes = None
+            policy_digest = "default_policy"
+
+    except (RuntimeError, TimeoutError, ValueError):
+        if not initial_deadline.is_work_exhausted():
+            raise
+        return (LimitFailure("1", "limit_failure", {"base_tip": base_tip, "comparison_base": comparison_base,
+                "head": head, "policy_digest": policy_digest, "reviewer_digest": None}, 2, False, True,
+                "deadline_exceeded", {"name": "bootstrap_work_seconds", "cap": 1, "observed": 1},
+                ({"domain": "scope", "count": None},)), initial_deadline, record_limits)
 
     # 3. Load trusted declarative configuration
     config = load_config(policy_bytes, overrides, ci=ci)
-    config_digest = hashlib.sha256(str(config).encode("utf-8")).hexdigest()
+    record_limits = RecordLimits(max_depth=config.max_report_depth, max_aggregate_items=config.max_report_items,
+                                 max_string_bytes=config.max_report_string_bytes, max_payload_bytes=config.max_report_bytes)
+    semantic_config = {key: value for key, value in asdict(config).items()
+                       if key not in {"use_cache", "cache_dir", "max_cache_bytes"}}
+    config_digest = hashlib.sha256(json.dumps(semantic_config, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
     tool_digest = f"pullraptor_v1_py{sys.version_info.major}.{sys.version_info.minor}"
 
     effective_limits = Limits(
@@ -109,14 +128,23 @@ def review(
     if ci or not use_cache or not config.use_cache:
         cache_dir: Path | None = None
     else:
-        cache_dir = Path(config.cache_dir) if config.cache_dir else (repo / ".pullraptor_cache")
+        cache_dir = (Path(config.cache_dir) if config.cache_dir else
+                     Path.home() / ".cache" / "pullraptor" / hashlib.sha256(str(repo.resolve()).encode()).hexdigest())
+        if cache_dir.resolve().is_relative_to(repo.resolve()):
+            cache_dir = None
 
     # 4. Ingest comparison base and head snapshots
     base_snap = read_snapshot(repo, comparison_base, effective_limits, deadline)
     head_snap = read_snapshot(repo, head, effective_limits, deadline)
 
     # 5. Compute exact diff facts
-    chgs = changes(repo, base_snap, head_snap, effective_limits, deadline)
+    try:
+        chgs = changes(repo, base_snap, head_snap, effective_limits, deadline)
+    except LimitExceeded as error:
+        return (LimitFailure("1", "limit_failure", {"base_tip": base_tip, "comparison_base": comparison_base,
+                "head": head, "policy_digest": policy_digest, "reviewer_digest": tool_digest}, 2, False, True,
+                error.cause, {"name": error.name, "cap": error.cap, "observed": error.observed},
+                ({"domain": "scope", "count": None}, {"domain": "findings", "count": None})), deadline, record_limits)
 
     # Deadline check before expensive fact extraction
     if deadline.is_work_exhausted():
@@ -142,10 +170,25 @@ def review(
     inventory = tuple(b.path for b in head_snap.blobs if b.path)
     runtime_str = f"{sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}"
 
+    unknown_scope: list[ScopeEntry] = []
+    unknown_receipts: list[CoverageReceipt] = []
+    unknown_diagnostics: list[Diagnostic] = []
+    for snapshot in (base_snap, head_snap):
+        for blob in snapshot.blobs:
+            if blob.path is not None:
+                continue
+            key = file_scope_key("file", snapshot.oid, blob.path_bytes, "generic_diff")
+            unknown_scope.append(ScopeEntry(key, "file", snapshot.oid, "generic_diff",
+                path_bytes=blob.path_bytes, reason="unsupported non-UTF-8 path"))
+            unknown_receipts.append(CoverageReceipt(key, policy_digest, "generic_diff", "incomplete",
+                cause="non_utf8_path", recovery="Use a UTF-8 repository path for source navigation"))
+            unknown_diagnostics.append(Diagnostic("PATH_NON_UTF8", "Requested repository path cannot be represented as UTF-8.",
+                cause="non_utf8_path", recovery="Use a UTF-8 repository path for source navigation"))
+
     # Profile: diff
     if config.profile == "diff":
-        expected_scope: list[ScopeEntry] = []
-        receipts: list[CoverageReceipt] = []
+        expected_scope: list[ScopeEntry] = list(unknown_scope)
+        receipts: list[CoverageReceipt] = list(unknown_receipts)
 
         for chg in chgs:
             if chg.path:
@@ -181,7 +224,7 @@ def review(
             expected_scope=tuple(expected_scope),
             discovery_complete=True,
         )
-        receipt_diags = validate_receipts(contract, tuple(receipts))
+        receipt_diags = tuple(unknown_diagnostics + list(base_snap.diagnostics + head_snap.diagnostics)) + validate_receipts(contract, tuple(receipts))
         exit_code = decide(contract, tuple(receipts), (), receipt_diags, config)
 
         report = FullReport(
@@ -201,161 +244,128 @@ def review(
     # Extract Python facts for changed files and their in-repository static dependencies
     changed_python_paths = {
         chg.path for chg in chgs
-        if chg.path and chg.path.endswith(".py")
+        if chg.path and chg.path.endswith((".py", ".pyi"))
     }
 
     # Map paths to BlobRef
     head_blobs_by_path = {b.path: b for b in head_snap.blobs if b.path}
     base_blobs_by_path = {b.path: b for b in base_snap.blobs if b.path}
 
-    def _extract_for_blob(blob: Any, side: str, snap: Snapshot) -> tuple[BoundFacts | None, list[Diagnostic]]:
-        source = read_blob(repo, blob.blob_oid, effective_limits, deadline)
-        k = cache_key(blob.blob_oid, runtime_str, "1", EXTRACTOR_DIGEST)
-        cached = load_facts(cache_dir, k, effective_limits) if cache_dir else None
+    admitted_bytes: dict[str, int] = {}
+    cache_hits = cache_misses = 0
 
+    def _extract_for_blob(blob: Any, side: str, snap: Snapshot) -> tuple[BoundFacts | None, list[Diagnostic]]:
+        nonlocal cache_hits, cache_misses
+        if blob.mode not in {"100644", "100755"}:
+            return None, [Diagnostic("SOURCE_MODE_UNSUPPORTED", "Source is not a regular tracked blob.",
+                path=blob.path, side=side, cause="unsupported_source_mode", recovery="Review the metadata exclusion or select the diff profile")]
+        if blob.size > effective_limits.max_blob_bytes:
+            return None, [Diagnostic("LIMIT_EXCEEDED", "Requested source exceeds the declared per-blob byte limit.",
+                path=blob.path, side=side, cause="max_blob_bytes_exceeded", recovery="Increase the trusted per-blob byte limit")]
+        total = admitted_bytes.get(snap.oid, 0) + blob.size
+        if total > effective_limits.max_total_bytes:
+            return None, [Diagnostic("LIMIT_EXCEEDED", "Requested source exceeds the declared snapshot byte limit.",
+                path=blob.path, side=side, cause="max_total_bytes_exceeded", recovery="Increase the trusted snapshot byte limit")]
+        admitted_bytes[snap.oid] = total
+        source = read_blob(repo, blob.blob_oid, effective_limits, deadline)
+        k = cache_key(hashlib.sha256(source).hexdigest(), runtime_str, "1", EXTRACTOR_DIGEST)
+        cached = load_facts(cache_dir, k, effective_limits) if cache_dir else None
         if cached is not None:
-            facts = cached
-            diags: list[Diagnostic] = []
+            cache_hits += 1
+            facts, diags = cached, []
         else:
+            cache_misses += 1
             res = extract_python(source, effective_limits, deadline)
-            facts = res.content
-            diags = list(res.diagnostics)
+            facts, diags = res.content, list(res.diagnostics)
             if facts is not None and cache_dir:
                 store_facts(cache_dir, k, facts, effective_limits)
-
         if facts is None:
             return None, diags
+        return bind_facts(facts, source, snap, blob.path, side), diags
 
-        bound = bind_facts(facts, source, snap, blob.path, side)
-        return bound, diags
-
-    expected_scope_list: list[ScopeEntry] = []
-    receipts_list: list[CoverageReceipt] = []
+    expected_scope_list: list[ScopeEntry] = list(unknown_scope)
+    receipts_list: list[CoverageReceipt] = list(unknown_receipts)
     head_bound_facts: list[BoundFacts] = []
     base_bound_facts: list[BoundFacts] = []
-    all_diagnostics: list[Diagnostic] = []
-
-    # Queue of files to analyze in head
-    head_queue = list(changed_python_paths)
+    all_diagnostics: list[Diagnostic] = list(base_snap.diagnostics + head_snap.diagnostics) + unknown_diagnostics
+    discovery_complete = not all_diagnostics
     head_visited: set[str] = set()
 
-    while head_queue:
-        curr_path = head_queue.pop(0)
-        if curr_path in head_visited:
-            continue
-        head_visited.add(curr_path)
+    # Each revision discovers its own append-only static context closure. A
+    # head dependency graph cannot stand in for the independently required base.
+    for side, snapshot, blobs_by_path, bound_facts in (("base", base_snap, base_blobs_by_path, base_bound_facts),
+                                                      ("head", head_snap, head_blobs_by_path, head_bound_facts)):
+        queue = sorted(changed_python_paths)
+        visited: set[str] = set()
+        while queue:
+            path = queue.pop(0)
+            if path in visited:
+                continue
+            visited.add(path)
+            if side == "head":
+                head_visited.add(path)
+            blob = blobs_by_path.get(path)
+            if blob is None:
+                continue
+            key = file_scope_key("file", snapshot.oid, blob.path_bytes, "python_patterns")
+            expected_scope_list.append(ScopeEntry(key, "file", snapshot.oid, "python_patterns",
+                path=path, path_bytes=blob.path_bytes,
+                reason="changed source" if path in changed_python_paths else "static dependency"))
+            bound, diagnostics = _extract_for_blob(blob, side, snapshot)
+            all_diagnostics.extend(diagnostics)
+            if bound is None:
+                discovery_complete = False
+                primary = diagnostics[0] if diagnostics else None
+                receipts_list.append(CoverageReceipt(key, policy_digest, "python_patterns", "incomplete",
+                    cause=primary.cause if primary else "parse_failure", recovery=primary.recovery if primary else "Prepare the requested source"))
+                continue
+            bound_facts.append(bound)
+            receipts_list.append(CoverageReceipt(key, policy_digest, "python_patterns", "complete"))
+            current, _ = resolve_context((bound,), snapshot)
+            queue.extend(sorted({item["target_path"] for item in current[0].resolved_imports
+                                 if item.get("kind") == "repo" and item.get("target_path")} - visited))
 
-        blob = head_blobs_by_path.get(curr_path)
-        if not blob:
-            continue
-
-        scope_key = file_scope_key("file", head, blob.path_bytes, "python_patterns")
-        expected_scope_list.append(
-            ScopeEntry(
-                key=scope_key,
-                kind="file",
-                snapshot=head,
-                capability="python_patterns",
-                path=curr_path,
-                path_bytes=blob.path_bytes,
-                reason="changed source" if curr_path in changed_python_paths else "static dependency",
-            )
-        )
-
-        bound, diags = _extract_for_blob(blob, "head", head_snap)
-        all_diagnostics.extend(diags)
-
-        if bound is not None:
-            head_bound_facts.append(bound)
-            receipts_list.append(
-                CoverageReceipt(
-                    key=scope_key,
-                    contract_digest=policy_digest,
-                    capability="python_patterns",
-                    status="complete",
-                )
-            )
-
-            # Discover static repo dependencies
-            for imp in bound.content.imports:
-                mod = imp.get("module") or imp.get("name") or ""
-                candidate_path = f"{mod.replace('.', '/')}.py"
-                candidate_init = f"{mod.replace('.', '/')}/__init__.py"
-                candidate_src_path = f"src/{candidate_path}"
-                candidate_src_init = f"src/{candidate_init}"
-
-                if candidate_path in head_blobs_by_path:
-                    head_queue.append(candidate_path)
-                elif candidate_init in head_blobs_by_path:
-                    head_queue.append(candidate_init)
-                elif candidate_src_path in head_blobs_by_path:
-                    head_queue.append(candidate_src_path)
-                elif candidate_src_init in head_blobs_by_path:
-                    head_queue.append(candidate_src_init)
-        else:
-            receipts_list.append(
-                CoverageReceipt(
-                    key=scope_key,
-                    contract_digest=policy_digest,
-                    capability="python_patterns",
-                    status="incomplete",
-                    cause="parse_failure",
-                    recovery="Fix Python syntax error",
-                )
-            )
-
-    # Also analyze matching baseline files for differential alignment
-    for path in head_visited:
-        base_blob = base_blobs_by_path.get(path)
-        if base_blob:
-            bound_b, diags_b = _extract_for_blob(base_blob, "base", base_snap)
-            all_diagnostics.extend(diags_b)
-            if bound_b is not None:
-                base_bound_facts.append(bound_b)
-
-    # Contextual resolution
     head_resolved, head_res_diags = resolve_context(tuple(head_bound_facts), head_snap)
     base_resolved, base_res_diags = resolve_context(tuple(base_bound_facts), base_snap)
-    all_diagnostics.extend(head_res_diags)
-    all_diagnostics.extend(base_res_diags)
+    all_diagnostics.extend(base_res_diags + head_res_diags)
 
-    # Unresolved imports produce distinct scope entries and incomplete receipts
-    seen_imp_keys: set[str] = set()
-    for d in head_res_diags:
-        if d.code == "IMPORT_UNRESOLVED" and d.path:
-            imp_key = import_scope_key(
-                kind="import_lookup",
-                snapshot=head,
-                source_occurrence=d.path,
-                canonical_target=d.message,
-                relative_level=0,
-                capability="python_structure",
-            )
-            if imp_key in seen_imp_keys:
+    # Lookup identity contains source/module/level, not diagnostic prose or an
+    # invented path. Ambiguous and missing lookups cannot disappear from scope.
+    seen_lookup_keys: set[str] = set()
+    for snapshot, resolved_items in ((base_snap, base_resolved), (head_snap, head_resolved)):
+        for resolved in resolved_items:
+            for occurrence, lookup in zip(resolved.bound.content.imports, resolved.resolved_imports):
+                if lookup.get("kind") not in {"unresolved", "ambiguous"}:
+                    continue
+                target = str(lookup.get("raw") or lookup.get("canonical") or "")
+                level = int(occurrence.get("level", 0))
+                key = import_scope_key("import_lookup", snapshot.oid, resolved.bound.path, target, level, "python_structure")
+                if key in seen_lookup_keys:
+                    continue
+                seen_lookup_keys.add(key)
+                expected_scope_list.append(ScopeEntry(key, "import_lookup", snapshot.oid, "python_structure",
+                    source_occurrence=resolved.bound.path, canonical_target=target, relative_level=level,
+                    reason="unresolved or ambiguous import lookup"))
+                receipts_list.append(CoverageReceipt(key, policy_digest, "python_structure", "incomplete",
+                    cause="unresolved_import" if lookup["kind"] == "unresolved" else "ambiguous_import",
+                    recovery="Prepare or disambiguate the requested repository context"))
+
+    # Every changed known source language remains requested on both present
+    # sides. Unsupported structural capability cannot vanish from the contract.
+    for change in chgs:
+        if not change.path or not change.path.endswith(config.source_suffixes) or change.path.endswith((".py", ".pyi")):
+            continue
+        for side, snapshot, blob in (("base", base_snap, change.base_blob), ("head", head_snap, change.head_blob)):
+            if blob is None:
                 continue
-            seen_imp_keys.add(imp_key)
-            expected_scope_list.append(
-                ScopeEntry(
-                    key=imp_key,
-                    kind="import_lookup",
-                    snapshot=head,
-                    capability="python_structure",
-                    source_occurrence=d.path,
-                    canonical_target=d.message,
-                    relative_level=0,
-                    reason="unresolved import lookup",
-                )
-            )
-            receipts_list.append(
-                CoverageReceipt(
-                    key=imp_key,
-                    contract_digest=policy_digest,
-                    capability="python_structure",
-                    status="incomplete",
-                    cause="unresolved_import",
-                    recovery="Provide repository candidate or configure modeled external",
-                )
-            )
+            key = file_scope_key("file", snapshot.oid, blob.path_bytes, "python_structure")
+            expected_scope_list.append(ScopeEntry(key, "file", snapshot.oid, "python_structure",
+                path=change.path, path_bytes=blob.path_bytes, reason="changed unsupported source"))
+            receipts_list.append(CoverageReceipt(key, policy_digest, "python_structure", "incomplete",
+                cause="unsupported_language", recovery="Select the explicit diff profile or an independently admitted language worker"))
+            all_diagnostics.append(Diagnostic("UNSUPPORTED_LANGUAGE", "Requested structural analysis is unavailable for this source language.",
+                path=change.path, side=side, cause="unsupported_language",
+                recovery="Select the explicit diff profile or an independently admitted language worker"))
 
     # 6. Evaluate rules
     base_findings = evaluate_rules(base_resolved, base_snap, config)
@@ -374,8 +384,8 @@ def review(
         config_digest=config_digest,
         tool_digest=tool_digest,
         profile="structural",
-        expected_scope=tuple(expected_scope_list),
-        discovery_complete=True,
+        expected_scope=tuple(sorted(expected_scope_list, key=lambda item: item.key)),
+        discovery_complete=discovery_complete,
     )
     receipt_diags = validate_receipts(contract, tuple(receipts_list))
     all_diagnostics.extend(receipt_diags)
@@ -386,6 +396,9 @@ def review(
     execution: dict[str, Any] = {
         "duration_ms": int((time.monotonic() - start_time) * 1000),
         "exit_code": exit_code,
+        "cache_hits": cache_hits,
+        "cache_misses": cache_misses,
+        "cache_enabled": cache_dir is not None,
     }
     if config.profile == "structural":
         from pullraptor.review_execution import (

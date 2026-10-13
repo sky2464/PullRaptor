@@ -1,0 +1,14 @@
+test_unreached_checkpoint_cannot_claim_an_interruption (tests.test_update_recovery.TestCheckpointGuards.test_unreached_checkpoint_cannot_claim_an_interruption) ... ok
+test_replaced_build_only_tool_bytes_are_refused (tests.test_update_recovery.TestReviewedToolBoundary.test_replaced_build_only_tool_bytes_are_refused) ... ok
+test_interrupted_update_two_actual_filesystem_checkpoints (tests.test_update_recovery.TestUpdateRecovery.test_interrupted_update_two_actual_filesystem_checkpoints) ... ok
+test_real_distinct_update_and_corrupt_refusal (tests.test_update_recovery.TestUpdateRecovery.test_real_distinct_update_and_corrupt_refusal) ... ok
+test_reports_entrypoints_and_identities_after_every_recovery (tests.test_update_recovery.TestUpdateRecovery.test_reports_entrypoints_and_identities_after_every_recovery) ... ok
+test_install_interrupt_recovery (tests.test_installed_artifacts.TestInstalledArtifacts.test_install_interrupt_recovery) ... ok
+test_uninstall_no_credentials_remnants (tests.test_installed_artifacts.TestInstalledArtifacts.test_uninstall_no_credentials_remnants) ... ok
+test_br18_prior_wheel_reinstall_rollback (tests.test_installed_artifacts.TestInstalledArtifacts.test_br18_prior_wheel_reinstall_rollback) ... ok
+test_update_rollback_prior_accepted_artifact (tests.test_installed_artifacts.TestInstalledArtifacts.test_update_rollback_prior_accepted_artifact) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 42.618s
+
+OK

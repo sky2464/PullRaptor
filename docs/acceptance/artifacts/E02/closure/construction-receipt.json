@@ -1,0 +1,83 @@
+{
+  "schema": "pullraptor.e02-closure-construction/1",
+  "criterion": "E02-A2",
+  "mode": "implement_and_development_verify",
+  "baseline_source_oid": "48bef09d985fbeb42749d1cc6238c74429616a25",
+  "trusted_base_oid": "48bef09d985fbeb42749d1cc6238c74429616a25",
+  "source_state": "uncommitted_shared_branch",
+  "source_sha256": {
+    "src/pullraptor/publication_contract.py": "49bfa7461cd3c1dfb8a02b3ac0f952708b8ada9dad6deb7d2ab5cda1fb520e0a",
+    "src/pullraptor/publisher.py": "3338888b12dccf98eae9443e042b2cd445d5c4952195d0c464c063736179c2fe",
+    "src/pullraptor/publication_transport.py": "1669f56d0e33207637daa41525275320ed6dcdd3bca8c5f7ee209ce6475549b3"
+  },
+  "test_sha256": {
+    "tests/test_e02_publication_closure.py": "c1fb12902415cea7485e8d2d48d95409bcf5b5ca36911b8719bf0f932662f0ad",
+    "tests/test_publication_contract.py": "8a323d1ab62ea77ccf9e33287e137d869b84fce843ef94e8ae70827e17b69b51",
+    "tests/test_publication_binding_fixtures.py": "d22b968d055be9d76e27017e4988cbdb602a4b1690637271cb9d2198364adfaf",
+    "tests/test_publisher.py": "831696354eb8b01672360aded3d35bb206fa7008a70e68b80fb1fa643720b149",
+    "tests/test_publisher_fixture_scenarios.py": "517c034e10591bc219ea14ceeb9e07d82be8c7c5b6b81941e0b263b8dbf747df"
+  },
+  "fixture_sha256": {
+    "tests/fixtures/e02/publication-binding/authorized_exact_context.json": "7efd9ffb078c0d27aac79a18a1b8d5e158adaf56114aa7e9f702cb665c66381f",
+    "tests/fixtures/e02/publication-binding/base_policy_changed_same_head.json": "a54e970c3d02d5f77cd3854f0281bc42188268ee625546e1adc1bb5f03b4acb2",
+    "tests/fixtures/e02/publication-binding/cross_pr_replay.json": "65df5276d2d5fb3936830114d2570ca6ebe26068793b44204955d08618f94f5b",
+    "tests/fixtures/e02/publication-binding/deleted_side_location.json": "17e8bea2c93e85536d3fe109555ec5718fa488ef3f59e12ff1910c2b7cac67ad",
+    "tests/fixtures/e02/publication-binding/incomplete_receipts.json": "856bf90d7e197b053930ae72749833e3afc0ff8ba020e999d51a3af7ac0f9efa",
+    "tests/fixtures/e02/publication-binding/invalid_head_prefix.json": "70b78188f441a867f342c9c2ee4d10abb9e5e29c7c2d7ef246f9b2f57c8f6e72",
+    "tests/fixtures/e02/publication-binding/invalid_side_location.json": "a4b5aae9403012bd963c75befda597b2156ff0e07b9b7fa568fbb0bc746a7368",
+    "tests/fixtures/e02/publication-binding/limit_failure.json": "f6e51cb3a8090fcdbda943314e09ab77a130f5a506cf63c400c0ea0a6f3176a1",
+    "tests/fixtures/e02/publication-binding/manifest.json": "110a75a52fa6884ff9337c73220cdd1f3dec883802dc5ec147a20e6570f39e5b",
+    "tests/fixtures/e02/publication-binding/report_contract_context_mismatch.json": "ad1f240d4423c5a4ffefd50f7a9738ecf68d3a9dbdcdb0630030f9ab7a25a14c",
+    "tests/fixtures/e02/publication-binding/scope_digest_collision.json": "513244b0a8b2c0d7225ea540b87ea2a722e00d8c7282dcd37ea296ac18e3f8fd",
+    "tests/fixtures/e02/publication-binding/trusted-authority.json": "6fe0e44bf2a3cf2a5a2bf4b2876d67cb024d9f3bfaf1ace0d5d36d488112545f",
+    "tests/fixtures/e02/publication-binding/trusted-inline-authority.json": "b29868618cc7b061be6f3aba1d187f9a47b065a782c37fcef42948f0449e80b2",
+    "tests/fixtures/e02/publication-binding/trusted-unit-scope-digests.json": "650db83592ef4f34013293192ee670c5ba08942974c11bdd4eeb7645db1eea70",
+    "tests/fixtures/e02/publication-binding/wrong_workflow_run_artifact.json": "e8bd1270007b5699a6f17ad68c11174973b26992e0c8e106c551d64522fd3fd0",
+    "tests/fixtures/e02/publisher/limit_failure_denied.json": "e866523bf4862f5b2a616d99051e7b2542cc1a2094408e9711c2deb036405db1",
+    "tests/fixtures/e02/publisher/manifest.json": "fa4ace11d95ce1f82d66db70c0213552abe8c0a77cdcd33283f033d90b212371",
+    "tests/fixtures/e02/publisher/override_ignored.json": "ac8277f5680f166a803effc9f0117fb0884f4ea91d0d9676dc19402477e6c6fd",
+    "tests/fixtures/e02/publisher/policy_drift_denied.json": "b05d06b24abb8fe8b53f4b99c4bc21e055bdbd6e0cc568ad6e07ccd0dad9cc10",
+    "tests/fixtures/e02/publisher/preview_zero_writes.json": "2d5b743d3927d4b86a3690334ddc6e6bef50d742e47452200ad4ae63ad1adc33",
+    "tests/fixtures/e02/publisher/stale_head_denied.json": "2bac03a3e0d8beda1e531d39b4754817ba20354af5bf382260128400afbdf693",
+    "tests/fixtures/e02/publisher/trusted-inline-report.json": "e7d17d0cff1dc3bbd9b25e4b187821a9ed31d67c7b43d06014d6b7fdd9a85401",
+    "tests/fixtures/e02/publisher/trusted-report.json": "dd7a2762eb8c3ec693d72e7432b2ebba5272758bc765b3914d6fe22bc73ef758"
+  },
+  "runtime": {
+    "python": "3.12.15",
+    "executable": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "platform": "macOS-26.6.2-arm64-arm-64bit"
+  },
+  "environment": {
+    "PATH": "/opt/homebrew/bin:/usr/bin:/bin",
+    "PYTHONPATH": "src:.",
+    "ambient_environment": "cleared via /usr/bin/env -i",
+    "api": "inert local responses; no live API"
+  },
+  "command": "/usr/bin/env -i PATH=/opt/homebrew/bin:/usr/bin:/bin PYTHONPATH=src:. /opt/homebrew/bin/python3.12 -m unittest tests.test_e02_publication_closure tests.test_publication_contract tests.test_publication_binding_fixtures tests.test_publication_lifecycle tests.test_publication_trust tests.test_publisher tests.test_publisher_fixture_scenarios -v",
+  "red": {
+    "initial_cases": 5,
+    "initial_failure_subcases": 14,
+    "receipt_gap_and_duplicate_scope_failures": 2,
+    "coordinate_coercion_failures": 2,
+    "missing_side_failures": 1
+  },
+  "green": {
+    "tests": 57,
+    "failures": 0,
+    "errors": 0,
+    "status": "passed_development_checks"
+  },
+  "logs_sha256": {
+    "docs/acceptance/artifacts/E02/closure/red.log": "ef8bea76bd866db3410b77f380cd7b08931dcc3e286211b6ba8a339b9acaae86",
+    "docs/acceptance/artifacts/E02/closure/receipt-red.log": "d8fab06172a25d3becf139b6c23cc04451088fc40cfbb207747c26f481a64091",
+    "docs/acceptance/artifacts/E02/closure/coordinates-red.log": "5a056b391f08685cf0dfce5b867d11184f16a3955b0064be95040dd4cd1382b6",
+    "docs/acceptance/artifacts/E02/closure/missing-side-red.log": "6d9453dd3dfcccf8a0917a2f0212201ccdc1cfa8898880da56292e6f00fdc518",
+    "docs/acceptance/artifacts/E02/closure/green.log": "1254f8d8991dad9d0c01f5c4f4270398de8af39313dfb246ea932ea325c82624"
+  },
+  "independent_acceptance": "not_run",
+  "customer_beta_publisher": "disabled",
+  "live_publication": "not_run",
+  "hostile_ci_isolation": "not_run",
+  "E02_A1_A3_A4": "outside_this_closure_assignment",
+  "final_commit_repin": "required_after_coordinator_integration"
+}

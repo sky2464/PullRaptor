@@ -1,0 +1,14 @@
+{
+  "actual_failure": "AssertionError: checkpoint not reached: after_old_dist_info_removal: ",
+  "actual_installer_exit_code": 0,
+  "expected_failure": "checkpoint not reached: after_old_dist_info_removal",
+  "mutant_helper_sha256": "289ce36c44a48dfc0251e57ab796482c05359103b19ddd9cdea624428f2b2c60",
+  "original_helper_sha256": "0196d35dee01a4b60476d16722435df638c6d0db47a8b3373ce402504fc117dd",
+  "replacement": {
+    "after": "if True:",
+    "before": "if checkpoint != name:"
+  },
+  "result": "failed",
+  "schema": "pullraptor-br18-checkpoint-mutation/1",
+  "scope": "temporary helper copy only; workspace helper unchanged"
+}

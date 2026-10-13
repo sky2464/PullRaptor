@@ -1,0 +1,234 @@
+test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) ... 
+  test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'max_blob_bytes': 'bad'}) ... ERROR
+  test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'path_exclude': 12}) ... ERROR
+  test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'path_include': [False]}) ... FAIL
+test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) ... 
+  test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_bytes') ... ERROR
+  test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_items') ... ERROR
+  test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_depth') ... ERROR
+  test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_string_bytes') ... ERROR
+test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) ... 
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_blob_bytes': True}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_total_bytes': -1}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'parse_timeout_seconds': nan}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'review_timeout_seconds': inf}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'failure_reserve_seconds': 0}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'path_include': 'app.py'}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'path_exclude': [1]}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'source_suffixes': [False]}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'use_cache': 'yes'}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'cache_dir': 1}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'profile': 'invalid'}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_tracked_entries': 2.5}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'parse_timeout_seconds': False}) ... FAIL
+  test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_cache_bytes': 0}) ... FAIL
+
+======================================================================
+ERROR: test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'max_blob_bytes': 'bad'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 29, in test_invalid_ci_override_is_configuration_error_not_type_crash
+    load_config(None, overrides, ci=True)
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 102, in load_config
+    _check_ci_weakening(base_vals, overrides)
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 53, in _check_ci_weakening
+    if override_vals[key] < base_val:
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: '<' not supported between instances of 'str' and 'int'
+
+======================================================================
+ERROR: test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'path_exclude': 12})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 29, in test_invalid_ci_override_is_configuration_error_not_type_crash
+    load_config(None, overrides, ci=True)
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 102, in load_config
+    _check_ci_weakening(base_vals, overrides)
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 60, in _check_ci_weakening
+    override_exclude = set(override_vals["path_exclude"])
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'int' object is not iterable
+
+======================================================================
+ERROR: test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 23, in test_minimum_output_byte_item_depth_string_capacity
+    cfg = load_config(None, {key: minimum})
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 99, in load_config
+    raise ValueError(f"Unknown configuration key in override: {k!r}")
+ValueError: Unknown configuration key in override: 'max_report_bytes'
+
+======================================================================
+ERROR: test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_items')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 23, in test_minimum_output_byte_item_depth_string_capacity
+    cfg = load_config(None, {key: minimum})
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 99, in load_config
+    raise ValueError(f"Unknown configuration key in override: {k!r}")
+ValueError: Unknown configuration key in override: 'max_report_items'
+
+======================================================================
+ERROR: test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_depth')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 23, in test_minimum_output_byte_item_depth_string_capacity
+    cfg = load_config(None, {key: minimum})
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 99, in load_config
+    raise ValueError(f"Unknown configuration key in override: {k!r}")
+ValueError: Unknown configuration key in override: 'max_report_depth'
+
+======================================================================
+ERROR: test_minimum_output_byte_item_depth_string_capacity (tests.test_e01_config_contract.ConfigContractTests.test_minimum_output_byte_item_depth_string_capacity) (key='max_report_string_bytes')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 23, in test_minimum_output_byte_item_depth_string_capacity
+    cfg = load_config(None, {key: minimum})
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/config.py", line 99, in load_config
+    raise ValueError(f"Unknown configuration key in override: {k!r}")
+ValueError: Unknown configuration key in override: 'max_report_string_bytes'
+
+======================================================================
+FAIL: test_invalid_ci_override_is_configuration_error_not_type_crash (tests.test_e01_config_contract.ConfigContractTests.test_invalid_ci_override_is_configuration_error_not_type_crash) (overrides={'path_include': [False]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 28, in test_invalid_ci_override_is_configuration_error_not_type_crash
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_blob_bytes': True})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_total_bytes': -1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'parse_timeout_seconds': nan})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'review_timeout_seconds': inf})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'failure_reserve_seconds': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'path_include': 'app.py'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'path_exclude': [1]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'source_suffixes': [False]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'use_cache': 'yes'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'cache_dir': 1})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'profile': 'invalid'})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_tracked_entries': 2.5})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'parse_timeout_seconds': False})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_wrong_types_nonfinite_and_nonpositive_limits_rejected (tests.test_e01_config_contract.ConfigContractTests.test_wrong_types_nonfinite_and_nonpositive_limits_rejected) (overrides={'max_cache_bytes': 0})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_config_contract.py", line 15, in test_wrong_types_nonfinite_and_nonpositive_limits_rejected
+    with self.subTest(overrides=overrides), self.assertRaises(ValueError):
+                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.008s
+
+FAILED (failures=15, errors=6)

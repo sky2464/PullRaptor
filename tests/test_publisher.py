@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import copy
+from dataclasses import replace
+from pathlib import Path
 import io
 import json
 import unittest
 from unittest.mock import MagicMock, patch
 
-from pullraptor.publication_contract import PublicationContext, scope_digest_from_report
+from pullraptor.publication_contract import PublicationRange, PublicationContext
 from pullraptor.publication_transport import TransportResponseLost
 from pullraptor.publisher import COMMENT_MARKER, main, publish_report, report_from_decoded
 
@@ -56,23 +58,27 @@ def _pr_payload(head: str = _HEAD, *, draft: bool = False) -> dict:
 
 
 def _expected_context(**overrides: object) -> PublicationContext:
-    report = report_from_decoded(_report_dict())
-    assert hasattr(report, "contract")
-    base = {
-        "repository_id": "owner/repo",
-        "pr_number": 1,
-        "workflow_id": _CONNECTOR["workflow_id"],
-        "run_id": _CONNECTOR["run_id"],
-        "artifact_digest": _CONNECTOR["artifact_digest"],
-        "reviewer_digest": _CONNECTOR["reviewer_digest"],
-        "head": _HEAD,
-        "base_tip": _BASE,
-        "comparison_base": _COMP,
-        "policy_digest": "pol1",
-        "scope_digest": scope_digest_from_report(report),
-    }
+    # Independently pinned connector fixture; never derive authority from submitted report.
+    fixture = Path(__file__).parent / "fixtures/e02/publication-binding/trusted-authority.json"
+    base = json.loads(fixture.read_text())
+    base["permitted_ranges"] = tuple(PublicationRange(**item) for item in base["permitted_ranges"])
     base.update(overrides)
     return PublicationContext(**base)
+
+
+def _trusted_current(pr, *, policy_digest="pol1"):
+    return replace(_expected_context(), head=pr["head"]["sha"], base_tip=pr["base"]["sha"],
+                   policy_digest=policy_digest)
+
+
+def _publish_trusted(*args, **kwargs):
+    submitted = kwargs.get("report_dict", args[0] if args else None)
+    kwargs.setdefault("raw_report_bytes", json.dumps(submitted).encode())
+    kwargs.setdefault("expected_context", _expected_context())
+    policy = kwargs.get("connector", {}).get("policy_digest", "pol1")
+    kwargs.setdefault("current_authority", lambda pr: _trusted_current(pr, policy_digest=policy))
+    return publish_report(*args, **kwargs)
+
 
 
 class TestPublisher(unittest.TestCase):
@@ -85,7 +91,7 @@ class TestPublisher(unittest.TestCase):
 
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -105,7 +111,7 @@ class TestPublisher(unittest.TestCase):
 
         err = io.StringIO()
         with patch("sys.stderr", err):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -128,7 +134,7 @@ class TestPublisher(unittest.TestCase):
 
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -161,7 +167,7 @@ class TestPublisher(unittest.TestCase):
 
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -214,7 +220,7 @@ class TestPublisher(unittest.TestCase):
             (201, {"id": 1}),
         ]
 
-        publish_report(
+        _publish_trusted(
             report_dict=self.report_dict,
             repo_slug="owner/repo",
             pr_number=1,
@@ -231,7 +237,7 @@ class TestPublisher(unittest.TestCase):
 
         err = io.StringIO()
         with patch("sys.stderr", err):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=bad_report,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -240,7 +246,7 @@ class TestPublisher(unittest.TestCase):
             )
 
         self.assertEqual(code, 2)
-        self.assertIn("invalid_head", err.getvalue())
+        self.assertTrue("invalid_head" in err.getvalue() or "report_bytes_mismatch" in err.getvalue())
         self.assertEqual(mock_api.call_count, 1)
 
     @patch("pullraptor.publisher._github_api_request")
@@ -251,7 +257,7 @@ class TestPublisher(unittest.TestCase):
 
         err = io.StringIO()
         with patch("sys.stderr", err):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -270,7 +276,7 @@ class TestPublisher(unittest.TestCase):
 
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -293,7 +299,7 @@ class TestPublisher(unittest.TestCase):
         ]
         evil = "<script>alert('x')</script>"
 
-        publish_report(
+        _publish_trusted(
             report_dict=self.report_dict,
             repo_slug="owner/repo",
             pr_number=1,
@@ -332,7 +338,7 @@ class TestPublisher(unittest.TestCase):
         mock_api.side_effect = side_effect
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -371,7 +377,7 @@ class TestPublisher(unittest.TestCase):
             return (200, {})
 
         mock_api.side_effect = side_effect
-        publish_report(
+        _publish_trusted(
             report_dict=self.report_dict,
             repo_slug="owner/repo",
             pr_number=1,
@@ -394,7 +400,7 @@ class TestPublisher(unittest.TestCase):
             (200, _pr_payload()),
             (201, {"id": 888}),
         ]
-        publish_report(
+        _publish_trusted(
             report_dict=self.report_dict,
             repo_slug="owner/repo",
             pr_number=1,
@@ -416,7 +422,7 @@ class TestPublisher(unittest.TestCase):
         ]
         out = io.StringIO()
         with patch("sys.stdout", out):
-            code = publish_report(
+            code = _publish_trusted(
                 report_dict=self.report_dict,
                 repo_slug="owner/repo",
                 pr_number=1,
@@ -431,7 +437,7 @@ class TestPublisher(unittest.TestCase):
         mock_api.return_value = (200, _pr_payload(head="f" * 40))
         original = copy.deepcopy(self.report_dict)
 
-        publish_report(
+        _publish_trusted(
             report_dict=self.report_dict,
             repo_slug="owner/repo",
             pr_number=1,

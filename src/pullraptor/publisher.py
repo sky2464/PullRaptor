@@ -3,12 +3,13 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
 import sys
 import time
-from typing import Any
+from typing import Any, Callable
 import urllib.error
 import urllib.request
 
@@ -29,7 +30,7 @@ from pullraptor.models import (
 )
 from pullraptor.publication_contract import (
     PublicationContext,
-    scope_digest_from_report,
+    PublicationDecision,
     validate_publication,
 )
 from pullraptor.publication_lifecycle import PublishedObservation, plan_publication
@@ -75,16 +76,16 @@ def _github_api_request(
 
 
 def _span_from_dict(raw: dict[str, Any]) -> Span:
-    start_line = int(raw["start_line"])
+    start_line = raw["start_line"]
     return Span(
-        path=str(raw["path"]),
-        side=str(raw.get("side", "head")),
+        path=raw["path"],
+        side=raw["side"],
         start_line=start_line,
-        end_line=int(raw.get("end_line", start_line)),
-        start_byte=int(raw.get("start_byte", 0)),
-        end_byte=int(raw.get("end_byte", 0)),
-        start_column=int(raw.get("start_column", 1)),
-        end_column=int(raw.get("end_column", 1)),
+        end_line=raw["end_line"],
+        start_byte=raw.get("start_byte", 0),
+        end_byte=raw.get("end_byte", 0),
+        start_column=raw.get("start_column", 1),
+        end_column=raw.get("end_column", 1),
     )
 
 
@@ -93,16 +94,16 @@ def _scope_entry_from_dict(raw: dict[str, Any]) -> ScopeEntry:
     if isinstance(path_bytes, str):
         path_bytes = bytes.fromhex(path_bytes)
     return ScopeEntry(
-        key=str(raw["key"]),
-        kind=str(raw["kind"]),
-        snapshot=str(raw["snapshot"]),
-        capability=str(raw["capability"]),
+        key=raw["key"],
+        kind=raw["kind"],
+        snapshot=raw["snapshot"],
+        capability=raw["capability"],
         path_bytes=path_bytes,
         path=raw.get("path"),
         source_occurrence=raw.get("source_occurrence"),
         canonical_target=raw.get("canonical_target"),
         relative_level=raw.get("relative_level"),
-        reason=str(raw.get("reason", "")),
+        reason=raw.get("reason", ""),
     )
 
 
@@ -111,35 +112,40 @@ def report_from_decoded(validated_dict: dict[str, Any]) -> Report:
     kind = validated_dict["kind"]
     if kind == "limit_failure":
         return LimitFailure(
-            schema=str(validated_dict["schema"]),
+            schema=validated_dict["schema"],
             kind=kind,
             known_inputs=dict(validated_dict.get("known_inputs", {})),
-            exit_code=int(validated_dict["exit_code"]),
-            analysis_complete=bool(validated_dict["analysis_complete"]),
-            details_omitted=bool(validated_dict["details_omitted"]),
-            cause=str(validated_dict["cause"]),
+            exit_code=validated_dict["exit_code"],
+            analysis_complete=validated_dict["analysis_complete"],
+            details_omitted=validated_dict["details_omitted"],
+            cause=validated_dict["cause"],
             limit=validated_dict.get("limit"),
             omitted_domains=tuple(validated_dict.get("omitted_domains", ())),
         )
 
     contract_raw = validated_dict["contract"]
+    if type(contract_raw.get("discovery_complete")) is not bool:
+        raise ValueError("discovery_complete must be a boolean")
+    for field in ("base_tip", "comparison_base", "head", "policy_digest", "config_digest", "tool_digest", "profile"):
+        if type(contract_raw[field]) is not str:
+            raise ValueError(f"contract {field} must be a string")
     contract = ReviewContract(
-        base_tip=str(contract_raw["base_tip"]),
-        comparison_base=str(contract_raw["comparison_base"]),
-        head=str(contract_raw["head"]),
-        policy_digest=str(contract_raw["policy_digest"]),
-        config_digest=str(contract_raw["config_digest"]),
-        tool_digest=str(contract_raw["tool_digest"]),
-        profile=str(contract_raw["profile"]),
-        expected_scope=tuple(_scope_entry_from_dict(e) for e in contract_raw.get("expected_scope", [])),
-        discovery_complete=bool(contract_raw.get("discovery_complete", True)),
+        base_tip=contract_raw["base_tip"],
+        comparison_base=contract_raw["comparison_base"],
+        head=contract_raw["head"],
+        policy_digest=contract_raw["policy_digest"],
+        config_digest=contract_raw["config_digest"],
+        tool_digest=contract_raw["tool_digest"],
+        profile=contract_raw["profile"],
+        expected_scope=tuple(_scope_entry_from_dict(e) for e in contract_raw["expected_scope"]),
+        discovery_complete=contract_raw["discovery_complete"],
     )
     receipts = tuple(
         CoverageReceipt(
-            key=str(r["key"]),
-            contract_digest=str(r["contract_digest"]),
-            capability=str(r["capability"]),
-            status=str(r["status"]),
+            key=r["key"],
+            contract_digest=r["contract_digest"],
+            capability=r["capability"],
+            status=r["status"],
             cause=r.get("cause"),
             recovery=r.get("recovery"),
         )
@@ -147,26 +153,26 @@ def report_from_decoded(validated_dict: dict[str, Any]) -> Report:
     )
     findings = tuple(
         Finding(
-            rule=str(f["rule"]),
-            version=str(f.get("version", "1")),
-            obligation=str(f["obligation"]),
-            anchor=str(f["anchor"]),
+            rule=f["rule"],
+            version=f.get("version", "1"),
+            obligation=f["obligation"],
+            anchor=f["anchor"],
             span=_span_from_dict(f["span"]),
-            claim=str(f["claim"]),
-            severity=str(f["severity"]),
-            policy_class=str(f["policy_class"]),
-            state=str(f["state"]),
-            witness=str(f["witness"]),
+            claim=f["claim"],
+            severity=f["severity"],
+            policy_class=f["policy_class"],
+            state=f["state"],
+            witness=f["witness"],
             assumptions=tuple(f.get("assumptions", ())),
-            delta=str(f.get("delta", "newly_detected")),
-            evidence_delta=str(f.get("evidence_delta", "added")),
+            delta=f.get("delta", "newly_detected"),
+            evidence_delta=f.get("evidence_delta", "added"),
         )
         for f in validated_dict.get("findings", [])
     )
     diagnostics = tuple(
         Diagnostic(
-            code=str(d["code"]),
-            message=str(d["message"]),
+            code=d["code"],
+            message=d["message"],
             span=_span_from_dict(d["span"]) if d.get("span") else None,
             path=d.get("path"),
             side=d.get("side"),
@@ -176,7 +182,7 @@ def report_from_decoded(validated_dict: dict[str, Any]) -> Report:
         for d in validated_dict.get("diagnostics", [])
     )
     return FullReport(
-        schema=str(validated_dict["schema"]),
+        schema=validated_dict["schema"],
         kind=kind,
         contract=contract,
         receipts=receipts,
@@ -185,71 +191,6 @@ def report_from_decoded(validated_dict: dict[str, Any]) -> Report:
         findings=findings,
         diagnostics=diagnostics,
         execution=dict(validated_dict.get("execution", {})),
-    )
-
-
-def connector_fields_from_environ() -> dict[str, str]:
-    """Read connector-owned publication binding fields from the environment."""
-    return {
-        "workflow_id": os.environ.get("PULLRAPTOR_WORKFLOW_ID") or os.environ.get("GITHUB_WORKFLOW", ""),
-        "run_id": os.environ.get("PULLRAPTOR_RUN_ID") or os.environ.get("GITHUB_RUN_ID", ""),
-        "artifact_digest": os.environ.get("PULLRAPTOR_ARTIFACT_DIGEST", ""),
-        "reviewer_digest": os.environ.get("PULLRAPTOR_REVIEWER_DIGEST", ""),
-        "policy_digest": os.environ.get("PULLRAPTOR_POLICY_DIGEST", ""),
-    }
-
-
-def expected_context_from_report(
-    report: FullReport,
-    *,
-    repository_id: str,
-    pr_number: int,
-    connector: dict[str, str],
-) -> PublicationContext:
-    """Build the artifact-pinned expected publication context from the report contract."""
-    policy = connector.get("policy_digest") or report.contract.policy_digest
-    return PublicationContext(
-        repository_id=repository_id,
-        pr_number=pr_number,
-        workflow_id=connector["workflow_id"],
-        run_id=connector["run_id"],
-        artifact_digest=connector["artifact_digest"],
-        reviewer_digest=connector["reviewer_digest"],
-        head=report.contract.head,
-        base_tip=report.contract.base_tip,
-        comparison_base=report.contract.comparison_base,
-        policy_digest=policy,
-        scope_digest=scope_digest_from_report(report),
-    )
-
-
-def current_context_from_pr(
-    pr_data: dict[str, Any],
-    *,
-    repository_id: str,
-    pr_number: int,
-    connector: dict[str, str],
-    comparison_base: str,
-    base_tip: str,
-    scope_digest: str,
-    policy_digest: str,
-) -> PublicationContext:
-    """Build fresh platform context immediately before an authorized write."""
-    head_sha = str(pr_data.get("head", {}).get("sha", ""))
-    pr_base = str(pr_data.get("base", {}).get("sha", base_tip))
-    policy = connector.get("policy_digest") or policy_digest
-    return PublicationContext(
-        repository_id=repository_id,
-        pr_number=pr_number,
-        workflow_id=connector["workflow_id"],
-        run_id=connector["run_id"],
-        artifact_digest=connector["artifact_digest"],
-        reviewer_digest=connector["reviewer_digest"],
-        head=head_sha,
-        base_tip=pr_base,
-        comparison_base=comparison_base,
-        policy_digest=policy,
-        scope_digest=scope_digest,
     )
 
 
@@ -295,36 +236,43 @@ def publish_report(
     preview_only: bool = False,
     expected_context: PublicationContext | None = None,
     connector: dict[str, str] | None = None,
+    raw_report_bytes: bytes | None = None,
+    current_authority: Callable[[dict[str, Any]], PublicationContext] | None = None,
 ) -> int:
     """Publish a PullRaptor review report to a GitHub pull request.
 
     Enforces bounded report validation, connector-owned publication binding,
-    lifecycle planning, and owned Markdown rendering.
+    lifecycle planning, and owned Markdown rendering. expected_context is a
+    trusted frozen connector authority; current_authority re-derives all fields
+    from current connector metadata and trusted policy before each write/retry.
+    raw_report_bytes are the exact downloaded bytes. The legacy connector mapping
+    is inert and cannot grant authorization.
 
     Returns process exit code (0: success/preview/skip, 2: denied/stale, 3: error).
     """
     record_limits = RecordLimits()
     deadline = Deadline(started_at=time.monotonic(), duration_seconds=30.0)
 
+    if not isinstance(expected_context, PublicationContext) or not callable(current_authority):
+        sys.stderr.write("PullRaptor Publisher: missing_publication_authority; refusing write.\n")
+        return 2
+    if not isinstance(raw_report_bytes, bytes):
+        sys.stderr.write("PullRaptor Publisher: missing_report_bytes; refusing write.\n")
+        return 2
     try:
-        raw_bytes = json.dumps(report_dict).encode("utf-8")
-        validated_dict = decode_record(raw_bytes, schema="report", limits=record_limits)
+        validated_dict = decode_record(raw_report_bytes, schema="report", limits=record_limits)
+        if validated_dict != report_dict:
+            sys.stderr.write("PullRaptor Publisher: report_bytes_mismatch; refusing write.\n")
+            return 2
+        report = report_from_decoded(validated_dict)
     except Exception as err:
         sys.stderr.write(f"PullRaptor Publisher: invalid report schema: {err}\n")
         return 3
-
-    report = report_from_decoded(validated_dict)
-    connector_fields = dict(connector or connector_fields_from_environ())
-
-    if isinstance(report, FullReport):
-        pinned_expected = expected_context or expected_context_from_report(
-            report,
-            repository_id=repo_slug,
-            pr_number=pr_number,
-            connector=connector_fields,
-        )
-    else:
-        pinned_expected = expected_context
+    pinned_expected = expected_context
+    if (pinned_expected.repository_id != repo_slug or pinned_expected.pr_number != pr_number):
+        sys.stderr.write("PullRaptor Publisher: request_context_mismatch; refusing write.\n")
+        return 2
+    actual_digest = hashlib.sha256(raw_report_bytes).hexdigest()
 
     pr_url = f"{api_base_url}/repos/{repo_slug}/pulls/{pr_number}"
     _status, pr_data = _github_api_request(pr_url, token)
@@ -337,26 +285,23 @@ def publish_report(
         sys.stdout.write(f"PullRaptor Publisher: PR #{pr_number} is a draft; skipping publication\n")
         return 0
 
-    if pinned_expected is None:
-        sys.stderr.write("PullRaptor Publisher: missing publication context for report\n")
-        return 3
+    def authorize(pr: dict[str, Any]) -> PublicationDecision:
+        # The callback is trusted connector code, refreshing origin/contract/diff
+        # authority independently. Neither a report envelope nor environment
+        # strings can substitute for it.
+        try:
+            current = current_authority(pr)
+            if not isinstance(current, PublicationContext):
+                raise ValueError("missing_publication_authority")
+            if (current.head != pr.get("head", {}).get("sha")
+                    or current.base_tip != pr.get("base", {}).get("sha")):
+                raise ValueError("platform_context_mismatch")
+            return validate_publication(report, pinned_expected, current,
+                                        actual_report_digest=actual_digest)
+        except Exception:
+            return PublicationDecision(False, "current_authority_unavailable", ())
 
-    scope_digest = pinned_expected.scope_digest
-    comparison_base = pinned_expected.comparison_base
-    base_tip = pinned_expected.base_tip
-
-    current = current_context_from_pr(
-        pr_data,
-        repository_id=repo_slug,
-        pr_number=pr_number,
-        connector=connector_fields,
-        comparison_base=comparison_base,
-        base_tip=base_tip,
-        scope_digest=scope_digest,
-        policy_digest=pinned_expected.policy_digest,
-    )
-
-    decision = validate_publication(report, pinned_expected, current)
+    decision = authorize(pr_data)
     if not decision.authorized:
         sys.stderr.write(
             f"PullRaptor Publisher: publication denied ({decision.cause}); refusing to post review.\n"
@@ -397,27 +342,17 @@ def publish_report(
     artifact_digest = pinned_expected.artifact_digest
     pub_plan = plan_publication(artifact_digest, report, existing_observations)
 
-    _status, pr_data_refresh = _github_api_request(pr_url, token)
-    if not isinstance(pr_data_refresh, dict):
-        sys.stderr.write(f"PullRaptor Publisher: invalid PR refresh for #{pr_number}\n")
-        return 3
-
-    refreshed = current_context_from_pr(
-        pr_data_refresh,
-        repository_id=repo_slug,
-        pr_number=pr_number,
-        connector=connector_fields,
-        comparison_base=comparison_base,
-        base_tip=base_tip,
-        scope_digest=scope_digest,
-        policy_digest=pinned_expected.policy_digest,
-    )
-    refresh_decision = validate_publication(report, pinned_expected, refreshed)
-    if not refresh_decision.authorized:
-        sys.stderr.write(
-            f"PullRaptor Publisher: publication denied after refresh ({refresh_decision.cause}); refusing write.\n"
-        )
-        return 2
+    def before_write() -> str | None:
+        try:
+            _status, fresh_pr = _github_api_request(pr_url, token)
+            if not isinstance(fresh_pr, dict):
+                return "invalid_pr_refresh"
+            if fresh_pr.get("draft", False) and not publish_draft:
+                return "draft_pr"
+            fresh_decision = authorize(fresh_pr)
+            return None if fresh_decision.authorized else fresh_decision.cause
+        except Exception:
+            return "current_authority_unavailable"
 
     owned_comment_id = find_owned_review_comment_id(comments_list)
 
@@ -431,8 +366,12 @@ def publish_report(
         owned_comment_id=owned_comment_id,
         deadline=deadline,
         request_fn=_transport_request,
+        before_write=before_write,
     )
 
+    if write_result.action == "denied":
+        sys.stderr.write(f"PullRaptor Publisher: publication denied ({write_result.cause}); refusing write.\n")
+        return 2
     if write_result.action == "created":
         sys.stdout.write(
             f"PullRaptor Publisher: Published review comment {write_result.comment_id} on PR #{pr_number}\n"
@@ -487,16 +426,16 @@ def main(argv: list[str] | None = None) -> int:
         return 3
 
     if args.report == "-":
-        raw_report = sys.stdin.read()
+        raw_report_bytes = sys.stdin.buffer.read()
     else:
         report_path = Path(args.report).resolve()
         if not report_path.is_file():
             sys.stderr.write(f"PullRaptor Publisher: Report file not found: {report_path}\n")
             return 3
-        raw_report = report_path.read_text(encoding="utf-8")
+        raw_report_bytes = report_path.read_bytes()
 
     try:
-        report_dict = json.loads(raw_report)
+        report_dict = json.loads(raw_report_bytes)
     except Exception as err:
         sys.stderr.write(f"PullRaptor Publisher: Invalid JSON report: {err}\n")
         return 3
@@ -509,6 +448,7 @@ def main(argv: list[str] | None = None) -> int:
             token=token,
             publish_draft=args.publish_draft,
             preview_only=args.preview_only,
+            raw_report_bytes=raw_report_bytes,
         )
     except Exception as err:
         sys.stderr.write(f"PullRaptor Publisher: Fatal publication error: {err}\n")

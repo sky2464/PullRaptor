@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import unittest
+import json
+from pathlib import Path
 
 from pullraptor.models import Finding, FullReport, LimitFailure, ReviewContract, ScopeEntry, Span
-from pullraptor.publication_contract import PublicationContext, scope_digest_from_report, validate_publication
+from pullraptor.publication_contract import PublicationRange, PublicationContext, validate_publication
 
 _HEAD = "a" * 40
 _BASE = "b" * 40
 _COMP = "c" * 40
+
+_UNIT_SCOPES = json.loads((Path(__file__).parent / "fixtures/e02/publication-binding/trusted-unit-scope-digests.json").read_text())
 
 
 def _context_for_report(report: FullReport, **overrides: object) -> PublicationContext:
@@ -18,13 +22,18 @@ def _context_for_report(report: FullReport, **overrides: object) -> PublicationC
         "pr_number": 7,
         "workflow_id": "wf-1",
         "run_id": "run-1",
-        "artifact_digest": "art-digest",
-        "reviewer_digest": "rev-digest",
+        "artifact_digest": "d" * 64,
+        "reviewer_digest": "e" * 64,
         "head": _HEAD,
         "base_tip": _BASE,
         "comparison_base": _COMP,
-        "policy_digest": report.contract.policy_digest,
-        "scope_digest": scope_digest_from_report(report),
+        "policy_digest": "policy-a",
+        "scope_digest": _UNIT_SCOPES["file_scope" if report.contract.expected_scope else "empty_scope"],
+        "config_digest": "cfg",
+        "tool_digest": "tool",
+        "profile": "structural",
+        "report_digest": "f" * 64,
+        "permitted_ranges": (PublicationRange("app.py", "head", 1, 3),),
     }
     base.update(overrides)
     return PublicationContext(**base)
@@ -61,7 +70,7 @@ class TestPublicationContract(unittest.TestCase):
         report = _full_report()
         expected = _context_for_report(report)
         current = _context_for_report(report, policy_digest="policy-b")
-        decision = validate_publication(report, expected, current)
+        decision = validate_publication(report, expected, current, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "stale_policy")
         self.assertEqual(decision.inline_keys, ())
@@ -70,7 +79,7 @@ class TestPublicationContract(unittest.TestCase):
         report = _full_report()
         expected = _context_for_report(report, pr_number=1)
         current = _context_for_report(report, pr_number=2)
-        decision = validate_publication(report, expected, current)
+        decision = validate_publication(report, expected, current, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "cross_pr_replay")
 
@@ -78,7 +87,7 @@ class TestPublicationContract(unittest.TestCase):
         report = _full_report()
         expected = _context_for_report(report, run_id="run-1")
         current = _context_for_report(report, run_id="run-2")
-        decision = validate_publication(report, expected, current)
+        decision = validate_publication(report, expected, current, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "wrong_workflow_run_artifact")
 
@@ -86,7 +95,7 @@ class TestPublicationContract(unittest.TestCase):
         report = _full_report()
         expected = _context_for_report(report, head="deadbeef")
         current = _context_for_report(report, head="deadbeef")
-        decision = validate_publication(report, expected, current)
+        decision = validate_publication(report, expected, current, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "invalid_head")
 
@@ -124,7 +133,7 @@ class TestPublicationContract(unittest.TestCase):
             execution=report.execution,
         )
         ctx = _context_for_report(report)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "deleted_side_location")
 
@@ -152,7 +161,7 @@ class TestPublicationContract(unittest.TestCase):
             execution=report.execution,
         )
         ctx = _context_for_report(report)
-        decision = validate_publication(tampered, ctx, ctx)
+        decision = validate_publication(tampered, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "report_contract_context_mismatch")
 
@@ -187,7 +196,7 @@ class TestPublicationContract(unittest.TestCase):
             execution={"exit_code": 0},
         )
         ctx = _context_for_report(report)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "incomplete_receipts")
         self.assertEqual(decision.inline_keys, ())
@@ -203,7 +212,7 @@ class TestPublicationContract(unittest.TestCase):
         )
         report = _full_report(expected_scope=(scope,))
         ctx = _context_for_report(report, scope_digest="0" * 64)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "scope_capability_revision_collision")
 
@@ -231,7 +240,7 @@ class TestPublicationContract(unittest.TestCase):
         )
         report = _full_report(findings=(finding,))
         ctx = _context_for_report(report)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "invalid_side_location")
 
@@ -247,7 +256,7 @@ class TestPublicationContract(unittest.TestCase):
         )
         report_ctx = _full_report()
         ctx = _context_for_report(report_ctx)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertFalse(decision.authorized)
         self.assertEqual(decision.cause, "limit_failure")
         self.assertEqual(decision.inline_keys, ())
@@ -255,7 +264,7 @@ class TestPublicationContract(unittest.TestCase):
     def test_current_exact_context_authorized(self) -> None:
         report = _full_report()
         ctx = _context_for_report(report)
-        decision = validate_publication(report, ctx, ctx)
+        decision = validate_publication(report, ctx, ctx, actual_report_digest="f" * 64)
         self.assertTrue(decision.authorized)
         self.assertEqual(decision.cause, "authorized")
 

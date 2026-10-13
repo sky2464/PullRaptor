@@ -1,0 +1,28 @@
+test_cold_worker_timeout_warm_completion_requires_full_clean_replay (tests.test_e01_cache_sequences.CacheSequenceTests.test_cold_worker_timeout_warm_completion_requires_full_clean_replay) ... ok
+test_full_canonical_clean_warm_corrupt_absent_mutation_sequence (tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence) ... 
+  test_full_canonical_clean_warm_corrupt_absent_mutation_sequence (tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence) (mutation='exceed_limit') ... ERROR
+
+======================================================================
+ERROR: test_full_canonical_clean_warm_corrupt_absent_mutation_sequence (tests.test_e01_cache_sequences.CacheSequenceTests.test_full_canonical_clean_warm_corrupt_absent_mutation_sequence) (mutation='exceed_limit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_cache_sequences.py", line 41, in test_full_canonical_clean_warm_corrupt_absent_mutation_sequence
+    clean, canonical = run(False)
+                       ^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/tests/test_e01_cache_sequences.py", line 36, in run
+    value, deadline, limits = review(repo.root, base, head, policy,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/kernel.py", line 284, in review
+    bound, diags = _extract_for_blob(blob, "head", head_snap)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/kernel.py", line 231, in _extract_for_blob
+    source = read_blob(repo, blob.blob_oid, effective_limits, deadline)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/chicademy/Documents/Code/PullRaptor/src/pullraptor/git_snapshot.py", line 273, in read_blob
+    raise ValueError(f"Blob {blob_oid} size exceeded max_blob_bytes ({limits.max_blob_bytes})")
+ValueError: Blob 401c735483352a7499c106952a599f5c0902cf04 size exceeded max_blob_bytes (64)
+
+----------------------------------------------------------------------
+Ran 2 tests in 10.245s
+
+FAILED (errors=1)

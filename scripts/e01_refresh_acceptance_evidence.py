@@ -1,145 +1,106 @@
 #!/usr/bin/env python3.12
-"""Refresh E01 boundary/cache/corpus acceptance artifact indexes (development verification)."""
-
+"""Collect per-case development evidence without promoting criteria or beta receipts."""
 from __future__ import annotations
-
+import argparse
+import hashlib
+import io
 import json
+import os
+from pathlib import Path
+import platform
 import subprocess
 import sys
+import tempfile
+import unittest
 from datetime import datetime, timezone
-from pathlib import Path
+try:
+    from scripts.e01_build_requirement_map import assertion_inventory, source_identity
+except ModuleNotFoundError:
+    from e01_build_requirement_map import assertion_inventory, source_identity
 
 REPO = Path(__file__).resolve().parents[1]
-ART = REPO / "docs" / "acceptance" / "artifacts" / "E01"
+ART = REPO / 'docs/acceptance/artifacts/E01/full'
+MODULES = ('tests.test_models', 'tests.test_config', 'tests.test_process', 'tests.test_snapshot',
+           'tests.test_diff', 'tests.test_python_facts', 'tests.test_rules', 'tests.test_evidence',
+           'tests.test_cache', 'tests.test_kernel', 'tests.test_cli', 'tests.test_render',
+           'tests.test_e01_offline_boundaries', 'tests.test_e01_evidence_integrity',
+           'tests.test_e01_core_regressions', 'tests.test_e01_output_contract')
 
 
-def _rev() -> str:
-    return subprocess.check_output(["git", "-C", str(REPO), "rev-parse", "HEAD"], text=True).strip()
+def collect_suite(suite: unittest.TestSuite) -> tuple[list[dict], str]:
+    """Keep every failure/skip/subcase; successful aggregate exit is insufficient."""
+    bodies = {body['test_id']: body for body in assertion_inventory(REPO)}
+    records = {}
+    class CaseResult(unittest.TextTestResult):
+        def startTest(self, test):
+            super().startTest(test)
+            records[test.id()] = {**bodies.get(test.id(), {}), 'test_id': test.id(),
+                                  'result': 'not_run', 'subcases': []}
+        def addSuccess(self, test):
+            super().addSuccess(test)
+            if records[test.id()]['result'] != 'failed':
+                records[test.id()]['result'] = 'passed'
+        def addFailure(self, test, err):
+            super().addFailure(test, err)
+            records[test.id()]['result'] = 'failed'
+        def addError(self, test, err):
+            super().addError(test, err)
+            records[test.id()]['result'] = 'failed'
+        def addSkip(self, test, reason):
+            super().addSkip(test, reason)
+            records[test.id()]['result'] = 'not_run'
+            records[test.id()]['reason'] = reason
+        def addSubTest(self, test, subtest, err):
+            super().addSubTest(test, subtest, err)
+            records[test.id()]['subcases'].append({'id': str(subtest), 'result': 'failed' if err else 'passed'})
+            if err:
+                records[test.id()]['result'] = 'failed'
+    output = io.StringIO()
+    unittest.TextTestRunner(stream=output, verbosity=2, resultclass=CaseResult).run(suite)
+    return list(records.values()), output.getvalue()
 
 
-def _run_tests(modules: list[str]) -> tuple[int, str]:
-    proc = subprocess.run(
-        [sys.executable, "-m", "unittest", *modules, "-v"],
-        cwd=REPO,
-        env={**dict(__import__("os").environ), "PYTHONPATH": f"{REPO / 'src'}{__import__('os').pathsep}{REPO}"},
-        capture_output=True,
-        text=True,
-    )
-    return proc.returncode, proc.stdout + proc.stderr
+def _git_revision() -> str:
+    return subprocess.check_output(['git', '-C', str(REPO), 'rev-parse', 'HEAD'],
+                                   env={'PATH': '/opt/homebrew/bin:/usr/bin:/bin'}, text=True).strip()
+
+
+def collect(output_dir: Path, modules: tuple[str, ...] = MODULES) -> int:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    before = source_identity(REPO)
+    cases, log = collect_suite(unittest.defaultTestLoader.loadTestsFromNames(modules))
+    after = source_identity(REPO)
+    if before != after:
+        for case in cases:
+            if case['result'] == 'passed': case['result'] = 'stale'
+    fixtures = {str(path.relative_to(REPO)): hashlib.sha256(path.read_bytes()).hexdigest()
+                for path in sorted((REPO / 'tests/fixtures/e01').rglob('*')) if path.is_file()}
+    payload = {'schema': 'pullraptor-e01-case-receipts/2', 'collected_at': datetime.now(timezone.utc).isoformat(),
+               'product_source': before, 'product_source_after': after, 'evidence_revision': _git_revision(),
+               'runtime': {'python': platform.python_version(), 'executable': sys.executable, 'platform': platform.platform()},
+               'fixture_manifest': fixtures, 'cases': cases, 'modules': list(modules),
+               'independent_acceptance': 'pending', 'claim_limit': 'Development cases only; adequacy and independent acceptance separate.'}
+    (output_dir / 'case-receipts.json').write_text(json.dumps(payload, indent=2) + '\n')
+    (output_dir / 'development-tests.log').write_text(log)
+    return int(any(case['result'] in {'failed', 'stale'} for case in cases))
 
 
 def main() -> int:
-    rev = _rev()
-    boundary_code, boundary_log = _run_tests(
-        ["tests.test_e01_offline_boundaries", "tests.test_cli", "tests.test_render"],
-    )
-    cache_code, cache_log = _run_tests(["tests.test_cache", "tests.test_kernel"])
-    corpus_code, corpus_log = _run_tests(["tests.test_rules"])
-
-    boundary_log_path = ART / "boundaries" / "focused-boundary.log"
-    boundary_log_path.write_text(boundary_log, encoding="utf-8")
-    cache_log_path = ART / "cache" / "focused-cache.log"
-    cache_log_path.write_text(cache_log, encoding="utf-8")
-    corpus_log_path = ART / "corpus" / "focused-corpus.log"
-    corpus_log_path.write_text(corpus_log, encoding="utf-8")
-
-    if boundary_code == 0:
-        receipt_path = ART / "boundaries" / "offline-network-receipt.json"
-        receipt_path.write_text(
-            json.dumps(
-                {
-                    "schema": "pullraptor-e01-boundary-receipt/1",
-                    "check": "offline_review_no_socket",
-                    "tests": ["tests/test_e01_offline_boundaries.py"],
-                    "source_revision": rev,
-                    "result": "passed",
-                    "note": "Development verification; independent BR-03 acceptance remains separate.",
-                },
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
-
-    (ART / "boundaries" / "index.json").write_text(
-        json.dumps(
-            {
-                "card_id": "E01-T9-RECORDS",
-                "source_revision": rev,
-                "evidence_status": "development_passed" if boundary_code == 0 else "failed",
-                "offline_network_receipt": "docs/acceptance/artifacts/E01/boundaries/offline-network-receipt.json",
-                "focused_log": str(boundary_log_path.relative_to(REPO)),
-                "independent_acceptance": "pending_BR-07",
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    cache_fixture = REPO / "tests" / "fixtures" / "e01" / "cache-mutations" / "manifest.json"
-    cache_fixture.parent.mkdir(parents=True, exist_ok=True)
-    cache_fixture.write_text(
-        json.dumps(
-            {
-                "schema": "pullraptor-e01-cache-fixtures/1",
-                "source_revision": rev,
-                "coverage": "tests/test_cache.py mutation and trust cases",
-                "status": "mapped_to_unittests",
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    (ART / "cache" / "index.json").write_text(
-        json.dumps(
-            {
-                "card_id": "E01-T9-CACHE",
-                "source_revision": rev,
-                "evidence_status": "development_passed" if cache_code == 0 else "failed",
-                "fixture_directory": "tests/fixtures/e01/cache-mutations",
-                "focused_log": str(cache_log_path.relative_to(REPO)),
-                "independent_acceptance": "pending_BR-07",
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    (ART / "corpus" / "index.json").write_text(
-        json.dumps(
-            {
-                "card_id": "E01-T9-CORPUS",
-                "source_revision": rev,
-                "evidence_status": "development_passed" if corpus_code == 0 else "failed",
-                "manifest": "tests/fixtures/e01/corpus/manifest.json",
-                "focused_log": str(corpus_log_path.relative_to(REPO)),
-                "user_flows": "docs/acceptance/artifacts/E01/user-flows/source-cli-smoke.md",
-                "independent_label_review": "pending_BR-05",
-            },
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    summary = {
-        "collected_at": datetime.now(timezone.utc).isoformat(),
-        "source_revision": rev,
-        "boundary_exit_code": boundary_code,
-        "cache_exit_code": cache_code,
-        "corpus_exit_code": corpus_code,
-    }
-    (ART / "br03-06-focused.log").write_text(
-        json.dumps(summary, indent=2) + "\n\n" + boundary_log + "\n---\n" + cache_log + "\n---\n" + corpus_log,
-        encoding="utf-8",
-    )
-    print(json.dumps(summary, indent=2))
-    return 0 if boundary_code == cache_code == corpus_code == 0 else 1
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output-dir', type=Path, default=ART)
+    parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    if args.worker:
+        return collect(args.output_dir)
+    # Worker development tests receive no ambient credentials or shared caches.
+    with tempfile.TemporaryDirectory(prefix='pullraptor-e01-verification-') as home:
+        env = {'PATH': '/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin', 'HOME': home,
+               'PYTHONPATH': f'{REPO / "src"}{os.pathsep}{REPO}', 'LC_ALL': 'C', 'LANG': 'C',
+               'GIT_CONFIG_NOSYSTEM': '1', 'GIT_CONFIG_GLOBAL': os.devnull}
+        proc = subprocess.run([sys.executable, str(Path(__file__).resolve()), '--worker', '--output-dir',
+                               str(args.output_dir.resolve())], cwd=REPO, env=env, timeout=300)
+    return proc.returncode
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     raise SystemExit(main())

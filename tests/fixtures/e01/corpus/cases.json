@@ -1,0 +1,1022 @@
+[
+  {
+    "id": "PY001-positive-01",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.append(1)\n",
+    "source_sha256": "9bb15b638bb9847aa1ecc002a9aaf65ec848a3a5e8580a1869f6c588bb90d3da",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-02",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.extend([1])\n",
+    "source_sha256": "e43c1918d616d5e9775625c1dc3d7ada7c5e0f1bae435413bc70ba3cbcc2efac",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-03",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.insert(0, 1)\n",
+    "source_sha256": "4f861a9847f0978d52f0f2d65b2a9da1effb00af7a6438d26e53d4c34d58ea70",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-04",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.pop()\n",
+    "source_sha256": "1222ac81ebe8512eab3830349a8c831ff1ba5af0c7786980deb08cfdc2b8648a",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-05",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.remove(1)\n",
+    "source_sha256": "65b7ff285d9d6691d543ff13d59155c18637c13ee533743b2d343dea9b31e06f",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-06",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x.clear()\n",
+    "source_sha256": "8b50cc6714ca167f7f8ece36a3d2d60052286097eb6a390600ca0b11b1e832b6",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-07",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(x=[]): x[0] = 1\n",
+    "source_sha256": "6acaed2d33501f5e5fd2a09327669a3b2a2d6b5be215aca890115868243747b1",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-08",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(d={}): d['a'] = 1\n",
+    "source_sha256": "ce56247b8a617c12a834d8c9a0c6e6ac94f51a7c38125707524309196d37e75d",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-09",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(d={}): d.update({'a': 1})\n",
+    "source_sha256": "9bf37fcf105e06c14e19fc6dba6b37dec7d584d5e6badf81aa8196aa02b39090",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-positive-10",
+    "rule": "PY001",
+    "label": "positive",
+    "source": "def f(s={1}): s.add(2)\n",
+    "source_sha256": "889726bc614cc2f4fe1493f6211ab1c2fcdb096591641f3d2aa788f955bb6583",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-01",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=None): pass\n",
+    "source_sha256": "9525efeb235c890ad23619fcc34760ce233c9129ca909105c94a418b55dc8198",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-02",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=()): pass\n",
+    "source_sha256": "66a2f728382f5013bb94fd905323f942f9daf093c7fa4b03a6ae75a7f96205fe",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-03",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=[]): pass\n",
+    "source_sha256": "926dbea72ad693f5fee59a07b1ff54905a34edf6c4b554b0551af3e658d221df",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-04",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=[]):\n    y=x\n    y.append(1)\n",
+    "source_sha256": "3a53a75862bb218372ead7e73a41ce8900f341bb0061b6ded9f6762477b1db62",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-05",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=[]):\n    x = []\n    x.append(1)\n",
+    "source_sha256": "19ab65782da0e6371512c03b2729024f2337fbc91a9d155354b06e781e3d8878",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-06",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=[]):\n    def inner(): x.append(1)\n",
+    "source_sha256": "b86ed77e88846e61b691dca5e6a4998e7cc9459380f4c819878dc1431bd6a0de",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-07",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=set()): x.add(1)\n",
+    "source_sha256": "de73db09cd546832d8b36ffc0bcdf2822fbb03a8ac95a3b0174e39876f419b29",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-08",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=list()): x.append(1)\n",
+    "source_sha256": "68ce868c381dfd4950c560e8b33761657794016f66e47b46958103288b48f1c8",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-09",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x={}): x.append(1)\n",
+    "source_sha256": "bfd3f87121a3ee5ab6e60d9593231b3e91ca3231af55437f691af5b9f7168d17",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY001-counterexample_or_ambiguous-10",
+    "rule": "PY001",
+    "label": "counterexample_or_ambiguous",
+    "source": "def f(x=[]):\n    x: object = []\n    x.append(1)\n",
+    "source_sha256": "8d648686fa156a04b2357f5b799298b80662daa81832fc9b71ea68f83f57d06e",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-01",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: pass\nexcept: pass\n",
+    "source_sha256": "5c36afc3573201749bd09c1612f05765fe525ed0690b630c3b4f968cd1d81bf0",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-02",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: pass\nexcept: x=1\n",
+    "source_sha256": "1f6236d1b1a9a6bb0038db7fe879c1e298b7a766007aed75856e3d372fdbad28",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-03",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: pass\nexcept: print('error')\n",
+    "source_sha256": "c5ba4853e3fa6bdef342b1371db1437dc9b30b640c659eee35c1b590124d5dac",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-04",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "def f():\n    try: pass\n    except: return 1\n",
+    "source_sha256": "5f73946b96b64b5eadf89c63af6b4be93adae27bcb3ccfd8372129fe4d3cd43c",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-05",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "def f():\n    try: pass\n    except:\n        log('error')\n        return None\n",
+    "source_sha256": "d831db331701e4c0864cd2991b9e2fdabd882d7418bc4d8369bbe4eaac90cd69",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-06",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: work()\nexcept: recover()\n",
+    "source_sha256": "1e10892cb0d6756d96d1ee419db168d142086bebcf9e157d84a75a48f3260885",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-07",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: work()\nexcept: seen=True\n",
+    "source_sha256": "8f31f10299b9914b753defc0337d7813c04b59fe45e3850a203d364b04b7029c",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-08",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: work()\nexcept: error='ignored'\n",
+    "source_sha256": "3db5ec88662ce6d1d020a8794575d0a63f614acf43d5b1b41b3a857cfc0a0262",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-09",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "def supervisor():\n    try: work()\n    except:\n        record_interrupt()\n        return\n",
+    "source_sha256": "28272a58d4a50da3c7000ebb0bdcd211b3f7b266fae81e1d7b7fbeb3527a499c",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-positive-10",
+    "rule": "PY002",
+    "label": "positive",
+    "source": "try: work()\nexcept:\n    a=1\n    b=2\n",
+    "source_sha256": "cd0600ee92b7afa3e7b68b7cbdefbb5fbcd5c73f4057aa99cca9b171214d99d2",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-01",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept ValueError: pass\n",
+    "source_sha256": "731f9960a388e8f39ccae51f6cb326e3000f80db8de0c3fd675be1c9390e321c",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-02",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept Exception: pass\n",
+    "source_sha256": "97373b5809f31d254d886f7fab766254d9e16576634adbde360f90235fca4bf7",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-03",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept BaseException: pass\n",
+    "source_sha256": "fa32c2ae0389401158042f830c8a97ba1faed66588bae52fcfd066fd62db8701",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-04",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept: raise\n",
+    "source_sha256": "d09d1ead9e6647e156d95e1be75613a359a66a29934cd89f930a95bcbb4955cb",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-05",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept: raise RuntimeError()\n",
+    "source_sha256": "3f2c4f92ac34a8a05a68c268d51fd4935c5018921184f733a134dbaf279be136",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-06",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept:\n    if condition: raise\n",
+    "source_sha256": "8a641bb66ac9cebb05ca9d62a0ca7a10787b8f5f322209ea69ed949d8c7098b3",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-07",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept:\n    for x in [1]: pass\n",
+    "source_sha256": "9ecc0b00b2b098d0b4acddbb1b7be241134b9708370cb05d00ce6a160c1cc123",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-08",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept:\n    while condition: pass\n",
+    "source_sha256": "88873bff31c6ae037138ff0e50ffc8fef21f85b8e281ac60ad43421d02e594af",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-09",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept:\n    try: pass\n    except: raise\n",
+    "source_sha256": "f43dfba57ab90d9c2ed6bb311e5b4f59d1f30c8e725984a3430d063a6f1189cd",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY002-counterexample_or_ambiguous-10",
+    "rule": "PY002",
+    "label": "counterexample_or_ambiguous",
+    "source": "try: pass\nexcept:\n    with lock: pass\n",
+    "source_sha256": "510f588d5480aefdf9db7b49d94e894f31560e63f09af9949561217679bbbd05",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-01",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess\nsubprocess.run('ls', shell=True)\n",
+    "source_sha256": "9263cab1d9b00dae301f0cfb05d182649f7cdcd6ad9e467064a9f657caa4d607",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-02",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess\nsubprocess.Popen('ls', shell=True)\n",
+    "source_sha256": "3c8d06c70ac438d860f2a5a65206e191c61f48026e5811768aa98fe2310988c0",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-03",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess\nsubprocess.call('ls', shell=True)\n",
+    "source_sha256": "25260e176340d594740f023f53bcf7f54b473a6b7c6e77804f5367230e034769",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-04",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess\nsubprocess.check_call('ls', shell=True)\n",
+    "source_sha256": "7adaef7639cfef76bd4c9bae82e150df78ca9da8364bed048209421e3e5d58e4",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-05",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess\nsubprocess.check_output('ls', shell=True)\n",
+    "source_sha256": "12c55ba49152b1cec2bc4d60dbf542153d13f90ccc556a4a486b219fa2437cbe",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-06",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess as sp\nsp.run('ls', shell=True)\n",
+    "source_sha256": "7faa60fb08ef994f7371d116499de86b8535810bc186ed29c90b55b10f16d94e",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-07",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "import subprocess as sp\nsp.Popen('ls', shell=True)\n",
+    "source_sha256": "d9eab381cdab435bbe5772816e6078f50122a646984fadcb01d3819dd8ff2898",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-08",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "from subprocess import run\nrun('ls', shell=True)\n",
+    "source_sha256": "481e47f7161e95e4fdb42522a95baf04cf855de2a9b4ff39d22f5b18325e3eef",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-09",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "from subprocess import Popen\nPopen('ls', shell=True)\n",
+    "source_sha256": "c35d31b5709e55f3e73f88a834d238322afb5d87dc11c71cdc4d30529221165f",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-positive-10",
+    "rule": "PY003",
+    "label": "positive",
+    "source": "from subprocess import check_output\ncheck_output('ls', shell=True)\n",
+    "source_sha256": "6afc16a7d4c4ddd52e94a0008145d54995a2a49e36fffd9c11e5225e346c7e94",
+    "expected_findings": 1,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-01",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsubprocess.run('ls', shell=False)\n",
+    "source_sha256": "7b04ff0cbc427b3f36e89680ea10dc6a1860bb151d8ef2ddc52a2282b05b951a",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-02",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsubprocess.run('ls')\n",
+    "source_sha256": "4139f94cbba0493596bcd619cefe50ebb5b168dfb4925071cd3a826591de4edc",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-03",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsubprocess.Popen(['ls'])\n",
+    "source_sha256": "b45d3b924bd892882876c8347ab7e871463c147c9456809adab2bed5ce3899f7",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-04",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "def run(cmd, shell=True): pass\nrun('ls', shell=True)\n",
+    "source_sha256": "4efffcc5519c428902cc830cb7b6defd31e53689e8d729090efd60a439440f47",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-05",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "class Runner:\n    def run(self, shell=True): pass\nRunner().run(shell=True)\n",
+    "source_sha256": "d249e52eb86f59f5b5886dcb819f14d80a6b302c5c3ea3d27860d425a8c5a63c",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-06",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import os\nos.system('ls')\n",
+    "source_sha256": "49fc7d00fa4fef4dff5717c45217afcef4bfe5c768719b3a50cbb36efc214d67",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-07",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsubprocess.run('ls', shell=0)\n",
+    "source_sha256": "ea85e212675fefb89fd857e0978e8645ef45e64d55d03bf411268bf0eddbc870",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-08",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsubprocess.run('ls', shell=None)\n",
+    "source_sha256": "af72548b62546c4dd39f210768b0c79098712f8c5cb30ae67ffeaefb6a8e0b26",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-09",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess\nsh=True\nsubprocess.run('ls', shell=sh)\n",
+    "source_sha256": "a456bdb44b72efd4db296042be0cfb714c4fe3953d63e15a65efc3d9ac4a25ce",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  },
+  {
+    "id": "PY003-counterexample_or_ambiguous-10",
+    "rule": "PY003",
+    "label": "counterexample_or_ambiguous",
+    "source": "import subprocess as sp\ndef f(sp):\n    sp.run('ls', shell=True)\n",
+    "source_sha256": "2fc8696e990c8b492bd5238bac68f1a246097ee5abb876606964011b76bcb0f7",
+    "expected_findings": 0,
+    "expected_policy_class": "advisory",
+    "forbidden_claims": [
+      "defect",
+      "injection",
+      "exploit",
+      "bug"
+    ],
+    "license": "Apache-2.0",
+    "origin": "Owned synthetic fixture; inspected as data, never executed"
+  }
+]

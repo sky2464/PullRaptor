@@ -1,0 +1,24 @@
+{
+  "stage": "working_tree_provisional",
+  "acceptance": "pending",
+  "receipt_context_replay": {
+    "scenario": "same snapshot/scope/policy with changed semantic config and tool identity",
+    "expected": "stale receipt rejected unless freshly rebound by coordinator",
+    "observed_diagnostics": [],
+    "observed_exit": 0,
+    "rejected": false
+  },
+  "qualified_symbol_alignment": {
+    "scenario": "qualified function identity changes first to second, parameter and mutation unchanged",
+    "expected": "qualified symbol change does not assert the same obligation persists",
+    "observed": [
+      {
+        "anchor": "x",
+        "delta": "persisting",
+        "evidence_delta": "unchanged",
+        "side": "head",
+        "claim": "Default mutable argument can persist across omitted-argument calls"
+      }
+    ]
+  }
+}
