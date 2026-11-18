@@ -81,7 +81,10 @@ def _compute_blob_diff(
 
     env = _git_env()
     bounds = ProcessBounds(
-        max_stdout_bytes=min(limits.max_blob_bytes * 2, limits.max_diff_bytes),
+        # Diff stdout is bounded by max_diff_bytes. Per-blob admission stays in
+        # the extractor path so oversized sources become incomplete full reports
+        # rather than aborting the whole review during hunk computation.
+        max_stdout_bytes=limits.max_diff_bytes,
         max_stderr_bytes=limits.max_stderr_bytes,
         timeout_seconds=limits.parse_timeout_seconds,
     )
@@ -127,15 +130,25 @@ def changes(
         head_blob = head_by_path.get(path_bytes)
         remaining = replace(limits, max_diff_bytes=limits.max_diff_bytes - total_diff_bytes)
         raw_bytes = 0
+        oversized = (
+            (base_blob is not None and base_blob.size > limits.max_blob_bytes)
+            or (head_blob is not None and head_blob.size > limits.max_blob_bytes)
+        )
 
         if base_blob is None and head_blob is not None:
             kind = "added"
             path = head_blob.path
-            hunks, raw_bytes = _compute_blob_diff(repo, None, head_blob.blob_oid, remaining, deadline)
+            if oversized:
+                hunks, raw_bytes = (), 0
+            else:
+                hunks, raw_bytes = _compute_blob_diff(repo, None, head_blob.blob_oid, remaining, deadline)
         elif base_blob is not None and head_blob is None:
             kind = "deleted"
             path = base_blob.path
-            hunks, raw_bytes = _compute_blob_diff(repo, base_blob.blob_oid, None, remaining, deadline)
+            if oversized:
+                hunks, raw_bytes = (), 0
+            else:
+                hunks, raw_bytes = _compute_blob_diff(repo, base_blob.blob_oid, None, remaining, deadline)
         elif base_blob is not None and head_blob is not None:
             if base_blob.blob_oid == head_blob.blob_oid and base_blob.mode == head_blob.mode:
                 continue
@@ -143,6 +156,9 @@ def changes(
             if base_blob.mode != head_blob.mode and base_blob.blob_oid == head_blob.blob_oid:
                 kind = "type_changed"
                 hunks = ()
+            elif oversized:
+                kind = "modified"
+                hunks, raw_bytes = (), 0
             else:
                 kind = "modified"
                 hunks, raw_bytes = _compute_blob_diff(repo, base_blob.blob_oid, head_blob.blob_oid, remaining, deadline)

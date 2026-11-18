@@ -20,6 +20,11 @@ jobs:
           fetch-depth: 0
           persist-credentials: false
 
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
       - name: Verify development CI policy from trusted base
         if: github.event_name == 'pull_request'
         run: |
