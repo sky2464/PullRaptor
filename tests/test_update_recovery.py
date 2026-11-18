@@ -19,7 +19,7 @@ def rehearsal():
         spec = importlib.util.spec_from_file_location("maintenance_rehearsal", SCRIPT)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        wheelhouse = Path(os.environ.get("PULLRAPTOR_BR18_WHEELHOUSE", ROOT / ".superpowers/sdd/acceptance-maintenance-closure/wheelhouse"))
+        wheelhouse = Path(os.environ.get("PULLRAPTOR_BR18_WHEELHOUSE", ROOT / "tests/fixtures/e07/br18-wheelhouse"))
         with tempfile.TemporaryDirectory(prefix="pullraptor-br18-tests-") as tmp:
             _RESULT = module.run_rehearsal(ROOT, Path(tmp), wheelhouse, ROOT / "tests/fixtures/e07/maintenance/pullraptor-0.1.0b2.dev0-py3-none-any.whl")
     return _RESULT
@@ -70,7 +70,7 @@ class TestCheckpointGuards(unittest.TestCase):
         spec = importlib.util.spec_from_file_location("maintenance_rehearsal", SCRIPT)
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        wheelhouse = Path(os.environ.get("PULLRAPTOR_BR18_WHEELHOUSE", ROOT / ".superpowers/sdd/acceptance-maintenance-closure/wheelhouse"))
+        wheelhouse = Path(os.environ.get("PULLRAPTOR_BR18_WHEELHOUSE", ROOT / "tests/fixtures/e07/br18-wheelhouse"))
         with tempfile.TemporaryDirectory(prefix="pullraptor-br18-no-checkpoint-") as tmp:
             runner = module.Runner(Path(tmp))
             venv = Path(tmp) / "venv"

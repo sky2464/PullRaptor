@@ -11,7 +11,7 @@ Rebuild from an operator-owned reviewed offline wheelhouse:
 ```sh
 python3.12 scripts/maintenance_rehearsal.py --source . \
   --output docs/acceptance/artifacts/E07/maintenance/macos-arm64 \
-  --wheelhouse .superpowers/sdd/acceptance-maintenance-closure/wheelhouse \
+  --wheelhouse tests/fixtures/e07/br18-wheelhouse \
   --prepare-candidate tests/fixtures/e07/maintenance
 ```
 
