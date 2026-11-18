@@ -75,6 +75,22 @@ def extract_python(
 
     Enforces blob size bounds and deadlines.
     """
+    if (sys.version_info.major, sys.version_info.minor) != (3, 12):
+        return FactResult(
+            content=None,
+            diagnostics=(
+                Diagnostic(
+                    code="RUNTIME_UNSUPPORTED",
+                    message=(
+                        f"Python {sys.version_info.major}.{sys.version_info.minor}."
+                        f"{sys.version_info.micro} is not an admitted analyzer runtime"
+                    ),
+                    cause="unsupported_runtime",
+                    recovery="Use the pinned Python 3.12.x baseline or complete parser parity admission",
+                ),
+            ),
+        )
+
     if len(source) > limits.max_blob_bytes:
         return FactResult(
             content=None,
