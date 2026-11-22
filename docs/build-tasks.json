@@ -1192,7 +1192,7 @@
       "plan_task": "Task 3 pure lifecycle",
       "title": "Complete stable observation identity and collision handling",
       "owner_role": "Lifecycle implementer",
-      "observed_state": "Planner uses obligation:anchor only, hard-coded owner text, string artifact input and first-key inventory reduction; no transport reconciliation.",
+      "observed_state": "Planner takes PublicationContext and a connector-proved owner id. Obligation keys include repository, pull request, rule, version, path, obligation, and anchor. Revision observation IDs pin head and witness separately. Duplicate keys stay ambiguous and are not updated or marked outdated. The inline cap does not mark later findings outdated. Dismissal of an unchanged witness stays deferred. A changed witness renews the same platform observation. Development tests passed on this change; independent E02-A3 acceptance remains not_run. Customer publish stays disabled.",
       "scope": "Network-free owned observation planning, preserving all report findings and ambiguity/dismissal state.",
       "input_paths": [
         "src/pullraptor/publication_lifecycle.py",
@@ -1237,17 +1237,17 @@
         "Reordered delivery and ambiguous identity",
         "Partial report drops findings"
       ],
-      "next_action": "Implement the coordinator-declared identity/owner mapping, add collision/cap/dismissal fixtures and preserve the full report alongside create/update/outdated/deferred actions.",
+      "next_action": "Assign an independent E02-A3 reviewer for the pinned lifecycle source. Do not enable customer pullraptor-publish.",
       "depends_on": [
         "E02-D01",
         "E02-T2-BIND"
       ],
-      "construction_status": "waiting_for_task_outputs",
-      "evidence_status": "not_run",
+      "construction_status": "constructed",
+      "evidence_status": "development_verified",
       "decision_reference": "docs/build-interfaces.md",
       "document_revision": "coordinator pins immutable document OID at dispatch",
       "code_revision": "28b623ab1bb238ef11fbf07b29c1c773522a4a42",
-      "trusted_base_revision": "28b623ab1bb238ef11fbf07b29c1c773522a4a42",
+      "trusted_base_revision": "a11d464c0027a8bdfe9b1e8b2df7c1eeff13cdad",
       "review_owner": "Coordinator assigns independent reviewer; implementer cannot accept its own scope",
       "prerequisite_inputs": [],
       "operation_prerequisites": []
@@ -1259,7 +1259,7 @@
       "plan_task": "Task 3 actual connector reconciliation",
       "title": "Implement bounded paginated ownership and lost-response recovery",
       "owner_role": "Publisher transport implementer",
-      "observed_state": "Legacy publisher reads one page and updates marker-only comments; helper tests labeled timeout do not perform ambiguous network writes.",
+      "observed_state": "Publisher transport tests cover lost POST reconciliation, bounded comment pagination, foreign markers, rate-limit deferral, and one shared 30-second deadline with at most 3 attempts. Two owned marker comments with the same obligation key refuse the write before POST or PATCH. Live credentials and customer publish remain disabled. Independent E02-A3 acceptance remains not_run.",
       "scope": "Bounded transport/inventory execution around authorized publication plan, using owned local transport fixtures before activation.",
       "input_paths": [
         "src/pullraptor/publisher.py",
@@ -1303,17 +1303,17 @@
         "Duplicated/reordered events",
         "Context drift during reconciliation"
       ],
-      "next_action": "Build an owned transport fixture that commits a POST then drops its response, prove reconciliation suppresses a second write, and verify retries/bytes/pages consume shared bounds.",
+      "next_action": "Assign an independent E02-A3 reviewer. Live GET/POST/PATCH stays behind the connector activation gate.",
       "depends_on": [
         "E02-T2-INTEGRATE",
         "E02-T3-LIFECYCLE"
       ],
-      "construction_status": "waiting_for_task_outputs",
-      "evidence_status": "not_run",
+      "construction_status": "constructed",
+      "evidence_status": "development_verified",
       "decision_reference": "docs/build-interfaces.md",
       "document_revision": "coordinator pins immutable document OID at dispatch",
       "code_revision": "28b623ab1bb238ef11fbf07b29c1c773522a4a42",
-      "trusted_base_revision": "28b623ab1bb238ef11fbf07b29c1c773522a4a42",
+      "trusted_base_revision": "a11d464c0027a8bdfe9b1e8b2df7c1eeff13cdad",
       "review_owner": "Coordinator assigns independent reviewer; implementer cannot accept its own scope",
       "prerequisite_inputs": [],
       "operation_prerequisites": []

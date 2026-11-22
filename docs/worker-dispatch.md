@@ -1,6 +1,12 @@
 # Coordinator dispatch and unblock record
 
-## Authorized acceptance/maintenance closure (current human request)
+## 2026-11-22 human request
+
+The human asked to merge approved changes onto `main` and continue the next planned construction. setuptools 84.1.0 is on `main` at `a11d464c0027a8bdfe9b1e8b2df7c1eeff13cdad` (PR #71). Dependabot pull request #70 carried the same pin and did not pass the trusted branch-name gate; no open pull request remains.
+
+Assigned construction: `E02-T3-LIFECYCLE` and the already-present `E02-T3-WRITES` local transport checks. Mode: implement and development verification of PullRaptor's own tests. Trusted base: `a11d464c0027a8bdfe9b1e8b2df7c1eeff13cdad`. Work branch: `feat/e02-t3-lifecycle-identity-9c84`. Independent E02-A3 acceptance, customer `pullraptor-publish` activation, release publication, and reviewed-target execution are not assigned.
+
+## Authorized acceptance/maintenance closure (2026-10-05 human request)
 
 Baseline code/trusted base: `48bef09d985fbeb42749d1cc6238c74429616a25`; documentation baseline contains E01 Task 9, E02 binding/integration and BR-18 cards. The human explicitly requests implementation and development verification of [the closure plan](superpowers/plans/2026-10-05-acceptance-maintenance-closure.md). Coordinator: current assistant. Work branch: `feat/acceptance-maintenance-closure`. Pin later source/document/fixture revisions at evidence collection. Customer publisher activation, new release publication and reviewed-target execution are not assigned. Independent reviewers are separate from scope implementers. Execution/evidence status is maintained in the closure checklist; historical beta decisions remain unchanged.
 
