@@ -7,11 +7,14 @@ from dataclasses import replace
 from pathlib import Path
 import io
 import json
+import time
 import unittest
 from unittest.mock import MagicMock, patch
 
+from pullraptor.models import Deadline
 from pullraptor.publication_contract import PublicationRange, PublicationContext
-from pullraptor.publication_transport import TransportResponseLost
+from pullraptor.publication_lifecycle import PublicationPlan
+from pullraptor.publication_transport import TransportResponseLost, apply_publication_write
 from pullraptor.publisher import COMMENT_MARKER, main, publish_report, report_from_decoded
 
 _HEAD = "a" * 40
@@ -446,6 +449,82 @@ class TestPublisher(unittest.TestCase):
         )
 
         self.assertEqual(self.report_dict, original)
+
+    @patch("pullraptor.publisher._github_api_request")
+    def test_ambiguous_owned_markers_stop_writes(self, mock_api: MagicMock) -> None:
+        comments = [
+            {"id": 1, "body": f"{COMMENT_MARKER}\na", "user": {"login": "pullraptor-bot"}},
+            {"id": 2, "body": f"{COMMENT_MARKER}\nb", "user": {"login": "pullraptor-bot"}},
+        ]
+        mock_api.side_effect = [
+            (200, _pr_payload()),
+            (200, comments),
+        ]
+        err = io.StringIO()
+        with patch("sys.stderr", err):
+            code = _publish_trusted(
+                report_dict=self.report_dict,
+                repo_slug="owner/repo",
+                pr_number=1,
+                token="dummy_token",
+                connector=_CONNECTOR,
+            )
+        self.assertEqual(code, 2)
+        self.assertIn("ambiguous_observation_match", err.getvalue())
+        methods = [call.kwargs.get("method", "GET") for call in mock_api.call_args_list]
+        self.assertNotIn("POST", methods)
+        self.assertNotIn("PATCH", methods)
+
+    def test_retries_share_30_second_deadline(self) -> None:
+        expired = Deadline(started_at=time.monotonic() - 31.0, duration_seconds=30.0)
+        calls = {"n": 0}
+
+        def blocked(url: str, token: str, method: str = "GET", payload=None):
+            calls["n"] += 1
+            return (500, {})
+
+        denied = apply_publication_write(
+            api_base_url="https://example.invalid",
+            repo_slug="acme/app",
+            pr_number=7,
+            token="token",
+            comment_payload="body",
+            pub_plan=PublicationPlan(create=("k",), update=(), outdated=(), deferred=()),
+            owned_comment_id=None,
+            deadline=expired,
+            request_fn=blocked,
+            before_write=lambda: None,
+        )
+        self.assertEqual(calls["n"], 0)
+        self.assertEqual(denied.attempts, 0)
+        self.assertEqual(denied.action, "error")
+        self.assertEqual(denied.cause, "deadline_exceeded")
+
+        shared = Deadline(started_at=time.monotonic(), duration_seconds=30.0)
+        posts = {"n": 0}
+
+        def flaky(url: str, token: str, method: str = "GET", payload=None):
+            if method == "POST":
+                posts["n"] += 1
+                raise RuntimeError("temporary")
+            return (200, [])
+
+        retried = apply_publication_write(
+            api_base_url="https://example.invalid",
+            repo_slug="acme/app",
+            pr_number=7,
+            token="token",
+            comment_payload="body",
+            pub_plan=PublicationPlan(create=("k",), update=(), outdated=(), deferred=()),
+            owned_comment_id=None,
+            deadline=shared,
+            request_fn=flaky,
+            before_write=lambda: None,
+        )
+        self.assertEqual(posts["n"], 3)
+        self.assertEqual(retried.attempts, 3)
+        self.assertLess(time.monotonic() - shared.started_at, shared.duration_seconds)
+        self.assertEqual(shared.duration_seconds, 30.0)
 
 
 if __name__ == "__main__":

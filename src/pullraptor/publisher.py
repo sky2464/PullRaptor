@@ -238,6 +238,7 @@ def publish_report(
     connector: dict[str, str] | None = None,
     raw_report_bytes: bytes | None = None,
     current_authority: Callable[[dict[str, Any]], PublicationContext] | None = None,
+    proven_owner_id: str = _BOT_OWNER,
 ) -> int:
     """Publish a PullRaptor review report to a GitHub pull request.
 
@@ -246,7 +247,8 @@ def publish_report(
     trusted frozen connector authority; current_authority re-derives all fields
     from current connector metadata and trusted policy before each write/retry.
     raw_report_bytes are the exact downloaded bytes. The legacy connector mapping
-    is inert and cannot grant authorization.
+    is inert and cannot grant authorization. proven_owner_id is the actor the
+    connector authenticated; report text cannot supply it.
 
     Returns process exit code (0: success/preview/skip, 2: denied/stale, 3: error).
     """
@@ -337,10 +339,21 @@ def publish_report(
         deadline=deadline,
         request_fn=_transport_request,
     )
-    existing_observations = observations_from_comments(comments_list)
-
-    artifact_digest = pinned_expected.artifact_digest
-    pub_plan = plan_publication(artifact_digest, report, existing_observations)
+    existing_observations = observations_from_comments(
+        comments_list,
+        bot_owner_id=proven_owner_id,
+    )
+    pub_plan = plan_publication(
+        pinned_expected,
+        report,
+        existing_observations,
+        proven_owner_id=proven_owner_id,
+    )
+    if pub_plan.ambiguous:
+        sys.stderr.write(
+            "PullRaptor Publisher: ambiguous_observation_match; refusing write.\n"
+        )
+        return 2
 
     def before_write() -> str | None:
         try:

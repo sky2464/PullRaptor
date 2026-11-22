@@ -1,0 +1,13 @@
+{
+  "schema": "pullraptor.lifecycle-fixture/1",
+  "repository_id": "acme/app",
+  "pr_number": 7,
+  "rule_path_version_collision": [
+    {"rule": "PY001", "version": "1", "obligation": "PY001", "anchor": "same", "path": "app.py", "witness": "w"},
+    {"rule": "PY001", "version": "1", "obligation": "PY001", "anchor": "same", "path": "lib.py", "witness": "w"},
+    {"rule": "PY001", "version": "2", "obligation": "PY001", "anchor": "same", "path": "app.py", "witness": "w"},
+    {"rule": "PY002", "version": "1", "obligation": "auth", "anchor": "same", "path": "app.py", "witness": "w"}
+  ],
+  "beyond_cap_count": 11,
+  "beyond_cap_observation_id": "obs-beyond"
+}
